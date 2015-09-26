@@ -3,10 +3,16 @@
     public static class Tags
     {
         //Root
-        public static HtmlElement Html => new HtmlElement("html");
+        public static HtmlElement Html => new HtmlElement("html"); //Uses attributes (xmlns)
+        public static HtmlElement Base => new HtmlElement("bases"); //Uses attributes (href, target)
 
         //Meta
         public static HtmlElement Head => new HtmlElement("head");
+
+        public static HtmlElement Link => new HtmlElement("link"); //Uses attributes (crossorigin, href, hreflang, integrity, media, rel, sizes, type)
+        public static HtmlElement Style => new HtmlElement("style"); //Uses attributes (type, media, scoped, title, disabled)
+
+        public static HtmlElement Meta => new HtmlElement("meta"); //Uses attributes (charset, http-equiv, default-style, refresh, name)
         public static HtmlElement Title => new HtmlElement("title");
 
         public static HtmlElement Script => new HtmlElement("script"); //Uses attributes (async, integrity, src, type, text, defer, crossorigin)

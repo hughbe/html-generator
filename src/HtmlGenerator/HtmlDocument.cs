@@ -2,21 +2,17 @@
 {
     public class HtmlDocument : HtmlElement
     {
-        public HtmlDocument(HtmlHead head, HtmlElement body) : base("html")
+        public HtmlDocument(HtmlElement head, HtmlElement body) : base(Tags.Html.ElementTag)
         {
-            Head = Add(head ?? new HtmlHead());
-            Body = Add(body ?? new HtmlElement("body"));
+            Head = Add(head ?? Tags.Head);
+            Body = Add(body ?? Tags.Body);
         }
 
         public HtmlDocument() : this(null, null)
         {
         }
 
-        public HtmlDocument(string title) : this(new HtmlHead(title), null)
-        {
-        }
-
-        public HtmlHead Head { get; }
+        public HtmlElement Head { get; }
         public HtmlElement Body { get; }
     }
 }

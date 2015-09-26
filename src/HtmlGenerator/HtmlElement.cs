@@ -53,7 +53,7 @@ namespace HtmlGenerator
             return element;
         }
 
-        public string Serialize()
+        public virtual string Serialize()
         {
             var openingTag = SerializeOpenTag();
             var closingTag = "</" + ElementTag + ">";

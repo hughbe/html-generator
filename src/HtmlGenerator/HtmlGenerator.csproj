@@ -36,7 +36,6 @@
   <ItemGroup>
     <Compile Include="HtmlDocument.cs" />
     <Compile Include="HtmlElement.cs" />
-    <Compile Include="HtmlHead.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tags.cs" />
   </ItemGroup>
