@@ -1,0 +1,18 @@
+{
+    "version": "1.0.0-*",
+    "description": "HtmlGenerator Class Library",
+    "authors": [ "Hugh Bellamy" ],
+    "tags": [ "" ],
+    "projectUrl": "https://github.com/hughbe/html-generator/",
+    "licenseUrl": "https://github.com/hughbe/html-generator/blob/master/LICENSE",
+
+    "dependencies": {
+        "System.Collections": "4.0.10",
+        "System.Threading": "4.0.10",
+        "System.Runtime": "4.0.20"
+    },
+
+    "frameworks": {
+        "dotnet": { }
+    }
+}

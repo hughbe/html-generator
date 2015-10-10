@@ -2,10 +2,10 @@
 {
     public class HtmlDocument : HtmlElement
     {
-        public HtmlDocument(HtmlElement head, HtmlElement body) : base(Tags.Html.ElementTag)
+        public HtmlDocument(HtmlElement head, HtmlElement body) : base(Tag.Html.ElementTag)
         {
-            Head = Add(head ?? Tags.Head);
-            Body = Add(body ?? Tags.Body);
+            Head = Add(head ?? Tag.Head);
+            Body = Add(body ?? Tag.Body);
         }
 
         public HtmlDocument() : this(null, null)

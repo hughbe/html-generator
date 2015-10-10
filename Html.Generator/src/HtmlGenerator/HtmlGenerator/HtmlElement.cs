@@ -1,14 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace HtmlGenerator
 {
     public class HtmlElement
     {
+        public string ElementTag { get; }
+
+        public Dictionary<Attribute, string> Attributes { get; private set; } = new Dictionary<Attribute, string>();
+
+        public string Content { get; private set; }
+
+        public HtmlElement Parent { get; internal set; }
+        public Collection<HtmlElement> Children { get; private set; } = new Collection<HtmlElement>();
+
         public HtmlElement(string elementTag)
         {
             ElementTag = elementTag;
-        }   
+        }
 
         public HtmlElement WithChildren(params HtmlElement[] children)
         {
@@ -21,33 +31,49 @@ namespace HtmlGenerator
 
         public HtmlElement WithAttribute(string key, string value)
         {
-            Attributes.Add(key, value);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            return WithAttribute(new Attribute(key), value);
+        }
+
+        public HtmlElement WithAttribute(Attribute attribute, string value)
+        {
+            Attributes.Add(attribute, value ?? "");
             return this;
         }
 
-        public HtmlElement WithAttributes(Dictionary<string, string> attributes)
+        public HtmlElement WithAttributes(Dictionary<Attribute, string> attributes)
         {
+            if (attributes == null)
+            {
+                throw new ArgumentNullException(nameof(attributes));
+            }
+
             Attributes = attributes;
             return this;
         }
 
         public HtmlElement WithContent(string content)
         {
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
             Content = content;
             return this;
         }
-        
-        public string ElementTag { get; }
-
-        public Dictionary<string, string> Attributes { get; private set; } = new Dictionary<string, string>();
-        
-        public string Content { get; private set; }
-
-        public HtmlElement Parent { get; internal set; }
-        public Collection<HtmlElement> Children { get; private set; } = new Collection<HtmlElement>();
 
         public T Add<T>(T element) where T : HtmlElement
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
             Children.Add(element);
             element.Parent = this;
             return element;
@@ -84,7 +110,14 @@ namespace HtmlGenerator
             var attributes = " ";
             foreach (var attribute in Attributes)
             {
-                attributes += attribute.Key + "=" + "\"" + attribute.Value + "\" ";
+                if (string.IsNullOrEmpty(attribute.Value)) //No attribute content
+                {
+                    attributes += attribute.Key;
+                }
+                else
+                {
+                    attributes += attribute.Key + "=" + "\"" + attribute.Value + "\" ";
+                }
             }
 
             return tagOpener + attributes + tagCloser;

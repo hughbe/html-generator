@@ -1,6 +1,6 @@
 ﻿namespace HtmlGenerator
 {
-    public static class Tags
+    public static class Tag
     {
         //Root
         public static HtmlElement Html => new HtmlElement("html"); //Uses attributes (xmlns)
@@ -12,7 +12,7 @@
         public static HtmlElement Link => new HtmlElement("link"); //Uses attributes (crossorigin, href, hreflang, integrity, media, rel, sizes, type)
         public static HtmlElement Style => new HtmlElement("style"); //Uses attributes (type, media, scoped, title, disabled)
 
-        public static HtmlElement Meta => new HtmlElement("meta"); //Uses attributes (charset, http-equiv, default-style, refresh, name)
+        public static HtmlElement Meta => new HtmlElement("meta"); //Uses attributes (charset, content, http-equiv, default-style, refresh, name)
         public static HtmlElement Title => new HtmlElement("title");
 
         public static HtmlElement Script => new HtmlElement("script"); //Uses attributes (async, integrity, src, type, text, defer, crossorigin)
@@ -47,7 +47,7 @@
         public static HtmlElement Ul => new HtmlElement("ul");
 
         //Text
-        public static HtmlElement Anchor => new HtmlElement("a"); //Uses attributes (download, href, hreflang, media, ping, rel, target, type)
+        public static HtmlElement A => new HtmlElement("a"); //Uses attributes (download, href, hreflang, media, ping, rel, target, type)
 
         public static HtmlElement H1 => new HtmlElement("h1");
         public static HtmlElement H2 => new HtmlElement("h2");
@@ -97,8 +97,8 @@
         public static HtmlElement Area => new HtmlElement("area"); //Uses attributes (alt, coords, download, href, hreflang, media, rel, shape, target, type)
         public static HtmlElement Audio => new HtmlElement("audio"); //Uses attributes (autoplay, buffered, controls, loop, muted, played, preload, src, volume)
         public static HtmlElement Img => new HtmlElement("img"); //Uses attributes (alt, crossorigin, height, ismap, longdesc, sizes, src, srcset, width, usemap)
-        public static HtmlElement Map => new HtmlElement("img"); //Uses attributes (name)
-        public static HtmlElement Track => new HtmlElement("img"); //Uses attributes (default, kind, label, src, srclang)
+        public static HtmlElement Map => new HtmlElement("map"); //Uses attributes (name)
+        public static HtmlElement Track => new HtmlElement("track"); //Uses attributes (default, kind, label, src, srclang)
         public static HtmlElement Video => new HtmlElement("video"); //Uses attributes (autoplay, buffers, controls, crossorigin, height, loop, muted, played, preload, poster, src, width)
 
         //Embedding
@@ -133,7 +133,7 @@
         public static HtmlElement Output => new HtmlElement("output"); //Uses attributes (for, form, name)
         public static HtmlElement Progress => new HtmlElement("progress"); //Uses attributes (max, value)
         public static HtmlElement Select => new HtmlElement("select"); //Uses attributes (autofocus, disabled, form, multiple, name, required, size)
-        public static HtmlElement Textarea => new HtmlElement("textarea"); //Uses attributes (autocomplete, autofocus, cols, disabled, form, maxlength, minLength, name, placeholder, readonly, required, rows, selectiondirection, selectionend, selectionstart, spellcheck, wrap)
+        public static HtmlElement TextArea => new HtmlElement("textarea"); //Uses attributes (autocomplete, autofocus, cols, disabled, form, maxlength, minLength, name, placeholder, readonly, required, rows, selectionDirection, selectionEnd, selectionStart, spellcheck, wrap)
 
         //Interactivity
         public static HtmlElement Details => new HtmlElement("details"); //Uses attributes (open); Unsupported
