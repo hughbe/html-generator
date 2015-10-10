@@ -4,9 +4,10 @@ A library that simplifies generating complex HTML files from C# code.
 Installation Instructions
 --------------
 #### Nuget
-Run `PM> Install-Package HtmlGenerator` from the Package Manager Console
+- Run `PM> Install-Package HtmlGenerator` from the Package Manager Console
+
 #### DLL
-[Download the *.dll file here](https://github.com/hughbe/html-generator/releases/latest)
+- [Download the *.dll file here](https://github.com/hughbe/html-generator/releases/latest)
 
 Screenshots
 --------------
