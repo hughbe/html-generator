@@ -112,11 +112,11 @@ namespace HtmlGenerator
             {
                 if (string.IsNullOrEmpty(attribute.Value)) //No attribute content
                 {
-                    attributes += attribute.Key;
+                    attributes += attribute.Key.Key;
                 }
                 else
                 {
-                    attributes += attribute.Key + "=" + "\"" + attribute.Value + "\" ";
+                    attributes += attribute.Key.Key + "=" + "\"" + attribute.Value + "\" ";
                 }
             }
 
