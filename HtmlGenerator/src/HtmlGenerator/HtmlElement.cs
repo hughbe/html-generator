@@ -162,6 +162,7 @@ namespace HtmlGenerator
             {
                 return openingTag;
             }
+
             var closingTag = "</" + ElementTag + ">";
 
             var content = Content ?? "";
