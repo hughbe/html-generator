@@ -16,6 +16,7 @@ namespace HtmlGenerator
             {
                 throw new ArgumentException("The element's tag cannot be empty", nameof(elementTag));
             }
+
             ElementTag = elementTag;
             IsVoidElement = isVoidElement;
         }
@@ -52,6 +53,7 @@ namespace HtmlGenerator
             {
                 throw new ArgumentNullException(nameof(child));
             }
+
             Children.Add(child);
         }
 
@@ -87,7 +89,7 @@ namespace HtmlGenerator
 
         public HtmlElement WithAttribute(Attribute attribute, string value)
         {
-            SetAttribute(attribute, value);
+            AddAttribute(attribute, value);
             return this;
         }
 
@@ -99,28 +101,35 @@ namespace HtmlGenerator
 
         public void SetClass(string className)
         {
-            SetAttribute(Attribute.Class, className);
+            AddAttribute(Attribute.Class, className);
         }
 
         public void SetId(string idName)
         {
-            SetAttribute(Attribute.Id, idName);
+            AddAttribute(Attribute.Id, idName);
         }
-
-        public void SetAttribute(string key, string value)
-        {
-            SetAttribute(new Attribute(key), value);
-        }
-
-        public void SetAttribute(Attribute attribute, string value)
+        
+        public void AddAttribute(Attribute attribute, string value)
         {
             Attributes.Add(attribute, value ?? "");
         }
 
-        public HtmlElement SetAttributes(Dictionary<Attribute, string> attributes)
+        public void AddAttributes(Dictionary<Attribute, string> attributes)
+        {
+            if (attributes == null)
+            {
+                throw new ArgumentNullException(nameof(attributes));
+            }
+
+            foreach (var keyValuePair in attributes)
+            {
+                Attributes.Add(keyValuePair.Key, keyValuePair.Value);
+            }
+        }
+
+        public void SetAttributes(Dictionary<Attribute, string> attributes)
         {
             Attributes = attributes ?? new Dictionary<Attribute, string>();
-            return this;
         }
 
         public HtmlElement WithContent(string content)
@@ -149,7 +158,7 @@ namespace HtmlGenerator
         public virtual string Serialize()
         {
             var openingTag = SerializeOpenTag();
-            if (!IsVoidElement)
+            if (IsVoidElement)
             {
                 return openingTag;
             }
