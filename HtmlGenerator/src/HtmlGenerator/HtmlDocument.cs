@@ -14,5 +14,7 @@
 
         public HtmlElement Head { get; }
         public HtmlElement Body { get; }
+
+        public override string Serialize() => "<!DOCTYPE html>" + base.Serialize();
     }
 }

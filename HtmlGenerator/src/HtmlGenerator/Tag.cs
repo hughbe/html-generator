@@ -4,15 +4,15 @@
     {
         //Root
         public static HtmlElement Html => new HtmlElement("html"); //Uses attributes (xmlns)
-        public static HtmlElement Base => new HtmlElement("bases"); //Uses attributes (href, target)
+        public static HtmlElement Base => new HtmlElement("base", true); //Uses attributes (href, target)
 
         //Meta
         public static HtmlElement Head => new HtmlElement("head");
 
-        public static HtmlElement Link => new HtmlElement("link"); //Uses attributes (crossorigin, href, hreflang, integrity, media, rel, sizes, type)
+        public static HtmlElement Link => new HtmlElement("link", true); //Uses attributes (crossorigin, href, hreflang, integrity, media, rel, sizes, type)
         public static HtmlElement Style => new HtmlElement("style"); //Uses attributes (type, media, scoped, title, disabled)
 
-        public static HtmlElement Meta => new HtmlElement("meta"); //Uses attributes (charset, content, http-equiv, default-style, refresh, name)
+        public static HtmlElement Meta => new HtmlElement("meta", true); //Uses attributes (charset, content, http-equiv, default-style, refresh, name)
         public static HtmlElement Title => new HtmlElement("title");
 
         public static HtmlElement Script => new HtmlElement("script"); //Uses attributes (async, integrity, src, type, text, defer, crossorigin)
@@ -33,8 +33,8 @@
         public static HtmlElement Template => new HtmlElement("template"); //Unsupported
 
         //Seperators
-        public static HtmlElement Br => new HtmlElement("br");
-        public static HtmlElement Hr => new HtmlElement("hr"); //Uses attributes (color)
+        public static HtmlElement Br => new HtmlElement("br", true);
+        public static HtmlElement Hr => new HtmlElement("hr", true); //Uses attributes (color)
         public static HtmlElement Wbr => new HtmlElement("wbr");
 
         //Lists
@@ -94,23 +94,23 @@
         public static HtmlElement Rtc => new HtmlElement("rtc");
 
         //Multimedia
-        public static HtmlElement Area => new HtmlElement("area"); //Uses attributes (alt, coords, download, href, hreflang, media, rel, shape, target, type)
+        public static HtmlElement Area => new HtmlElement("area", true); //Uses attributes (alt, coords, download, href, hreflang, media, rel, shape, target, type)
         public static HtmlElement Audio => new HtmlElement("audio"); //Uses attributes (autoplay, buffered, controls, loop, muted, played, preload, src, volume)
-        public static HtmlElement Img => new HtmlElement("img"); //Uses attributes (alt, crossorigin, height, ismap, longdesc, sizes, src, srcset, width, usemap)
+        public static HtmlElement Img => new HtmlElement("img", true); //Uses attributes (alt, crossorigin, height, ismap, longdesc, sizes, src, srcset, width, usemap)
         public static HtmlElement Map => new HtmlElement("map"); //Uses attributes (name)
-        public static HtmlElement Track => new HtmlElement("track"); //Uses attributes (default, kind, label, src, srclang)
+        public static HtmlElement Track => new HtmlElement("track", true); //Uses attributes (default, kind, label, src, srclang)
         public static HtmlElement Video => new HtmlElement("video"); //Uses attributes (autoplay, buffers, controls, crossorigin, height, loop, muted, played, preload, poster, src, width)
 
         //Embedding
-        public static HtmlElement Embed => new HtmlElement("embed"); //Uses attributes (height, src, type, width)
+        public static HtmlElement Embed => new HtmlElement("embed", true); //Uses attributes (height, src, type, width)
         public static HtmlElement Iframe => new HtmlElement("iframe"); //Uses attributes (allowfullscreen, height, name, sandbox, seamless, src, srcdoc, width)
         public static HtmlElement Object => new HtmlElement("object"); //Uses attributes (data, form, height, height, name, type, typemustmatch, usemap, width)
-        public static HtmlElement Param => new HtmlElement("param"); //Uses attributes (name, value)
-        public static HtmlElement Source => new HtmlElement("source"); //Uses attributes (src, type)
+        public static HtmlElement Param => new HtmlElement("param", true); //Uses attributes (name, value)
+        public static HtmlElement Source => new HtmlElement("source", true); //Uses attributes (src, type)
 
         //Table
         public static HtmlElement Caption => new HtmlElement("caption");
-        public static HtmlElement Col => new HtmlElement("col"); //Uses attributes (span)
+        public static HtmlElement Col => new HtmlElement("col", true); //Uses attributes (span)
         public static HtmlElement Colgroup => new HtmlElement("colgroup"); //Uses attributes (span)
         public static HtmlElement Table => new HtmlElement("table");
         public static HtmlElement Tbody => new HtmlElement("tbody");
@@ -124,7 +124,7 @@
         public static HtmlElement Datalist => new HtmlElement("datalist");
         public static HtmlElement Fieldset => new HtmlElement("fieldset"); //Uses attributes (disabled, form, name)
         public static HtmlElement Form => new HtmlElement("form"); //Uses attributes (accept-charset, action, autocomplete, enctype, method, name, novalidate, target)
-        public static HtmlElement Input => new HtmlElement("input"); //Uses attributes (type, accept, autocomplete, autofocus, autosave, checked, disabled, form, formaction, formenctype, formmethod, formnovalidate, formtarget, height, inputmode, list, max, maxlength, min, minLength, multiple, name, pattern, placeholder, readonly, required, selectionDirection, size, spellCheck, src, step, tabIndex, value, width)
+        public static HtmlElement Input => new HtmlElement("input", true); //Uses attributes (type, accept, autocomplete, autofocus, autosave, checked, disabled, form, formaction, formenctype, formmethod, formnovalidate, formtarget, height, inputmode, list, max, maxlength, min, minLength, multiple, name, pattern, placeholder, readonly, required, selectionDirection, size, spellCheck, src, step, tabIndex, value, width)
         public static HtmlElement Label => new HtmlElement("label"); //Uses attributes (accesskey, for, form)
         public static HtmlElement Legend => new HtmlElement("legend");
         public static HtmlElement Meter => new HtmlElement("meter"); //Uses attributes (value, min, max, low, high, optimum, form)
@@ -139,7 +139,7 @@
         public static HtmlElement Details => new HtmlElement("details"); //Uses attributes (open); Unsupported
         public static HtmlElement Dialog => new HtmlElement("dialog"); //Uses attributes (open); Unsupported
         public static HtmlElement Menu => new HtmlElement("menu"); //Uses attributes (label, type); Unsupported
-        public static HtmlElement MenuItem => new HtmlElement("menutiem"); //Uses attributes (checked, command, default, disabled, icon, label, radiogroup, type); Unsupported
+        public static HtmlElement MenuItem => new HtmlElement("menutiem", true); //Uses attributes (checked, command, default, disabled, icon, label, radiogroup, type); Unsupported
         public static HtmlElement Summary => new HtmlElement("summary"); //Unsupported
         
     }

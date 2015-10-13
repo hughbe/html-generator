@@ -6,65 +6,132 @@ namespace HtmlGenerator
 {
     public class HtmlElement
     {
-        public string ElementTag { get; }
+        public HtmlElement(string elementTag, bool isVoidElement)
+        {
+            if (elementTag == null)
+            {
+                throw new ArgumentNullException(nameof(elementTag));
+            }
+            if (elementTag.Length == 0)
+            {
+                throw new ArgumentException("The element's tag cannot be empty", nameof(elementTag));
+            }
+            ElementTag = elementTag;
+            IsVoidElement = isVoidElement;
+        }
 
-        public Dictionary<Attribute, string> Attributes { get; private set; } = new Dictionary<Attribute, string>();
+        public HtmlElement(string elementTag) : this(elementTag, false)
+        {
+        }
+
+        public string ElementTag { get; }
+        public bool IsVoidElement { get; }
 
         public string Content { get; private set; }
 
         public HtmlElement Parent { get; internal set; }
         public Collection<HtmlElement> Children { get; private set; } = new Collection<HtmlElement>();
 
-        public HtmlElement(string elementTag)
-        {
-            ElementTag = elementTag;
-        }
+        public Dictionary<Attribute, string> Attributes { get; private set; } = new Dictionary<Attribute, string>();
 
-        public HtmlElement WithChildren(params HtmlElement[] children)
+        public HtmlElement WithChild(HtmlElement child)
         {
-            Children = new Collection<HtmlElement>(children);
+            AddChild(child);
             return this;
         }
 
-        public HtmlElement WithClass(string className) => WithAttribute("class", className);
-        public HtmlElement WithId(string idName) => WithAttribute("id", idName);
-
-        public HtmlElement WithAttribute(string key, string value)
+        public HtmlElement WithChildren(Collection<HtmlElement> children)
         {
-            if (key == null)
+            AddChildren(children);
+            return this;
+        }
+
+        public void AddChild(HtmlElement child)
+        {
+            if (child == null)
             {
-                throw new ArgumentNullException(nameof(key));
+                throw new ArgumentNullException(nameof(child));
+            }
+            Children.Add(child);
+        }
+
+        public void AddChildren(Collection<HtmlElement> children)
+        {
+            if (children == null)
+            {
+                throw new ArgumentNullException(nameof(children));
             }
 
-            return WithAttribute(new Attribute(key), value);
+            foreach (var child in children)
+            {
+                AddChild(child);
+            }
+        }
+
+        public void SetChildren(Collection<HtmlElement> children)
+        {
+            Children = children ?? new Collection<HtmlElement>();
+        }
+
+        public HtmlElement WithClass(string className)
+        {
+            SetClass(className);
+            return this;
+        }
+
+        public HtmlElement WithId(string idName)
+        {
+            SetId(idName);
+            return this;
         }
 
         public HtmlElement WithAttribute(Attribute attribute, string value)
         {
-            Attributes.Add(attribute, value ?? "");
+            SetAttribute(attribute, value);
             return this;
         }
 
         public HtmlElement WithAttributes(Dictionary<Attribute, string> attributes)
         {
-            if (attributes == null)
-            {
-                throw new ArgumentNullException(nameof(attributes));
-            }
+            SetAttributes(attributes);
+            return this;
+        }
 
-            Attributes = attributes;
+        public void SetClass(string className)
+        {
+            SetAttribute(Attribute.Class, className);
+        }
+
+        public void SetId(string idName)
+        {
+            SetAttribute(Attribute.Id, idName);
+        }
+
+        public void SetAttribute(string key, string value)
+        {
+            SetAttribute(new Attribute(key), value);
+        }
+
+        public void SetAttribute(Attribute attribute, string value)
+        {
+            Attributes.Add(attribute, value ?? "");
+        }
+
+        public HtmlElement SetAttributes(Dictionary<Attribute, string> attributes)
+        {
+            Attributes = attributes ?? new Dictionary<Attribute, string>();
             return this;
         }
 
         public HtmlElement WithContent(string content)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-
-            Content = content;
+            SetContent(content);
             return this;
+        }
+
+        public void SetContent(string content)
+        {
+            Content = content;
         }
 
         public T Add<T>(T element) where T : HtmlElement
@@ -82,6 +149,10 @@ namespace HtmlGenerator
         public virtual string Serialize()
         {
             var openingTag = SerializeOpenTag();
+            if (!IsVoidElement)
+            {
+                return openingTag;
+            }
             var closingTag = "</" + ElementTag + ">";
 
             var content = Content ?? "";
@@ -90,10 +161,6 @@ namespace HtmlGenerator
                 content += child.Serialize();
             }
 
-            if (string.IsNullOrEmpty(ElementTag))
-            {
-                return content;
-            }
             return openingTag + content + closingTag;
         }
 
@@ -101,6 +168,11 @@ namespace HtmlGenerator
         {
             var tagOpener = "<" + ElementTag;
             var tagCloser = ">";
+
+            if (IsVoidElement)
+            {
+                tagCloser = "/>";
+            }
 
             if (Attributes == null || Attributes.Count == 0)
             {
