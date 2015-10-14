@@ -14,7 +14,13 @@
 
         public HtmlElement Head { get; }
         public HtmlElement Body { get; }
+        
+        public string Doctype { get; set; } = "<!DOCTYPE html>";
 
-        public override string Serialize() => "<!DOCTYPE html>" + base.Serialize();
+        public override string Serialize()
+        {
+            var doctype = Doctype ?? "";
+            return doctype + base.Serialize();
+        }
     }
 }

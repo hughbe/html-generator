@@ -6,7 +6,11 @@ namespace HtmlGenerator
 {
     public class HtmlElement
     {
-        public HtmlElement(string elementTag, bool isVoidElement)
+        protected HtmlElement(string elementTag) : this(elementTag, false)
+        {
+        }
+
+        internal HtmlElement(string elementTag, bool isVoid)
         {
             if (elementTag == null)
             {
@@ -18,22 +22,18 @@ namespace HtmlGenerator
             }
 
             ElementTag = elementTag;
-            IsVoidElement = isVoidElement;
-        }
-
-        public HtmlElement(string elementTag) : this(elementTag, false)
-        {
+            IsVoid = isVoid;
         }
 
         public string ElementTag { get; }
-        public bool IsVoidElement { get; }
+        public bool IsVoid { get; }
 
         public string Content { get; private set; }
 
         public HtmlElement Parent { get; internal set; }
         public Collection<HtmlElement> Children { get; private set; } = new Collection<HtmlElement>();
 
-        public Dictionary<Attribute, string> Attributes { get; private set; } = new Dictionary<Attribute, string>();
+        public Collection<HtmlAttribute> Attributes { get; private set; } = new Collection<HtmlAttribute>();
 
         public HtmlElement WithChild(HtmlElement child)
         {
@@ -87,13 +87,13 @@ namespace HtmlGenerator
             return this;
         }
 
-        public HtmlElement WithAttribute(Attribute attribute, string value)
+        public HtmlElement WithAttribute(HtmlAttribute attribute)
         {
-            AddAttribute(attribute, value);
+            AddAttribute(attribute);
             return this;
         }
 
-        public HtmlElement WithAttributes(Dictionary<Attribute, string> attributes)
+        public HtmlElement WithAttributes(Collection<HtmlAttribute> attributes)
         {
             SetAttributes(attributes);
             return this;
@@ -101,35 +101,35 @@ namespace HtmlGenerator
 
         public void SetClass(string className)
         {
-            AddAttribute(Attribute.Class, className);
+            AddAttribute(Attribute.Class(className));
         }
 
         public void SetId(string idName)
         {
-            AddAttribute(Attribute.Id, idName);
-        }
-        
-        public void AddAttribute(Attribute attribute, string value)
-        {
-            Attributes.Add(attribute, value ?? "");
+            AddAttribute(Attribute.Id(idName));
         }
 
-        public void AddAttributes(Dictionary<Attribute, string> attributes)
+        public void AddAttribute(HtmlAttribute attribute)
+        {
+            Attributes.Add(attribute);
+        }
+
+        public void AddAttributes(Collection<HtmlAttribute> attributes)
         {
             if (attributes == null)
             {
                 throw new ArgumentNullException(nameof(attributes));
             }
 
-            foreach (var keyValuePair in attributes)
+            foreach (var attribute in attributes)
             {
-                Attributes.Add(keyValuePair.Key, keyValuePair.Value);
+                Attributes.Add(attribute);
             }
         }
 
-        public void SetAttributes(Dictionary<Attribute, string> attributes)
+        public void SetAttributes(Collection<HtmlAttribute> attributes)
         {
-            Attributes = attributes ?? new Dictionary<Attribute, string>();
+            Attributes = attributes ?? new Collection<HtmlAttribute>();
         }
 
         public HtmlElement WithContent(string content)
@@ -158,7 +158,7 @@ namespace HtmlGenerator
         public virtual string Serialize()
         {
             var openingTag = SerializeOpenTag();
-            if (IsVoidElement)
+            if (IsVoid)
             {
                 return openingTag;
             }
@@ -179,7 +179,7 @@ namespace HtmlGenerator
             var tagOpener = "<" + ElementTag;
             var tagCloser = ">";
 
-            if (IsVoidElement)
+            if (IsVoid)
             {
                 tagCloser = "/>";
             }
@@ -192,14 +192,7 @@ namespace HtmlGenerator
             var attributes = " ";
             foreach (var attribute in Attributes)
             {
-                if (string.IsNullOrEmpty(attribute.Value)) //No attribute content
-                {
-                    attributes += attribute.Key.Key;
-                }
-                else
-                {
-                    attributes += attribute.Key.Key + "=" + "\"" + attribute.Value + "\" ";
-                }
+                attributes += attribute.Serialize();
             }
 
             return tagOpener + attributes + tagCloser;
