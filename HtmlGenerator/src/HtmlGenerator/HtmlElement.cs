@@ -153,7 +153,7 @@ namespace HtmlGenerator
         }
 
         private int minimumIndentDepth = 1;
-        private int maximumIndentDepth = 7;
+        private int maximumIndentDepth = 9;
 
         public int MinimumIndentDepth
         {
@@ -191,9 +191,9 @@ namespace HtmlGenerator
 
         public string Serialize() => Serialize(HtmlSerializeType.PrettyPrint);
 
-        public virtual string Serialize(HtmlSerializeType serializeType) => Serialize(serializeType, 0);
+        public string Serialize(HtmlSerializeType serializeType) => Serialize(serializeType, 0);
 
-        private string Serialize(HtmlSerializeType serializeType, int depth)
+        public virtual string Serialize(HtmlSerializeType serializeType, int depth)
         {
             var openingTag = SerializeOpenTag();
             if (serializeType == HtmlSerializeType.PrettyPrint)
@@ -236,7 +236,7 @@ namespace HtmlGenerator
                         content += "\t";
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(child.Content) || child.Children.Count == 0)
+                if (!string.IsNullOrWhiteSpace(child.Content) && child.Children.Count == 0)
                 {
                     content += child.Serialize(serializeType, 0);
                 }

@@ -1,5 +1,5 @@
 {
-  "version": "1.0.5-*",
+  "version": "1.0.6-*",
   "description": "A library that simplifies generating complex HTML files from C# code.",
   "summary": "A library that simplifies generating complex HTML files from C# code.",
   "authors": [ "Hugh Bellamy" ],
