@@ -47,15 +47,19 @@ namespace HtmlGenerator
             return this;
         }
 
-        public void AddChild(HtmlElement child)
+        public T InsertChild<T>(int index, T element) where T : HtmlElement
         {
-            if (child == null)
+            if (element == null)
             {
-                throw new ArgumentNullException(nameof(child));
+                throw new ArgumentNullException(nameof(element));
             }
 
-            Children.Add(child);
+            Children.Insert(index, element);
+            element.Parent = this;
+            return element;
         }
+
+        public T AddChild<T>(T element) where T : HtmlElement => InsertChild(Children.Count, element);
 
         public void AddChildren(Collection<HtmlElement> children)
         {
@@ -114,6 +118,11 @@ namespace HtmlGenerator
             Attributes.Add(attribute);
         }
 
+        public void AddAttribute(int index, HtmlAttribute attribute)
+        {
+            Attributes.Insert(index, attribute);
+        }
+
         public void AddAttributes(Collection<HtmlAttribute> attributes)
         {
             if (attributes == null)
@@ -123,7 +132,7 @@ namespace HtmlGenerator
 
             foreach (var attribute in attributes)
             {
-                Attributes.Add(attribute);
+                AddAttribute(attribute);
             }
         }
 
@@ -143,35 +152,106 @@ namespace HtmlGenerator
             Content = content;
         }
 
-        public T Add<T>(T element) where T : HtmlElement
-        {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+        private int minimumIndentDepth = 1;
+        private int maximumIndentDepth = 7;
 
-            Children.Add(element);
-            element.Parent = this;
-            return element;
+        public int MinimumIndentDepth
+        {
+            get { return minimumIndentDepth; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("The minimum indent depth cannot be negative", nameof(value));
+                }
+                if (value > maximumIndentDepth)
+                {
+                    throw new ArgumentException("The minimum indent depth cannot be larger than the maximum indent depth", nameof(value));
+                }
+                minimumIndentDepth = value;
+            }
         }
 
-        public virtual string Serialize()
+        public int MaximumIndentDepth
+        {
+            get { return maximumIndentDepth; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("The maximum indent depth cannot be negative", nameof(value));
+                }
+                if (value < minimumIndentDepth)
+                {
+                    throw new ArgumentException("The maximum indent depth cannot be less than the minimum indent depth", nameof(value));
+                }
+                maximumIndentDepth = value;
+            }
+        }
+
+        public string Serialize() => Serialize(HtmlSerializeType.PrettyPrint);
+
+        public virtual string Serialize(HtmlSerializeType serializeType) => Serialize(serializeType, 0);
+
+        private string Serialize(HtmlSerializeType serializeType, int depth)
         {
             var openingTag = SerializeOpenTag();
+            if (serializeType == HtmlSerializeType.PrettyPrint)
+            {
+                if ((string.IsNullOrEmpty(Content) && Children.Count > 0) || IsVoid)
+                {
+                    openingTag += "\r";
+                }
+            }
+
             if (IsVoid)
             {
                 return openingTag;
             }
 
             var closingTag = "</" + ElementTag + ">";
+            if (depth > MaximumIndentDepth)
+            {
+                depth = MaximumIndentDepth;
+                closingTag = "\t" + closingTag;
+            }
+
+            var shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
+            
+            if (shouldIndent)
+            {
+                for (int counter = 0; counter < depth - 1; counter++)
+                {
+                    closingTag = "\t" + closingTag;
+                }
+            }
 
             var content = Content ?? "";
             foreach (var child in Children)
             {
-                content += child.Serialize();
+                if (shouldIndent)
+                {
+                    for (int counter = 0; counter < depth; counter++)
+                    {
+                        content += "\t";
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(child.Content) || child.Children.Count == 0)
+                {
+                    content += child.Serialize(serializeType, 0);
+                }
+                else
+                {
+                    content += child.Serialize(serializeType, depth + 1);
+                }
             }
 
-            return openingTag + content + closingTag;
+            var html = openingTag + content + closingTag;
+            if (serializeType == HtmlSerializeType.PrettyPrint)
+            {   
+                html += "\r";
+            }
+            return html;
         }
 
         private string SerializeOpenTag()
@@ -189,10 +269,10 @@ namespace HtmlGenerator
                 return tagOpener + tagCloser;
             }
 
-            var attributes = " ";
+            var attributes = "";
             foreach (var attribute in Attributes)
             {
-                attributes += attribute.Serialize();
+                attributes += " " + attribute.Serialize();
             }
 
             return tagOpener + attributes + tagCloser;

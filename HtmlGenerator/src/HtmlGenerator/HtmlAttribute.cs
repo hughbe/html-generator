@@ -33,7 +33,7 @@ namespace HtmlGenerator
             }
             else
             {
-                attribute = Name + "=" + "\"" + Value + "\" ";
+                attribute = Name + "=" + "\"" + Value + "\"";
             }
             return attribute;
         }

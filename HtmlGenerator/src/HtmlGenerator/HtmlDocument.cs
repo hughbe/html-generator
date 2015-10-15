@@ -4,8 +4,8 @@
     {
         public HtmlDocument(HtmlElement head, HtmlElement body) : base(Tag.Html.ElementTag)
         {
-            Head = Add(head ?? Tag.Head);
-            Body = Add(body ?? Tag.Body);
+            Head = AddChild(head ?? Tag.Head);
+            Body = AddChild(body ?? Tag.Body);
         }
 
         public HtmlDocument() : this(null, null)
@@ -17,10 +17,14 @@
         
         public string Doctype { get; set; } = "<!DOCTYPE html>";
 
-        public override string Serialize()
+        public override string Serialize(HtmlSerializeType serializeType)
         {
             var doctype = Doctype ?? "";
-            return doctype + base.Serialize();
+            if (serializeType == HtmlSerializeType.PrettyPrint)
+            {
+                doctype += "\r";
+            }
+            return doctype + base.Serialize(serializeType);
         }
     }
 }
