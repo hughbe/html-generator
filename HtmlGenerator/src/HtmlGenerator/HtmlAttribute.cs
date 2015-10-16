@@ -2,13 +2,17 @@
 
 namespace HtmlGenerator
 {
-    public struct HtmlAttribute
+    public class HtmlAttribute
     {
         public string Name { get; }
         public string Value { get; }
-        public bool IsVoidAttribute { get; }
-
-        internal HtmlAttribute(string name, string value, bool isVoidAttribute)
+        public bool IsVoid { get; }
+        
+        protected HtmlAttribute(HtmlAttribute attribute) : this(attribute.Name, attribute.Value, attribute.IsVoid)
+        {
+        }
+         
+        internal HtmlAttribute(string name, string value, bool isVoid)
         {
             if (name == null)
             {
@@ -18,16 +22,16 @@ namespace HtmlGenerator
             {
                 throw new ArgumentException("The attribute's name must not be an empty string", nameof(name));
             }
-            
+
             Name = name;
             Value = value;
-            IsVoidAttribute = isVoidAttribute;
+            IsVoid = isVoid;
         }
 
         public string Serialize()
         {
-            var attribute = "";
-            if (IsVoidAttribute || Value == null) //No attribute content
+            string attribute;
+            if (IsVoid || Value == null) //No attribute content
             {
                 attribute = Name;
             }

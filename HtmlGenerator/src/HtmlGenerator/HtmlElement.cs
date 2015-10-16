@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace HtmlGenerator
 {
     public class HtmlElement
     {
-        protected HtmlElement(string elementTag) : this(elementTag, false)
+        private int _maximumIndentDepth = 9;
+        private int _minimumIndentDepth = 1;
+
+        protected HtmlElement(HtmlElement element) : this(element.ElementTag, element.IsVoid)
         {
         }
 
@@ -30,10 +32,48 @@ namespace HtmlGenerator
 
         public string Content { get; private set; }
 
-        public HtmlElement Parent { get; internal set; }
+        public HtmlElement Parent { get; private set; }
         public Collection<HtmlElement> Children { get; private set; } = new Collection<HtmlElement>();
 
         public Collection<HtmlAttribute> Attributes { get; private set; } = new Collection<HtmlAttribute>();
+
+        public int MinimumIndentDepth
+        {
+            get { return _minimumIndentDepth; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("The minimum indent depth cannot be negative", nameof(value));
+                }
+                if (value > _maximumIndentDepth)
+                {
+                    throw new ArgumentException(
+                        "The minimum indent depth cannot be larger than the maximum indent depth", nameof(value));
+                }
+
+                _minimumIndentDepth = value;
+            }
+        }
+
+        public int MaximumIndentDepth
+        {
+            get { return _maximumIndentDepth; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("The maximum indent depth cannot be negative", nameof(value));
+                }
+                if (value < _minimumIndentDepth)
+                {
+                    throw new ArgumentException(
+                        "The maximum indent depth cannot be less than the minimum indent depth", nameof(value));
+                }
+
+                _maximumIndentDepth = value;
+            }
+        }
 
         public HtmlElement WithChild(HtmlElement child)
         {
@@ -152,43 +192,6 @@ namespace HtmlGenerator
             Content = content;
         }
 
-        private int minimumIndentDepth = 1;
-        private int maximumIndentDepth = 9;
-
-        public int MinimumIndentDepth
-        {
-            get { return minimumIndentDepth; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("The minimum indent depth cannot be negative", nameof(value));
-                }
-                if (value > maximumIndentDepth)
-                {
-                    throw new ArgumentException("The minimum indent depth cannot be larger than the maximum indent depth", nameof(value));
-                }
-                minimumIndentDepth = value;
-            }
-        }
-
-        public int MaximumIndentDepth
-        {
-            get { return maximumIndentDepth; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("The maximum indent depth cannot be negative", nameof(value));
-                }
-                if (value < minimumIndentDepth)
-                {
-                    throw new ArgumentException("The maximum indent depth cannot be less than the minimum indent depth", nameof(value));
-                }
-                maximumIndentDepth = value;
-            }
-        }
-
         public string Serialize() => Serialize(HtmlSerializeType.PrettyPrint);
 
         public string Serialize(HtmlSerializeType serializeType) => Serialize(serializeType, 0);
@@ -217,10 +220,10 @@ namespace HtmlGenerator
             }
 
             var shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
-            
+
             if (shouldIndent)
             {
-                for (int counter = 0; counter < depth - 1; counter++)
+                for (var counter = 0; counter < depth - 1; counter++)
                 {
                     closingTag = "\t" + closingTag;
                 }
@@ -231,7 +234,7 @@ namespace HtmlGenerator
             {
                 if (shouldIndent)
                 {
-                    for (int counter = 0; counter < depth; counter++)
+                    for (var counter = 0; counter < depth; counter++)
                     {
                         content += "\t";
                     }
@@ -248,7 +251,7 @@ namespace HtmlGenerator
 
             var html = openingTag + content + closingTag;
             if (serializeType == HtmlSerializeType.PrettyPrint)
-            {   
+            {
                 html += "\r";
             }
             return html;

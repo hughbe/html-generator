@@ -1,6 +1,6 @@
 ﻿namespace HtmlGenerator
 {
-    public struct Attribute
+    public static class Attribute
     {
         public static HtmlAttribute Accept(string value) => Custom("accept", value);
         public static HtmlAttribute AcceptCharset(string value) => Custom("accept-charset", value);
@@ -77,7 +77,7 @@
         public static HtmlAttribute MaxLength(string value) => Custom("maxLength", value);
         public static HtmlAttribute Media(string value) => Custom("media", value);
         public static HtmlAttribute Min(string value) => Custom("min", value);
-        public static HtmlAttribute MinLength(string value) => Custom("minLength", value);
+        public static HtmlAttribute MinLength(string value) => Custom("minLeng  th", value);
         public static HtmlAttribute Multiple(string value) => Custom("multiple");
         public static HtmlAttribute Muted(string value) => Custom("muted", value);
 

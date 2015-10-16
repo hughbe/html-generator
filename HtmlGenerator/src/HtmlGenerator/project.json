@@ -1,20 +1,20 @@
 {
-  "version": "1.0.6-*",
-  "description": "A library that simplifies generating complex HTML files from C# code.",
-  "summary": "A library that simplifies generating complex HTML files from C# code.",
-  "authors": [ "Hugh Bellamy" ],
-  "tags": [ "html generator web" ],
-  "copyright": "Hugh Bellamy 2015",
-  "projectUrl": "https://github.com/hughbe/html-generator/",
-  "licenseUrl": "https://github.com/hughbe/html-generator/blob/master/LICENSE",
+    "version": "1.0.6-*",
+    "description": "A library that simplifies generating complex HTML files from C# code.",
+    "summary": "A library that simplifies generating complex HTML files from C# code.",
+    "authors": [ "Hugh Bellamy" ],
+    "tags": [ "html generator web" ],
+    "copyright": "Hugh Bellamy 2015",
+    "projectUrl": "https://github.com/hughbe/html-generator/",
+    "licenseUrl": "https://github.com/hughbe/html-generator/blob/master/LICENSE",
 
-  "dependencies": {
-    "System.Collections": "4.0.10",
-    "System.Threading": "4.0.10",
-    "System.Runtime": "4.0.20"
-  },
+    "dependencies": {
+        "System.Collections": "4.0.10",
+        "System.Threading": "4.0.10",
+        "System.Runtime": "4.0.20"
+    },
 
-  "frameworks": {
-    "dotnet": { }
-  }
+    "frameworks": {
+        "dotnet": { }
+    }
 }
