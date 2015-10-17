@@ -21,5 +21,27 @@ namespace HtmlGenerator
 		public HtmlObjectElement WithUseMapAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.UseMap(value));
 
 		public HtmlObjectElement WithWidthAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Width(value));
+
+		public HtmlObjectElement WithAccessKey(string value) => (HtmlObjectElement)WithAttribute(Attribute.AccessKey(value));
+
+		public HtmlObjectElement WithClass(string value) => (HtmlObjectElement)WithAttribute(Attribute.Class(value));
+
+		public HtmlObjectElement WithContentEditable(string value) => (HtmlObjectElement)WithAttribute(Attribute.ContentEditable(value));
+
+		public HtmlObjectElement WithContextMenuAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.ContextMenu(value));
+
+		public HtmlObjectElement WithDir(string value) => (HtmlObjectElement)WithAttribute(Attribute.Dir(value));
+
+		public HtmlObjectElement WithHidden(string value) => (HtmlObjectElement)WithAttribute(Attribute.Hidden(value));
+
+		public HtmlObjectElement WithId(string value) => (HtmlObjectElement)WithAttribute(Attribute.Id(value));
+
+		public HtmlObjectElement WithLang(string value) => (HtmlObjectElement)WithAttribute(Attribute.Lang(value));
+
+		public HtmlObjectElement WithSpellCheck(string value) => (HtmlObjectElement)WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlObjectElement WithStyleAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Style(value));
+
+		public HtmlObjectElement WithTabIndex(string value) => (HtmlObjectElement)WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -30,18 +30,15 @@ namespace HtmlGeneratorMeta
                 var upperName = property.Name;
 
                 var isVoid = htmlObject.IsVoid ? "true" : "false";
+                var isGlobal = htmlObject.IsGlobal ? "true" : "false";
 
                 var className = "Html" + upperName + "Attribute";
 
-                string basePropertyCode = string.Format("\t\tinternal static {0} {1} => new {0}();", className, upperName);
-                string createPropertyCode;
+                string basePropertyCode = string.Format("\t\tpublic static {0} {1} => new {0}();", className, upperName);
+                string createPropertyCode = basePropertyCode;
 
-                if (htmlObject.IsVoid)
-                {
-                    createPropertyCode = string.Format("\t\tpublic static {0} {1} => new {0}();", className, upperName);
-                }
-                else
-                {
+                if (!htmlObject.IsVoid)
+                { 
                     createPropertyCode = string.Format("\t\tpublic static {0} {1}(string value) => new {0}(value);", className, upperName);
                 }
 
@@ -66,28 +63,28 @@ namespace HtmlGeneratorMeta
                 if (!htmlObject.IsVoid)
                 {
                     valueCreationCode = string.Format(
-"\n\n" + @"        internal {0}(string value) : base(""{1}"", ""{2}"", value, {3}) 
+"\n\n" + @"        internal {0}(string value) : base(""{1}"", ""{2}"", value, {3}, {4}) 
         {{
-        }}", className, lowerName, upperName, isVoid);
+        }}", className, lowerName, upperName, isVoid, isGlobal);
                 }
 
                 var code = string.Format(@"namespace HtmlGenerator
 {{
     public class {0} : HtmlAttribute 
     {{
-        internal {0}() : base(""{1}"", ""{2}"", null, {3}) 
+        internal {0}() : base(""{1}"", ""{2}"", null, {3}, {4}) 
         {{
-        }}{4}
+        }}{5}
     }}
 }}
-", className, lowerName, upperName, isVoid, valueCreationCode);
+", className, lowerName, upperName, isVoid, isGlobal, valueCreationCode);
 
                 GenerateClass(className, code);
                 
                 PreviousName = upperName;
             }
 
-            GenerateList("BaseAttribute", "internal", baseList);
+            GenerateList("BaseAttribute", "public", baseList);
             GenerateList("Attribute", "public", createList);
         }
     }

@@ -64,12 +64,32 @@ namespace HtmlGenerator
 
 		public HtmlInputElement WithStepAttribute(string value) => (HtmlInputElement)WithAttribute(Attribute.Step(value));
 
-		public HtmlInputElement WithTabIndexAttribute(string value) => (HtmlInputElement)WithAttribute(Attribute.TabIndex(value));
-
 		public HtmlInputElement WithTypeAttribute(string value) => (HtmlInputElement)WithAttribute(Attribute.Type(value));
 
 		public HtmlInputElement WithValueAttribute(string value) => (HtmlInputElement)WithAttribute(Attribute.Value(value));
 
 		public HtmlInputElement WithWidthAttribute(string value) => (HtmlInputElement)WithAttribute(Attribute.Width(value));
+
+		public HtmlInputElement WithAccessKey(string value) => (HtmlInputElement)WithAttribute(Attribute.AccessKey(value));
+
+		public HtmlInputElement WithClass(string value) => (HtmlInputElement)WithAttribute(Attribute.Class(value));
+
+		public HtmlInputElement WithContentEditable(string value) => (HtmlInputElement)WithAttribute(Attribute.ContentEditable(value));
+
+		public HtmlInputElement WithContextMenuAttribute(string value) => (HtmlInputElement)WithAttribute(Attribute.ContextMenu(value));
+
+		public HtmlInputElement WithDir(string value) => (HtmlInputElement)WithAttribute(Attribute.Dir(value));
+
+		public HtmlInputElement WithHidden(string value) => (HtmlInputElement)WithAttribute(Attribute.Hidden(value));
+
+		public HtmlInputElement WithId(string value) => (HtmlInputElement)WithAttribute(Attribute.Id(value));
+
+		public HtmlInputElement WithLang(string value) => (HtmlInputElement)WithAttribute(Attribute.Lang(value));
+
+		public HtmlInputElement WithSpellCheck(string value) => (HtmlInputElement)WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlInputElement WithStyleAttribute(string value) => (HtmlInputElement)WithAttribute(Attribute.Style(value));
+
+		public HtmlInputElement WithTabIndex(string value) => (HtmlInputElement)WithAttribute(Attribute.TabIndex(value));
     }
 }

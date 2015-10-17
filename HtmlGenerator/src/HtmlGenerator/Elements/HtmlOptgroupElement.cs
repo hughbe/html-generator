@@ -9,5 +9,27 @@ namespace HtmlGenerator
 		public HtmlOptgroupElement WithDisabledAttribute() => (HtmlOptgroupElement)WithAttribute(Attribute.Disabled);
 
 		public HtmlOptgroupElement WithLabelAttribute(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Label(value));
+
+		public HtmlOptgroupElement WithAccessKey(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.AccessKey(value));
+
+		public HtmlOptgroupElement WithClass(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Class(value));
+
+		public HtmlOptgroupElement WithContentEditable(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.ContentEditable(value));
+
+		public HtmlOptgroupElement WithContextMenuAttribute(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.ContextMenu(value));
+
+		public HtmlOptgroupElement WithDir(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Dir(value));
+
+		public HtmlOptgroupElement WithHidden(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Hidden(value));
+
+		public HtmlOptgroupElement WithId(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Id(value));
+
+		public HtmlOptgroupElement WithLang(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Lang(value));
+
+		public HtmlOptgroupElement WithSpellCheck(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlOptgroupElement WithStyleAttribute(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Style(value));
+
+		public HtmlOptgroupElement WithTabIndex(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.TabIndex(value));
     }
 }

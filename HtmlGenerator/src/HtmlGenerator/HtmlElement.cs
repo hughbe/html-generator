@@ -119,18 +119,6 @@ namespace HtmlGenerator
             Children = children ?? new Collection<HtmlElement>();
         }
 
-        public HtmlElement WithClass(string className)
-        {
-            SetClass(className);
-            return this;
-        }
-
-        public HtmlElement WithId(string idName)
-        {
-            SetId(idName);
-            return this;
-        }
-
         public HtmlElement WithAttribute(HtmlAttribute attribute)
         {
             AddAttribute(attribute);
@@ -142,17 +130,7 @@ namespace HtmlGenerator
             SetAttributes(attributes);
             return this;
         }
-
-        public void SetClass(string className)
-        {
-            AddAttribute(Attribute.Class(className));
-        }
-
-        public void SetId(string idName)
-        {
-            AddAttribute(Attribute.Id(idName));
-        }
-
+        
         public void AddAttribute(HtmlAttribute attribute)
         {
             Attributes.Add(attribute);

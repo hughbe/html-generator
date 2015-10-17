@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlRequiredAttribute : HtmlAttribute 
     {
-        internal HtmlRequiredAttribute() : base("required", "Required", null, true) 
+        internal HtmlRequiredAttribute() : base("required", "Required", null, true, false) 
         {
         }
     }

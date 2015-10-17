@@ -62,18 +62,24 @@ namespace HtmlGeneratorMeta
             {
                 var methodName = attribute.ProperName;
 
-                string attributeCodeFormat = "\n\n\t\t";
+                var attributeCodeFormat = "\n\n\t\t";
+                var methodNameEnd = "Attribute";
+
+                if (attribute.IsGlobal)
+                {
+                    methodNameEnd = "";
+                }
 
                 if (attribute.IsVoid)
                 {
-                    attributeCodeFormat += "public {0} With{1}Attribute() => ({0})WithAttribute(Attribute.{1});";
+                    attributeCodeFormat += "public {0} With{1}{2}() => ({0})WithAttribute(Attribute.{1});";
                 }
                 else
                 {
-                    attributeCodeFormat += "public {0} With{1}Attribute(string value) => ({0})WithAttribute(Attribute.{1}(value));";
+                    attributeCodeFormat += "public {0} With{1}{2}(string value) => ({0})WithAttribute(Attribute.{1}(value));";
                 }
 
-                attributesCode += string.Format(attributeCodeFormat, className, methodName);
+                attributesCode += string.Format(attributeCodeFormat, className, methodName, methodNameEnd);
             }
 
             var code = string.Format(@"namespace HtmlGenerator

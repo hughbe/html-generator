@@ -33,5 +33,27 @@ namespace HtmlGenerator
 		public HtmlTextAreaElement WithSelectionDirectionAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.SelectionDirection(value));
 
 		public HtmlTextAreaElement WithWrapAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Wrap(value));
+
+		public HtmlTextAreaElement WithAccessKey(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.AccessKey(value));
+
+		public HtmlTextAreaElement WithClass(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Class(value));
+
+		public HtmlTextAreaElement WithContentEditable(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.ContentEditable(value));
+
+		public HtmlTextAreaElement WithContextMenuAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.ContextMenu(value));
+
+		public HtmlTextAreaElement WithDir(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Dir(value));
+
+		public HtmlTextAreaElement WithHidden(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Hidden(value));
+
+		public HtmlTextAreaElement WithId(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Id(value));
+
+		public HtmlTextAreaElement WithLang(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Lang(value));
+
+		public HtmlTextAreaElement WithSpellCheck(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlTextAreaElement WithStyleAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Style(value));
+
+		public HtmlTextAreaElement WithTabIndex(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -59,12 +59,12 @@
         public static ElementInfo I => Custom("i");
         public static ElementInfo Iframe => Custom("iframe", AllowFullScreen, Height, Name, Sandbox, Seamless, Src, SrcDoc, Width);
         public static ElementInfo Img => Custom("img", true, Alt, CrossOrigin, Height, IsMap, LongDesc, Sizes, Src, SrcSet, Width, UseMap);
-        public static ElementInfo Input => Custom("input", true, Accept, AutoComplete, AutoFocus, AutoSave, Checked, Disabled, BaseAttribute.Form, FormAction, FormEncType, FormMethod, FormNoValidate, FormTarget, Height, InputMode, List, Max, MaxLength, Min, MinLength, Multiple, Name, Pattern, Placeholder, Readonly, Required, SelectionDirection, Size, Src, Step, TabIndex, Type, Value, Width);
+        public static ElementInfo Input => Custom("input", true, Accept, AutoComplete, AutoFocus, AutoSave, Checked, Disabled, BaseAttribute.Form, FormAction, FormEncType, FormMethod, FormNoValidate, FormTarget, Height, InputMode, List, Max, MaxLength, Min, MinLength, Multiple, Name, Pattern, Placeholder, Readonly, Required, SelectionDirection, Size, Src, Step, Type, Value, Width);
         public static ElementInfo Ins => Custom("ins", BaseAttribute.Cite, DateTime);
 
         public static ElementInfo Kbd => Custom("kbd");
 
-        public static ElementInfo Label => Custom("label", AccessKey, For, BaseAttribute.Form);
+        public static ElementInfo Label => Custom("label", For, BaseAttribute.Form);
         public static ElementInfo Legend => Custom("legend");
         public static ElementInfo Li => Custom("li", Value);
         public static ElementInfo Link => Custom("link", true, CrossOrigin, Href, HrefLang, Integrity, Media, Rel, Sizes, Type);
@@ -99,14 +99,14 @@
         public static ElementInfo Ruby => Custom("ruby");
 
         public static ElementInfo Samp => Custom("samp");
-        public static ElementInfo Script => Custom("script", Async, Integrity, Src, Type, Text, Defer, CrossOrigin);
+        public static ElementInfo Script => Custom("script", Async, CrossOrigin, Defer, Integrity, Src, Text, Type);
         public static ElementInfo Section => Custom("section");
         public static ElementInfo Select => Custom("select", AutoFocus, Disabled, BaseAttribute.Form, Multiple, Name, Required, Size);
         public static ElementInfo Small => Custom("small");
         public static ElementInfo Source => Custom("source", true, Src, Type);
         public static ElementInfo Span => Custom("span");
         public static ElementInfo Strong => Custom("strong");
-        public static ElementInfo Style => Custom("style", Type, Media, Scoped, BaseAttribute.Title, Disabled);
+        public static ElementInfo Style => Custom("style", Disabled, Type, Media, Scoped);
         public static ElementInfo Sub => Custom("sub");
         public static ElementInfo Summary => Custom("summary");
         public static ElementInfo Sup => Custom("sup");
@@ -121,7 +121,7 @@
         public static ElementInfo Time => Custom("time", DateTime);
         public static ElementInfo Title => Custom("title");
         public static ElementInfo Tr => Custom("tr");
-        public static ElementInfo Track => Custom("track", true, Kind, Default, BaseAttribute.Label, Src, SrcLang);
+        public static ElementInfo Track => Custom("track", true, Default, Kind, BaseAttribute.Label, Src, SrcLang);
 
         public static ElementInfo U => Custom("u");
         public static ElementInfo Ul => Custom("ul");

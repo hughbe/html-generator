@@ -7,13 +7,15 @@ namespace HtmlGenerator
         public string ProperName { get; }
         public string Name { get; }
         public string Value { get; }
+
         public bool IsVoid { get; }
+        public bool IsGlobal { get; }
         
-        protected internal HtmlAttribute(HtmlAttribute attribute) : this(attribute.Name, attribute.ProperName, attribute.Value, attribute.IsVoid)
+        protected internal HtmlAttribute(HtmlAttribute attribute) : this(attribute.Name, attribute.ProperName, attribute.Value, attribute.IsVoid, attribute.IsGlobal)
         {
         }
          
-        protected internal HtmlAttribute(string name, string properName, string value, bool isVoid)
+        protected internal HtmlAttribute(string name, string properName, string value, bool isVoid, bool isGlobal)
         {
             if (name == null)
             {
@@ -34,6 +36,7 @@ namespace HtmlGenerator
             ProperName = properName;
             Value = value;
             IsVoid = isVoid;
+            IsGlobal = isGlobal;
         }
 
         public string Serialize()
