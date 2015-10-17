@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlDialogElement : HtmlElement 
     {
-        internal HtmlDialogElement() : base("dialog", false) 
+        public HtmlDialogElement() : base("dialog", false) 
         {    
         }
 

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlCanvasElement : HtmlElement 
     {
-        internal HtmlCanvasElement() : base("canvas", false) 
+        public HtmlCanvasElement() : base("canvas", false) 
         {    
         }
 

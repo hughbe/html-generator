@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlNavElement : HtmlElement 
     {
-        internal HtmlNavElement() : base("nav", false) 
+        public HtmlNavElement() : base("nav", false) 
         {    
         }
 

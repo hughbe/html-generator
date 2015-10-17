@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlMapElement : HtmlElement 
     {
-        internal HtmlMapElement() : base("map", false) 
+        public HtmlMapElement() : base("map", false) 
         {    
         }
 

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlMeterElement : HtmlElement 
     {
-        internal HtmlMeterElement() : base("meter", false) 
+        public HtmlMeterElement() : base("meter", false) 
         {    
         }
 

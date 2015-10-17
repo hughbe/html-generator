@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlDelElement : HtmlElement 
     {
-        internal HtmlDelElement() : base("del", false) 
+        public HtmlDelElement() : base("del", false) 
         {    
         }
 

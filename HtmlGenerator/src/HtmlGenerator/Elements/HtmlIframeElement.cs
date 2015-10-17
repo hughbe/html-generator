@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlIframeElement : HtmlElement 
     {
-        internal HtmlIframeElement() : base("iframe", false) 
+        public HtmlIframeElement() : base("iframe", false) 
         {    
         }
 

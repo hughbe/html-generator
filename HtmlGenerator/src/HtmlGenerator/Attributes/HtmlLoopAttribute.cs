@@ -2,11 +2,11 @@ namespace HtmlGenerator
 {
     public class HtmlLoopAttribute : HtmlAttribute 
     {
-        internal HtmlLoopAttribute() : base("loop", "Loop", null, false, false) 
+        public HtmlLoopAttribute() : base("loop", "Loop", null, false, false) 
         {
         }
 
-        internal HtmlLoopAttribute(string value) : base("loop", "Loop", value, false, false) 
+        public HtmlLoopAttribute(string value) : base("loop", "Loop", value, false, false) 
         {
         }
     }

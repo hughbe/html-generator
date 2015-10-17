@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlTypeMustMatchAttribute : HtmlAttribute 
     {
-        internal HtmlTypeMustMatchAttribute() : base("typemustmatch", "TypeMustMatch", null, true, false) 
+        public HtmlTypeMustMatchAttribute() : base("typemustmatch", "TypeMustMatch", null, true, false) 
         {
         }
     }

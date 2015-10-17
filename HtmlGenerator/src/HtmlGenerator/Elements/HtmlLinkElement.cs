@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlLinkElement : HtmlElement 
     {
-        internal HtmlLinkElement() : base("link", true) 
+        public HtmlLinkElement() : base("link", true) 
         {    
         }
 

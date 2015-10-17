@@ -2,11 +2,11 @@ namespace HtmlGenerator
 {
     public class HtmlSizesAttribute : HtmlAttribute 
     {
-        internal HtmlSizesAttribute() : base("sizes", "Sizes", null, false, false) 
+        public HtmlSizesAttribute() : base("sizes", "Sizes", null, false, false) 
         {
         }
 
-        internal HtmlSizesAttribute(string value) : base("sizes", "Sizes", value, false, false) 
+        public HtmlSizesAttribute(string value) : base("sizes", "Sizes", value, false, false) 
         {
         }
     }

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlFieldsetElement : HtmlElement 
     {
-        internal HtmlFieldsetElement() : base("fieldset", false) 
+        public HtmlFieldsetElement() : base("fieldset", false) 
         {    
         }
 

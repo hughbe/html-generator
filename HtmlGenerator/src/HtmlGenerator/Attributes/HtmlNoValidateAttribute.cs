@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlNoValidateAttribute : HtmlAttribute 
     {
-        internal HtmlNoValidateAttribute() : base("novalidate", "NoValidate", null, true, false) 
+        public HtmlNoValidateAttribute() : base("novalidate", "NoValidate", null, true, false) 
         {
         }
     }

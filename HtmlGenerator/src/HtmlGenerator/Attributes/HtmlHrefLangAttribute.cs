@@ -2,11 +2,11 @@ namespace HtmlGenerator
 {
     public class HtmlHrefLangAttribute : HtmlAttribute 
     {
-        internal HtmlHrefLangAttribute() : base("hreflang", "HrefLang", null, false, false) 
+        public HtmlHrefLangAttribute() : base("hreflang", "HrefLang", null, false, false) 
         {
         }
 
-        internal HtmlHrefLangAttribute(string value) : base("hreflang", "HrefLang", value, false, false) 
+        public HtmlHrefLangAttribute(string value) : base("hreflang", "HrefLang", value, false, false) 
         {
         }
     }

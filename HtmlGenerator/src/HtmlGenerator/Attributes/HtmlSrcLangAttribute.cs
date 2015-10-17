@@ -2,11 +2,11 @@ namespace HtmlGenerator
 {
     public class HtmlSrcLangAttribute : HtmlAttribute 
     {
-        internal HtmlSrcLangAttribute() : base("srclang", "SrcLang", null, false, false) 
+        public HtmlSrcLangAttribute() : base("srclang", "SrcLang", null, false, false) 
         {
         }
 
-        internal HtmlSrcLangAttribute(string value) : base("srclang", "SrcLang", value, false, false) 
+        public HtmlSrcLangAttribute(string value) : base("srclang", "SrcLang", value, false, false) 
         {
         }
     }

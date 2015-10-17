@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlRubyElement : HtmlElement 
     {
-        internal HtmlRubyElement() : base("ruby", false) 
+        public HtmlRubyElement() : base("ruby", false) 
         {    
         }
 

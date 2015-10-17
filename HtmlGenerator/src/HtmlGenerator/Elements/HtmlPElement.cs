@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlPElement : HtmlElement 
     {
-        internal HtmlPElement() : base("p", false) 
+        public HtmlPElement() : base("p", false) 
         {    
         }
 

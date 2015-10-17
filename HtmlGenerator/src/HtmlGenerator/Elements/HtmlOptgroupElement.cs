@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlOptgroupElement : HtmlElement 
     {
-        internal HtmlOptgroupElement() : base("optgroup", false) 
+        public HtmlOptgroupElement() : base("optgroup", false) 
         {    
         }
 

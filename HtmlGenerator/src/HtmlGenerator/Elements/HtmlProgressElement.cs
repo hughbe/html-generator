@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlProgressElement : HtmlElement 
     {
-        internal HtmlProgressElement() : base("progress", false) 
+        public HtmlProgressElement() : base("progress", false) 
         {    
         }
 

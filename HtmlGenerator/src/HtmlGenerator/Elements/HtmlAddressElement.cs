@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlAddressElement : HtmlElement 
     {
-        internal HtmlAddressElement() : base("address", false) 
+        public HtmlAddressElement() : base("address", false) 
         {    
         }
 

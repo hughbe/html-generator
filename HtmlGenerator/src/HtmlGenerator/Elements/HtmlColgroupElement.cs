@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlColgroupElement : HtmlElement 
     {
-        internal HtmlColgroupElement() : base("colgroup", false) 
+        public HtmlColgroupElement() : base("colgroup", false) 
         {    
         }
 

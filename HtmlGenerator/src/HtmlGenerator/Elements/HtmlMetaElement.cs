@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlMetaElement : HtmlElement 
     {
-        internal HtmlMetaElement() : base("meta", true) 
+        public HtmlMetaElement() : base("meta", true) 
         {    
         }
 

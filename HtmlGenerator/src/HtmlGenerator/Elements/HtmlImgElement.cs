@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlImgElement : HtmlElement 
     {
-        internal HtmlImgElement() : base("img", true) 
+        public HtmlImgElement() : base("img", true) 
         {    
         }
 

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlCaptionElement : HtmlElement 
     {
-        internal HtmlCaptionElement() : base("caption", false) 
+        public HtmlCaptionElement() : base("caption", false) 
         {    
         }
 

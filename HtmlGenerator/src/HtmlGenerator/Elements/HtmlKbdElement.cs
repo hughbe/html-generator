@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlKbdElement : HtmlElement 
     {
-        internal HtmlKbdElement() : base("kbd", false) 
+        public HtmlKbdElement() : base("kbd", false) 
         {    
         }
 

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlTextAreaElement : HtmlElement 
     {
-        internal HtmlTextAreaElement() : base("textarea", false) 
+        public HtmlTextAreaElement() : base("textarea", false) 
         {    
         }
 

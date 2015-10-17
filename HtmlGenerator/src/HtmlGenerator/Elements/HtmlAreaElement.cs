@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlAreaElement : HtmlElement 
     {
-        internal HtmlAreaElement() : base("area", true) 
+        public HtmlAreaElement() : base("area", true) 
         {    
         }
 

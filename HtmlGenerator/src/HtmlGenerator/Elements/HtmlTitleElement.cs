@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlTitleElement : HtmlElement 
     {
-        internal HtmlTitleElement() : base("title", false) 
+        public HtmlTitleElement() : base("title", false) 
         {    
         }
 

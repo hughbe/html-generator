@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlVarElement : HtmlElement 
     {
-        internal HtmlVarElement() : base("var", false) 
+        public HtmlVarElement() : base("var", false) 
         {    
         }
 

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlDfnElement : HtmlElement 
     {
-        internal HtmlDfnElement() : base("dfn", false) 
+        public HtmlDfnElement() : base("dfn", false) 
         {    
         }
 

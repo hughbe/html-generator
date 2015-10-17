@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlMenuElement : HtmlElement 
     {
-        internal HtmlMenuElement() : base("menu", false) 
+        public HtmlMenuElement() : base("menu", false) 
         {    
         }
 

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlReadonlyAttribute : HtmlAttribute 
     {
-        internal HtmlReadonlyAttribute() : base("readonly", "Readonly", null, true, false) 
+        public HtmlReadonlyAttribute() : base("readonly", "Readonly", null, true, false) 
         {
         }
     }

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlButtonElement : HtmlElement 
     {
-        internal HtmlButtonElement() : base("button", false) 
+        public HtmlButtonElement() : base("button", false) 
         {    
         }
 

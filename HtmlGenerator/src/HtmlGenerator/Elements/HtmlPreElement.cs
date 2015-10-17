@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlPreElement : HtmlElement 
     {
-        internal HtmlPreElement() : base("pre", false) 
+        public HtmlPreElement() : base("pre", false) 
         {    
         }
 

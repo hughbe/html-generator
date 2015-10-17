@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlCiteElement : HtmlElement 
     {
-        internal HtmlCiteElement() : base("cite", false) 
+        public HtmlCiteElement() : base("cite", false) 
         {    
         }
 

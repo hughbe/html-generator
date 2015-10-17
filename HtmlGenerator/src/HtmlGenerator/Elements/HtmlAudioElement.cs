@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlAudioElement : HtmlElement 
     {
-        internal HtmlAudioElement() : base("audio", false) 
+        public HtmlAudioElement() : base("audio", false) 
         {    
         }
 

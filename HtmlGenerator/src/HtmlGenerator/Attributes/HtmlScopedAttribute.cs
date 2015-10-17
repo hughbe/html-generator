@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlScopedAttribute : HtmlAttribute 
     {
-        internal HtmlScopedAttribute() : base("scoped", "Scoped", null, true, false) 
+        public HtmlScopedAttribute() : base("scoped", "Scoped", null, true, false) 
         {
         }
     }

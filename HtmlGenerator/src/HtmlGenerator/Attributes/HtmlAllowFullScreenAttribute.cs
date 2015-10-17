@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlAllowFullScreenAttribute : HtmlAttribute 
     {
-        internal HtmlAllowFullScreenAttribute() : base("allowfullscreen", "AllowFullScreen", null, true, false) 
+        public HtmlAllowFullScreenAttribute() : base("allowfullscreen", "AllowFullScreen", null, true, false) 
         {
         }
     }

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlWbrElement : HtmlElement 
     {
-        internal HtmlWbrElement() : base("wbr", false) 
+        public HtmlWbrElement() : base("wbr", false) 
         {    
         }
 

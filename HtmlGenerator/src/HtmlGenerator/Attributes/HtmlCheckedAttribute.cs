@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlCheckedAttribute : HtmlAttribute 
     {
-        internal HtmlCheckedAttribute() : base("checked", "Checked", null, true, false) 
+        public HtmlCheckedAttribute() : base("checked", "Checked", null, true, false) 
         {
         }
     }

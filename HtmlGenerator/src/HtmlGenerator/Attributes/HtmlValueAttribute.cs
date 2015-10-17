@@ -2,11 +2,11 @@ namespace HtmlGenerator
 {
     public class HtmlValueAttribute : HtmlAttribute 
     {
-        internal HtmlValueAttribute() : base("value", "Value", null, false, false) 
+        public HtmlValueAttribute() : base("value", "Value", null, false, false) 
         {
         }
 
-        internal HtmlValueAttribute(string value) : base("value", "Value", value, false, false) 
+        public HtmlValueAttribute(string value) : base("value", "Value", value, false, false) 
         {
         }
     }

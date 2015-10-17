@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlSectionElement : HtmlElement 
     {
-        internal HtmlSectionElement() : base("section", false) 
+        public HtmlSectionElement() : base("section", false) 
         {    
         }
 

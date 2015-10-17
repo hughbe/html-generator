@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlSourceElement : HtmlElement 
     {
-        internal HtmlSourceElement() : base("source", true) 
+        public HtmlSourceElement() : base("source", true) 
         {    
         }
 

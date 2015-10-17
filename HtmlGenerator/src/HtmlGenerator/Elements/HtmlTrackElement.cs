@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlTrackElement : HtmlElement 
     {
-        internal HtmlTrackElement() : base("track", true) 
+        public HtmlTrackElement() : base("track", true) 
         {    
         }
 

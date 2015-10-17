@@ -63,7 +63,7 @@ namespace HtmlGeneratorMeta
                 if (!htmlObject.IsVoid)
                 {
                     valueCreationCode = string.Format(
-"\n\n" + @"        internal {0}(string value) : base(""{1}"", ""{2}"", value, {3}, {4}) 
+"\n\n" + @"        public {0}(string value) : base(""{1}"", ""{2}"", value, {3}, {4}) 
         {{
         }}", className, lowerName, upperName, isVoid, isGlobal);
                 }
@@ -72,7 +72,7 @@ namespace HtmlGeneratorMeta
 {{
     public class {0} : HtmlAttribute 
     {{
-        internal {0}() : base(""{1}"", ""{2}"", null, {3}, {4}) 
+        public {0}() : base(""{1}"", ""{2}"", null, {3}, {4}) 
         {{
         }}{5}
     }}

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlOptionElement : HtmlElement 
     {
-        internal HtmlOptionElement() : base("option", false) 
+        public HtmlOptionElement() : base("option", false) 
         {    
         }
 

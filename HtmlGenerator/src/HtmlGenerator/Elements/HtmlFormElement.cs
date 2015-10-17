@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlFormElement : HtmlElement 
     {
-        internal HtmlFormElement() : base("form", false) 
+        public HtmlFormElement() : base("form", false) 
         {    
         }
 

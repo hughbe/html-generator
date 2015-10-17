@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlParamElement : HtmlElement 
     {
-        internal HtmlParamElement() : base("param", true) 
+        public HtmlParamElement() : base("param", true) 
         {    
         }
 

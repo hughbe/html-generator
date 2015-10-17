@@ -86,7 +86,7 @@ namespace HtmlGeneratorMeta
 {{
     public class {0} : HtmlElement 
     {{
-        internal {0}() : base(""{1}"", {2}) 
+        public {0}() : base(""{1}"", {2}) 
         {{    
         }}{3}
     }}

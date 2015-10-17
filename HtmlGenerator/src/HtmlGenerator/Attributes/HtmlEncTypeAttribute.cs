@@ -2,11 +2,11 @@ namespace HtmlGenerator
 {
     public class HtmlEncTypeAttribute : HtmlAttribute 
     {
-        internal HtmlEncTypeAttribute() : base("enctype", "EncType", null, false, false) 
+        public HtmlEncTypeAttribute() : base("enctype", "EncType", null, false, false) 
         {
         }
 
-        internal HtmlEncTypeAttribute(string value) : base("enctype", "EncType", value, false, false) 
+        public HtmlEncTypeAttribute(string value) : base("enctype", "EncType", value, false, false) 
         {
         }
     }

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlVideoElement : HtmlElement 
     {
-        internal HtmlVideoElement() : base("video", false) 
+        public HtmlVideoElement() : base("video", false) 
         {    
         }
 

@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlInputElement : HtmlElement 
     {
-        internal HtmlInputElement() : base("input", true) 
+        public HtmlInputElement() : base("input", true) 
         {    
         }
 

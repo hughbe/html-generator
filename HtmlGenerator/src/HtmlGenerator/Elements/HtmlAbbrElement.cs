@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlAbbrElement : HtmlElement 
     {
-        internal HtmlAbbrElement() : base("abbr", false) 
+        public HtmlAbbrElement() : base("abbr", false) 
         {    
         }
 

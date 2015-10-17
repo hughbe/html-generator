@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlSelectElement : HtmlElement 
     {
-        internal HtmlSelectElement() : base("select", false) 
+        public HtmlSelectElement() : base("select", false) 
         {    
         }
 

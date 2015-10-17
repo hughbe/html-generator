@@ -2,7 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlLiElement : HtmlElement 
     {
-        internal HtmlLiElement() : base("li", false) 
+        public HtmlLiElement() : base("li", false) 
         {    
         }
 

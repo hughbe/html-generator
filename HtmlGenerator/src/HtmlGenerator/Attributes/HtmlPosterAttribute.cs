@@ -2,11 +2,11 @@ namespace HtmlGenerator
 {
     public class HtmlPosterAttribute : HtmlAttribute 
     {
-        internal HtmlPosterAttribute() : base("poster", "Poster", null, false, false) 
+        public HtmlPosterAttribute() : base("poster", "Poster", null, false, false) 
         {
         }
 
-        internal HtmlPosterAttribute(string value) : base("poster", "Poster", value, false, false) 
+        public HtmlPosterAttribute(string value) : base("poster", "Poster", value, false, false) 
         {
         }
     }
