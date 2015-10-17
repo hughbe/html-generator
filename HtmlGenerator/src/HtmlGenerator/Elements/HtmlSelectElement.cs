@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlSelectElement : HtmlElement 
@@ -6,40 +8,48 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlSelectElement WithAutoFocus() => (HtmlSelectElement)WithAttribute(Attribute.AutoFocus);
+        public new HtmlSelectElement WithChild(HtmlElement child) => (HtmlSelectElement)base.WithChild(child);
+        public new HtmlSelectElement WithChildren(Collection<HtmlElement> children) => (HtmlSelectElement)base.WithChildren(children);
 
-		public HtmlSelectElement WithDisabled() => (HtmlSelectElement)WithAttribute(Attribute.Disabled);
+        public new HtmlSelectElement WithInnerText(string innerText) => (HtmlSelectElement)base.WithInnerText(innerText);
 
-		public HtmlSelectElement WithForm(string value) => (HtmlSelectElement)WithAttribute(Attribute.Form(value));
+        public new HtmlSelectElement WithAttribute(HtmlAttribute attribute) => (HtmlSelectElement)base.WithAttribute(attribute);
+        public new HtmlSelectElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlSelectElement)base.WithAttributes(attributes);
 
-		public HtmlSelectElement WithMultiple() => (HtmlSelectElement)WithAttribute(Attribute.Multiple);
+		public HtmlSelectElement WithAutoFocus() => WithAttribute(Attribute.AutoFocus);
 
-		public HtmlSelectElement WithName(string value) => (HtmlSelectElement)WithAttribute(Attribute.Name(value));
+		public HtmlSelectElement WithDisabled() => WithAttribute(Attribute.Disabled);
 
-		public HtmlSelectElement WithRequired() => (HtmlSelectElement)WithAttribute(Attribute.Required);
+		public HtmlSelectElement WithForm(string value) => WithAttribute(Attribute.Form(value));
 
-		public HtmlSelectElement WithSize(string value) => (HtmlSelectElement)WithAttribute(Attribute.Size(value));
+		public HtmlSelectElement WithMultiple() => WithAttribute(Attribute.Multiple);
 
-		public HtmlSelectElement WithAccessKey(string value) => (HtmlSelectElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlSelectElement WithName(string value) => WithAttribute(Attribute.Name(value));
 
-		public HtmlSelectElement WithClass(string value) => (HtmlSelectElement)WithAttribute(Attribute.Class(value));
+		public HtmlSelectElement WithRequired() => WithAttribute(Attribute.Required);
 
-		public HtmlSelectElement WithContentEditable(string value) => (HtmlSelectElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlSelectElement WithSize(string value) => WithAttribute(Attribute.Size(value));
 
-		public HtmlSelectElement WithContextMenu(string value) => (HtmlSelectElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlSelectElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlSelectElement WithDir(string value) => (HtmlSelectElement)WithAttribute(Attribute.Dir(value));
+		public HtmlSelectElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlSelectElement WithHidden(string value) => (HtmlSelectElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlSelectElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlSelectElement WithId(string value) => (HtmlSelectElement)WithAttribute(Attribute.Id(value));
+		public HtmlSelectElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlSelectElement WithLang(string value) => (HtmlSelectElement)WithAttribute(Attribute.Lang(value));
+		public HtmlSelectElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlSelectElement WithSpellCheck(string value) => (HtmlSelectElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlSelectElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlSelectElement WithStyle(string value) => (HtmlSelectElement)WithAttribute(Attribute.Style(value));
+		public HtmlSelectElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlSelectElement WithTabIndex(string value) => (HtmlSelectElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlSelectElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlSelectElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlSelectElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlSelectElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

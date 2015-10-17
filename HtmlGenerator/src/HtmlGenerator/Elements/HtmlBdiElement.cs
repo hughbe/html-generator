@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlBdiElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlBdiElement WithAccessKey(string value) => (HtmlBdiElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlBdiElement WithChild(HtmlElement child) => (HtmlBdiElement)base.WithChild(child);
+        public new HtmlBdiElement WithChildren(Collection<HtmlElement> children) => (HtmlBdiElement)base.WithChildren(children);
 
-		public HtmlBdiElement WithClass(string value) => (HtmlBdiElement)WithAttribute(Attribute.Class(value));
+        public new HtmlBdiElement WithInnerText(string innerText) => (HtmlBdiElement)base.WithInnerText(innerText);
 
-		public HtmlBdiElement WithContentEditable(string value) => (HtmlBdiElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlBdiElement WithAttribute(HtmlAttribute attribute) => (HtmlBdiElement)base.WithAttribute(attribute);
+        public new HtmlBdiElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlBdiElement)base.WithAttributes(attributes);
 
-		public HtmlBdiElement WithContextMenu(string value) => (HtmlBdiElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlBdiElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlBdiElement WithDir(string value) => (HtmlBdiElement)WithAttribute(Attribute.Dir(value));
+		public HtmlBdiElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlBdiElement WithHidden(string value) => (HtmlBdiElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlBdiElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlBdiElement WithId(string value) => (HtmlBdiElement)WithAttribute(Attribute.Id(value));
+		public HtmlBdiElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlBdiElement WithLang(string value) => (HtmlBdiElement)WithAttribute(Attribute.Lang(value));
+		public HtmlBdiElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlBdiElement WithSpellCheck(string value) => (HtmlBdiElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlBdiElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlBdiElement WithStyle(string value) => (HtmlBdiElement)WithAttribute(Attribute.Style(value));
+		public HtmlBdiElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlBdiElement WithTabIndex(string value) => (HtmlBdiElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlBdiElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlBdiElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlBdiElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlBdiElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

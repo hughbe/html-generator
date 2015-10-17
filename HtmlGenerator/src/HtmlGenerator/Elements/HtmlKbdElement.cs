@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlKbdElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlKbdElement WithAccessKey(string value) => (HtmlKbdElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlKbdElement WithChild(HtmlElement child) => (HtmlKbdElement)base.WithChild(child);
+        public new HtmlKbdElement WithChildren(Collection<HtmlElement> children) => (HtmlKbdElement)base.WithChildren(children);
 
-		public HtmlKbdElement WithClass(string value) => (HtmlKbdElement)WithAttribute(Attribute.Class(value));
+        public new HtmlKbdElement WithInnerText(string innerText) => (HtmlKbdElement)base.WithInnerText(innerText);
 
-		public HtmlKbdElement WithContentEditable(string value) => (HtmlKbdElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlKbdElement WithAttribute(HtmlAttribute attribute) => (HtmlKbdElement)base.WithAttribute(attribute);
+        public new HtmlKbdElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlKbdElement)base.WithAttributes(attributes);
 
-		public HtmlKbdElement WithContextMenu(string value) => (HtmlKbdElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlKbdElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlKbdElement WithDir(string value) => (HtmlKbdElement)WithAttribute(Attribute.Dir(value));
+		public HtmlKbdElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlKbdElement WithHidden(string value) => (HtmlKbdElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlKbdElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlKbdElement WithId(string value) => (HtmlKbdElement)WithAttribute(Attribute.Id(value));
+		public HtmlKbdElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlKbdElement WithLang(string value) => (HtmlKbdElement)WithAttribute(Attribute.Lang(value));
+		public HtmlKbdElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlKbdElement WithSpellCheck(string value) => (HtmlKbdElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlKbdElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlKbdElement WithStyle(string value) => (HtmlKbdElement)WithAttribute(Attribute.Style(value));
+		public HtmlKbdElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlKbdElement WithTabIndex(string value) => (HtmlKbdElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlKbdElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlKbdElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlKbdElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlKbdElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlIframeElement : HtmlElement 
@@ -6,42 +8,50 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlIframeElement WithAllowFullScreen() => (HtmlIframeElement)WithAttribute(Attribute.AllowFullScreen);
+        public new HtmlIframeElement WithChild(HtmlElement child) => (HtmlIframeElement)base.WithChild(child);
+        public new HtmlIframeElement WithChildren(Collection<HtmlElement> children) => (HtmlIframeElement)base.WithChildren(children);
 
-		public HtmlIframeElement WithHeight(string value) => (HtmlIframeElement)WithAttribute(Attribute.Height(value));
+        public new HtmlIframeElement WithInnerText(string innerText) => (HtmlIframeElement)base.WithInnerText(innerText);
 
-		public HtmlIframeElement WithName(string value) => (HtmlIframeElement)WithAttribute(Attribute.Name(value));
+        public new HtmlIframeElement WithAttribute(HtmlAttribute attribute) => (HtmlIframeElement)base.WithAttribute(attribute);
+        public new HtmlIframeElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlIframeElement)base.WithAttributes(attributes);
 
-		public HtmlIframeElement WithSandbox() => (HtmlIframeElement)WithAttribute(Attribute.Sandbox);
+		public HtmlIframeElement WithAllowFullScreen() => WithAttribute(Attribute.AllowFullScreen);
 
-		public HtmlIframeElement WithSeamless() => (HtmlIframeElement)WithAttribute(Attribute.Seamless);
+		public HtmlIframeElement WithHeight(string value) => WithAttribute(Attribute.Height(value));
 
-		public HtmlIframeElement WithSrc(string value) => (HtmlIframeElement)WithAttribute(Attribute.Src(value));
+		public HtmlIframeElement WithName(string value) => WithAttribute(Attribute.Name(value));
 
-		public HtmlIframeElement WithSrcDoc(string value) => (HtmlIframeElement)WithAttribute(Attribute.SrcDoc(value));
+		public HtmlIframeElement WithSandbox() => WithAttribute(Attribute.Sandbox);
 
-		public HtmlIframeElement WithWidth(string value) => (HtmlIframeElement)WithAttribute(Attribute.Width(value));
+		public HtmlIframeElement WithSeamless() => WithAttribute(Attribute.Seamless);
 
-		public HtmlIframeElement WithAccessKey(string value) => (HtmlIframeElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlIframeElement WithSrc(string value) => WithAttribute(Attribute.Src(value));
 
-		public HtmlIframeElement WithClass(string value) => (HtmlIframeElement)WithAttribute(Attribute.Class(value));
+		public HtmlIframeElement WithSrcDoc(string value) => WithAttribute(Attribute.SrcDoc(value));
 
-		public HtmlIframeElement WithContentEditable(string value) => (HtmlIframeElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlIframeElement WithWidth(string value) => WithAttribute(Attribute.Width(value));
 
-		public HtmlIframeElement WithContextMenu(string value) => (HtmlIframeElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlIframeElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlIframeElement WithDir(string value) => (HtmlIframeElement)WithAttribute(Attribute.Dir(value));
+		public HtmlIframeElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlIframeElement WithHidden(string value) => (HtmlIframeElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlIframeElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlIframeElement WithId(string value) => (HtmlIframeElement)WithAttribute(Attribute.Id(value));
+		public HtmlIframeElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlIframeElement WithLang(string value) => (HtmlIframeElement)WithAttribute(Attribute.Lang(value));
+		public HtmlIframeElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlIframeElement WithSpellCheck(string value) => (HtmlIframeElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlIframeElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlIframeElement WithStyle(string value) => (HtmlIframeElement)WithAttribute(Attribute.Style(value));
+		public HtmlIframeElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlIframeElement WithTabIndex(string value) => (HtmlIframeElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlIframeElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlIframeElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlIframeElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlIframeElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlProgressElement : HtmlElement 
@@ -6,30 +8,38 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlProgressElement WithMax(string value) => (HtmlProgressElement)WithAttribute(Attribute.Max(value));
+        public new HtmlProgressElement WithChild(HtmlElement child) => (HtmlProgressElement)base.WithChild(child);
+        public new HtmlProgressElement WithChildren(Collection<HtmlElement> children) => (HtmlProgressElement)base.WithChildren(children);
 
-		public HtmlProgressElement WithValue(string value) => (HtmlProgressElement)WithAttribute(Attribute.Value(value));
+        public new HtmlProgressElement WithInnerText(string innerText) => (HtmlProgressElement)base.WithInnerText(innerText);
 
-		public HtmlProgressElement WithAccessKey(string value) => (HtmlProgressElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlProgressElement WithAttribute(HtmlAttribute attribute) => (HtmlProgressElement)base.WithAttribute(attribute);
+        public new HtmlProgressElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlProgressElement)base.WithAttributes(attributes);
 
-		public HtmlProgressElement WithClass(string value) => (HtmlProgressElement)WithAttribute(Attribute.Class(value));
+		public HtmlProgressElement WithMax(string value) => WithAttribute(Attribute.Max(value));
 
-		public HtmlProgressElement WithContentEditable(string value) => (HtmlProgressElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlProgressElement WithValue(string value) => WithAttribute(Attribute.Value(value));
 
-		public HtmlProgressElement WithContextMenu(string value) => (HtmlProgressElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlProgressElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlProgressElement WithDir(string value) => (HtmlProgressElement)WithAttribute(Attribute.Dir(value));
+		public HtmlProgressElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlProgressElement WithHidden(string value) => (HtmlProgressElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlProgressElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlProgressElement WithId(string value) => (HtmlProgressElement)WithAttribute(Attribute.Id(value));
+		public HtmlProgressElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlProgressElement WithLang(string value) => (HtmlProgressElement)WithAttribute(Attribute.Lang(value));
+		public HtmlProgressElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlProgressElement WithSpellCheck(string value) => (HtmlProgressElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlProgressElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlProgressElement WithStyle(string value) => (HtmlProgressElement)WithAttribute(Attribute.Style(value));
+		public HtmlProgressElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlProgressElement WithTabIndex(string value) => (HtmlProgressElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlProgressElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlProgressElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlProgressElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlProgressElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

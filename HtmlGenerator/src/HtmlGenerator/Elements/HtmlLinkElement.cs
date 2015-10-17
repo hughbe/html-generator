@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlLinkElement : HtmlElement 
@@ -6,42 +8,50 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlLinkElement WithCrossOrigin(string value) => (HtmlLinkElement)WithAttribute(Attribute.CrossOrigin(value));
+        public new HtmlLinkElement WithChild(HtmlElement child) => (HtmlLinkElement)base.WithChild(child);
+        public new HtmlLinkElement WithChildren(Collection<HtmlElement> children) => (HtmlLinkElement)base.WithChildren(children);
 
-		public HtmlLinkElement WithHref(string value) => (HtmlLinkElement)WithAttribute(Attribute.Href(value));
+        public new HtmlLinkElement WithInnerText(string innerText) => (HtmlLinkElement)base.WithInnerText(innerText);
 
-		public HtmlLinkElement WithHrefLang(string value) => (HtmlLinkElement)WithAttribute(Attribute.HrefLang(value));
+        public new HtmlLinkElement WithAttribute(HtmlAttribute attribute) => (HtmlLinkElement)base.WithAttribute(attribute);
+        public new HtmlLinkElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlLinkElement)base.WithAttributes(attributes);
 
-		public HtmlLinkElement WithIntegrity(string value) => (HtmlLinkElement)WithAttribute(Attribute.Integrity(value));
+		public HtmlLinkElement WithCrossOrigin(string value) => WithAttribute(Attribute.CrossOrigin(value));
 
-		public HtmlLinkElement WithMedia(string value) => (HtmlLinkElement)WithAttribute(Attribute.Media(value));
+		public HtmlLinkElement WithHref(string value) => WithAttribute(Attribute.Href(value));
 
-		public HtmlLinkElement WithRel(string value) => (HtmlLinkElement)WithAttribute(Attribute.Rel(value));
+		public HtmlLinkElement WithHrefLang(string value) => WithAttribute(Attribute.HrefLang(value));
 
-		public HtmlLinkElement WithSizes(string value) => (HtmlLinkElement)WithAttribute(Attribute.Sizes(value));
+		public HtmlLinkElement WithIntegrity(string value) => WithAttribute(Attribute.Integrity(value));
 
-		public HtmlLinkElement WithType(string value) => (HtmlLinkElement)WithAttribute(Attribute.Type(value));
+		public HtmlLinkElement WithMedia(string value) => WithAttribute(Attribute.Media(value));
 
-		public HtmlLinkElement WithAccessKey(string value) => (HtmlLinkElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlLinkElement WithRel(string value) => WithAttribute(Attribute.Rel(value));
 
-		public HtmlLinkElement WithClass(string value) => (HtmlLinkElement)WithAttribute(Attribute.Class(value));
+		public HtmlLinkElement WithSizes(string value) => WithAttribute(Attribute.Sizes(value));
 
-		public HtmlLinkElement WithContentEditable(string value) => (HtmlLinkElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlLinkElement WithType(string value) => WithAttribute(Attribute.Type(value));
 
-		public HtmlLinkElement WithContextMenu(string value) => (HtmlLinkElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlLinkElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlLinkElement WithDir(string value) => (HtmlLinkElement)WithAttribute(Attribute.Dir(value));
+		public HtmlLinkElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlLinkElement WithHidden(string value) => (HtmlLinkElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlLinkElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlLinkElement WithId(string value) => (HtmlLinkElement)WithAttribute(Attribute.Id(value));
+		public HtmlLinkElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlLinkElement WithLang(string value) => (HtmlLinkElement)WithAttribute(Attribute.Lang(value));
+		public HtmlLinkElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlLinkElement WithSpellCheck(string value) => (HtmlLinkElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlLinkElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlLinkElement WithStyle(string value) => (HtmlLinkElement)WithAttribute(Attribute.Style(value));
+		public HtmlLinkElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlLinkElement WithTabIndex(string value) => (HtmlLinkElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlLinkElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlLinkElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlLinkElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlLinkElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlCanvasElement : HtmlElement 
@@ -6,30 +8,38 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlCanvasElement WithHeight(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Height(value));
+        public new HtmlCanvasElement WithChild(HtmlElement child) => (HtmlCanvasElement)base.WithChild(child);
+        public new HtmlCanvasElement WithChildren(Collection<HtmlElement> children) => (HtmlCanvasElement)base.WithChildren(children);
 
-		public HtmlCanvasElement WithWidth(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Width(value));
+        public new HtmlCanvasElement WithInnerText(string innerText) => (HtmlCanvasElement)base.WithInnerText(innerText);
 
-		public HtmlCanvasElement WithAccessKey(string value) => (HtmlCanvasElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlCanvasElement WithAttribute(HtmlAttribute attribute) => (HtmlCanvasElement)base.WithAttribute(attribute);
+        public new HtmlCanvasElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlCanvasElement)base.WithAttributes(attributes);
 
-		public HtmlCanvasElement WithClass(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Class(value));
+		public HtmlCanvasElement WithHeight(string value) => WithAttribute(Attribute.Height(value));
 
-		public HtmlCanvasElement WithContentEditable(string value) => (HtmlCanvasElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlCanvasElement WithWidth(string value) => WithAttribute(Attribute.Width(value));
 
-		public HtmlCanvasElement WithContextMenu(string value) => (HtmlCanvasElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlCanvasElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlCanvasElement WithDir(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Dir(value));
+		public HtmlCanvasElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlCanvasElement WithHidden(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlCanvasElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlCanvasElement WithId(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Id(value));
+		public HtmlCanvasElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlCanvasElement WithLang(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Lang(value));
+		public HtmlCanvasElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlCanvasElement WithSpellCheck(string value) => (HtmlCanvasElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlCanvasElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlCanvasElement WithStyle(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Style(value));
+		public HtmlCanvasElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlCanvasElement WithTabIndex(string value) => (HtmlCanvasElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlCanvasElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlCanvasElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlCanvasElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlCanvasElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

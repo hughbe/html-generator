@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlDialogElement : HtmlElement 
@@ -6,28 +8,36 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlDialogElement WithOpen(string value) => (HtmlDialogElement)WithAttribute(Attribute.Open(value));
+        public new HtmlDialogElement WithChild(HtmlElement child) => (HtmlDialogElement)base.WithChild(child);
+        public new HtmlDialogElement WithChildren(Collection<HtmlElement> children) => (HtmlDialogElement)base.WithChildren(children);
 
-		public HtmlDialogElement WithAccessKey(string value) => (HtmlDialogElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlDialogElement WithInnerText(string innerText) => (HtmlDialogElement)base.WithInnerText(innerText);
 
-		public HtmlDialogElement WithClass(string value) => (HtmlDialogElement)WithAttribute(Attribute.Class(value));
+        public new HtmlDialogElement WithAttribute(HtmlAttribute attribute) => (HtmlDialogElement)base.WithAttribute(attribute);
+        public new HtmlDialogElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDialogElement)base.WithAttributes(attributes);
 
-		public HtmlDialogElement WithContentEditable(string value) => (HtmlDialogElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlDialogElement WithOpen(string value) => WithAttribute(Attribute.Open(value));
 
-		public HtmlDialogElement WithContextMenu(string value) => (HtmlDialogElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlDialogElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlDialogElement WithDir(string value) => (HtmlDialogElement)WithAttribute(Attribute.Dir(value));
+		public HtmlDialogElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlDialogElement WithHidden(string value) => (HtmlDialogElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlDialogElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlDialogElement WithId(string value) => (HtmlDialogElement)WithAttribute(Attribute.Id(value));
+		public HtmlDialogElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlDialogElement WithLang(string value) => (HtmlDialogElement)WithAttribute(Attribute.Lang(value));
+		public HtmlDialogElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlDialogElement WithSpellCheck(string value) => (HtmlDialogElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlDialogElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlDialogElement WithStyle(string value) => (HtmlDialogElement)WithAttribute(Attribute.Style(value));
+		public HtmlDialogElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlDialogElement WithTabIndex(string value) => (HtmlDialogElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlDialogElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlDialogElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlDialogElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlDialogElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

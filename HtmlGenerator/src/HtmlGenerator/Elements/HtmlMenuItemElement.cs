@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlMenuItemElement : HtmlElement 
@@ -6,42 +8,50 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlMenuItemElement WithChecked() => (HtmlMenuItemElement)WithAttribute(Attribute.Checked);
+        public new HtmlMenuItemElement WithChild(HtmlElement child) => (HtmlMenuItemElement)base.WithChild(child);
+        public new HtmlMenuItemElement WithChildren(Collection<HtmlElement> children) => (HtmlMenuItemElement)base.WithChildren(children);
 
-		public HtmlMenuItemElement WithCommand(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Command(value));
+        public new HtmlMenuItemElement WithInnerText(string innerText) => (HtmlMenuItemElement)base.WithInnerText(innerText);
 
-		public HtmlMenuItemElement WithDefault() => (HtmlMenuItemElement)WithAttribute(Attribute.Default);
+        public new HtmlMenuItemElement WithAttribute(HtmlAttribute attribute) => (HtmlMenuItemElement)base.WithAttribute(attribute);
+        public new HtmlMenuItemElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlMenuItemElement)base.WithAttributes(attributes);
 
-		public HtmlMenuItemElement WithDisabled() => (HtmlMenuItemElement)WithAttribute(Attribute.Disabled);
+		public HtmlMenuItemElement WithChecked() => WithAttribute(Attribute.Checked);
 
-		public HtmlMenuItemElement WithIcon(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Icon(value));
+		public HtmlMenuItemElement WithCommand(string value) => WithAttribute(Attribute.Command(value));
 
-		public HtmlMenuItemElement WithLabel(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Label(value));
+		public HtmlMenuItemElement WithDefault() => WithAttribute(Attribute.Default);
 
-		public HtmlMenuItemElement WithRadioGroup(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.RadioGroup(value));
+		public HtmlMenuItemElement WithDisabled() => WithAttribute(Attribute.Disabled);
 
-		public HtmlMenuItemElement WithType(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Type(value));
+		public HtmlMenuItemElement WithIcon(string value) => WithAttribute(Attribute.Icon(value));
 
-		public HtmlMenuItemElement WithAccessKey(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlMenuItemElement WithLabel(string value) => WithAttribute(Attribute.Label(value));
 
-		public HtmlMenuItemElement WithClass(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Class(value));
+		public HtmlMenuItemElement WithRadioGroup(string value) => WithAttribute(Attribute.RadioGroup(value));
 
-		public HtmlMenuItemElement WithContentEditable(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlMenuItemElement WithType(string value) => WithAttribute(Attribute.Type(value));
 
-		public HtmlMenuItemElement WithContextMenu(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlMenuItemElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlMenuItemElement WithDir(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Dir(value));
+		public HtmlMenuItemElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlMenuItemElement WithHidden(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlMenuItemElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlMenuItemElement WithId(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Id(value));
+		public HtmlMenuItemElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlMenuItemElement WithLang(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Lang(value));
+		public HtmlMenuItemElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlMenuItemElement WithSpellCheck(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlMenuItemElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlMenuItemElement WithStyle(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Style(value));
+		public HtmlMenuItemElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlMenuItemElement WithTabIndex(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlMenuItemElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlMenuItemElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlMenuItemElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlMenuItemElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

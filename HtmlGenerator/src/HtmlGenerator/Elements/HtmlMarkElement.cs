@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlMarkElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlMarkElement WithAccessKey(string value) => (HtmlMarkElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlMarkElement WithChild(HtmlElement child) => (HtmlMarkElement)base.WithChild(child);
+        public new HtmlMarkElement WithChildren(Collection<HtmlElement> children) => (HtmlMarkElement)base.WithChildren(children);
 
-		public HtmlMarkElement WithClass(string value) => (HtmlMarkElement)WithAttribute(Attribute.Class(value));
+        public new HtmlMarkElement WithInnerText(string innerText) => (HtmlMarkElement)base.WithInnerText(innerText);
 
-		public HtmlMarkElement WithContentEditable(string value) => (HtmlMarkElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlMarkElement WithAttribute(HtmlAttribute attribute) => (HtmlMarkElement)base.WithAttribute(attribute);
+        public new HtmlMarkElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlMarkElement)base.WithAttributes(attributes);
 
-		public HtmlMarkElement WithContextMenu(string value) => (HtmlMarkElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlMarkElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlMarkElement WithDir(string value) => (HtmlMarkElement)WithAttribute(Attribute.Dir(value));
+		public HtmlMarkElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlMarkElement WithHidden(string value) => (HtmlMarkElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlMarkElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlMarkElement WithId(string value) => (HtmlMarkElement)WithAttribute(Attribute.Id(value));
+		public HtmlMarkElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlMarkElement WithLang(string value) => (HtmlMarkElement)WithAttribute(Attribute.Lang(value));
+		public HtmlMarkElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlMarkElement WithSpellCheck(string value) => (HtmlMarkElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlMarkElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlMarkElement WithStyle(string value) => (HtmlMarkElement)WithAttribute(Attribute.Style(value));
+		public HtmlMarkElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlMarkElement WithTabIndex(string value) => (HtmlMarkElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlMarkElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlMarkElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlMarkElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlMarkElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

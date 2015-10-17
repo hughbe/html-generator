@@ -65,30 +65,40 @@ namespace HtmlGeneratorMeta
                 var attributeCodeFormat = "\n\n\t\t";
                 var methodStart = "";
                 
-                if (attribute.Name.Equals("content"))
+                /*if (attribute.Name.Equals("content"))
                 {
                     methodStart = "new ";
                 }
-
+                */
                 if (attribute.IsVoid)
                 {
-                    attributeCodeFormat += "public {0}{1} With{2}() => ({1})WithAttribute(Attribute.{2});";
+                    attributeCodeFormat += "public {0}{1} With{2}() => WithAttribute(Attribute.{2});";
                 }
                 else
                 {
-                    attributeCodeFormat += "public {0}{1} With{2}(string value) => ({1})WithAttribute(Attribute.{2}(value));";
+                    attributeCodeFormat += "public {0}{1} With{2}(string value) => WithAttribute(Attribute.{2}(value));";
                 }
 
                 attributesCode += string.Format(attributeCodeFormat, methodStart, className, methodName);
             }
 
-            var code = string.Format(@"namespace HtmlGenerator
+            var code = string.Format(@"using System.Collections.ObjectModel;
+
+namespace HtmlGenerator
 {{
     public class {0} : HtmlElement 
     {{
         public {0}() : base(""{1}"", {2}) 
         {{    
-        }}{3}
+        }}
+
+        public new {0} WithChild(HtmlElement child) => ({0})base.WithChild(child);
+        public new {0} WithChildren(Collection<HtmlElement> children) => ({0})base.WithChildren(children);
+
+        public new {0} WithInnerText(string innerText) => ({0})base.WithInnerText(innerText);
+
+        public new {0} WithAttribute(HtmlAttribute attribute) => ({0})base.WithAttribute(attribute);
+        public new {0} WithAttributes(Collection<HtmlAttribute> attributes) => ({0})base.WithAttributes(attributes);{3}
     }}
 }}
 ", className, lowerName, isVoid, attributesCode);

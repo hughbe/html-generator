@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlPreElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlPreElement WithAccessKey(string value) => (HtmlPreElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlPreElement WithChild(HtmlElement child) => (HtmlPreElement)base.WithChild(child);
+        public new HtmlPreElement WithChildren(Collection<HtmlElement> children) => (HtmlPreElement)base.WithChildren(children);
 
-		public HtmlPreElement WithClass(string value) => (HtmlPreElement)WithAttribute(Attribute.Class(value));
+        public new HtmlPreElement WithInnerText(string innerText) => (HtmlPreElement)base.WithInnerText(innerText);
 
-		public HtmlPreElement WithContentEditable(string value) => (HtmlPreElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlPreElement WithAttribute(HtmlAttribute attribute) => (HtmlPreElement)base.WithAttribute(attribute);
+        public new HtmlPreElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlPreElement)base.WithAttributes(attributes);
 
-		public HtmlPreElement WithContextMenu(string value) => (HtmlPreElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlPreElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlPreElement WithDir(string value) => (HtmlPreElement)WithAttribute(Attribute.Dir(value));
+		public HtmlPreElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlPreElement WithHidden(string value) => (HtmlPreElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlPreElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlPreElement WithId(string value) => (HtmlPreElement)WithAttribute(Attribute.Id(value));
+		public HtmlPreElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlPreElement WithLang(string value) => (HtmlPreElement)WithAttribute(Attribute.Lang(value));
+		public HtmlPreElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlPreElement WithSpellCheck(string value) => (HtmlPreElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlPreElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlPreElement WithStyle(string value) => (HtmlPreElement)WithAttribute(Attribute.Style(value));
+		public HtmlPreElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlPreElement WithTabIndex(string value) => (HtmlPreElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlPreElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlPreElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlPreElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlPreElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

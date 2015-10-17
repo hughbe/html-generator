@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlVideoElement : HtmlElement 
@@ -6,44 +8,52 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlVideoElement WithAutoPlay(string value) => (HtmlVideoElement)WithAttribute(Attribute.AutoPlay(value));
+        public new HtmlVideoElement WithChild(HtmlElement child) => (HtmlVideoElement)base.WithChild(child);
+        public new HtmlVideoElement WithChildren(Collection<HtmlElement> children) => (HtmlVideoElement)base.WithChildren(children);
 
-		public HtmlVideoElement WithControls() => (HtmlVideoElement)WithAttribute(Attribute.Controls);
+        public new HtmlVideoElement WithInnerText(string innerText) => (HtmlVideoElement)base.WithInnerText(innerText);
 
-		public HtmlVideoElement WithCrossOrigin(string value) => (HtmlVideoElement)WithAttribute(Attribute.CrossOrigin(value));
+        public new HtmlVideoElement WithAttribute(HtmlAttribute attribute) => (HtmlVideoElement)base.WithAttribute(attribute);
+        public new HtmlVideoElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlVideoElement)base.WithAttributes(attributes);
 
-		public HtmlVideoElement WithHeight(string value) => (HtmlVideoElement)WithAttribute(Attribute.Height(value));
+		public HtmlVideoElement WithAutoPlay(string value) => WithAttribute(Attribute.AutoPlay(value));
 
-		public HtmlVideoElement WithLoop(string value) => (HtmlVideoElement)WithAttribute(Attribute.Loop(value));
+		public HtmlVideoElement WithControls() => WithAttribute(Attribute.Controls);
 
-		public HtmlVideoElement WithMuted(string value) => (HtmlVideoElement)WithAttribute(Attribute.Muted(value));
+		public HtmlVideoElement WithCrossOrigin(string value) => WithAttribute(Attribute.CrossOrigin(value));
 
-		public HtmlVideoElement WithPreload(string value) => (HtmlVideoElement)WithAttribute(Attribute.Preload(value));
+		public HtmlVideoElement WithHeight(string value) => WithAttribute(Attribute.Height(value));
 
-		public HtmlVideoElement WithSrc(string value) => (HtmlVideoElement)WithAttribute(Attribute.Src(value));
+		public HtmlVideoElement WithLoop(string value) => WithAttribute(Attribute.Loop(value));
 
-		public HtmlVideoElement WithWidth(string value) => (HtmlVideoElement)WithAttribute(Attribute.Width(value));
+		public HtmlVideoElement WithMuted(string value) => WithAttribute(Attribute.Muted(value));
 
-		public HtmlVideoElement WithAccessKey(string value) => (HtmlVideoElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlVideoElement WithPreload(string value) => WithAttribute(Attribute.Preload(value));
 
-		public HtmlVideoElement WithClass(string value) => (HtmlVideoElement)WithAttribute(Attribute.Class(value));
+		public HtmlVideoElement WithSrc(string value) => WithAttribute(Attribute.Src(value));
 
-		public HtmlVideoElement WithContentEditable(string value) => (HtmlVideoElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlVideoElement WithWidth(string value) => WithAttribute(Attribute.Width(value));
 
-		public HtmlVideoElement WithContextMenu(string value) => (HtmlVideoElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlVideoElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlVideoElement WithDir(string value) => (HtmlVideoElement)WithAttribute(Attribute.Dir(value));
+		public HtmlVideoElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlVideoElement WithHidden(string value) => (HtmlVideoElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlVideoElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlVideoElement WithId(string value) => (HtmlVideoElement)WithAttribute(Attribute.Id(value));
+		public HtmlVideoElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlVideoElement WithLang(string value) => (HtmlVideoElement)WithAttribute(Attribute.Lang(value));
+		public HtmlVideoElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlVideoElement WithSpellCheck(string value) => (HtmlVideoElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlVideoElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlVideoElement WithStyle(string value) => (HtmlVideoElement)WithAttribute(Attribute.Style(value));
+		public HtmlVideoElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlVideoElement WithTabIndex(string value) => (HtmlVideoElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlVideoElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlVideoElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlVideoElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlVideoElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

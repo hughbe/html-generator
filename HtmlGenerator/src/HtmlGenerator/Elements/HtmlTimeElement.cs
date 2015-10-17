@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlTimeElement : HtmlElement 
@@ -6,28 +8,36 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlTimeElement WithDateTime(string value) => (HtmlTimeElement)WithAttribute(Attribute.DateTime(value));
+        public new HtmlTimeElement WithChild(HtmlElement child) => (HtmlTimeElement)base.WithChild(child);
+        public new HtmlTimeElement WithChildren(Collection<HtmlElement> children) => (HtmlTimeElement)base.WithChildren(children);
 
-		public HtmlTimeElement WithAccessKey(string value) => (HtmlTimeElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlTimeElement WithInnerText(string innerText) => (HtmlTimeElement)base.WithInnerText(innerText);
 
-		public HtmlTimeElement WithClass(string value) => (HtmlTimeElement)WithAttribute(Attribute.Class(value));
+        public new HtmlTimeElement WithAttribute(HtmlAttribute attribute) => (HtmlTimeElement)base.WithAttribute(attribute);
+        public new HtmlTimeElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTimeElement)base.WithAttributes(attributes);
 
-		public HtmlTimeElement WithContentEditable(string value) => (HtmlTimeElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlTimeElement WithDateTime(string value) => WithAttribute(Attribute.DateTime(value));
 
-		public HtmlTimeElement WithContextMenu(string value) => (HtmlTimeElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTimeElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlTimeElement WithDir(string value) => (HtmlTimeElement)WithAttribute(Attribute.Dir(value));
+		public HtmlTimeElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlTimeElement WithHidden(string value) => (HtmlTimeElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlTimeElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTimeElement WithId(string value) => (HtmlTimeElement)WithAttribute(Attribute.Id(value));
+		public HtmlTimeElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlTimeElement WithLang(string value) => (HtmlTimeElement)WithAttribute(Attribute.Lang(value));
+		public HtmlTimeElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlTimeElement WithSpellCheck(string value) => (HtmlTimeElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlTimeElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlTimeElement WithStyle(string value) => (HtmlTimeElement)WithAttribute(Attribute.Style(value));
+		public HtmlTimeElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlTimeElement WithTabIndex(string value) => (HtmlTimeElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlTimeElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlTimeElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlTimeElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlTimeElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

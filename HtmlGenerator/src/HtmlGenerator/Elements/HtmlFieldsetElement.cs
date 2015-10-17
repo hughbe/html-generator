@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlFieldsetElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlFieldsetElement WithAccessKey(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlFieldsetElement WithChild(HtmlElement child) => (HtmlFieldsetElement)base.WithChild(child);
+        public new HtmlFieldsetElement WithChildren(Collection<HtmlElement> children) => (HtmlFieldsetElement)base.WithChildren(children);
 
-		public HtmlFieldsetElement WithClass(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.Class(value));
+        public new HtmlFieldsetElement WithInnerText(string innerText) => (HtmlFieldsetElement)base.WithInnerText(innerText);
 
-		public HtmlFieldsetElement WithContentEditable(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlFieldsetElement WithAttribute(HtmlAttribute attribute) => (HtmlFieldsetElement)base.WithAttribute(attribute);
+        public new HtmlFieldsetElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlFieldsetElement)base.WithAttributes(attributes);
 
-		public HtmlFieldsetElement WithContextMenu(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlFieldsetElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlFieldsetElement WithDir(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.Dir(value));
+		public HtmlFieldsetElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlFieldsetElement WithHidden(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlFieldsetElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlFieldsetElement WithId(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.Id(value));
+		public HtmlFieldsetElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlFieldsetElement WithLang(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.Lang(value));
+		public HtmlFieldsetElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlFieldsetElement WithSpellCheck(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlFieldsetElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlFieldsetElement WithStyle(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.Style(value));
+		public HtmlFieldsetElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlFieldsetElement WithTabIndex(string value) => (HtmlFieldsetElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlFieldsetElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlFieldsetElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlFieldsetElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlFieldsetElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

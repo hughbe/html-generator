@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlFigCaptionElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlFigCaptionElement WithAccessKey(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlFigCaptionElement WithChild(HtmlElement child) => (HtmlFigCaptionElement)base.WithChild(child);
+        public new HtmlFigCaptionElement WithChildren(Collection<HtmlElement> children) => (HtmlFigCaptionElement)base.WithChildren(children);
 
-		public HtmlFigCaptionElement WithClass(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.Class(value));
+        public new HtmlFigCaptionElement WithInnerText(string innerText) => (HtmlFigCaptionElement)base.WithInnerText(innerText);
 
-		public HtmlFigCaptionElement WithContentEditable(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlFigCaptionElement WithAttribute(HtmlAttribute attribute) => (HtmlFigCaptionElement)base.WithAttribute(attribute);
+        public new HtmlFigCaptionElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlFigCaptionElement)base.WithAttributes(attributes);
 
-		public HtmlFigCaptionElement WithContextMenu(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlFigCaptionElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlFigCaptionElement WithDir(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.Dir(value));
+		public HtmlFigCaptionElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlFigCaptionElement WithHidden(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlFigCaptionElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlFigCaptionElement WithId(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.Id(value));
+		public HtmlFigCaptionElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlFigCaptionElement WithLang(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.Lang(value));
+		public HtmlFigCaptionElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlFigCaptionElement WithSpellCheck(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlFigCaptionElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlFigCaptionElement WithStyle(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.Style(value));
+		public HtmlFigCaptionElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlFigCaptionElement WithTabIndex(string value) => (HtmlFigCaptionElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlFigCaptionElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlFigCaptionElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlFigCaptionElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlFigCaptionElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlDdElement : HtmlElement 
@@ -6,28 +8,36 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlDdElement WithNoWrap(string value) => (HtmlDdElement)WithAttribute(Attribute.NoWrap(value));
+        public new HtmlDdElement WithChild(HtmlElement child) => (HtmlDdElement)base.WithChild(child);
+        public new HtmlDdElement WithChildren(Collection<HtmlElement> children) => (HtmlDdElement)base.WithChildren(children);
 
-		public HtmlDdElement WithAccessKey(string value) => (HtmlDdElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlDdElement WithInnerText(string innerText) => (HtmlDdElement)base.WithInnerText(innerText);
 
-		public HtmlDdElement WithClass(string value) => (HtmlDdElement)WithAttribute(Attribute.Class(value));
+        public new HtmlDdElement WithAttribute(HtmlAttribute attribute) => (HtmlDdElement)base.WithAttribute(attribute);
+        public new HtmlDdElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDdElement)base.WithAttributes(attributes);
 
-		public HtmlDdElement WithContentEditable(string value) => (HtmlDdElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlDdElement WithNoWrap(string value) => WithAttribute(Attribute.NoWrap(value));
 
-		public HtmlDdElement WithContextMenu(string value) => (HtmlDdElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlDdElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlDdElement WithDir(string value) => (HtmlDdElement)WithAttribute(Attribute.Dir(value));
+		public HtmlDdElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlDdElement WithHidden(string value) => (HtmlDdElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlDdElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlDdElement WithId(string value) => (HtmlDdElement)WithAttribute(Attribute.Id(value));
+		public HtmlDdElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlDdElement WithLang(string value) => (HtmlDdElement)WithAttribute(Attribute.Lang(value));
+		public HtmlDdElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlDdElement WithSpellCheck(string value) => (HtmlDdElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlDdElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlDdElement WithStyle(string value) => (HtmlDdElement)WithAttribute(Attribute.Style(value));
+		public HtmlDdElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlDdElement WithTabIndex(string value) => (HtmlDdElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlDdElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlDdElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlDdElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlDdElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

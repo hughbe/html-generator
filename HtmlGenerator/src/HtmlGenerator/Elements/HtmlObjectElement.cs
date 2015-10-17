@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlObjectElement : HtmlElement 
@@ -6,42 +8,50 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlObjectElement WithData(string value) => (HtmlObjectElement)WithAttribute(Attribute.Data(value));
+        public new HtmlObjectElement WithChild(HtmlElement child) => (HtmlObjectElement)base.WithChild(child);
+        public new HtmlObjectElement WithChildren(Collection<HtmlElement> children) => (HtmlObjectElement)base.WithChildren(children);
 
-		public HtmlObjectElement WithForm(string value) => (HtmlObjectElement)WithAttribute(Attribute.Form(value));
+        public new HtmlObjectElement WithInnerText(string innerText) => (HtmlObjectElement)base.WithInnerText(innerText);
 
-		public HtmlObjectElement WithHeight(string value) => (HtmlObjectElement)WithAttribute(Attribute.Height(value));
+        public new HtmlObjectElement WithAttribute(HtmlAttribute attribute) => (HtmlObjectElement)base.WithAttribute(attribute);
+        public new HtmlObjectElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlObjectElement)base.WithAttributes(attributes);
 
-		public HtmlObjectElement WithName(string value) => (HtmlObjectElement)WithAttribute(Attribute.Name(value));
+		public HtmlObjectElement WithData(string value) => WithAttribute(Attribute.Data(value));
 
-		public HtmlObjectElement WithType(string value) => (HtmlObjectElement)WithAttribute(Attribute.Type(value));
+		public HtmlObjectElement WithForm(string value) => WithAttribute(Attribute.Form(value));
 
-		public HtmlObjectElement WithTypeMustMatch() => (HtmlObjectElement)WithAttribute(Attribute.TypeMustMatch);
+		public HtmlObjectElement WithHeight(string value) => WithAttribute(Attribute.Height(value));
 
-		public HtmlObjectElement WithUseMap(string value) => (HtmlObjectElement)WithAttribute(Attribute.UseMap(value));
+		public HtmlObjectElement WithName(string value) => WithAttribute(Attribute.Name(value));
 
-		public HtmlObjectElement WithWidth(string value) => (HtmlObjectElement)WithAttribute(Attribute.Width(value));
+		public HtmlObjectElement WithType(string value) => WithAttribute(Attribute.Type(value));
 
-		public HtmlObjectElement WithAccessKey(string value) => (HtmlObjectElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlObjectElement WithTypeMustMatch() => WithAttribute(Attribute.TypeMustMatch);
 
-		public HtmlObjectElement WithClass(string value) => (HtmlObjectElement)WithAttribute(Attribute.Class(value));
+		public HtmlObjectElement WithUseMap(string value) => WithAttribute(Attribute.UseMap(value));
 
-		public HtmlObjectElement WithContentEditable(string value) => (HtmlObjectElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlObjectElement WithWidth(string value) => WithAttribute(Attribute.Width(value));
 
-		public HtmlObjectElement WithContextMenu(string value) => (HtmlObjectElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlObjectElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlObjectElement WithDir(string value) => (HtmlObjectElement)WithAttribute(Attribute.Dir(value));
+		public HtmlObjectElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlObjectElement WithHidden(string value) => (HtmlObjectElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlObjectElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlObjectElement WithId(string value) => (HtmlObjectElement)WithAttribute(Attribute.Id(value));
+		public HtmlObjectElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlObjectElement WithLang(string value) => (HtmlObjectElement)WithAttribute(Attribute.Lang(value));
+		public HtmlObjectElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlObjectElement WithSpellCheck(string value) => (HtmlObjectElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlObjectElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlObjectElement WithStyle(string value) => (HtmlObjectElement)WithAttribute(Attribute.Style(value));
+		public HtmlObjectElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlObjectElement WithTabIndex(string value) => (HtmlObjectElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlObjectElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlObjectElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlObjectElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlObjectElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

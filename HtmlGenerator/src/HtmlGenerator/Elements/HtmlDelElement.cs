@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlDelElement : HtmlElement 
@@ -6,30 +8,38 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlDelElement WithCite(string value) => (HtmlDelElement)WithAttribute(Attribute.Cite(value));
+        public new HtmlDelElement WithChild(HtmlElement child) => (HtmlDelElement)base.WithChild(child);
+        public new HtmlDelElement WithChildren(Collection<HtmlElement> children) => (HtmlDelElement)base.WithChildren(children);
 
-		public HtmlDelElement WithDateTime(string value) => (HtmlDelElement)WithAttribute(Attribute.DateTime(value));
+        public new HtmlDelElement WithInnerText(string innerText) => (HtmlDelElement)base.WithInnerText(innerText);
 
-		public HtmlDelElement WithAccessKey(string value) => (HtmlDelElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlDelElement WithAttribute(HtmlAttribute attribute) => (HtmlDelElement)base.WithAttribute(attribute);
+        public new HtmlDelElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDelElement)base.WithAttributes(attributes);
 
-		public HtmlDelElement WithClass(string value) => (HtmlDelElement)WithAttribute(Attribute.Class(value));
+		public HtmlDelElement WithCite(string value) => WithAttribute(Attribute.Cite(value));
 
-		public HtmlDelElement WithContentEditable(string value) => (HtmlDelElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlDelElement WithDateTime(string value) => WithAttribute(Attribute.DateTime(value));
 
-		public HtmlDelElement WithContextMenu(string value) => (HtmlDelElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlDelElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlDelElement WithDir(string value) => (HtmlDelElement)WithAttribute(Attribute.Dir(value));
+		public HtmlDelElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlDelElement WithHidden(string value) => (HtmlDelElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlDelElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlDelElement WithId(string value) => (HtmlDelElement)WithAttribute(Attribute.Id(value));
+		public HtmlDelElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlDelElement WithLang(string value) => (HtmlDelElement)WithAttribute(Attribute.Lang(value));
+		public HtmlDelElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlDelElement WithSpellCheck(string value) => (HtmlDelElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlDelElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlDelElement WithStyle(string value) => (HtmlDelElement)WithAttribute(Attribute.Style(value));
+		public HtmlDelElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlDelElement WithTabIndex(string value) => (HtmlDelElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlDelElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlDelElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlDelElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlDelElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

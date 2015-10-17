@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlStrongElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlStrongElement WithAccessKey(string value) => (HtmlStrongElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlStrongElement WithChild(HtmlElement child) => (HtmlStrongElement)base.WithChild(child);
+        public new HtmlStrongElement WithChildren(Collection<HtmlElement> children) => (HtmlStrongElement)base.WithChildren(children);
 
-		public HtmlStrongElement WithClass(string value) => (HtmlStrongElement)WithAttribute(Attribute.Class(value));
+        public new HtmlStrongElement WithInnerText(string innerText) => (HtmlStrongElement)base.WithInnerText(innerText);
 
-		public HtmlStrongElement WithContentEditable(string value) => (HtmlStrongElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlStrongElement WithAttribute(HtmlAttribute attribute) => (HtmlStrongElement)base.WithAttribute(attribute);
+        public new HtmlStrongElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlStrongElement)base.WithAttributes(attributes);
 
-		public HtmlStrongElement WithContextMenu(string value) => (HtmlStrongElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlStrongElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlStrongElement WithDir(string value) => (HtmlStrongElement)WithAttribute(Attribute.Dir(value));
+		public HtmlStrongElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlStrongElement WithHidden(string value) => (HtmlStrongElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlStrongElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlStrongElement WithId(string value) => (HtmlStrongElement)WithAttribute(Attribute.Id(value));
+		public HtmlStrongElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlStrongElement WithLang(string value) => (HtmlStrongElement)WithAttribute(Attribute.Lang(value));
+		public HtmlStrongElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlStrongElement WithSpellCheck(string value) => (HtmlStrongElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlStrongElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlStrongElement WithStyle(string value) => (HtmlStrongElement)WithAttribute(Attribute.Style(value));
+		public HtmlStrongElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlStrongElement WithTabIndex(string value) => (HtmlStrongElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlStrongElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlStrongElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlStrongElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlStrongElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

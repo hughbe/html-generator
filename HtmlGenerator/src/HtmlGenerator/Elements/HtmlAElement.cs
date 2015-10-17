@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlAElement : HtmlElement 
@@ -6,42 +8,50 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlAElement WithDownload(string value) => (HtmlAElement)WithAttribute(Attribute.Download(value));
+        public new HtmlAElement WithChild(HtmlElement child) => (HtmlAElement)base.WithChild(child);
+        public new HtmlAElement WithChildren(Collection<HtmlElement> children) => (HtmlAElement)base.WithChildren(children);
 
-		public HtmlAElement WithHref(string value) => (HtmlAElement)WithAttribute(Attribute.Href(value));
+        public new HtmlAElement WithInnerText(string innerText) => (HtmlAElement)base.WithInnerText(innerText);
 
-		public HtmlAElement WithHrefLang(string value) => (HtmlAElement)WithAttribute(Attribute.HrefLang(value));
+        public new HtmlAElement WithAttribute(HtmlAttribute attribute) => (HtmlAElement)base.WithAttribute(attribute);
+        public new HtmlAElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlAElement)base.WithAttributes(attributes);
 
-		public HtmlAElement WithMedia(string value) => (HtmlAElement)WithAttribute(Attribute.Media(value));
+		public HtmlAElement WithDownload(string value) => WithAttribute(Attribute.Download(value));
 
-		public HtmlAElement WithPing(string value) => (HtmlAElement)WithAttribute(Attribute.Ping(value));
+		public HtmlAElement WithHref(string value) => WithAttribute(Attribute.Href(value));
 
-		public HtmlAElement WithRel(string value) => (HtmlAElement)WithAttribute(Attribute.Rel(value));
+		public HtmlAElement WithHrefLang(string value) => WithAttribute(Attribute.HrefLang(value));
 
-		public HtmlAElement WithTarget(string value) => (HtmlAElement)WithAttribute(Attribute.Target(value));
+		public HtmlAElement WithMedia(string value) => WithAttribute(Attribute.Media(value));
 
-		public HtmlAElement WithType(string value) => (HtmlAElement)WithAttribute(Attribute.Type(value));
+		public HtmlAElement WithPing(string value) => WithAttribute(Attribute.Ping(value));
 
-		public HtmlAElement WithAccessKey(string value) => (HtmlAElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlAElement WithRel(string value) => WithAttribute(Attribute.Rel(value));
 
-		public HtmlAElement WithClass(string value) => (HtmlAElement)WithAttribute(Attribute.Class(value));
+		public HtmlAElement WithTarget(string value) => WithAttribute(Attribute.Target(value));
 
-		public HtmlAElement WithContentEditable(string value) => (HtmlAElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlAElement WithType(string value) => WithAttribute(Attribute.Type(value));
 
-		public HtmlAElement WithContextMenu(string value) => (HtmlAElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlAElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlAElement WithDir(string value) => (HtmlAElement)WithAttribute(Attribute.Dir(value));
+		public HtmlAElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlAElement WithHidden(string value) => (HtmlAElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlAElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlAElement WithId(string value) => (HtmlAElement)WithAttribute(Attribute.Id(value));
+		public HtmlAElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlAElement WithLang(string value) => (HtmlAElement)WithAttribute(Attribute.Lang(value));
+		public HtmlAElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlAElement WithSpellCheck(string value) => (HtmlAElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlAElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlAElement WithStyle(string value) => (HtmlAElement)WithAttribute(Attribute.Style(value));
+		public HtmlAElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlAElement WithTabIndex(string value) => (HtmlAElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlAElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlAElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlAElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlAElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlNavElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlNavElement WithAccessKey(string value) => (HtmlNavElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlNavElement WithChild(HtmlElement child) => (HtmlNavElement)base.WithChild(child);
+        public new HtmlNavElement WithChildren(Collection<HtmlElement> children) => (HtmlNavElement)base.WithChildren(children);
 
-		public HtmlNavElement WithClass(string value) => (HtmlNavElement)WithAttribute(Attribute.Class(value));
+        public new HtmlNavElement WithInnerText(string innerText) => (HtmlNavElement)base.WithInnerText(innerText);
 
-		public HtmlNavElement WithContentEditable(string value) => (HtmlNavElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlNavElement WithAttribute(HtmlAttribute attribute) => (HtmlNavElement)base.WithAttribute(attribute);
+        public new HtmlNavElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlNavElement)base.WithAttributes(attributes);
 
-		public HtmlNavElement WithContextMenu(string value) => (HtmlNavElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlNavElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlNavElement WithDir(string value) => (HtmlNavElement)WithAttribute(Attribute.Dir(value));
+		public HtmlNavElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlNavElement WithHidden(string value) => (HtmlNavElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlNavElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlNavElement WithId(string value) => (HtmlNavElement)WithAttribute(Attribute.Id(value));
+		public HtmlNavElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlNavElement WithLang(string value) => (HtmlNavElement)WithAttribute(Attribute.Lang(value));
+		public HtmlNavElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlNavElement WithSpellCheck(string value) => (HtmlNavElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlNavElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlNavElement WithStyle(string value) => (HtmlNavElement)WithAttribute(Attribute.Style(value));
+		public HtmlNavElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlNavElement WithTabIndex(string value) => (HtmlNavElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlNavElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlNavElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlNavElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlNavElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -30,7 +30,7 @@ namespace HtmlGenerator
         public string ElementTag { get; }
         public bool IsVoid { get; }
 
-        public string Content { get; private set; }
+        public string InnerText { get; private set; }
 
         public HtmlElement Parent { get; private set; }
         public Collection<HtmlElement> Children { get; private set; } = new Collection<HtmlElement>();
@@ -48,8 +48,7 @@ namespace HtmlGenerator
                 }
                 if (value > _maximumIndentDepth)
                 {
-                    throw new ArgumentException(
-                        "The minimum indent depth cannot be larger than the maximum indent depth", nameof(value));
+                    throw new ArgumentException("The minimum indent depth cannot be larger than the maximum indent depth", nameof(value));
                 }
 
                 _minimumIndentDepth = value;
@@ -67,21 +66,20 @@ namespace HtmlGenerator
                 }
                 if (value < _minimumIndentDepth)
                 {
-                    throw new ArgumentException(
-                        "The maximum indent depth cannot be less than the minimum indent depth", nameof(value));
+                    throw new ArgumentException("The maximum indent depth cannot be less than the minimum indent depth", nameof(value));
                 }
 
                 _maximumIndentDepth = value;
             }
         }
 
-        public HtmlElement WithChild(HtmlElement child)
+        public virtual HtmlElement WithChild(HtmlElement child)
         {
             AddChild(child);
             return this;
         }
 
-        public HtmlElement WithChildren(Collection<HtmlElement> children)
+        public virtual HtmlElement WithChildren(Collection<HtmlElement> children)
         {
             AddChildren(children);
             return this;
@@ -92,6 +90,11 @@ namespace HtmlGenerator
             if (element == null)
             {
                 throw new ArgumentNullException(nameof(element));
+            }
+
+            if (element == this)
+            {
+                throw new ArgumentException("You cannot add yourself to the list of children", nameof(element));
             }
 
             Children.Insert(index, element);
@@ -119,13 +122,13 @@ namespace HtmlGenerator
             Children = children ?? new Collection<HtmlElement>();
         }
 
-        public HtmlElement WithAttribute(HtmlAttribute attribute)
+        public virtual HtmlElement WithAttribute(HtmlAttribute attribute)
         {
             AddAttribute(attribute);
             return this;
         }
 
-        public HtmlElement WithAttributes(Collection<HtmlAttribute> attributes)
+        public virtual HtmlElement WithAttributes(Collection<HtmlAttribute> attributes)
         {
             SetAttributes(attributes);
             return this;
@@ -159,15 +162,15 @@ namespace HtmlGenerator
             Attributes = attributes ?? new Collection<HtmlAttribute>();
         }
 
-        public HtmlElement WithContent(string content)
+        public virtual HtmlElement WithInnerText(string innerText)
         {
-            SetContent(content);
+            SetInnerText(innerText);
             return this;
         }
 
-        public void SetContent(string content)
+        public void SetInnerText(string innerText)
         {
-            Content = content;
+            InnerText = innerText;
         }
 
         public string Serialize() => Serialize(HtmlSerializeType.PrettyPrint);
@@ -179,7 +182,7 @@ namespace HtmlGenerator
             var openingTag = SerializeOpenTag();
             if (serializeType == HtmlSerializeType.PrettyPrint)
             {
-                if ((string.IsNullOrEmpty(Content) && Children.Count > 0) || IsVoid)
+                if ((string.IsNullOrEmpty(InnerText) && Children.Count > 0) || IsVoid)
                 {
                     openingTag += "\r";
                 }
@@ -207,27 +210,27 @@ namespace HtmlGenerator
                 }
             }
 
-            var content = Content ?? "";
+            var innerText = InnerText ?? "";
             foreach (var child in Children)
             {
                 if (shouldIndent)
                 {
                     for (var counter = 0; counter < depth; counter++)
                     {
-                        content += "\t";
+                        innerText += "\t";
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(child.Content) && child.Children.Count == 0)
+                if (!string.IsNullOrWhiteSpace(child.InnerText) && child.Children.Count == 0)
                 {
-                    content += child.Serialize(serializeType, 0);
+                    innerText += child.Serialize(serializeType, 0);
                 }
                 else
                 {
-                    content += child.Serialize(serializeType, depth + 1);
+                    innerText += child.Serialize(serializeType, depth + 1);
                 }
             }
 
-            var html = openingTag + content + closingTag;
+            var html = openingTag + innerText + closingTag;
             if (serializeType == HtmlSerializeType.PrettyPrint)
             {
                 html += "\r";

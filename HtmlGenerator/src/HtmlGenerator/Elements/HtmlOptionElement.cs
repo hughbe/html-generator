@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlOptionElement : HtmlElement 
@@ -6,34 +8,42 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlOptionElement WithDisabled() => (HtmlOptionElement)WithAttribute(Attribute.Disabled);
+        public new HtmlOptionElement WithChild(HtmlElement child) => (HtmlOptionElement)base.WithChild(child);
+        public new HtmlOptionElement WithChildren(Collection<HtmlElement> children) => (HtmlOptionElement)base.WithChildren(children);
 
-		public HtmlOptionElement WithLabel(string value) => (HtmlOptionElement)WithAttribute(Attribute.Label(value));
+        public new HtmlOptionElement WithInnerText(string innerText) => (HtmlOptionElement)base.WithInnerText(innerText);
 
-		public HtmlOptionElement WithSelected() => (HtmlOptionElement)WithAttribute(Attribute.Selected);
+        public new HtmlOptionElement WithAttribute(HtmlAttribute attribute) => (HtmlOptionElement)base.WithAttribute(attribute);
+        public new HtmlOptionElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlOptionElement)base.WithAttributes(attributes);
 
-		public HtmlOptionElement WithValue(string value) => (HtmlOptionElement)WithAttribute(Attribute.Value(value));
+		public HtmlOptionElement WithDisabled() => WithAttribute(Attribute.Disabled);
 
-		public HtmlOptionElement WithAccessKey(string value) => (HtmlOptionElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlOptionElement WithLabel(string value) => WithAttribute(Attribute.Label(value));
 
-		public HtmlOptionElement WithClass(string value) => (HtmlOptionElement)WithAttribute(Attribute.Class(value));
+		public HtmlOptionElement WithSelected() => WithAttribute(Attribute.Selected);
 
-		public HtmlOptionElement WithContentEditable(string value) => (HtmlOptionElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlOptionElement WithValue(string value) => WithAttribute(Attribute.Value(value));
 
-		public HtmlOptionElement WithContextMenu(string value) => (HtmlOptionElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlOptionElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlOptionElement WithDir(string value) => (HtmlOptionElement)WithAttribute(Attribute.Dir(value));
+		public HtmlOptionElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlOptionElement WithHidden(string value) => (HtmlOptionElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlOptionElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlOptionElement WithId(string value) => (HtmlOptionElement)WithAttribute(Attribute.Id(value));
+		public HtmlOptionElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlOptionElement WithLang(string value) => (HtmlOptionElement)WithAttribute(Attribute.Lang(value));
+		public HtmlOptionElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlOptionElement WithSpellCheck(string value) => (HtmlOptionElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlOptionElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlOptionElement WithStyle(string value) => (HtmlOptionElement)WithAttribute(Attribute.Style(value));
+		public HtmlOptionElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlOptionElement WithTabIndex(string value) => (HtmlOptionElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlOptionElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlOptionElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlOptionElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlOptionElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

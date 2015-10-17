@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlSupElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlSupElement WithAccessKey(string value) => (HtmlSupElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlSupElement WithChild(HtmlElement child) => (HtmlSupElement)base.WithChild(child);
+        public new HtmlSupElement WithChildren(Collection<HtmlElement> children) => (HtmlSupElement)base.WithChildren(children);
 
-		public HtmlSupElement WithClass(string value) => (HtmlSupElement)WithAttribute(Attribute.Class(value));
+        public new HtmlSupElement WithInnerText(string innerText) => (HtmlSupElement)base.WithInnerText(innerText);
 
-		public HtmlSupElement WithContentEditable(string value) => (HtmlSupElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlSupElement WithAttribute(HtmlAttribute attribute) => (HtmlSupElement)base.WithAttribute(attribute);
+        public new HtmlSupElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlSupElement)base.WithAttributes(attributes);
 
-		public HtmlSupElement WithContextMenu(string value) => (HtmlSupElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlSupElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlSupElement WithDir(string value) => (HtmlSupElement)WithAttribute(Attribute.Dir(value));
+		public HtmlSupElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlSupElement WithHidden(string value) => (HtmlSupElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlSupElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlSupElement WithId(string value) => (HtmlSupElement)WithAttribute(Attribute.Id(value));
+		public HtmlSupElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlSupElement WithLang(string value) => (HtmlSupElement)WithAttribute(Attribute.Lang(value));
+		public HtmlSupElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlSupElement WithSpellCheck(string value) => (HtmlSupElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlSupElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlSupElement WithStyle(string value) => (HtmlSupElement)WithAttribute(Attribute.Style(value));
+		public HtmlSupElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlSupElement WithTabIndex(string value) => (HtmlSupElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlSupElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlSupElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlSupElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlSupElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlTextAreaElement : HtmlElement 
@@ -6,54 +8,62 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlTextAreaElement WithAutoComplete(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.AutoComplete(value));
+        public new HtmlTextAreaElement WithChild(HtmlElement child) => (HtmlTextAreaElement)base.WithChild(child);
+        public new HtmlTextAreaElement WithChildren(Collection<HtmlElement> children) => (HtmlTextAreaElement)base.WithChildren(children);
 
-		public HtmlTextAreaElement WithAutoFocus() => (HtmlTextAreaElement)WithAttribute(Attribute.AutoFocus);
+        public new HtmlTextAreaElement WithInnerText(string innerText) => (HtmlTextAreaElement)base.WithInnerText(innerText);
 
-		public HtmlTextAreaElement WithCols(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Cols(value));
+        public new HtmlTextAreaElement WithAttribute(HtmlAttribute attribute) => (HtmlTextAreaElement)base.WithAttribute(attribute);
+        public new HtmlTextAreaElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTextAreaElement)base.WithAttributes(attributes);
 
-		public HtmlTextAreaElement WithDisabled() => (HtmlTextAreaElement)WithAttribute(Attribute.Disabled);
+		public HtmlTextAreaElement WithAutoComplete(string value) => WithAttribute(Attribute.AutoComplete(value));
 
-		public HtmlTextAreaElement WithForm(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Form(value));
+		public HtmlTextAreaElement WithAutoFocus() => WithAttribute(Attribute.AutoFocus);
 
-		public HtmlTextAreaElement WithMaxLength(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.MaxLength(value));
+		public HtmlTextAreaElement WithCols(string value) => WithAttribute(Attribute.Cols(value));
 
-		public HtmlTextAreaElement WithMinLength(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.MinLength(value));
+		public HtmlTextAreaElement WithDisabled() => WithAttribute(Attribute.Disabled);
 
-		public HtmlTextAreaElement WithName(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Name(value));
+		public HtmlTextAreaElement WithForm(string value) => WithAttribute(Attribute.Form(value));
 
-		public HtmlTextAreaElement WithPlaceholder(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Placeholder(value));
+		public HtmlTextAreaElement WithMaxLength(string value) => WithAttribute(Attribute.MaxLength(value));
 
-		public HtmlTextAreaElement WithReadonly() => (HtmlTextAreaElement)WithAttribute(Attribute.Readonly);
+		public HtmlTextAreaElement WithMinLength(string value) => WithAttribute(Attribute.MinLength(value));
 
-		public HtmlTextAreaElement WithRequired() => (HtmlTextAreaElement)WithAttribute(Attribute.Required);
+		public HtmlTextAreaElement WithName(string value) => WithAttribute(Attribute.Name(value));
 
-		public HtmlTextAreaElement WithRows(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Rows(value));
+		public HtmlTextAreaElement WithPlaceholder(string value) => WithAttribute(Attribute.Placeholder(value));
 
-		public HtmlTextAreaElement WithSelectionDirection(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.SelectionDirection(value));
+		public HtmlTextAreaElement WithReadonly() => WithAttribute(Attribute.Readonly);
 
-		public HtmlTextAreaElement WithWrap(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Wrap(value));
+		public HtmlTextAreaElement WithRequired() => WithAttribute(Attribute.Required);
 
-		public HtmlTextAreaElement WithAccessKey(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlTextAreaElement WithRows(string value) => WithAttribute(Attribute.Rows(value));
 
-		public HtmlTextAreaElement WithClass(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Class(value));
+		public HtmlTextAreaElement WithSelectionDirection(string value) => WithAttribute(Attribute.SelectionDirection(value));
 
-		public HtmlTextAreaElement WithContentEditable(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlTextAreaElement WithWrap(string value) => WithAttribute(Attribute.Wrap(value));
 
-		public HtmlTextAreaElement WithContextMenu(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTextAreaElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlTextAreaElement WithDir(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Dir(value));
+		public HtmlTextAreaElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlTextAreaElement WithHidden(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlTextAreaElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTextAreaElement WithId(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Id(value));
+		public HtmlTextAreaElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlTextAreaElement WithLang(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Lang(value));
+		public HtmlTextAreaElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlTextAreaElement WithSpellCheck(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlTextAreaElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlTextAreaElement WithStyle(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Style(value));
+		public HtmlTextAreaElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlTextAreaElement WithTabIndex(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlTextAreaElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlTextAreaElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlTextAreaElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlTextAreaElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

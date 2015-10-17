@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlFormElement : HtmlElement 
@@ -6,42 +8,50 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlFormElement WithAcceptCharset(string value) => (HtmlFormElement)WithAttribute(Attribute.AcceptCharset(value));
+        public new HtmlFormElement WithChild(HtmlElement child) => (HtmlFormElement)base.WithChild(child);
+        public new HtmlFormElement WithChildren(Collection<HtmlElement> children) => (HtmlFormElement)base.WithChildren(children);
 
-		public HtmlFormElement WithAction(string value) => (HtmlFormElement)WithAttribute(Attribute.Action(value));
+        public new HtmlFormElement WithInnerText(string innerText) => (HtmlFormElement)base.WithInnerText(innerText);
 
-		public HtmlFormElement WithAutoComplete(string value) => (HtmlFormElement)WithAttribute(Attribute.AutoComplete(value));
+        public new HtmlFormElement WithAttribute(HtmlAttribute attribute) => (HtmlFormElement)base.WithAttribute(attribute);
+        public new HtmlFormElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlFormElement)base.WithAttributes(attributes);
 
-		public HtmlFormElement WithEncType(string value) => (HtmlFormElement)WithAttribute(Attribute.EncType(value));
+		public HtmlFormElement WithAcceptCharset(string value) => WithAttribute(Attribute.AcceptCharset(value));
 
-		public HtmlFormElement WithMethod(string value) => (HtmlFormElement)WithAttribute(Attribute.Method(value));
+		public HtmlFormElement WithAction(string value) => WithAttribute(Attribute.Action(value));
 
-		public HtmlFormElement WithName(string value) => (HtmlFormElement)WithAttribute(Attribute.Name(value));
+		public HtmlFormElement WithAutoComplete(string value) => WithAttribute(Attribute.AutoComplete(value));
 
-		public HtmlFormElement WithNoValidate() => (HtmlFormElement)WithAttribute(Attribute.NoValidate);
+		public HtmlFormElement WithEncType(string value) => WithAttribute(Attribute.EncType(value));
 
-		public HtmlFormElement WithTarget(string value) => (HtmlFormElement)WithAttribute(Attribute.Target(value));
+		public HtmlFormElement WithMethod(string value) => WithAttribute(Attribute.Method(value));
 
-		public HtmlFormElement WithAccessKey(string value) => (HtmlFormElement)WithAttribute(Attribute.AccessKey(value));
+		public HtmlFormElement WithName(string value) => WithAttribute(Attribute.Name(value));
 
-		public HtmlFormElement WithClass(string value) => (HtmlFormElement)WithAttribute(Attribute.Class(value));
+		public HtmlFormElement WithNoValidate() => WithAttribute(Attribute.NoValidate);
 
-		public HtmlFormElement WithContentEditable(string value) => (HtmlFormElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlFormElement WithTarget(string value) => WithAttribute(Attribute.Target(value));
 
-		public HtmlFormElement WithContextMenu(string value) => (HtmlFormElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlFormElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlFormElement WithDir(string value) => (HtmlFormElement)WithAttribute(Attribute.Dir(value));
+		public HtmlFormElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlFormElement WithHidden(string value) => (HtmlFormElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlFormElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlFormElement WithId(string value) => (HtmlFormElement)WithAttribute(Attribute.Id(value));
+		public HtmlFormElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlFormElement WithLang(string value) => (HtmlFormElement)WithAttribute(Attribute.Lang(value));
+		public HtmlFormElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlFormElement WithSpellCheck(string value) => (HtmlFormElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlFormElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlFormElement WithStyle(string value) => (HtmlFormElement)WithAttribute(Attribute.Style(value));
+		public HtmlFormElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlFormElement WithTabIndex(string value) => (HtmlFormElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlFormElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlFormElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlFormElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlFormElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

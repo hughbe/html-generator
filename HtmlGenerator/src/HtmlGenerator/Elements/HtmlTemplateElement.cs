@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlTemplateElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlTemplateElement WithAccessKey(string value) => (HtmlTemplateElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlTemplateElement WithChild(HtmlElement child) => (HtmlTemplateElement)base.WithChild(child);
+        public new HtmlTemplateElement WithChildren(Collection<HtmlElement> children) => (HtmlTemplateElement)base.WithChildren(children);
 
-		public HtmlTemplateElement WithClass(string value) => (HtmlTemplateElement)WithAttribute(Attribute.Class(value));
+        public new HtmlTemplateElement WithInnerText(string innerText) => (HtmlTemplateElement)base.WithInnerText(innerText);
 
-		public HtmlTemplateElement WithContentEditable(string value) => (HtmlTemplateElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlTemplateElement WithAttribute(HtmlAttribute attribute) => (HtmlTemplateElement)base.WithAttribute(attribute);
+        public new HtmlTemplateElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTemplateElement)base.WithAttributes(attributes);
 
-		public HtmlTemplateElement WithContextMenu(string value) => (HtmlTemplateElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTemplateElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlTemplateElement WithDir(string value) => (HtmlTemplateElement)WithAttribute(Attribute.Dir(value));
+		public HtmlTemplateElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlTemplateElement WithHidden(string value) => (HtmlTemplateElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlTemplateElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTemplateElement WithId(string value) => (HtmlTemplateElement)WithAttribute(Attribute.Id(value));
+		public HtmlTemplateElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlTemplateElement WithLang(string value) => (HtmlTemplateElement)WithAttribute(Attribute.Lang(value));
+		public HtmlTemplateElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlTemplateElement WithSpellCheck(string value) => (HtmlTemplateElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlTemplateElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlTemplateElement WithStyle(string value) => (HtmlTemplateElement)WithAttribute(Attribute.Style(value));
+		public HtmlTemplateElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlTemplateElement WithTabIndex(string value) => (HtmlTemplateElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlTemplateElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlTemplateElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlTemplateElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlTemplateElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlParamElement : HtmlElement 
@@ -6,30 +8,38 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlParamElement WithName(string value) => (HtmlParamElement)WithAttribute(Attribute.Name(value));
+        public new HtmlParamElement WithChild(HtmlElement child) => (HtmlParamElement)base.WithChild(child);
+        public new HtmlParamElement WithChildren(Collection<HtmlElement> children) => (HtmlParamElement)base.WithChildren(children);
 
-		public HtmlParamElement WithValue(string value) => (HtmlParamElement)WithAttribute(Attribute.Value(value));
+        public new HtmlParamElement WithInnerText(string innerText) => (HtmlParamElement)base.WithInnerText(innerText);
 
-		public HtmlParamElement WithAccessKey(string value) => (HtmlParamElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlParamElement WithAttribute(HtmlAttribute attribute) => (HtmlParamElement)base.WithAttribute(attribute);
+        public new HtmlParamElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlParamElement)base.WithAttributes(attributes);
 
-		public HtmlParamElement WithClass(string value) => (HtmlParamElement)WithAttribute(Attribute.Class(value));
+		public HtmlParamElement WithName(string value) => WithAttribute(Attribute.Name(value));
 
-		public HtmlParamElement WithContentEditable(string value) => (HtmlParamElement)WithAttribute(Attribute.ContentEditable(value));
+		public HtmlParamElement WithValue(string value) => WithAttribute(Attribute.Value(value));
 
-		public HtmlParamElement WithContextMenu(string value) => (HtmlParamElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlParamElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlParamElement WithDir(string value) => (HtmlParamElement)WithAttribute(Attribute.Dir(value));
+		public HtmlParamElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlParamElement WithHidden(string value) => (HtmlParamElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlParamElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlParamElement WithId(string value) => (HtmlParamElement)WithAttribute(Attribute.Id(value));
+		public HtmlParamElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlParamElement WithLang(string value) => (HtmlParamElement)WithAttribute(Attribute.Lang(value));
+		public HtmlParamElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlParamElement WithSpellCheck(string value) => (HtmlParamElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlParamElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlParamElement WithStyle(string value) => (HtmlParamElement)WithAttribute(Attribute.Style(value));
+		public HtmlParamElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlParamElement WithTabIndex(string value) => (HtmlParamElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlParamElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlParamElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlParamElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlParamElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

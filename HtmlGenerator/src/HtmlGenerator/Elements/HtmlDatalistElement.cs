@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlDatalistElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlDatalistElement WithAccessKey(string value) => (HtmlDatalistElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlDatalistElement WithChild(HtmlElement child) => (HtmlDatalistElement)base.WithChild(child);
+        public new HtmlDatalistElement WithChildren(Collection<HtmlElement> children) => (HtmlDatalistElement)base.WithChildren(children);
 
-		public HtmlDatalistElement WithClass(string value) => (HtmlDatalistElement)WithAttribute(Attribute.Class(value));
+        public new HtmlDatalistElement WithInnerText(string innerText) => (HtmlDatalistElement)base.WithInnerText(innerText);
 
-		public HtmlDatalistElement WithContentEditable(string value) => (HtmlDatalistElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlDatalistElement WithAttribute(HtmlAttribute attribute) => (HtmlDatalistElement)base.WithAttribute(attribute);
+        public new HtmlDatalistElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDatalistElement)base.WithAttributes(attributes);
 
-		public HtmlDatalistElement WithContextMenu(string value) => (HtmlDatalistElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlDatalistElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlDatalistElement WithDir(string value) => (HtmlDatalistElement)WithAttribute(Attribute.Dir(value));
+		public HtmlDatalistElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlDatalistElement WithHidden(string value) => (HtmlDatalistElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlDatalistElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlDatalistElement WithId(string value) => (HtmlDatalistElement)WithAttribute(Attribute.Id(value));
+		public HtmlDatalistElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlDatalistElement WithLang(string value) => (HtmlDatalistElement)WithAttribute(Attribute.Lang(value));
+		public HtmlDatalistElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlDatalistElement WithSpellCheck(string value) => (HtmlDatalistElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlDatalistElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlDatalistElement WithStyle(string value) => (HtmlDatalistElement)WithAttribute(Attribute.Style(value));
+		public HtmlDatalistElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlDatalistElement WithTabIndex(string value) => (HtmlDatalistElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlDatalistElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlDatalistElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlDatalistElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlDatalistElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

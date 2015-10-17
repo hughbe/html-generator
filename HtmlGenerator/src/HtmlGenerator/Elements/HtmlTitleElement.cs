@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlTitleElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlTitleElement WithAccessKey(string value) => (HtmlTitleElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlTitleElement WithChild(HtmlElement child) => (HtmlTitleElement)base.WithChild(child);
+        public new HtmlTitleElement WithChildren(Collection<HtmlElement> children) => (HtmlTitleElement)base.WithChildren(children);
 
-		public HtmlTitleElement WithClass(string value) => (HtmlTitleElement)WithAttribute(Attribute.Class(value));
+        public new HtmlTitleElement WithInnerText(string innerText) => (HtmlTitleElement)base.WithInnerText(innerText);
 
-		public HtmlTitleElement WithContentEditable(string value) => (HtmlTitleElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlTitleElement WithAttribute(HtmlAttribute attribute) => (HtmlTitleElement)base.WithAttribute(attribute);
+        public new HtmlTitleElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTitleElement)base.WithAttributes(attributes);
 
-		public HtmlTitleElement WithContextMenu(string value) => (HtmlTitleElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTitleElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlTitleElement WithDir(string value) => (HtmlTitleElement)WithAttribute(Attribute.Dir(value));
+		public HtmlTitleElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlTitleElement WithHidden(string value) => (HtmlTitleElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlTitleElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTitleElement WithId(string value) => (HtmlTitleElement)WithAttribute(Attribute.Id(value));
+		public HtmlTitleElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlTitleElement WithLang(string value) => (HtmlTitleElement)WithAttribute(Attribute.Lang(value));
+		public HtmlTitleElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlTitleElement WithSpellCheck(string value) => (HtmlTitleElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlTitleElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlTitleElement WithStyle(string value) => (HtmlTitleElement)WithAttribute(Attribute.Style(value));
+		public HtmlTitleElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlTitleElement WithTabIndex(string value) => (HtmlTitleElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlTitleElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlTitleElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlTitleElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlTitleElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }

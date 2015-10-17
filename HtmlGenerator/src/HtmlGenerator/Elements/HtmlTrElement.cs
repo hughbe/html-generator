@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace HtmlGenerator
 {
     public class HtmlTrElement : HtmlElement 
@@ -6,26 +8,34 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlTrElement WithAccessKey(string value) => (HtmlTrElement)WithAttribute(Attribute.AccessKey(value));
+        public new HtmlTrElement WithChild(HtmlElement child) => (HtmlTrElement)base.WithChild(child);
+        public new HtmlTrElement WithChildren(Collection<HtmlElement> children) => (HtmlTrElement)base.WithChildren(children);
 
-		public HtmlTrElement WithClass(string value) => (HtmlTrElement)WithAttribute(Attribute.Class(value));
+        public new HtmlTrElement WithInnerText(string innerText) => (HtmlTrElement)base.WithInnerText(innerText);
 
-		public HtmlTrElement WithContentEditable(string value) => (HtmlTrElement)WithAttribute(Attribute.ContentEditable(value));
+        public new HtmlTrElement WithAttribute(HtmlAttribute attribute) => (HtmlTrElement)base.WithAttribute(attribute);
+        public new HtmlTrElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTrElement)base.WithAttributes(attributes);
 
-		public HtmlTrElement WithContextMenu(string value) => (HtmlTrElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTrElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 
-		public HtmlTrElement WithDir(string value) => (HtmlTrElement)WithAttribute(Attribute.Dir(value));
+		public HtmlTrElement WithClass(string value) => WithAttribute(Attribute.Class(value));
 
-		public HtmlTrElement WithHidden(string value) => (HtmlTrElement)WithAttribute(Attribute.Hidden(value));
+		public HtmlTrElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTrElement WithId(string value) => (HtmlTrElement)WithAttribute(Attribute.Id(value));
+		public HtmlTrElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
 
-		public HtmlTrElement WithLang(string value) => (HtmlTrElement)WithAttribute(Attribute.Lang(value));
+		public HtmlTrElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
 
-		public HtmlTrElement WithSpellCheck(string value) => (HtmlTrElement)WithAttribute(Attribute.SpellCheck(value));
+		public HtmlTrElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
 
-		public HtmlTrElement WithStyle(string value) => (HtmlTrElement)WithAttribute(Attribute.Style(value));
+		public HtmlTrElement WithId(string value) => WithAttribute(Attribute.Id(value));
 
-		public HtmlTrElement WithTabIndex(string value) => (HtmlTrElement)WithAttribute(Attribute.TabIndex(value));
+		public HtmlTrElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
+
+		public HtmlTrElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
+
+		public HtmlTrElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
+
+		public HtmlTrElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
     }
 }
