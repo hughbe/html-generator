@@ -4,15 +4,16 @@ namespace HtmlGenerator
 {
     public class HtmlAttribute
     {
+        public string ProperName { get; }
         public string Name { get; }
         public string Value { get; }
         public bool IsVoid { get; }
         
-        protected HtmlAttribute(HtmlAttribute attribute) : this(attribute.Name, attribute.Value, attribute.IsVoid)
+        protected internal HtmlAttribute(HtmlAttribute attribute) : this(attribute.Name, attribute.ProperName, attribute.Value, attribute.IsVoid)
         {
         }
          
-        internal HtmlAttribute(string name, string value, bool isVoid)
+        protected internal HtmlAttribute(string name, string properName, string value, bool isVoid)
         {
             if (name == null)
             {
@@ -23,7 +24,14 @@ namespace HtmlGenerator
                 throw new ArgumentException("The attribute's name must not be an empty string", nameof(name));
             }
 
+            if (string.IsNullOrWhiteSpace(properName))
+            {
+                properName = name;
+            }
+            properName.Replace(" ", "").Replace("-", "");
+            
             Name = name;
+            ProperName = properName;
             Value = value;
             IsVoid = isVoid;
         }

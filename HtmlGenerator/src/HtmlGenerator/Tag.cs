@@ -1,165 +1,132 @@
-﻿namespace HtmlGenerator
+namespace HtmlGenerator 
 {
-    public static class Tag
+    public static class Tag 
     {
-        //Root
-        public static HtmlElement Html => Custom("html"); //Uses attributes (xmlns)
-        public static HtmlElement Base => Custom("base", true); //Uses attributes (href, target)
+		public static HtmlAElement A => new HtmlAElement();
+		public static HtmlAbbrElement Abbr => new HtmlAbbrElement();
+		public static HtmlAddressElement Address => new HtmlAddressElement();
+		public static HtmlAreaElement Area => new HtmlAreaElement();
+		public static HtmlArticleElement Article => new HtmlArticleElement();
+		public static HtmlAudioElement Audio => new HtmlAudioElement();
 
-        //Meta
-        public static HtmlElement Head => Custom("head");
+		public static HtmlBElement B => new HtmlBElement();
+		public static HtmlBaseElement Base => new HtmlBaseElement();
+		public static HtmlBdiElement Bdi => new HtmlBdiElement();
+		public static HtmlBodyElement Body => new HtmlBodyElement();
+		public static HtmlBrElement Br => new HtmlBrElement();
+		public static HtmlButtonElement Button => new HtmlButtonElement();
 
-        public static HtmlElement Link => Custom("link", true);
-        //Uses attributes (crossorigin, href, hreflang, integrity, media, rel, sizes, type)
-        public static HtmlElement Style => Custom("style"); //Uses attributes (type, media, scoped, title, disabled)
+		public static HtmlCanvasElement Canvas => new HtmlCanvasElement();
+		public static HtmlCaptionElement Caption => new HtmlCaptionElement();
+		public static HtmlCiteElement Cite => new HtmlCiteElement();
+		public static HtmlCodeElement Code => new HtmlCodeElement();
+		public static HtmlColElement Col => new HtmlColElement();
+		public static HtmlColgroupElement Colgroup => new HtmlColgroupElement();
 
-        public static HtmlElement Meta => Custom("meta", true);
-        //Uses attributes (charset, content, http-equiv, default-style, refresh, name)
-        public static HtmlElement Title => Custom("title");
+		public static HtmlDataElement Data => new HtmlDataElement();
+		public static HtmlDatalistElement Datalist => new HtmlDatalistElement();
+		public static HtmlDdElement Dd => new HtmlDdElement();
+		public static HtmlDelElement Del => new HtmlDelElement();
+		public static HtmlDetailsElement Details => new HtmlDetailsElement();
+		public static HtmlDfnElement Dfn => new HtmlDfnElement();
+		public static HtmlDialogElement Dialog => new HtmlDialogElement();
+		public static HtmlDivElement Div => new HtmlDivElement();
+		public static HtmlDlElement Dl => new HtmlDlElement();
+		public static HtmlDtElement Dt => new HtmlDtElement();
 
-        public static HtmlElement Script => Custom("script");
-        //Uses attributes (async, integrity, src, type, text, defer, crossorigin)
-        public static HtmlElement Noscript => Custom("noscript");
-        public static HtmlElement Canvas => Custom("canvas"); //Uses attributes (height, width)
+		public static HtmlEmElement Em => new HtmlEmElement();
+		public static HtmlEmbedElement Embed => new HtmlEmbedElement();
 
-        //Structure
-        public static HtmlElement Address => Custom("address");
-        public static HtmlElement Article => Custom("article");
-        public static HtmlElement Body => Custom("body");
-        public static HtmlElement Div => Custom("div");
-        public static HtmlElement Footer => Custom("footer");
-        public static HtmlElement Header => Custom("header");
-        public static HtmlElement Main => Custom("main");
-        public static HtmlElement Nav => Custom("nav");
-        public static HtmlElement Section => Custom("section");
-        public static HtmlElement Span => Custom("span");
-        public static HtmlElement Template => Custom("template"); //Unsupported
+		public static HtmlFieldsetElement Fieldset => new HtmlFieldsetElement();
+		public static HtmlFigCaptionElement FigCaption => new HtmlFigCaptionElement();
+		public static HtmlFigureElement Figure => new HtmlFigureElement();
+		public static HtmlFooterElement Footer => new HtmlFooterElement();
+		public static HtmlFormElement Form => new HtmlFormElement();
 
-        //Seperators
-        public static HtmlElement Br => Custom("br", true);
-        public static HtmlElement Hr => Custom("hr", true); //Uses attributes (color)
-        public static HtmlElement Wbr => Custom("wbr");
+		public static HtmlH1Element H1 => new HtmlH1Element();
+		public static HtmlH2Element H2 => new HtmlH2Element();
+		public static HtmlH3Element H3 => new HtmlH3Element();
+		public static HtmlH4Element H4 => new HtmlH4Element();
+		public static HtmlH5Element H5 => new HtmlH5Element();
+		public static HtmlH6Element H6 => new HtmlH6Element();
+		public static HtmlHeadElement Head => new HtmlHeadElement();
+		public static HtmlHeaderElement Header => new HtmlHeaderElement();
+		public static HtmlHrElement Hr => new HtmlHrElement();
+		public static HtmlHtmlElement Html => new HtmlHtmlElement();
 
-        //Lists
-        public static HtmlElement Dd => Custom("dd"); //Uses attributes (nowrap)
-        public static HtmlElement Dl => Custom("dl"); //Uses attributes (compact)
-        public static HtmlElement Dt => Custom("dt");
+		public static HtmlIElement I => new HtmlIElement();
+		public static HtmlIframeElement Iframe => new HtmlIframeElement();
+		public static HtmlImgElement Img => new HtmlImgElement();
+		public static HtmlInputElement Input => new HtmlInputElement();
+		public static HtmlInsElement Ins => new HtmlInsElement();
 
-        public static HtmlElement Li => Custom("li"); //Uses attributes (value)
-        public static HtmlElement Ol => Custom("ol"); //Uses attributes (reversed, start, type)
-        public static HtmlElement Ul => Custom("ul");
+		public static HtmlKbdElement Kbd => new HtmlKbdElement();
 
-        //Text
-        public static HtmlElement A => Custom("a");
-        //Uses attributes (download, href, hreflang, media, ping, rel, target, type)
+		public static HtmlLabelElement Label => new HtmlLabelElement();
+		public static HtmlLegendElement Legend => new HtmlLegendElement();
+		public static HtmlLiElement Li => new HtmlLiElement();
+		public static HtmlLinkElement Link => new HtmlLinkElement();
 
-        public static HtmlElement H1 => Custom("h1");
-        public static HtmlElement H2 => Custom("h2");
-        public static HtmlElement H3 => Custom("h3");
-        public static HtmlElement H4 => Custom("h4");
-        public static HtmlElement H5 => Custom("h5");
-        public static HtmlElement H6 => Custom("h6");
+		public static HtmlMainElement Main => new HtmlMainElement();
+		public static HtmlMapElement Map => new HtmlMapElement();
+		public static HtmlMarkElement Mark => new HtmlMarkElement();
+		public static HtmlMenuElement Menu => new HtmlMenuElement();
+		public static HtmlMenuItemElement MenuItem => new HtmlMenuItemElement();
+		public static HtmlMetaElement Meta => new HtmlMetaElement();
+		public static HtmlMeterElement Meter => new HtmlMeterElement();
 
-        public static HtmlElement P => Custom("p");
+		public static HtmlNavElement Nav => new HtmlNavElement();
+		public static HtmlNoscriptElement Noscript => new HtmlNoscriptElement();
 
-        //Displaying External Content
-        public static HtmlElement Cite => Custom("cite");
-        public static HtmlElement Data => Custom("data"); //Uses attributes (value); unsupported
-        public static HtmlElement Dfn => Custom("dfn");
-        public static HtmlElement Figure => Custom("figure");
-        public static HtmlElement FigCaption => Custom("figcaption");
-        public static HtmlElement Q => Custom("q"); //Uses attributes (cite)
-        public static HtmlElement Sub => Custom("sub");
-        public static HtmlElement Sup => Custom("sup");
-        public static HtmlElement Time => Custom("time"); //Uses attributes (datetime)
+		public static HtmlObjectElement Object => new HtmlObjectElement();
+		public static HtmlOlElement Ol => new HtmlOlElement();
+		public static HtmlOptgroupElement Optgroup => new HtmlOptgroupElement();
+		public static HtmlOptionElement Option => new HtmlOptionElement();
+		public static HtmlOutputElement Output => new HtmlOutputElement();
 
-        //Formatting
-        public static HtmlElement Abbr => Custom("abbr");
-        public static HtmlElement B => Custom("b"); //LEGACY
-        public static HtmlElement Code => Custom("code");
-        public static HtmlElement Del => Custom("del"); //Uses attributes (cite, datetime)
-        public static HtmlElement Em => Custom("em");
-        public static HtmlElement I => Custom("i");
-        public static HtmlElement Ins => Custom("ins"); //Uses attributes (cite, datetime)
-        public static HtmlElement Kbd => Custom("kbd");
-        public static HtmlElement Mark => Custom("mark");
-        public static HtmlElement Pre => Custom("pre");
-        public static HtmlElement Samp => Custom("samp");
-        public static HtmlElement Small => Custom("small");
-        public static HtmlElement Strong => Custom("strong");
-        public static HtmlElement U => Custom("u");
-        public static HtmlElement Var => Custom("var");
+		public static HtmlPElement P => new HtmlPElement();
+		public static HtmlParamElement Param => new HtmlParamElement();
+		public static HtmlPreElement Pre => new HtmlPreElement();
+		public static HtmlProgressElement Progress => new HtmlProgressElement();
 
-        //Localisation
-        public static HtmlElement Bdi => Custom("bdi");
-        public static HtmlElement Rp => Custom("rp");
-        public static HtmlElement Ruby => Custom("ruby");
-        public static HtmlElement Rt => Custom("rt");
-        public static HtmlElement Rtc => Custom("rtc");
+		public static HtmlQElement Q => new HtmlQElement();
 
-        //Multimedia
-        public static HtmlElement Area => Custom("area", true);
-        //Uses attributes (alt, coords, download, href, hreflang, media, rel, shape, target, type)
-        public static HtmlElement Audio => Custom("audio");
-        //Uses attributes (autoplay, buffered, controls, loop, muted, played, preload, src, volume)
-        public static HtmlElement Img => Custom("img", true);
-        //Uses attributes (alt, crossorigin, height, ismap, longdesc, sizes, src, srcset, width, usemap)
-        public static HtmlElement Map => Custom("map"); //Uses attributes (name)
-        public static HtmlElement Track => Custom("track", true); //Uses attributes (default, kind, label, src, srclang)
-        public static HtmlElement Video => Custom("video");
-        //Uses attributes (autoplay, buffers, controls, crossorigin, height, loop, muted, played, preload, poster, src, width)
+		public static HtmlRpElement Rp => new HtmlRpElement();
+		public static HtmlRtElement Rt => new HtmlRtElement();
+		public static HtmlRtcElement Rtc => new HtmlRtcElement();
+		public static HtmlRubyElement Ruby => new HtmlRubyElement();
 
-        //Embedding
-        public static HtmlElement Embed => Custom("embed", true); //Uses attributes (height, src, type, width)
-        public static HtmlElement Iframe => Custom("iframe");
-        //Uses attributes (allowfullscreen, height, name, sandbox, seamless, src, srcdoc, width)
-        public static HtmlElement Object => Custom("object");
-        //Uses attributes (data, form, height, height, name, type, typemustmatch, usemap, width)
-        public static HtmlElement Param => Custom("param", true); //Uses attributes (name, value)
-        public static HtmlElement Source => Custom("source", true); //Uses attributes (src, type)
+		public static HtmlSampElement Samp => new HtmlSampElement();
+		public static HtmlScriptElement Script => new HtmlScriptElement();
+		public static HtmlSectionElement Section => new HtmlSectionElement();
+		public static HtmlSelectElement Select => new HtmlSelectElement();
+		public static HtmlSmallElement Small => new HtmlSmallElement();
+		public static HtmlSourceElement Source => new HtmlSourceElement();
+		public static HtmlSpanElement Span => new HtmlSpanElement();
+		public static HtmlStrongElement Strong => new HtmlStrongElement();
+		public static HtmlStyleElement Style => new HtmlStyleElement();
+		public static HtmlSubElement Sub => new HtmlSubElement();
+		public static HtmlSummaryElement Summary => new HtmlSummaryElement();
+		public static HtmlSupElement Sup => new HtmlSupElement();
 
-        //Table
-        public static HtmlElement Caption => Custom("caption");
-        public static HtmlElement Col => Custom("col", true); //Uses attributes (span)
-        public static HtmlElement Colgroup => Custom("colgroup"); //Uses attributes (span)
-        public static HtmlElement Table => Custom("table");
-        public static HtmlElement Tbody => Custom("tbody");
-        public static HtmlElement Tfoot => Custom("tfoot");
-        public static HtmlElement Th => Custom("th"); //Uses attributes (colspan, headers, rowspan, scope)
-        public static HtmlElement Thead => Custom("thead");
-        public static HtmlElement Tr => Custom("tr");
+		public static HtmlTableElement Table => new HtmlTableElement();
+		public static HtmlTbodyElement Tbody => new HtmlTbodyElement();
+		public static HtmlTemplateElement Template => new HtmlTemplateElement();
+		public static HtmlTextAreaElement TextArea => new HtmlTextAreaElement();
+		public static HtmlTfootElement Tfoot => new HtmlTfootElement();
+		public static HtmlThElement Th => new HtmlThElement();
+		public static HtmlTheadElement Thead => new HtmlTheadElement();
+		public static HtmlTimeElement Time => new HtmlTimeElement();
+		public static HtmlTitleElement Title => new HtmlTitleElement();
+		public static HtmlTrElement Tr => new HtmlTrElement();
+		public static HtmlTrackElement Track => new HtmlTrackElement();
 
-        //Forms
-        public static HtmlElement Button => Custom("button");
-        //Uses attributes (autofocus, disabled, form, formaction, formenctype, formmethod, formnovalidate, formtarget, name, type, value)
-        public static HtmlElement Datalist => Custom("datalist");
-        public static HtmlElement Fieldset => Custom("fieldset"); //Uses attributes (disabled, form, name)
-        public static HtmlElement Form => Custom("form");
-        //Uses attributes (accept-charset, action, autocomplete, enctype, method, name, novalidate, target)
-        public static HtmlElement Input => Custom("input", true);
-        //Uses attributes (type, accept, autocomplete, autofocus, autosave, checked, disabled, form, formaction, formenctype, formmethod, formnovalidate, formtarget, height, inputmode, list, max, maxlength, min, minLength, multiple, name, pattern, placeholder, readonly, required, selectionDirection, size, spellCheck, src, step, tabIndex, value, width)
-        public static HtmlElement Label => Custom("label"); //Uses attributes (accesskey, for, form)
-        public static HtmlElement Legend => Custom("legend");
-        public static HtmlElement Meter => Custom("meter");
-        //Uses attributes (value, min, max, low, high, optimum, form)
-        public static HtmlElement Optgroup => Custom("optgroup"); //Uses attributes (disabled, label)
-        public static HtmlElement Option => Custom("option"); //Uses attributes (disabled, label, selected, value)
-        public static HtmlElement Output => Custom("output"); //Uses attributes (for, form, name)
-        public static HtmlElement Progress => Custom("progress"); //Uses attributes (max, value)
-        public static HtmlElement Select => Custom("select");
-        //Uses attributes (autofocus, disabled, form, multiple, name, required, size)
-        public static HtmlElement TextArea => Custom("textarea");
-        //Uses attributes (autocomplete, autofocus, cols, disabled, form, maxlength, minLength, name, placeholder, readonly, required, rows, selectionDirection, selectionEnd, selectionStart, spellcheck, wrap)
+		public static HtmlUElement U => new HtmlUElement();
+		public static HtmlUlElement Ul => new HtmlUlElement();
 
-        //Interactivity
-        public static HtmlElement Details => Custom("details"); //Uses attributes (open); Unsupported
-        public static HtmlElement Dialog => Custom("dialog"); //Uses attributes (open); Unsupported
-        public static HtmlElement Menu => Custom("menu"); //Uses attributes (label, type); Unsupported
-        public static HtmlElement MenuItem => Custom("menutiem", true);
-        //Uses attributes (checked, command, default, disabled, icon, label, radiogroup, type); Unsupported
-        public static HtmlElement Summary => Custom("summary"); //Unsupported
+		public static HtmlVarElement Var => new HtmlVarElement();
+		public static HtmlVideoElement Video => new HtmlVideoElement();
 
-        public static HtmlElement Custom(string tag) => Custom(tag, false);
-        public static HtmlElement Custom(string tag, bool isVoid) => new HtmlElement(tag, isVoid);
+		public static HtmlWbrElement Wbr => new HtmlWbrElement();
     }
 }
