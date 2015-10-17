@@ -6,9 +6,9 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlProgressElement WithMaxAttribute(string value) => (HtmlProgressElement)WithAttribute(Attribute.Max(value));
+		public HtmlProgressElement WithMax(string value) => (HtmlProgressElement)WithAttribute(Attribute.Max(value));
 
-		public HtmlProgressElement WithValueAttribute(string value) => (HtmlProgressElement)WithAttribute(Attribute.Value(value));
+		public HtmlProgressElement WithValue(string value) => (HtmlProgressElement)WithAttribute(Attribute.Value(value));
 
 		public HtmlProgressElement WithAccessKey(string value) => (HtmlProgressElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -16,7 +16,7 @@ namespace HtmlGenerator
 
 		public HtmlProgressElement WithContentEditable(string value) => (HtmlProgressElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlProgressElement WithContextMenuAttribute(string value) => (HtmlProgressElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlProgressElement WithContextMenu(string value) => (HtmlProgressElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlProgressElement WithDir(string value) => (HtmlProgressElement)WithAttribute(Attribute.Dir(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlProgressElement WithSpellCheck(string value) => (HtmlProgressElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlProgressElement WithStyleAttribute(string value) => (HtmlProgressElement)WithAttribute(Attribute.Style(value));
+		public HtmlProgressElement WithStyle(string value) => (HtmlProgressElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlProgressElement WithTabIndex(string value) => (HtmlProgressElement)WithAttribute(Attribute.TabIndex(value));
     }

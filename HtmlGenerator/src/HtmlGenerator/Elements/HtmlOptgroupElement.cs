@@ -6,9 +6,9 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlOptgroupElement WithDisabledAttribute() => (HtmlOptgroupElement)WithAttribute(Attribute.Disabled);
+		public HtmlOptgroupElement WithDisabled() => (HtmlOptgroupElement)WithAttribute(Attribute.Disabled);
 
-		public HtmlOptgroupElement WithLabelAttribute(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Label(value));
+		public HtmlOptgroupElement WithLabel(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Label(value));
 
 		public HtmlOptgroupElement WithAccessKey(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -16,7 +16,7 @@ namespace HtmlGenerator
 
 		public HtmlOptgroupElement WithContentEditable(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlOptgroupElement WithContextMenuAttribute(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlOptgroupElement WithContextMenu(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlOptgroupElement WithDir(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Dir(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlOptgroupElement WithSpellCheck(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlOptgroupElement WithStyleAttribute(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Style(value));
+		public HtmlOptgroupElement WithStyle(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlOptgroupElement WithTabIndex(string value) => (HtmlOptgroupElement)WithAttribute(Attribute.TabIndex(value));
     }

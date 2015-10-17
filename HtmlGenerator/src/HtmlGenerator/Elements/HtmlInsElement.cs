@@ -6,9 +6,9 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlInsElement WithCiteAttribute(string value) => (HtmlInsElement)WithAttribute(Attribute.Cite(value));
+		public HtmlInsElement WithCite(string value) => (HtmlInsElement)WithAttribute(Attribute.Cite(value));
 
-		public HtmlInsElement WithDateTimeAttribute(string value) => (HtmlInsElement)WithAttribute(Attribute.DateTime(value));
+		public HtmlInsElement WithDateTime(string value) => (HtmlInsElement)WithAttribute(Attribute.DateTime(value));
 
 		public HtmlInsElement WithAccessKey(string value) => (HtmlInsElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -16,7 +16,7 @@ namespace HtmlGenerator
 
 		public HtmlInsElement WithContentEditable(string value) => (HtmlInsElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlInsElement WithContextMenuAttribute(string value) => (HtmlInsElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlInsElement WithContextMenu(string value) => (HtmlInsElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlInsElement WithDir(string value) => (HtmlInsElement)WithAttribute(Attribute.Dir(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlInsElement WithSpellCheck(string value) => (HtmlInsElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlInsElement WithStyleAttribute(string value) => (HtmlInsElement)WithAttribute(Attribute.Style(value));
+		public HtmlInsElement WithStyle(string value) => (HtmlInsElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlInsElement WithTabIndex(string value) => (HtmlInsElement)WithAttribute(Attribute.TabIndex(value));
     }

@@ -6,21 +6,21 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlObjectElement WithDataAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Data(value));
+		public HtmlObjectElement WithData(string value) => (HtmlObjectElement)WithAttribute(Attribute.Data(value));
 
-		public HtmlObjectElement WithFormAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Form(value));
+		public HtmlObjectElement WithForm(string value) => (HtmlObjectElement)WithAttribute(Attribute.Form(value));
 
-		public HtmlObjectElement WithHeightAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Height(value));
+		public HtmlObjectElement WithHeight(string value) => (HtmlObjectElement)WithAttribute(Attribute.Height(value));
 
-		public HtmlObjectElement WithNameAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Name(value));
+		public HtmlObjectElement WithName(string value) => (HtmlObjectElement)WithAttribute(Attribute.Name(value));
 
-		public HtmlObjectElement WithTypeAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Type(value));
+		public HtmlObjectElement WithType(string value) => (HtmlObjectElement)WithAttribute(Attribute.Type(value));
 
-		public HtmlObjectElement WithTypeMustMatchAttribute() => (HtmlObjectElement)WithAttribute(Attribute.TypeMustMatch);
+		public HtmlObjectElement WithTypeMustMatch() => (HtmlObjectElement)WithAttribute(Attribute.TypeMustMatch);
 
-		public HtmlObjectElement WithUseMapAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.UseMap(value));
+		public HtmlObjectElement WithUseMap(string value) => (HtmlObjectElement)WithAttribute(Attribute.UseMap(value));
 
-		public HtmlObjectElement WithWidthAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Width(value));
+		public HtmlObjectElement WithWidth(string value) => (HtmlObjectElement)WithAttribute(Attribute.Width(value));
 
 		public HtmlObjectElement WithAccessKey(string value) => (HtmlObjectElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlObjectElement WithContentEditable(string value) => (HtmlObjectElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlObjectElement WithContextMenuAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlObjectElement WithContextMenu(string value) => (HtmlObjectElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlObjectElement WithDir(string value) => (HtmlObjectElement)WithAttribute(Attribute.Dir(value));
 
@@ -40,7 +40,7 @@ namespace HtmlGenerator
 
 		public HtmlObjectElement WithSpellCheck(string value) => (HtmlObjectElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlObjectElement WithStyleAttribute(string value) => (HtmlObjectElement)WithAttribute(Attribute.Style(value));
+		public HtmlObjectElement WithStyle(string value) => (HtmlObjectElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlObjectElement WithTabIndex(string value) => (HtmlObjectElement)WithAttribute(Attribute.TabIndex(value));
     }

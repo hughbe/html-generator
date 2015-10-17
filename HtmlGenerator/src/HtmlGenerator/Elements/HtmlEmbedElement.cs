@@ -6,13 +6,13 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlEmbedElement WithHeightAttribute(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Height(value));
+		public HtmlEmbedElement WithHeight(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Height(value));
 
-		public HtmlEmbedElement WithSrcAttribute(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Src(value));
+		public HtmlEmbedElement WithSrc(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Src(value));
 
-		public HtmlEmbedElement WithTypeAttribute(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Type(value));
+		public HtmlEmbedElement WithType(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Type(value));
 
-		public HtmlEmbedElement WithWidthAttribute(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Width(value));
+		public HtmlEmbedElement WithWidth(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Width(value));
 
 		public HtmlEmbedElement WithAccessKey(string value) => (HtmlEmbedElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -20,7 +20,7 @@ namespace HtmlGenerator
 
 		public HtmlEmbedElement WithContentEditable(string value) => (HtmlEmbedElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlEmbedElement WithContextMenuAttribute(string value) => (HtmlEmbedElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlEmbedElement WithContextMenu(string value) => (HtmlEmbedElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlEmbedElement WithDir(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Dir(value));
 
@@ -32,7 +32,7 @@ namespace HtmlGenerator
 
 		public HtmlEmbedElement WithSpellCheck(string value) => (HtmlEmbedElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlEmbedElement WithStyleAttribute(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Style(value));
+		public HtmlEmbedElement WithStyle(string value) => (HtmlEmbedElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlEmbedElement WithTabIndex(string value) => (HtmlEmbedElement)WithAttribute(Attribute.TabIndex(value));
     }

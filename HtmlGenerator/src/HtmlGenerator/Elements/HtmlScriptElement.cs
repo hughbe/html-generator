@@ -6,19 +6,19 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlScriptElement WithAsyncAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.Async(value));
+		public HtmlScriptElement WithAsync(string value) => (HtmlScriptElement)WithAttribute(Attribute.Async(value));
 
-		public HtmlScriptElement WithCrossOriginAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.CrossOrigin(value));
+		public HtmlScriptElement WithCrossOrigin(string value) => (HtmlScriptElement)WithAttribute(Attribute.CrossOrigin(value));
 
-		public HtmlScriptElement WithDeferAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.Defer(value));
+		public HtmlScriptElement WithDefer(string value) => (HtmlScriptElement)WithAttribute(Attribute.Defer(value));
 
-		public HtmlScriptElement WithIntegrityAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.Integrity(value));
+		public HtmlScriptElement WithIntegrity(string value) => (HtmlScriptElement)WithAttribute(Attribute.Integrity(value));
 
-		public HtmlScriptElement WithSrcAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.Src(value));
+		public HtmlScriptElement WithSrc(string value) => (HtmlScriptElement)WithAttribute(Attribute.Src(value));
 
-		public HtmlScriptElement WithTextAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.Text(value));
+		public HtmlScriptElement WithText(string value) => (HtmlScriptElement)WithAttribute(Attribute.Text(value));
 
-		public HtmlScriptElement WithTypeAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.Type(value));
+		public HtmlScriptElement WithType(string value) => (HtmlScriptElement)WithAttribute(Attribute.Type(value));
 
 		public HtmlScriptElement WithAccessKey(string value) => (HtmlScriptElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -26,7 +26,7 @@ namespace HtmlGenerator
 
 		public HtmlScriptElement WithContentEditable(string value) => (HtmlScriptElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlScriptElement WithContextMenuAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlScriptElement WithContextMenu(string value) => (HtmlScriptElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlScriptElement WithDir(string value) => (HtmlScriptElement)WithAttribute(Attribute.Dir(value));
 
@@ -38,7 +38,7 @@ namespace HtmlGenerator
 
 		public HtmlScriptElement WithSpellCheck(string value) => (HtmlScriptElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlScriptElement WithStyleAttribute(string value) => (HtmlScriptElement)WithAttribute(Attribute.Style(value));
+		public HtmlScriptElement WithStyle(string value) => (HtmlScriptElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlScriptElement WithTabIndex(string value) => (HtmlScriptElement)WithAttribute(Attribute.TabIndex(value));
     }

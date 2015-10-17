@@ -6,21 +6,21 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlAElement WithDownloadAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.Download(value));
+		public HtmlAElement WithDownload(string value) => (HtmlAElement)WithAttribute(Attribute.Download(value));
 
-		public HtmlAElement WithHrefAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.Href(value));
+		public HtmlAElement WithHref(string value) => (HtmlAElement)WithAttribute(Attribute.Href(value));
 
-		public HtmlAElement WithHrefLangAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.HrefLang(value));
+		public HtmlAElement WithHrefLang(string value) => (HtmlAElement)WithAttribute(Attribute.HrefLang(value));
 
-		public HtmlAElement WithMediaAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.Media(value));
+		public HtmlAElement WithMedia(string value) => (HtmlAElement)WithAttribute(Attribute.Media(value));
 
-		public HtmlAElement WithPingAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.Ping(value));
+		public HtmlAElement WithPing(string value) => (HtmlAElement)WithAttribute(Attribute.Ping(value));
 
-		public HtmlAElement WithRelAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.Rel(value));
+		public HtmlAElement WithRel(string value) => (HtmlAElement)WithAttribute(Attribute.Rel(value));
 
-		public HtmlAElement WithTargetAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.Target(value));
+		public HtmlAElement WithTarget(string value) => (HtmlAElement)WithAttribute(Attribute.Target(value));
 
-		public HtmlAElement WithTypeAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.Type(value));
+		public HtmlAElement WithType(string value) => (HtmlAElement)WithAttribute(Attribute.Type(value));
 
 		public HtmlAElement WithAccessKey(string value) => (HtmlAElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlAElement WithContentEditable(string value) => (HtmlAElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlAElement WithContextMenuAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlAElement WithContextMenu(string value) => (HtmlAElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlAElement WithDir(string value) => (HtmlAElement)WithAttribute(Attribute.Dir(value));
 
@@ -40,7 +40,7 @@ namespace HtmlGenerator
 
 		public HtmlAElement WithSpellCheck(string value) => (HtmlAElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlAElement WithStyleAttribute(string value) => (HtmlAElement)WithAttribute(Attribute.Style(value));
+		public HtmlAElement WithStyle(string value) => (HtmlAElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlAElement WithTabIndex(string value) => (HtmlAElement)WithAttribute(Attribute.TabIndex(value));
     }

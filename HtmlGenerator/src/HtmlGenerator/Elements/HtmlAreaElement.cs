@@ -6,25 +6,25 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlAreaElement WithAltAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Alt(value));
+		public HtmlAreaElement WithAlt(string value) => (HtmlAreaElement)WithAttribute(Attribute.Alt(value));
 
-		public HtmlAreaElement WithCoordsAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Coords(value));
+		public HtmlAreaElement WithCoords(string value) => (HtmlAreaElement)WithAttribute(Attribute.Coords(value));
 
-		public HtmlAreaElement WithDownloadAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Download(value));
+		public HtmlAreaElement WithDownload(string value) => (HtmlAreaElement)WithAttribute(Attribute.Download(value));
 
-		public HtmlAreaElement WithHrefAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Href(value));
+		public HtmlAreaElement WithHref(string value) => (HtmlAreaElement)WithAttribute(Attribute.Href(value));
 
-		public HtmlAreaElement WithHrefLangAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.HrefLang(value));
+		public HtmlAreaElement WithHrefLang(string value) => (HtmlAreaElement)WithAttribute(Attribute.HrefLang(value));
 
-		public HtmlAreaElement WithMediaAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Media(value));
+		public HtmlAreaElement WithMedia(string value) => (HtmlAreaElement)WithAttribute(Attribute.Media(value));
 
-		public HtmlAreaElement WithRelAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Rel(value));
+		public HtmlAreaElement WithRel(string value) => (HtmlAreaElement)WithAttribute(Attribute.Rel(value));
 
-		public HtmlAreaElement WithShapeAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Shape(value));
+		public HtmlAreaElement WithShape(string value) => (HtmlAreaElement)WithAttribute(Attribute.Shape(value));
 
-		public HtmlAreaElement WithTargetAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Target(value));
+		public HtmlAreaElement WithTarget(string value) => (HtmlAreaElement)WithAttribute(Attribute.Target(value));
 
-		public HtmlAreaElement WithTypeAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Type(value));
+		public HtmlAreaElement WithType(string value) => (HtmlAreaElement)WithAttribute(Attribute.Type(value));
 
 		public HtmlAreaElement WithAccessKey(string value) => (HtmlAreaElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -32,7 +32,7 @@ namespace HtmlGenerator
 
 		public HtmlAreaElement WithContentEditable(string value) => (HtmlAreaElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlAreaElement WithContextMenuAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlAreaElement WithContextMenu(string value) => (HtmlAreaElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlAreaElement WithDir(string value) => (HtmlAreaElement)WithAttribute(Attribute.Dir(value));
 
@@ -44,7 +44,7 @@ namespace HtmlGenerator
 
 		public HtmlAreaElement WithSpellCheck(string value) => (HtmlAreaElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlAreaElement WithStyleAttribute(string value) => (HtmlAreaElement)WithAttribute(Attribute.Style(value));
+		public HtmlAreaElement WithStyle(string value) => (HtmlAreaElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlAreaElement WithTabIndex(string value) => (HtmlAreaElement)WithAttribute(Attribute.TabIndex(value));
     }

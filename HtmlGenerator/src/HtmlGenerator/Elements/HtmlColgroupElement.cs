@@ -6,7 +6,7 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlColgroupElement WithSpanAttribute(string value) => (HtmlColgroupElement)WithAttribute(Attribute.Span(value));
+		public HtmlColgroupElement WithSpan(string value) => (HtmlColgroupElement)WithAttribute(Attribute.Span(value));
 
 		public HtmlColgroupElement WithAccessKey(string value) => (HtmlColgroupElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -14,7 +14,7 @@ namespace HtmlGenerator
 
 		public HtmlColgroupElement WithContentEditable(string value) => (HtmlColgroupElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlColgroupElement WithContextMenuAttribute(string value) => (HtmlColgroupElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlColgroupElement WithContextMenu(string value) => (HtmlColgroupElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlColgroupElement WithDir(string value) => (HtmlColgroupElement)WithAttribute(Attribute.Dir(value));
 
@@ -26,7 +26,7 @@ namespace HtmlGenerator
 
 		public HtmlColgroupElement WithSpellCheck(string value) => (HtmlColgroupElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlColgroupElement WithStyleAttribute(string value) => (HtmlColgroupElement)WithAttribute(Attribute.Style(value));
+		public HtmlColgroupElement WithStyle(string value) => (HtmlColgroupElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlColgroupElement WithTabIndex(string value) => (HtmlColgroupElement)WithAttribute(Attribute.TabIndex(value));
     }

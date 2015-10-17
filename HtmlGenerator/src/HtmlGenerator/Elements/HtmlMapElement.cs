@@ -6,7 +6,7 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlMapElement WithNameAttribute(string value) => (HtmlMapElement)WithAttribute(Attribute.Name(value));
+		public HtmlMapElement WithName(string value) => (HtmlMapElement)WithAttribute(Attribute.Name(value));
 
 		public HtmlMapElement WithAccessKey(string value) => (HtmlMapElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -14,7 +14,7 @@ namespace HtmlGenerator
 
 		public HtmlMapElement WithContentEditable(string value) => (HtmlMapElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlMapElement WithContextMenuAttribute(string value) => (HtmlMapElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlMapElement WithContextMenu(string value) => (HtmlMapElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlMapElement WithDir(string value) => (HtmlMapElement)WithAttribute(Attribute.Dir(value));
 
@@ -26,7 +26,7 @@ namespace HtmlGenerator
 
 		public HtmlMapElement WithSpellCheck(string value) => (HtmlMapElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlMapElement WithStyleAttribute(string value) => (HtmlMapElement)WithAttribute(Attribute.Style(value));
+		public HtmlMapElement WithStyle(string value) => (HtmlMapElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlMapElement WithTabIndex(string value) => (HtmlMapElement)WithAttribute(Attribute.TabIndex(value));
     }

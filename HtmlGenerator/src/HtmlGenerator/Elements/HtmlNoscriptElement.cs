@@ -12,7 +12,7 @@ namespace HtmlGenerator
 
 		public HtmlNoscriptElement WithContentEditable(string value) => (HtmlNoscriptElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlNoscriptElement WithContextMenuAttribute(string value) => (HtmlNoscriptElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlNoscriptElement WithContextMenu(string value) => (HtmlNoscriptElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlNoscriptElement WithDir(string value) => (HtmlNoscriptElement)WithAttribute(Attribute.Dir(value));
 
@@ -24,7 +24,7 @@ namespace HtmlGenerator
 
 		public HtmlNoscriptElement WithSpellCheck(string value) => (HtmlNoscriptElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlNoscriptElement WithStyleAttribute(string value) => (HtmlNoscriptElement)WithAttribute(Attribute.Style(value));
+		public HtmlNoscriptElement WithStyle(string value) => (HtmlNoscriptElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlNoscriptElement WithTabIndex(string value) => (HtmlNoscriptElement)WithAttribute(Attribute.TabIndex(value));
     }

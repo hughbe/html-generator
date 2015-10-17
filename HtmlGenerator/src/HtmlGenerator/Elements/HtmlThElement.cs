@@ -6,13 +6,13 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlThElement WithColSpanAttribute(string value) => (HtmlThElement)WithAttribute(Attribute.ColSpan(value));
+		public HtmlThElement WithColSpan(string value) => (HtmlThElement)WithAttribute(Attribute.ColSpan(value));
 
-		public HtmlThElement WithHeadersAttribute(string value) => (HtmlThElement)WithAttribute(Attribute.Headers(value));
+		public HtmlThElement WithHeaders(string value) => (HtmlThElement)WithAttribute(Attribute.Headers(value));
 
-		public HtmlThElement WithRowSpanAttribute(string value) => (HtmlThElement)WithAttribute(Attribute.RowSpan(value));
+		public HtmlThElement WithRowSpan(string value) => (HtmlThElement)WithAttribute(Attribute.RowSpan(value));
 
-		public HtmlThElement WithScopeAttribute(string value) => (HtmlThElement)WithAttribute(Attribute.Scope(value));
+		public HtmlThElement WithScope(string value) => (HtmlThElement)WithAttribute(Attribute.Scope(value));
 
 		public HtmlThElement WithAccessKey(string value) => (HtmlThElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -20,7 +20,7 @@ namespace HtmlGenerator
 
 		public HtmlThElement WithContentEditable(string value) => (HtmlThElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlThElement WithContextMenuAttribute(string value) => (HtmlThElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlThElement WithContextMenu(string value) => (HtmlThElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlThElement WithDir(string value) => (HtmlThElement)WithAttribute(Attribute.Dir(value));
 
@@ -32,7 +32,7 @@ namespace HtmlGenerator
 
 		public HtmlThElement WithSpellCheck(string value) => (HtmlThElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlThElement WithStyleAttribute(string value) => (HtmlThElement)WithAttribute(Attribute.Style(value));
+		public HtmlThElement WithStyle(string value) => (HtmlThElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlThElement WithTabIndex(string value) => (HtmlThElement)WithAttribute(Attribute.TabIndex(value));
     }

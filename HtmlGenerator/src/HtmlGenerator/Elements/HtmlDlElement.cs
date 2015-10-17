@@ -6,7 +6,7 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlDlElement WithCompactAttribute(string value) => (HtmlDlElement)WithAttribute(Attribute.Compact(value));
+		public HtmlDlElement WithCompact(string value) => (HtmlDlElement)WithAttribute(Attribute.Compact(value));
 
 		public HtmlDlElement WithAccessKey(string value) => (HtmlDlElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -14,7 +14,7 @@ namespace HtmlGenerator
 
 		public HtmlDlElement WithContentEditable(string value) => (HtmlDlElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlDlElement WithContextMenuAttribute(string value) => (HtmlDlElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlDlElement WithContextMenu(string value) => (HtmlDlElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlDlElement WithDir(string value) => (HtmlDlElement)WithAttribute(Attribute.Dir(value));
 
@@ -26,7 +26,7 @@ namespace HtmlGenerator
 
 		public HtmlDlElement WithSpellCheck(string value) => (HtmlDlElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlDlElement WithStyleAttribute(string value) => (HtmlDlElement)WithAttribute(Attribute.Style(value));
+		public HtmlDlElement WithStyle(string value) => (HtmlDlElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlDlElement WithTabIndex(string value) => (HtmlDlElement)WithAttribute(Attribute.TabIndex(value));
     }

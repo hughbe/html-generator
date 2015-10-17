@@ -6,9 +6,9 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlDelElement WithCiteAttribute(string value) => (HtmlDelElement)WithAttribute(Attribute.Cite(value));
+		public HtmlDelElement WithCite(string value) => (HtmlDelElement)WithAttribute(Attribute.Cite(value));
 
-		public HtmlDelElement WithDateTimeAttribute(string value) => (HtmlDelElement)WithAttribute(Attribute.DateTime(value));
+		public HtmlDelElement WithDateTime(string value) => (HtmlDelElement)WithAttribute(Attribute.DateTime(value));
 
 		public HtmlDelElement WithAccessKey(string value) => (HtmlDelElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -16,7 +16,7 @@ namespace HtmlGenerator
 
 		public HtmlDelElement WithContentEditable(string value) => (HtmlDelElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlDelElement WithContextMenuAttribute(string value) => (HtmlDelElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlDelElement WithContextMenu(string value) => (HtmlDelElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlDelElement WithDir(string value) => (HtmlDelElement)WithAttribute(Attribute.Dir(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlDelElement WithSpellCheck(string value) => (HtmlDelElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlDelElement WithStyleAttribute(string value) => (HtmlDelElement)WithAttribute(Attribute.Style(value));
+		public HtmlDelElement WithStyle(string value) => (HtmlDelElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlDelElement WithTabIndex(string value) => (HtmlDelElement)WithAttribute(Attribute.TabIndex(value));
     }

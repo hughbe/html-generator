@@ -6,7 +6,7 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlTimeElement WithDateTimeAttribute(string value) => (HtmlTimeElement)WithAttribute(Attribute.DateTime(value));
+		public HtmlTimeElement WithDateTime(string value) => (HtmlTimeElement)WithAttribute(Attribute.DateTime(value));
 
 		public HtmlTimeElement WithAccessKey(string value) => (HtmlTimeElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -14,7 +14,7 @@ namespace HtmlGenerator
 
 		public HtmlTimeElement WithContentEditable(string value) => (HtmlTimeElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTimeElement WithContextMenuAttribute(string value) => (HtmlTimeElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTimeElement WithContextMenu(string value) => (HtmlTimeElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlTimeElement WithDir(string value) => (HtmlTimeElement)WithAttribute(Attribute.Dir(value));
 
@@ -26,7 +26,7 @@ namespace HtmlGenerator
 
 		public HtmlTimeElement WithSpellCheck(string value) => (HtmlTimeElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlTimeElement WithStyleAttribute(string value) => (HtmlTimeElement)WithAttribute(Attribute.Style(value));
+		public HtmlTimeElement WithStyle(string value) => (HtmlTimeElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlTimeElement WithTabIndex(string value) => (HtmlTimeElement)WithAttribute(Attribute.TabIndex(value));
     }

@@ -6,19 +6,19 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlAudioElement WithAutoPlayAttribute(string value) => (HtmlAudioElement)WithAttribute(Attribute.AutoPlay(value));
+		public HtmlAudioElement WithAutoPlay(string value) => (HtmlAudioElement)WithAttribute(Attribute.AutoPlay(value));
 
-		public HtmlAudioElement WithControlsAttribute() => (HtmlAudioElement)WithAttribute(Attribute.Controls);
+		public HtmlAudioElement WithControls() => (HtmlAudioElement)WithAttribute(Attribute.Controls);
 
-		public HtmlAudioElement WithLoopAttribute(string value) => (HtmlAudioElement)WithAttribute(Attribute.Loop(value));
+		public HtmlAudioElement WithLoop(string value) => (HtmlAudioElement)WithAttribute(Attribute.Loop(value));
 
-		public HtmlAudioElement WithMutedAttribute(string value) => (HtmlAudioElement)WithAttribute(Attribute.Muted(value));
+		public HtmlAudioElement WithMuted(string value) => (HtmlAudioElement)WithAttribute(Attribute.Muted(value));
 
-		public HtmlAudioElement WithPreloadAttribute(string value) => (HtmlAudioElement)WithAttribute(Attribute.Preload(value));
+		public HtmlAudioElement WithPreload(string value) => (HtmlAudioElement)WithAttribute(Attribute.Preload(value));
 
-		public HtmlAudioElement WithSrcAttribute(string value) => (HtmlAudioElement)WithAttribute(Attribute.Src(value));
+		public HtmlAudioElement WithSrc(string value) => (HtmlAudioElement)WithAttribute(Attribute.Src(value));
 
-		public HtmlAudioElement WithVolumeAttribute(string value) => (HtmlAudioElement)WithAttribute(Attribute.Volume(value));
+		public HtmlAudioElement WithVolume(string value) => (HtmlAudioElement)WithAttribute(Attribute.Volume(value));
 
 		public HtmlAudioElement WithAccessKey(string value) => (HtmlAudioElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -26,7 +26,7 @@ namespace HtmlGenerator
 
 		public HtmlAudioElement WithContentEditable(string value) => (HtmlAudioElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlAudioElement WithContextMenuAttribute(string value) => (HtmlAudioElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlAudioElement WithContextMenu(string value) => (HtmlAudioElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlAudioElement WithDir(string value) => (HtmlAudioElement)WithAttribute(Attribute.Dir(value));
 
@@ -38,7 +38,7 @@ namespace HtmlGenerator
 
 		public HtmlAudioElement WithSpellCheck(string value) => (HtmlAudioElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlAudioElement WithStyleAttribute(string value) => (HtmlAudioElement)WithAttribute(Attribute.Style(value));
+		public HtmlAudioElement WithStyle(string value) => (HtmlAudioElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlAudioElement WithTabIndex(string value) => (HtmlAudioElement)WithAttribute(Attribute.TabIndex(value));
     }

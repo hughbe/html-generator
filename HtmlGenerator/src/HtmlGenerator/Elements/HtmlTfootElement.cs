@@ -12,7 +12,7 @@ namespace HtmlGenerator
 
 		public HtmlTfootElement WithContentEditable(string value) => (HtmlTfootElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTfootElement WithContextMenuAttribute(string value) => (HtmlTfootElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTfootElement WithContextMenu(string value) => (HtmlTfootElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlTfootElement WithDir(string value) => (HtmlTfootElement)WithAttribute(Attribute.Dir(value));
 
@@ -24,7 +24,7 @@ namespace HtmlGenerator
 
 		public HtmlTfootElement WithSpellCheck(string value) => (HtmlTfootElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlTfootElement WithStyleAttribute(string value) => (HtmlTfootElement)WithAttribute(Attribute.Style(value));
+		public HtmlTfootElement WithStyle(string value) => (HtmlTfootElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlTfootElement WithTabIndex(string value) => (HtmlTfootElement)WithAttribute(Attribute.TabIndex(value));
     }

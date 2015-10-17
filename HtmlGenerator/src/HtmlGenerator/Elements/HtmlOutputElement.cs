@@ -6,11 +6,11 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlOutputElement WithForAttribute(string value) => (HtmlOutputElement)WithAttribute(Attribute.For(value));
+		public HtmlOutputElement WithFor(string value) => (HtmlOutputElement)WithAttribute(Attribute.For(value));
 
-		public HtmlOutputElement WithFormAttribute(string value) => (HtmlOutputElement)WithAttribute(Attribute.Form(value));
+		public HtmlOutputElement WithForm(string value) => (HtmlOutputElement)WithAttribute(Attribute.Form(value));
 
-		public HtmlOutputElement WithNameAttribute(string value) => (HtmlOutputElement)WithAttribute(Attribute.Name(value));
+		public HtmlOutputElement WithName(string value) => (HtmlOutputElement)WithAttribute(Attribute.Name(value));
 
 		public HtmlOutputElement WithAccessKey(string value) => (HtmlOutputElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -18,7 +18,7 @@ namespace HtmlGenerator
 
 		public HtmlOutputElement WithContentEditable(string value) => (HtmlOutputElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlOutputElement WithContextMenuAttribute(string value) => (HtmlOutputElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlOutputElement WithContextMenu(string value) => (HtmlOutputElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlOutputElement WithDir(string value) => (HtmlOutputElement)WithAttribute(Attribute.Dir(value));
 
@@ -30,7 +30,7 @@ namespace HtmlGenerator
 
 		public HtmlOutputElement WithSpellCheck(string value) => (HtmlOutputElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlOutputElement WithStyleAttribute(string value) => (HtmlOutputElement)WithAttribute(Attribute.Style(value));
+		public HtmlOutputElement WithStyle(string value) => (HtmlOutputElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlOutputElement WithTabIndex(string value) => (HtmlOutputElement)WithAttribute(Attribute.TabIndex(value));
     }

@@ -6,33 +6,33 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlTextAreaElement WithAutoCompleteAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.AutoComplete(value));
+		public HtmlTextAreaElement WithAutoComplete(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.AutoComplete(value));
 
-		public HtmlTextAreaElement WithAutoFocusAttribute() => (HtmlTextAreaElement)WithAttribute(Attribute.AutoFocus);
+		public HtmlTextAreaElement WithAutoFocus() => (HtmlTextAreaElement)WithAttribute(Attribute.AutoFocus);
 
-		public HtmlTextAreaElement WithColsAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Cols(value));
+		public HtmlTextAreaElement WithCols(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Cols(value));
 
-		public HtmlTextAreaElement WithDisabledAttribute() => (HtmlTextAreaElement)WithAttribute(Attribute.Disabled);
+		public HtmlTextAreaElement WithDisabled() => (HtmlTextAreaElement)WithAttribute(Attribute.Disabled);
 
-		public HtmlTextAreaElement WithFormAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Form(value));
+		public HtmlTextAreaElement WithForm(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Form(value));
 
-		public HtmlTextAreaElement WithMaxLengthAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.MaxLength(value));
+		public HtmlTextAreaElement WithMaxLength(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.MaxLength(value));
 
-		public HtmlTextAreaElement WithMinLengthAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.MinLength(value));
+		public HtmlTextAreaElement WithMinLength(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.MinLength(value));
 
-		public HtmlTextAreaElement WithNameAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Name(value));
+		public HtmlTextAreaElement WithName(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Name(value));
 
-		public HtmlTextAreaElement WithPlaceholderAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Placeholder(value));
+		public HtmlTextAreaElement WithPlaceholder(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Placeholder(value));
 
-		public HtmlTextAreaElement WithReadonlyAttribute() => (HtmlTextAreaElement)WithAttribute(Attribute.Readonly);
+		public HtmlTextAreaElement WithReadonly() => (HtmlTextAreaElement)WithAttribute(Attribute.Readonly);
 
-		public HtmlTextAreaElement WithRequiredAttribute() => (HtmlTextAreaElement)WithAttribute(Attribute.Required);
+		public HtmlTextAreaElement WithRequired() => (HtmlTextAreaElement)WithAttribute(Attribute.Required);
 
-		public HtmlTextAreaElement WithRowsAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Rows(value));
+		public HtmlTextAreaElement WithRows(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Rows(value));
 
-		public HtmlTextAreaElement WithSelectionDirectionAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.SelectionDirection(value));
+		public HtmlTextAreaElement WithSelectionDirection(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.SelectionDirection(value));
 
-		public HtmlTextAreaElement WithWrapAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Wrap(value));
+		public HtmlTextAreaElement WithWrap(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Wrap(value));
 
 		public HtmlTextAreaElement WithAccessKey(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -40,7 +40,7 @@ namespace HtmlGenerator
 
 		public HtmlTextAreaElement WithContentEditable(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTextAreaElement WithContextMenuAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTextAreaElement WithContextMenu(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlTextAreaElement WithDir(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Dir(value));
 
@@ -52,7 +52,7 @@ namespace HtmlGenerator
 
 		public HtmlTextAreaElement WithSpellCheck(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlTextAreaElement WithStyleAttribute(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Style(value));
+		public HtmlTextAreaElement WithStyle(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlTextAreaElement WithTabIndex(string value) => (HtmlTextAreaElement)WithAttribute(Attribute.TabIndex(value));
     }

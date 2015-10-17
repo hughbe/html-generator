@@ -6,13 +6,13 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlOptionElement WithDisabledAttribute() => (HtmlOptionElement)WithAttribute(Attribute.Disabled);
+		public HtmlOptionElement WithDisabled() => (HtmlOptionElement)WithAttribute(Attribute.Disabled);
 
-		public HtmlOptionElement WithLabelAttribute(string value) => (HtmlOptionElement)WithAttribute(Attribute.Label(value));
+		public HtmlOptionElement WithLabel(string value) => (HtmlOptionElement)WithAttribute(Attribute.Label(value));
 
-		public HtmlOptionElement WithSelectedAttribute() => (HtmlOptionElement)WithAttribute(Attribute.Selected);
+		public HtmlOptionElement WithSelected() => (HtmlOptionElement)WithAttribute(Attribute.Selected);
 
-		public HtmlOptionElement WithValueAttribute(string value) => (HtmlOptionElement)WithAttribute(Attribute.Value(value));
+		public HtmlOptionElement WithValue(string value) => (HtmlOptionElement)WithAttribute(Attribute.Value(value));
 
 		public HtmlOptionElement WithAccessKey(string value) => (HtmlOptionElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -20,7 +20,7 @@ namespace HtmlGenerator
 
 		public HtmlOptionElement WithContentEditable(string value) => (HtmlOptionElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlOptionElement WithContextMenuAttribute(string value) => (HtmlOptionElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlOptionElement WithContextMenu(string value) => (HtmlOptionElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlOptionElement WithDir(string value) => (HtmlOptionElement)WithAttribute(Attribute.Dir(value));
 
@@ -32,7 +32,7 @@ namespace HtmlGenerator
 
 		public HtmlOptionElement WithSpellCheck(string value) => (HtmlOptionElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlOptionElement WithStyleAttribute(string value) => (HtmlOptionElement)WithAttribute(Attribute.Style(value));
+		public HtmlOptionElement WithStyle(string value) => (HtmlOptionElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlOptionElement WithTabIndex(string value) => (HtmlOptionElement)WithAttribute(Attribute.TabIndex(value));
     }

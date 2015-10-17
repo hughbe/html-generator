@@ -6,9 +6,9 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlBaseElement WithHrefAttribute(string value) => (HtmlBaseElement)WithAttribute(Attribute.Href(value));
+		public HtmlBaseElement WithHref(string value) => (HtmlBaseElement)WithAttribute(Attribute.Href(value));
 
-		public HtmlBaseElement WithTargetAttribute(string value) => (HtmlBaseElement)WithAttribute(Attribute.Target(value));
+		public HtmlBaseElement WithTarget(string value) => (HtmlBaseElement)WithAttribute(Attribute.Target(value));
 
 		public HtmlBaseElement WithAccessKey(string value) => (HtmlBaseElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -16,7 +16,7 @@ namespace HtmlGenerator
 
 		public HtmlBaseElement WithContentEditable(string value) => (HtmlBaseElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlBaseElement WithContextMenuAttribute(string value) => (HtmlBaseElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlBaseElement WithContextMenu(string value) => (HtmlBaseElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlBaseElement WithDir(string value) => (HtmlBaseElement)WithAttribute(Attribute.Dir(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlBaseElement WithSpellCheck(string value) => (HtmlBaseElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlBaseElement WithStyleAttribute(string value) => (HtmlBaseElement)WithAttribute(Attribute.Style(value));
+		public HtmlBaseElement WithStyle(string value) => (HtmlBaseElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlBaseElement WithTabIndex(string value) => (HtmlBaseElement)WithAttribute(Attribute.TabIndex(value));
     }

@@ -6,19 +6,19 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlMeterElement WithFormAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.Form(value));
+		public HtmlMeterElement WithForm(string value) => (HtmlMeterElement)WithAttribute(Attribute.Form(value));
 
-		public HtmlMeterElement WithLowAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.Low(value));
+		public HtmlMeterElement WithLow(string value) => (HtmlMeterElement)WithAttribute(Attribute.Low(value));
 
-		public HtmlMeterElement WithHighAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.High(value));
+		public HtmlMeterElement WithHigh(string value) => (HtmlMeterElement)WithAttribute(Attribute.High(value));
 
-		public HtmlMeterElement WithMinAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.Min(value));
+		public HtmlMeterElement WithMin(string value) => (HtmlMeterElement)WithAttribute(Attribute.Min(value));
 
-		public HtmlMeterElement WithMaxAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.Max(value));
+		public HtmlMeterElement WithMax(string value) => (HtmlMeterElement)WithAttribute(Attribute.Max(value));
 
-		public HtmlMeterElement WithOptimumAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.Optimum(value));
+		public HtmlMeterElement WithOptimum(string value) => (HtmlMeterElement)WithAttribute(Attribute.Optimum(value));
 
-		public HtmlMeterElement WithValueAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.Value(value));
+		public HtmlMeterElement WithValue(string value) => (HtmlMeterElement)WithAttribute(Attribute.Value(value));
 
 		public HtmlMeterElement WithAccessKey(string value) => (HtmlMeterElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -26,7 +26,7 @@ namespace HtmlGenerator
 
 		public HtmlMeterElement WithContentEditable(string value) => (HtmlMeterElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlMeterElement WithContextMenuAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlMeterElement WithContextMenu(string value) => (HtmlMeterElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlMeterElement WithDir(string value) => (HtmlMeterElement)WithAttribute(Attribute.Dir(value));
 
@@ -38,7 +38,7 @@ namespace HtmlGenerator
 
 		public HtmlMeterElement WithSpellCheck(string value) => (HtmlMeterElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlMeterElement WithStyleAttribute(string value) => (HtmlMeterElement)WithAttribute(Attribute.Style(value));
+		public HtmlMeterElement WithStyle(string value) => (HtmlMeterElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlMeterElement WithTabIndex(string value) => (HtmlMeterElement)WithAttribute(Attribute.TabIndex(value));
     }

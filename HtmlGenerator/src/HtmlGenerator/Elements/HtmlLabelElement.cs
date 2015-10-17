@@ -6,9 +6,9 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlLabelElement WithForAttribute(string value) => (HtmlLabelElement)WithAttribute(Attribute.For(value));
+		public HtmlLabelElement WithFor(string value) => (HtmlLabelElement)WithAttribute(Attribute.For(value));
 
-		public HtmlLabelElement WithFormAttribute(string value) => (HtmlLabelElement)WithAttribute(Attribute.Form(value));
+		public HtmlLabelElement WithForm(string value) => (HtmlLabelElement)WithAttribute(Attribute.Form(value));
 
 		public HtmlLabelElement WithAccessKey(string value) => (HtmlLabelElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -16,7 +16,7 @@ namespace HtmlGenerator
 
 		public HtmlLabelElement WithContentEditable(string value) => (HtmlLabelElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlLabelElement WithContextMenuAttribute(string value) => (HtmlLabelElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlLabelElement WithContextMenu(string value) => (HtmlLabelElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlLabelElement WithDir(string value) => (HtmlLabelElement)WithAttribute(Attribute.Dir(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlLabelElement WithSpellCheck(string value) => (HtmlLabelElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlLabelElement WithStyleAttribute(string value) => (HtmlLabelElement)WithAttribute(Attribute.Style(value));
+		public HtmlLabelElement WithStyle(string value) => (HtmlLabelElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlLabelElement WithTabIndex(string value) => (HtmlLabelElement)WithAttribute(Attribute.TabIndex(value));
     }

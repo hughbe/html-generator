@@ -6,9 +6,9 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlCanvasElement WithHeightAttribute(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Height(value));
+		public HtmlCanvasElement WithHeight(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Height(value));
 
-		public HtmlCanvasElement WithWidthAttribute(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Width(value));
+		public HtmlCanvasElement WithWidth(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Width(value));
 
 		public HtmlCanvasElement WithAccessKey(string value) => (HtmlCanvasElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -16,7 +16,7 @@ namespace HtmlGenerator
 
 		public HtmlCanvasElement WithContentEditable(string value) => (HtmlCanvasElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlCanvasElement WithContextMenuAttribute(string value) => (HtmlCanvasElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlCanvasElement WithContextMenu(string value) => (HtmlCanvasElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlCanvasElement WithDir(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Dir(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlCanvasElement WithSpellCheck(string value) => (HtmlCanvasElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlCanvasElement WithStyleAttribute(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Style(value));
+		public HtmlCanvasElement WithStyle(string value) => (HtmlCanvasElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlCanvasElement WithTabIndex(string value) => (HtmlCanvasElement)WithAttribute(Attribute.TabIndex(value));
     }

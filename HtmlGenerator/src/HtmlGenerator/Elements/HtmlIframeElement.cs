@@ -6,21 +6,21 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlIframeElement WithAllowFullScreenAttribute() => (HtmlIframeElement)WithAttribute(Attribute.AllowFullScreen);
+		public HtmlIframeElement WithAllowFullScreen() => (HtmlIframeElement)WithAttribute(Attribute.AllowFullScreen);
 
-		public HtmlIframeElement WithHeightAttribute(string value) => (HtmlIframeElement)WithAttribute(Attribute.Height(value));
+		public HtmlIframeElement WithHeight(string value) => (HtmlIframeElement)WithAttribute(Attribute.Height(value));
 
-		public HtmlIframeElement WithNameAttribute(string value) => (HtmlIframeElement)WithAttribute(Attribute.Name(value));
+		public HtmlIframeElement WithName(string value) => (HtmlIframeElement)WithAttribute(Attribute.Name(value));
 
-		public HtmlIframeElement WithSandboxAttribute() => (HtmlIframeElement)WithAttribute(Attribute.Sandbox);
+		public HtmlIframeElement WithSandbox() => (HtmlIframeElement)WithAttribute(Attribute.Sandbox);
 
-		public HtmlIframeElement WithSeamlessAttribute() => (HtmlIframeElement)WithAttribute(Attribute.Seamless);
+		public HtmlIframeElement WithSeamless() => (HtmlIframeElement)WithAttribute(Attribute.Seamless);
 
-		public HtmlIframeElement WithSrcAttribute(string value) => (HtmlIframeElement)WithAttribute(Attribute.Src(value));
+		public HtmlIframeElement WithSrc(string value) => (HtmlIframeElement)WithAttribute(Attribute.Src(value));
 
-		public HtmlIframeElement WithSrcDocAttribute(string value) => (HtmlIframeElement)WithAttribute(Attribute.SrcDoc(value));
+		public HtmlIframeElement WithSrcDoc(string value) => (HtmlIframeElement)WithAttribute(Attribute.SrcDoc(value));
 
-		public HtmlIframeElement WithWidthAttribute(string value) => (HtmlIframeElement)WithAttribute(Attribute.Width(value));
+		public HtmlIframeElement WithWidth(string value) => (HtmlIframeElement)WithAttribute(Attribute.Width(value));
 
 		public HtmlIframeElement WithAccessKey(string value) => (HtmlIframeElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlIframeElement WithContentEditable(string value) => (HtmlIframeElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlIframeElement WithContextMenuAttribute(string value) => (HtmlIframeElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlIframeElement WithContextMenu(string value) => (HtmlIframeElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlIframeElement WithDir(string value) => (HtmlIframeElement)WithAttribute(Attribute.Dir(value));
 
@@ -40,7 +40,7 @@ namespace HtmlGenerator
 
 		public HtmlIframeElement WithSpellCheck(string value) => (HtmlIframeElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlIframeElement WithStyleAttribute(string value) => (HtmlIframeElement)WithAttribute(Attribute.Style(value));
+		public HtmlIframeElement WithStyle(string value) => (HtmlIframeElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlIframeElement WithTabIndex(string value) => (HtmlIframeElement)WithAttribute(Attribute.TabIndex(value));
     }

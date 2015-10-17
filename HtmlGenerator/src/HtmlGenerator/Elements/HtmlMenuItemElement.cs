@@ -6,21 +6,21 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlMenuItemElement WithCheckedAttribute() => (HtmlMenuItemElement)WithAttribute(Attribute.Checked);
+		public HtmlMenuItemElement WithChecked() => (HtmlMenuItemElement)WithAttribute(Attribute.Checked);
 
-		public HtmlMenuItemElement WithCommandAttribute(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Command(value));
+		public HtmlMenuItemElement WithCommand(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Command(value));
 
-		public HtmlMenuItemElement WithDefaultAttribute() => (HtmlMenuItemElement)WithAttribute(Attribute.Default);
+		public HtmlMenuItemElement WithDefault() => (HtmlMenuItemElement)WithAttribute(Attribute.Default);
 
-		public HtmlMenuItemElement WithDisabledAttribute() => (HtmlMenuItemElement)WithAttribute(Attribute.Disabled);
+		public HtmlMenuItemElement WithDisabled() => (HtmlMenuItemElement)WithAttribute(Attribute.Disabled);
 
-		public HtmlMenuItemElement WithIconAttribute(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Icon(value));
+		public HtmlMenuItemElement WithIcon(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Icon(value));
 
-		public HtmlMenuItemElement WithLabelAttribute(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Label(value));
+		public HtmlMenuItemElement WithLabel(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Label(value));
 
-		public HtmlMenuItemElement WithRadioGroupAttribute(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.RadioGroup(value));
+		public HtmlMenuItemElement WithRadioGroup(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.RadioGroup(value));
 
-		public HtmlMenuItemElement WithTypeAttribute(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Type(value));
+		public HtmlMenuItemElement WithType(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Type(value));
 
 		public HtmlMenuItemElement WithAccessKey(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -28,7 +28,7 @@ namespace HtmlGenerator
 
 		public HtmlMenuItemElement WithContentEditable(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlMenuItemElement WithContextMenuAttribute(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlMenuItemElement WithContextMenu(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlMenuItemElement WithDir(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Dir(value));
 
@@ -40,7 +40,7 @@ namespace HtmlGenerator
 
 		public HtmlMenuItemElement WithSpellCheck(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlMenuItemElement WithStyleAttribute(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Style(value));
+		public HtmlMenuItemElement WithStyle(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlMenuItemElement WithTabIndex(string value) => (HtmlMenuItemElement)WithAttribute(Attribute.TabIndex(value));
     }

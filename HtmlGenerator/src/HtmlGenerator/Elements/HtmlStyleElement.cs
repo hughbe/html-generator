@@ -6,13 +6,13 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlStyleElement WithDisabledAttribute() => (HtmlStyleElement)WithAttribute(Attribute.Disabled);
+		public HtmlStyleElement WithDisabled() => (HtmlStyleElement)WithAttribute(Attribute.Disabled);
 
-		public HtmlStyleElement WithTypeAttribute(string value) => (HtmlStyleElement)WithAttribute(Attribute.Type(value));
+		public HtmlStyleElement WithType(string value) => (HtmlStyleElement)WithAttribute(Attribute.Type(value));
 
-		public HtmlStyleElement WithMediaAttribute(string value) => (HtmlStyleElement)WithAttribute(Attribute.Media(value));
+		public HtmlStyleElement WithMedia(string value) => (HtmlStyleElement)WithAttribute(Attribute.Media(value));
 
-		public HtmlStyleElement WithScopedAttribute() => (HtmlStyleElement)WithAttribute(Attribute.Scoped);
+		public HtmlStyleElement WithScoped() => (HtmlStyleElement)WithAttribute(Attribute.Scoped);
 
 		public HtmlStyleElement WithAccessKey(string value) => (HtmlStyleElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -20,7 +20,7 @@ namespace HtmlGenerator
 
 		public HtmlStyleElement WithContentEditable(string value) => (HtmlStyleElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlStyleElement WithContextMenuAttribute(string value) => (HtmlStyleElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlStyleElement WithContextMenu(string value) => (HtmlStyleElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlStyleElement WithDir(string value) => (HtmlStyleElement)WithAttribute(Attribute.Dir(value));
 
@@ -32,7 +32,7 @@ namespace HtmlGenerator
 
 		public HtmlStyleElement WithSpellCheck(string value) => (HtmlStyleElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlStyleElement WithStyleAttribute(string value) => (HtmlStyleElement)WithAttribute(Attribute.Style(value));
+		public HtmlStyleElement WithStyle(string value) => (HtmlStyleElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlStyleElement WithTabIndex(string value) => (HtmlStyleElement)WithAttribute(Attribute.TabIndex(value));
     }

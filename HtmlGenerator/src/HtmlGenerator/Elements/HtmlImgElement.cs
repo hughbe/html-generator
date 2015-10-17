@@ -6,25 +6,25 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlImgElement WithAltAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.Alt(value));
+		public HtmlImgElement WithAlt(string value) => (HtmlImgElement)WithAttribute(Attribute.Alt(value));
 
-		public HtmlImgElement WithCrossOriginAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.CrossOrigin(value));
+		public HtmlImgElement WithCrossOrigin(string value) => (HtmlImgElement)WithAttribute(Attribute.CrossOrigin(value));
 
-		public HtmlImgElement WithHeightAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.Height(value));
+		public HtmlImgElement WithHeight(string value) => (HtmlImgElement)WithAttribute(Attribute.Height(value));
 
-		public HtmlImgElement WithIsMapAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.IsMap(value));
+		public HtmlImgElement WithIsMap(string value) => (HtmlImgElement)WithAttribute(Attribute.IsMap(value));
 
-		public HtmlImgElement WithLongDescAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.LongDesc(value));
+		public HtmlImgElement WithLongDesc(string value) => (HtmlImgElement)WithAttribute(Attribute.LongDesc(value));
 
-		public HtmlImgElement WithSizesAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.Sizes(value));
+		public HtmlImgElement WithSizes(string value) => (HtmlImgElement)WithAttribute(Attribute.Sizes(value));
 
-		public HtmlImgElement WithSrcAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.Src(value));
+		public HtmlImgElement WithSrc(string value) => (HtmlImgElement)WithAttribute(Attribute.Src(value));
 
-		public HtmlImgElement WithSrcSetAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.SrcSet(value));
+		public HtmlImgElement WithSrcSet(string value) => (HtmlImgElement)WithAttribute(Attribute.SrcSet(value));
 
-		public HtmlImgElement WithWidthAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.Width(value));
+		public HtmlImgElement WithWidth(string value) => (HtmlImgElement)WithAttribute(Attribute.Width(value));
 
-		public HtmlImgElement WithUseMapAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.UseMap(value));
+		public HtmlImgElement WithUseMap(string value) => (HtmlImgElement)WithAttribute(Attribute.UseMap(value));
 
 		public HtmlImgElement WithAccessKey(string value) => (HtmlImgElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -32,7 +32,7 @@ namespace HtmlGenerator
 
 		public HtmlImgElement WithContentEditable(string value) => (HtmlImgElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlImgElement WithContextMenuAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlImgElement WithContextMenu(string value) => (HtmlImgElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlImgElement WithDir(string value) => (HtmlImgElement)WithAttribute(Attribute.Dir(value));
 
@@ -44,7 +44,7 @@ namespace HtmlGenerator
 
 		public HtmlImgElement WithSpellCheck(string value) => (HtmlImgElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlImgElement WithStyleAttribute(string value) => (HtmlImgElement)WithAttribute(Attribute.Style(value));
+		public HtmlImgElement WithStyle(string value) => (HtmlImgElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlImgElement WithTabIndex(string value) => (HtmlImgElement)WithAttribute(Attribute.TabIndex(value));
     }

@@ -6,19 +6,19 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlSelectElement WithAutoFocusAttribute() => (HtmlSelectElement)WithAttribute(Attribute.AutoFocus);
+		public HtmlSelectElement WithAutoFocus() => (HtmlSelectElement)WithAttribute(Attribute.AutoFocus);
 
-		public HtmlSelectElement WithDisabledAttribute() => (HtmlSelectElement)WithAttribute(Attribute.Disabled);
+		public HtmlSelectElement WithDisabled() => (HtmlSelectElement)WithAttribute(Attribute.Disabled);
 
-		public HtmlSelectElement WithFormAttribute(string value) => (HtmlSelectElement)WithAttribute(Attribute.Form(value));
+		public HtmlSelectElement WithForm(string value) => (HtmlSelectElement)WithAttribute(Attribute.Form(value));
 
-		public HtmlSelectElement WithMultipleAttribute() => (HtmlSelectElement)WithAttribute(Attribute.Multiple);
+		public HtmlSelectElement WithMultiple() => (HtmlSelectElement)WithAttribute(Attribute.Multiple);
 
-		public HtmlSelectElement WithNameAttribute(string value) => (HtmlSelectElement)WithAttribute(Attribute.Name(value));
+		public HtmlSelectElement WithName(string value) => (HtmlSelectElement)WithAttribute(Attribute.Name(value));
 
-		public HtmlSelectElement WithRequiredAttribute() => (HtmlSelectElement)WithAttribute(Attribute.Required);
+		public HtmlSelectElement WithRequired() => (HtmlSelectElement)WithAttribute(Attribute.Required);
 
-		public HtmlSelectElement WithSizeAttribute(string value) => (HtmlSelectElement)WithAttribute(Attribute.Size(value));
+		public HtmlSelectElement WithSize(string value) => (HtmlSelectElement)WithAttribute(Attribute.Size(value));
 
 		public HtmlSelectElement WithAccessKey(string value) => (HtmlSelectElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -26,7 +26,7 @@ namespace HtmlGenerator
 
 		public HtmlSelectElement WithContentEditable(string value) => (HtmlSelectElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlSelectElement WithContextMenuAttribute(string value) => (HtmlSelectElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlSelectElement WithContextMenu(string value) => (HtmlSelectElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlSelectElement WithDir(string value) => (HtmlSelectElement)WithAttribute(Attribute.Dir(value));
 
@@ -38,7 +38,7 @@ namespace HtmlGenerator
 
 		public HtmlSelectElement WithSpellCheck(string value) => (HtmlSelectElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlSelectElement WithStyleAttribute(string value) => (HtmlSelectElement)WithAttribute(Attribute.Style(value));
+		public HtmlSelectElement WithStyle(string value) => (HtmlSelectElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlSelectElement WithTabIndex(string value) => (HtmlSelectElement)WithAttribute(Attribute.TabIndex(value));
     }

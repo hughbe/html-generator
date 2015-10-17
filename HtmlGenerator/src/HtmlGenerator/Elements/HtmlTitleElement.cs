@@ -12,7 +12,7 @@ namespace HtmlGenerator
 
 		public HtmlTitleElement WithContentEditable(string value) => (HtmlTitleElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTitleElement WithContextMenuAttribute(string value) => (HtmlTitleElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTitleElement WithContextMenu(string value) => (HtmlTitleElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlTitleElement WithDir(string value) => (HtmlTitleElement)WithAttribute(Attribute.Dir(value));
 
@@ -24,7 +24,7 @@ namespace HtmlGenerator
 
 		public HtmlTitleElement WithSpellCheck(string value) => (HtmlTitleElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlTitleElement WithStyleAttribute(string value) => (HtmlTitleElement)WithAttribute(Attribute.Style(value));
+		public HtmlTitleElement WithStyle(string value) => (HtmlTitleElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlTitleElement WithTabIndex(string value) => (HtmlTitleElement)WithAttribute(Attribute.TabIndex(value));
     }

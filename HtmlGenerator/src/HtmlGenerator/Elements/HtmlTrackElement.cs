@@ -6,15 +6,15 @@ namespace HtmlGenerator
         {    
         }
 
-		public HtmlTrackElement WithDefaultAttribute() => (HtmlTrackElement)WithAttribute(Attribute.Default);
+		public HtmlTrackElement WithDefault() => (HtmlTrackElement)WithAttribute(Attribute.Default);
 
-		public HtmlTrackElement WithKindAttribute(string value) => (HtmlTrackElement)WithAttribute(Attribute.Kind(value));
+		public HtmlTrackElement WithKind(string value) => (HtmlTrackElement)WithAttribute(Attribute.Kind(value));
 
-		public HtmlTrackElement WithLabelAttribute(string value) => (HtmlTrackElement)WithAttribute(Attribute.Label(value));
+		public HtmlTrackElement WithLabel(string value) => (HtmlTrackElement)WithAttribute(Attribute.Label(value));
 
-		public HtmlTrackElement WithSrcAttribute(string value) => (HtmlTrackElement)WithAttribute(Attribute.Src(value));
+		public HtmlTrackElement WithSrc(string value) => (HtmlTrackElement)WithAttribute(Attribute.Src(value));
 
-		public HtmlTrackElement WithSrcLangAttribute(string value) => (HtmlTrackElement)WithAttribute(Attribute.SrcLang(value));
+		public HtmlTrackElement WithSrcLang(string value) => (HtmlTrackElement)WithAttribute(Attribute.SrcLang(value));
 
 		public HtmlTrackElement WithAccessKey(string value) => (HtmlTrackElement)WithAttribute(Attribute.AccessKey(value));
 
@@ -22,7 +22,7 @@ namespace HtmlGenerator
 
 		public HtmlTrackElement WithContentEditable(string value) => (HtmlTrackElement)WithAttribute(Attribute.ContentEditable(value));
 
-		public HtmlTrackElement WithContextMenuAttribute(string value) => (HtmlTrackElement)WithAttribute(Attribute.ContextMenu(value));
+		public HtmlTrackElement WithContextMenu(string value) => (HtmlTrackElement)WithAttribute(Attribute.ContextMenu(value));
 
 		public HtmlTrackElement WithDir(string value) => (HtmlTrackElement)WithAttribute(Attribute.Dir(value));
 
@@ -34,7 +34,7 @@ namespace HtmlGenerator
 
 		public HtmlTrackElement WithSpellCheck(string value) => (HtmlTrackElement)WithAttribute(Attribute.SpellCheck(value));
 
-		public HtmlTrackElement WithStyleAttribute(string value) => (HtmlTrackElement)WithAttribute(Attribute.Style(value));
+		public HtmlTrackElement WithStyle(string value) => (HtmlTrackElement)WithAttribute(Attribute.Style(value));
 
 		public HtmlTrackElement WithTabIndex(string value) => (HtmlTrackElement)WithAttribute(Attribute.TabIndex(value));
     }
