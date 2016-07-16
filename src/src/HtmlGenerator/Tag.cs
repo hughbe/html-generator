@@ -119,7 +119,7 @@ namespace HtmlGenerator
 		public static HtmlTimeElement Time => new HtmlTimeElement();
 		public static HtmlTitleElement Title => new HtmlTitleElement();
 		public static HtmlTrElement Tr => new HtmlTrElement();
-		public static HtmlTdElement Tr => new HtmlTdElement();
+		public static HtmlTdElement Td => new HtmlTdElement();
 		public static HtmlTrackElement Track => new HtmlTrackElement();
 
 		public static HtmlUElement U => new HtmlUElement();
