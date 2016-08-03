@@ -17,7 +17,12 @@ namespace HtmlGeneratorMeta
 
         public void GenerateClass(string className, string code)
         {
-            var filePath = FolderPath + className + ".cs";
+            if(!Directory.Exists(FolderPath)) 
+            {
+                Directory.CreateDirectory(FolderPath);
+            }
+            
+            var filePath = Path.Combine(FolderPath, className + ".cs");
             File.WriteAllText(filePath, code);
         }
 

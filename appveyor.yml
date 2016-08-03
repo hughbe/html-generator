@@ -1,0 +1,25 @@
+os: Visual Studio 2015
+configuration: Release
+
+environment:
+  matrix:
+    - FRAMEWORK: net45
+      LIBFRAMEWORK: net45
+    - FRAMEWORK: netcoreapp1
+      LIBFRAMEWORK: netstandard1.0
+
+before_build:
+  - dotnet --info
+  - dotnet restore
+
+build_script:
+  - ps: dotnet build -c Release -f $env:LibFramework src/HtmlGenerator
+
+test_script:
+  - ps: dotnet run -c Release -f $env:Framework -p src/HtmlGeneratorMeta -- $env:APPVEYOR_BUILD_FOLDER
+
+after_test:
+  - ps: dotnet pack -c Release src/HtmlGenerator
+
+artifacts:
+  path: 'src/HtmlGenerator/bin/Release/*.nupkg'

@@ -1,4 +1,5 @@
 ﻿using HtmlGenerator.Meta;
+using System.Reflection;
 
 namespace HtmlGeneratorMeta
 {
