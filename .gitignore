@@ -41,6 +41,10 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+# .NET Core
+*.lock.json
+artifacts/
+
 *_i.c
 *_p.c
 *_i.h
