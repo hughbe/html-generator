@@ -9,6 +9,7 @@ Installation Instructions
 --------------
 #### Nuget
 - Run `PM> Install-Package HtmlGenerator` from the Package Manager Console
+- Add `using HtmlGenerator;` in all the files you want to use the library.
 
 #### DLL
 - [Download the *.dll file here](https://github.com/hughbe/html-generator/releases/latest)

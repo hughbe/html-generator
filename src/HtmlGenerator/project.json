@@ -1,5 +1,6 @@
 {
-  "version": "1.0.11",
+  "version": "2.0.0-beta-1",
+  "title": "HtmlGenerator",
   "description": "A library that simplifies generating complex HTML files from C# code.",
   "authors": [ "Hugh Bellamy" ],
   "copyright": "Hugh Bellamy 2015",
