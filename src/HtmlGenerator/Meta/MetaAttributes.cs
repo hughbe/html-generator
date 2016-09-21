@@ -139,9 +139,12 @@
 
         public static AttributeInfo Width => Basic("width");
         public static AttributeInfo Wrap => Basic("wrap");
-
         public static AttributeInfo Xmls => Basic("xmls");
-
+        public static AttributeInfo Align => Basic("align");
+        public static AttributeInfo BgColor => Basic("bgcolor");
+        public static AttributeInfo Border => Basic("border");
+        public static AttributeInfo CellPadding => Basic("cellpadding");
+        public static AttributeInfo CellSpacing => Basic("cellspacing");
         private static AttributeInfo Basic(string key) => Custom(key, false, false);
         private static AttributeInfo Void(string key) => Custom(key, true, false);
         private static AttributeInfo Global(string key) => Custom(key, false, true);
