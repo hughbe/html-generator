@@ -1,30 +1,34 @@
-﻿namespace HtmlGenerator
+﻿using System.Text;
+
+namespace HtmlGenerator
 {
     public class HtmlDocument : HtmlElement
     {
-        public HtmlDocument(HtmlElement head, HtmlElement body) : base(Tag.Html)
+        public HtmlDocument() : base("html")
         {
-            Head = AddChild(head ?? Tag.Head);
-            Body = AddChild(body ?? Tag.Body);
-        }
+            Head = new HtmlElement("head");
+            Body = new HtmlElement("body");
 
-        public HtmlDocument() : this(null, null)
-        {
+            Add(Head);
+            Add(Body);
         }
-
-        public HtmlElement Head { get; }
-        public HtmlElement Body { get; }
+        
+        public HtmlElement Head { get; set; }
+        public HtmlElement Body { get; set; }
 
         public string Doctype { get; set; } = "<!DOCTYPE html>";
 
-        public override string Serialize(HtmlSerializeType serializeType, int depth)
+        internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
         {
-            var doctype = Doctype ?? "";
-            if (serializeType == HtmlSerializeType.PrettyPrint)
+            if (!string.IsNullOrEmpty(Doctype))
             {
-                doctype += "\r";
+                builder.Append(Doctype);
+                if (serializeType != HtmlSerializeOptions.NoFormatting)
+                {
+                    builder.AppendLine();
+                }
             }
-            return doctype + base.Serialize(serializeType, depth);
+            base.Serialize(builder, serializeType);
         }
     }
 }

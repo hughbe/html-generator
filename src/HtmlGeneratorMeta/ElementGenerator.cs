@@ -1,5 +1,6 @@
 ﻿using HtmlGenerator.Meta;
 using System.Reflection;
+using System;
 
 namespace HtmlGeneratorMeta
 {
@@ -33,6 +34,7 @@ namespace HtmlGeneratorMeta
 
                 PreviousName = newName;
             }
+            list += Environment.NewLine;
 
             GenerateList("Tag", "public", "partial ", list);
         }
@@ -48,10 +50,7 @@ namespace HtmlGeneratorMeta
             if (!string.IsNullOrEmpty(PreviousName))
             {
                 propertyCode = "\n" + propertyCode;
-
-                var newLetter = newName.Substring(0, 1);
-                var previousLetter = PreviousName.Substring(0, 1);
-                if (newLetter != previousLetter)
+                if (newName[0] != PreviousName[0])
                 {
                     propertyCode = "\n" + propertyCode;
                 }
@@ -61,12 +60,13 @@ namespace HtmlGeneratorMeta
 
             foreach (var attribute in element.Attributes)
             {
-                var methodName = attribute.ProperName;
+                var methodName = attribute;
 
+                AttributeInfo attributeInfo = (AttributeInfo)typeof(MetaAttributes).GetProperty(methodName).GetValue(null);
                 var attributeCodeFormat = "\n\n\t\t";
                 var methodStart = "";
 
-                if (attribute.IsVoid)
+                if (attributeInfo.IsVoid)
                 {
                     attributeCodeFormat += "public {0}{1} With{2}() => WithAttribute(Attribute.{2});";
                 }
@@ -78,23 +78,23 @@ namespace HtmlGeneratorMeta
                 attributesCode += string.Format(attributeCodeFormat, methodStart, className, methodName);
             }
 
-            var code = string.Format(@"using System.Collections.ObjectModel;
+            var code = string.Format(@"using System.Collections.Generic;
 
 namespace HtmlGenerator
 {{
-    public class {0} : HtmlElement 
+    public class {0} : HtmlElement
     {{
         public {0}() : base(""{1}"", {2}) 
         {{    
         }}
 
-        public new {0} WithChild(HtmlElement child) => ({0})base.WithChild(child);
-        public new {0} WithChildren(Collection<HtmlElement> children) => ({0})base.WithChildren(children);
+        public new {0} WithElement(HtmlElement element) => ({0})base.WithElement(element);
+        public new {0} WithElements(IEnumerable<HtmlElement> elements) => ({0})base.WithElements(elements);
 
         public new {0} WithInnerText(string innerText) => ({0})base.WithInnerText(innerText);
 
-        public new {0} WithAttribute(HtmlAttribute attribute) => ({0})base.WithAttribute(attribute);
-        public new {0} WithAttributes(Collection<HtmlAttribute> attributes) => ({0})base.WithAttributes(attributes);{3}
+        public new {0} WithAttribute(HtmlAttributeNew attribute) => ({0})base.WithAttribute(attribute);
+        public new {0} WithAttributes(IEnumerable<HtmlAttributeNew> attributes) => ({0})base.WithAttributes(attributes);{3}
     }}
 }}
 ", className, lowerName, isVoid, attributesCode);

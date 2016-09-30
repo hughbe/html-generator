@@ -250,3 +250,6 @@ Temporary Items
 Session.vim
 .netrwhist
 *~
+
+resources/coverage
+coverage.xml

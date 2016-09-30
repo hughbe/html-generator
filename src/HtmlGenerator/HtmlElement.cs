@@ -1,43 +1,296 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Text;
 
 namespace HtmlGenerator
 {
-    public class HtmlElement
+    public class HtmlElement : SerializableHtmlObject
     {
-        private int _maximumIndentDepth = 9;
-        private int _minimumIndentDepth = 1;
-
-        protected HtmlElement(HtmlElement element) : this(element.ElementTag, element.IsVoid)
+        private LinkedList<HtmlAttribute> _attributes = new LinkedList<HtmlAttribute>();
+        private LinkedList<HtmlElement> _elements = new LinkedList<HtmlElement>();
+        
+        public HtmlElement(string tag)
         {
+            Requires.NotNullOrWhitespace(tag, nameof(tag));
+            Tag = tag;
         }
 
-        internal HtmlElement(string elementTag, bool isVoid)
+        public HtmlElement(string tag, bool isVoid) : this(tag)
         {
-            if (elementTag == null)
-            {
-                throw new ArgumentNullException(nameof(elementTag));
-            }
-            if (elementTag.Length == 0)
-            {
-                throw new ArgumentException("The element's tag cannot be empty", nameof(elementTag));
-            }
-
-            ElementTag = elementTag;
             IsVoid = isVoid;
         }
 
-        public string ElementTag { get; }
-        public bool IsVoid { get; }
+        public HtmlElement(string tag, string innerText) : this(tag)
+        {
+            InnerText = innerText;
+        }
 
+        public HtmlElement(string tag, string innerText, params HtmlObject[] content) : this(tag, innerText)
+        {
+            Add(content);
+        }
+
+        public HtmlElement(string tag, params HtmlObject[] content) : this(tag)
+        {
+            Add(content);
+        }
+
+        public void Add(HtmlObject content)
+        {
+            Requires.NotNull(content, nameof(content));
+
+            if (content is HtmlAttribute)
+            {
+                Add((HtmlAttribute)content);
+            }
+            else if (content is HtmlElement)
+            {
+                Add((HtmlElement)content);
+            }
+            else
+            {
+                throw new ArgumentException("Content must be an HtmlElement or HtmlAttribute", nameof(content));
+            }
+        }
+
+        public void Add(HtmlElement element)
+        {
+            Requires.NotNull(element, nameof(element));
+            if (element == this)
+            {
+                throw new InvalidOperationException("Cannot add an object as a child to itself.");
+            }
+            if (element.Parent == this)
+            {
+                throw new InvalidOperationException("Cannot have a duplicate element or attribute");
+            }
+            ThrowIfVoid();
+            AddElement(element);
+        }
+
+        public void Add(HtmlAttribute attribute)
+        {
+            Requires.NotNull(attribute, nameof(attribute));
+            if (attribute.Parent == this)
+            {
+                throw new InvalidOperationException("Cannot have a duplicate element or attribute");
+            }
+            AddAttribute(attribute);
+        }
+        
+        public void Add(params HtmlObject[] content) => Add((IEnumerable<HtmlObject>)content);
+
+        public void Add(IEnumerable<HtmlObject> content)
+        {
+            Requires.NotNull(content, nameof(content));
+            ThrowIfVoid();
+            foreach (HtmlObject obj in content)
+            {
+                Add(obj);
+            }
+        }
+
+        public void Add(params HtmlElement[] elements) => Add((IEnumerable<HtmlElement>)elements);
+
+        public void Add(IEnumerable<HtmlElement> elements)
+        {
+            Requires.NotNull(elements, nameof(elements));
+            ThrowIfVoid();
+
+            foreach (HtmlElement obj in elements)
+            {
+                Add(obj);
+            }
+        }
+
+        public void Add(params HtmlAttribute[] attributes) => Add((IEnumerable<HtmlAttribute>)attributes);
+
+        public void Add(IEnumerable<HtmlAttribute> attributes)
+        {
+            Requires.NotNull(attributes, nameof(attributes));
+
+            foreach (HtmlAttribute obj in attributes)
+            {
+                Add(obj);
+            }
+        }
+
+        public void ReplaceAll(params HtmlObject[] content) => ReplaceAll((IEnumerable<HtmlObject>)content);
+
+        public void ReplaceAll(IEnumerable<HtmlObject> content)
+        {
+            Requires.NotNull(content, nameof(content));
+
+            _elements.Clear();
+            _attributes.Clear();
+            foreach (HtmlObject obj in content)
+            {
+                Add(obj);
+            }
+        }
+
+        public void ReplaceAttributes(params HtmlAttribute[] attributes) => ReplaceAttributes((IEnumerable<HtmlAttribute>)attributes);
+
+        public void ReplaceAttributes(IEnumerable<HtmlAttribute> attributes)
+        {
+            Requires.NotNull(attributes, nameof(attributes));
+            ThrowIfVoid();
+
+            _attributes.Clear();
+            foreach (HtmlAttribute attribute in attributes)
+            {
+                Add(attribute);
+            }
+        }
+
+        public void ReplaceElements(params HtmlElement[] elements) => ReplaceElements((IEnumerable<HtmlElement>)elements);
+
+        public void ReplaceElements(IEnumerable<HtmlElement> elements)
+        {
+            Requires.NotNull(elements, nameof(elements));
+            ThrowIfVoid();
+
+            _elements.Clear();
+            foreach (HtmlElement element in elements)
+            {
+                Add(element);
+            }
+        }
+        
+        private void AddElement(HtmlElement element)
+        {
+            element.Parent = this;
+            _elements.AddLast(element);
+        }
+
+        private void AddAttribute(HtmlAttribute attribute)
+        {
+            attribute.Parent = this;
+            _attributes.AddLast(attribute);
+        }
+
+        public void RemoveAll()
+        {
+            ThrowIfVoid();
+            _elements.Clear();
+            _attributes.Clear();
+        }
+
+        public void RemoveElements()
+        {
+            ThrowIfVoid();
+            _elements.Clear();
+        }
+
+        public void RemoveAttributes()
+        {
+            ThrowIfVoid();
+            _attributes.Clear();
+        }
+
+        public string Tag { get; }
+        public bool IsVoid { get; }
         public string InnerText { get; private set; }
 
-        public HtmlElement Parent { get; private set; }
-        public Collection<HtmlElement> Children { get; private set; } = new Collection<HtmlElement>();
+        public void SetInnerText(string value)
+        {
+            ThrowIfVoid();
+            InnerText = value;
+        }
 
-        public Collection<HtmlAttribute> Attributes { get; private set; } = new Collection<HtmlAttribute>();
+        public HtmlElement FirstElement => _elements.First?.Value;
+        public HtmlElement LastElement => _elements.Last?.Value;
 
+        public bool HasElements => _elements.Count != 0;
+
+        public IEnumerable<HtmlElement> Elements() => Elements(null);
+
+        public IEnumerable<HtmlElement> Elements(string tag)
+        {
+            bool isDefaultTag = string.IsNullOrEmpty(tag);
+
+            LinkedListNode<HtmlElement> elementNode = _elements.First;
+            while (elementNode != null)
+            {
+                HtmlElement element = elementNode.Value;
+                if (isDefaultTag || element.Tag == tag)
+                {
+                    yield return element;
+                }
+                elementNode = elementNode.Next;
+            }
+        }
+
+        public HtmlAttribute FirstAttribute => _attributes.First?.Value;
+        public HtmlAttribute LastAttribute => _attributes.Last?.Value;
+
+        public bool HasAttributes => _attributes.Count != 0;
+
+        public IEnumerable<HtmlAttribute> Attributes()
+        {
+            LinkedListNode<HtmlAttribute> attributeNode = _attributes.First;
+            while (attributeNode != null)
+            {
+                yield return attributeNode.Value;
+                attributeNode = attributeNode.Next;
+            }
+        }
+
+        public bool IsEmpty => !HasElements && !HasAttributes;
+
+        public IEnumerable<HtmlObject> ElementsAndAttributes()
+        {
+            foreach (HtmlElement element in Elements())
+            {
+                yield return element;
+            }
+            foreach (HtmlAttribute attribute in Attributes())
+            {
+                yield return attribute;
+            }
+        }
+
+        public bool TryGetElement(string tag, out HtmlElement element)
+        {
+            Requires.NotNullOrWhitespace(tag, nameof(tag));
+
+            LinkedListNode<HtmlElement> elementNode = _elements.First;
+            while (elementNode != null)
+            {
+                HtmlElement nodeElement = elementNode.Value;
+                if (nodeElement.Tag == tag)
+                {
+                    element = nodeElement;
+                    return true;
+                }
+                elementNode = elementNode.Next;
+            }
+
+            element = null;
+            return false;
+        }
+
+        public bool TryGetAttribute(string name, out HtmlAttribute attribute)
+        {
+            Requires.NotNullOrWhitespace(name, nameof(name));
+
+            LinkedListNode<HtmlAttribute> attributeNode = _attributes.First;
+            while (attributeNode != null)
+            {
+                HtmlAttribute nodeAttribute = attributeNode.Value;
+                if (nodeAttribute.Name == name)
+                {
+                    attribute = nodeAttribute;
+                    return true;
+                }
+                attributeNode = attributeNode.Next;
+            }
+
+            attribute = null;
+            return false;
+        }
+
+        private int _minimumIndentDepth = 1;
         public int MinimumIndentDepth
         {
             get { return _minimumIndentDepth; }
@@ -45,17 +298,18 @@ namespace HtmlGenerator
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("The minimum indent depth cannot be negative", nameof(value));
+                    throw new ArgumentOutOfRangeException(nameof(value), "The minimum indent depth cannot be negative");
                 }
                 if (value > _maximumIndentDepth)
                 {
-                    throw new ArgumentException("The minimum indent depth cannot be larger than the maximum indent depth", nameof(value));
+                    throw new ArgumentOutOfRangeException(nameof(value), "The minimum indent depth cannot be larger than the maximum indent depth");
                 }
 
                 _minimumIndentDepth = value;
             }
         }
 
+        private int _maximumIndentDepth = 9;
         public int MaximumIndentDepth
         {
             get { return _maximumIndentDepth; }
@@ -63,203 +317,126 @@ namespace HtmlGenerator
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("The maximum indent depth cannot be negative", nameof(value));
+                    throw new ArgumentOutOfRangeException(nameof(value), "The maximum indent depth cannot be negative");
                 }
                 if (value < _minimumIndentDepth)
                 {
-                    throw new ArgumentException("The maximum indent depth cannot be less than the minimum indent depth", nameof(value));
+                    throw new ArgumentOutOfRangeException(nameof(value), "The maximum indent depth cannot be less than the minimum indent depth");
                 }
 
                 _maximumIndentDepth = value;
             }
         }
 
-        public virtual HtmlElement WithChild(HtmlElement child)
+        internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
         {
-            AddChild(child);
-            return this;
+            Serialize(builder, serializeType, 0);
         }
 
-        public virtual HtmlElement WithChildren(Collection<HtmlElement> children)
+        private void Serialize(StringBuilder stringBuilder, HtmlSerializeOptions serializeType, int depth)
         {
-            AddChildren(children);
-            return this;
-        }
-
-        public T InsertChild<T>(int index, T element) where T : HtmlElement
-        {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
-            if (element == this)
-            {
-                throw new ArgumentException("You cannot add yourself to the list of children", nameof(element));
-            }
-
-            Children.Insert(index, element);
-            element.Parent = this;
-            return element;
-        }
-
-        public T AddChild<T>(T element) where T : HtmlElement => InsertChild(Children.Count, element);
-
-        public void AddChildren(Collection<HtmlElement> children)
-        {
-            if (children == null)
-            {
-                throw new ArgumentNullException(nameof(children));
-            }
-
-            foreach (var child in children)
-            {
-                AddChild(child);
-            }
-        }
-
-        public void SetChildren(Collection<HtmlElement> children)
-        {
-            Children = children ?? new Collection<HtmlElement>();
-        }
-
-        public virtual HtmlElement WithAttribute(HtmlAttribute attribute)
-        {
-            AddAttribute(attribute);
-            return this;
-        }
-
-        public virtual HtmlElement WithAttributes(Collection<HtmlAttribute> attributes)
-        {
-            SetAttributes(attributes);
-            return this;
-        }
-        
-        public void AddAttribute(HtmlAttribute attribute)
-        {
-            Attributes.Add(attribute);
-        }
-
-        public void AddAttribute(int index, HtmlAttribute attribute)
-        {
-            Attributes.Insert(index, attribute);
-        }
-
-        public void AddAttributes(Collection<HtmlAttribute> attributes)
-        {
-            if (attributes == null)
-            {
-                throw new ArgumentNullException(nameof(attributes));
-            }
-
-            foreach (var attribute in attributes)
-            {
-                AddAttribute(attribute);
-            }
-        }
-
-        public void SetAttributes(Collection<HtmlAttribute> attributes)
-        {
-            Attributes = attributes ?? new Collection<HtmlAttribute>();
-        }
-
-        public virtual HtmlElement WithInnerText(string innerText)
-        {
-            SetInnerText(innerText);
-            return this;
-        }
-
-        public void SetInnerText(string innerText)
-        {
-            InnerText = innerText;
-        }
-
-        public string Serialize() => Serialize(HtmlSerializeType.PrettyPrint);
-
-        public string Serialize(HtmlSerializeType serializeType) => Serialize(serializeType, 0);
-
-        public virtual string Serialize(HtmlSerializeType serializeType, int depth)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            Serialize(stringBuilder, serializeType, depth);
-            return stringBuilder.ToString();
-        }
-
-        internal void Serialize(StringBuilder stringBuilder, HtmlSerializeType serializeType, int depth)
-        {
-            SerializeOpenTag(stringBuilder);
-            if (serializeType == HtmlSerializeType.PrettyPrint)
-            {
-                if ((string.IsNullOrEmpty(InnerText) && Children.Count > 0) || IsVoid)
-                {
-                    stringBuilder.Append("\r");
-                }
-            }
-
+            SerializeOpenTag(stringBuilder, serializeType);
             if (IsVoid)
             {
                 return;
             }
-
-            var shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
-            stringBuilder.Append(InnerText ?? "");
-            foreach (var child in Children)
+            
+            if (InnerText != null)
             {
+                stringBuilder.Append(InnerText);
+            }
+            var shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
+            foreach (var child in _elements)
+            {
+                if (serializeType != HtmlSerializeOptions.NoFormatting)
+                {
+                    stringBuilder.AppendLine();
+                }
                 if (shouldIndent)
                 {
-                    stringBuilder.Append('\t', depth);
+                    stringBuilder.Append(' ', depth * 2);
                 }
-                if (!string.IsNullOrWhiteSpace(child.InnerText) && child.Children.Count == 0)
+                if (!string.IsNullOrWhiteSpace(child.InnerText) && child._elements.Count == 0)
                 {
-                    child.Serialize(stringBuilder, serializeType, 0);
+                    child.Serialize(stringBuilder, serializeType, depth);
                 }
                 else
                 {
                     child.Serialize(stringBuilder, serializeType, depth + 1);
                 }
             }
-            
+            if (_elements._count > 0 && serializeType != HtmlSerializeOptions.NoFormatting)
+            {
+                stringBuilder.AppendLine();
+            }
+
             if (depth > MaximumIndentDepth)
             {
                 depth = MaximumIndentDepth;
-                stringBuilder.Append('\t');
+                stringBuilder.Append(' ', 2);
             }
 
             if (shouldIndent && depth - 2 >= 0)
             {
-                stringBuilder.Append('\t', depth - 2);
+                stringBuilder.Append(' ', (depth - 2) * 2);
             }
             stringBuilder.Append("</");
-            stringBuilder.Append(ElementTag);
+            stringBuilder.Append(Tag);
             stringBuilder.Append('>');
-            
-            if (serializeType == HtmlSerializeType.PrettyPrint)
-            {
-                stringBuilder.Append("\r");
-            }
         }
 
-        private void SerializeOpenTag(StringBuilder stringBuilder)
+        private void SerializeOpenTag(StringBuilder stringBuilder, HtmlSerializeOptions serializeType)
         {
-            stringBuilder.Append("<");
-            stringBuilder.Append(ElementTag);
-            
-            if (Attributes != null && Attributes.Count != 0)
+            stringBuilder.Append('<');
+            stringBuilder.Append(Tag);
+
+            if (_attributes.Count != 0)
             {
-                foreach (var attribute in Attributes)
+                foreach (var attribute in Attributes())
                 {
-                    stringBuilder.Append(" ");
-                    attribute.Serialize(stringBuilder);
+                    stringBuilder.Append(' ');
+                    attribute.Serialize(stringBuilder, serializeType);
                 }
             }
-            stringBuilder.Append(IsVoid ? "/>" : ">");
+            stringBuilder.Append(IsVoid ? " />" : ">");
         }
 
-        public override string ToString()
+        private void ThrowIfVoid()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            SerializeOpenTag(stringBuilder);
-            return stringBuilder.ToString();
+            if (IsVoid)
+            {
+                throw new InvalidOperationException("Cannot set inner text for a void element");
+            }
+        }
+
+        public virtual HtmlElement WithElement(HtmlElement element)
+        {
+            Add(element);
+            return this;
+        }
+
+        public virtual HtmlElement WithElements(IEnumerable<HtmlElement> elements)
+        {
+            Add(elements);
+            return this;
+        }
+
+        public virtual HtmlElement WithAttribute(HtmlAttribute attribute)
+        {
+            Add(attribute);
+            return this;
+        }
+
+        public virtual HtmlElement WithAttributes(IEnumerable<HtmlAttribute> attributes)
+        {
+            Add(attributes);
+            return this;
+        }
+
+        public virtual HtmlElement WithInnerText(string innerText)
+        {
+            SetInnerText(innerText);
+            return this;
         }
     }
 }

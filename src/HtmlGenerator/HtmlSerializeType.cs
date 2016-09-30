@@ -1,8 +1,8 @@
 ﻿namespace HtmlGenerator
 {
-    public enum HtmlSerializeType
+    public enum HtmlSerializeOptions
     {
-        NoSpace,
-        PrettyPrint
+        None,
+        NoFormatting
     }
 }
