@@ -1,69 +1,38 @@
-﻿using System;
 using System.Text;
 
 namespace HtmlGenerator
 {
-    public class HtmlAttribute
+    public class HtmlAttribute : SerializableHtmlObject
     {
-        public string ProperName { get; }
+        public HtmlAttribute(string name)
+        {
+            Requires.NotNullOrWhitespace(name, nameof(name));
+            Name = name;
+        }
+
+        public HtmlAttribute(string name, string value) : this(name)
+        {
+            Requires.NotNull(value, nameof(value));
+            Value = value;
+        }
+        
         public string Name { get; }
         public string Value { get; }
 
-        public bool IsVoid { get; }
-        public bool IsGlobal { get; }
-        
-        protected internal HtmlAttribute(HtmlAttribute attribute) : this(attribute.Name, attribute.ProperName, attribute.Value, attribute.IsVoid, attribute.IsGlobal)
-        {
-        }
-         
-        protected internal HtmlAttribute(string name, string properName, string value, bool isVoid, bool isGlobal)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("The attribute's name must not be an empty string", nameof(name));
-            }
+        public bool IsVoid => Value == null;
 
-            if (string.IsNullOrWhiteSpace(properName))
-            {
-                properName = name;
-            }
-
-            properName = properName.Replace(" ", "").Replace("-", "");
-            
-            Name = name;
-            ProperName = properName;
-            Value = value;
-            IsVoid = isVoid;
-            IsGlobal = isGlobal;
-        }
-
-        public string Serialize()
+        internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            Serialize(stringBuilder);
-            return stringBuilder.ToString();
-        }
-
-        internal void Serialize(StringBuilder stringBuilder)
-        {
-            if (IsVoid || Value == null) // No attribute content
+            int extraLength = IsVoid ? 0 : (3 + Value.Length);
+            builder.EnsureCapacity(builder.Capacity + Name.Length + extraLength);
+            builder.Append(Name);
+            if (!IsVoid)
             {
-                stringBuilder.Append(Name);
-            }
-            else
-            {
-                stringBuilder.Append(Name);
-                stringBuilder.Append("=");
-                stringBuilder.Append("\"");
-                stringBuilder.Append(Value);
-                stringBuilder.Append("\"");
+                builder.Append('=');
+                builder.Append('"');
+                builder.Append(Value);
+                builder.Append('"');
             }
         }
-
-        public override string ToString() => Serialize();
     }
 }

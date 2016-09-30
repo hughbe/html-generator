@@ -16,11 +16,11 @@ namespace HtmlGeneratorMeta
             }
 
             Console.WriteLine("Generating elements ..");
-            new ElementGenerator(Path.Combine(folderPath, "elements")).Generate();
+            new ElementGenerator(Path.Combine(folderPath, "Elements/")).Generate();
             Console.WriteLine("Elements successfully generated!\n");
             
             Console.WriteLine("Generating attributes ..");
-            new AttributeGenerator(Path.Combine(folderPath, "attributes")).Generate();
+            new AttributeGenerator(Path.Combine(folderPath, "Attributes/")).Generate();
             Console.WriteLine("Attributes successfully generated!\n");
         }
     }

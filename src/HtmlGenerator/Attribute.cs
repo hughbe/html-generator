@@ -141,5 +141,14 @@ namespace HtmlGenerator
 		public static HtmlWrapAttribute Wrap(string value) => new HtmlWrapAttribute(value);
 
 		public static HtmlXmlsAttribute Xmls(string value) => new HtmlXmlsAttribute(value);
+
+		public static HtmlAlignAttribute Align(string value) => new HtmlAlignAttribute(value);
+
+		public static HtmlBgColorAttribute BgColor(string value) => new HtmlBgColorAttribute(value);
+		public static HtmlBorderAttribute Border(string value) => new HtmlBorderAttribute(value);
+
+		public static HtmlCellPaddingAttribute CellPadding(string value) => new HtmlCellPaddingAttribute(value);
+		public static HtmlCellSpacingAttribute CellSpacing(string value) => new HtmlCellSpacingAttribute(value);
+
     }
 }

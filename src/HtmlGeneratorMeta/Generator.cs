@@ -35,7 +35,7 @@ namespace HtmlGeneratorMeta
 {3}
     }}
 }}", accessModifier, partialModifier, fileName, list);
-            var filePath = FolderPath + fileName + ".cs";
+            var filePath = Path.Combine(FolderPath, "../") + fileName + ".cs";
             File.WriteAllText(filePath, code);
         }
     }

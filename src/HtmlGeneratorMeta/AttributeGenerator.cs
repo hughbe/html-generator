@@ -1,5 +1,6 @@
 ﻿using HtmlGenerator.Meta;
 using System.Reflection;
+using System;
 
 namespace HtmlGeneratorMeta
 {
@@ -48,9 +49,7 @@ namespace HtmlGeneratorMeta
                     basePropertyCode = "\n" + basePropertyCode;
                     createPropertyCode = "\n" + createPropertyCode;
 
-                    var newLetter = upperName.Substring(0, 1);
-                    var previousLetter = PreviousName.Substring(0, 1);
-                    if (newLetter != previousLetter)
+                    if (upperName[0] != PreviousName[0])
                     {
                         basePropertyCode = "\n" + basePropertyCode;
                         createPropertyCode = "\n" + createPropertyCode;
@@ -60,25 +59,24 @@ namespace HtmlGeneratorMeta
                 baseList += basePropertyCode;
                 createList += createPropertyCode;
 
-                var valueCreationCode = "";
-                if (!htmlObject.IsVoid)
+                var ctorCode = "";
+                if (htmlObject.IsVoid)
                 {
-                    valueCreationCode = string.Format(
-"\n\n" + @"        public {0}(string value) : base(""{1}"", ""{2}"", value, {3}, {4}) 
-        {{
-        }}", className, lowerName, upperName, isVoid, isGlobal);
+                    ctorCode = $"public {className}() : base(\"{lowerName}\") {{}}";
+                }
+                else
+                {
+                    ctorCode = $"public {className}(string value) : base(\"{lowerName}\", value) {{}}";
                 }
 
                 var code = string.Format(@"namespace HtmlGenerator
 {{
-    public class {0} : HtmlAttribute 
+    public class {0} : HtmlAttribute
     {{
-        public {0}() : base(""{1}"", ""{2}"", null, {3}, {4}) 
-        {{
-        }}{5}
+        {1}
     }}
 }}
-", className, lowerName, upperName, isVoid, isGlobal, valueCreationCode);
+", className, ctorCode);
 
                 GenerateClass(className, code);
                 
@@ -86,6 +84,8 @@ namespace HtmlGeneratorMeta
             }
 
             GenerateList("BaseAttribute", "public", "", baseList);
+
+            createList += Environment.NewLine;
             GenerateList("Attribute", "public", "", createList);
         }
     }

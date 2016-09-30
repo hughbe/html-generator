@@ -3,19 +3,11 @@
   "description": "Test app for HtmlGenerator.",
   "authors": [ "Hugh Bellamy" ],
   "copyright": "Hugh Bellamy 2015",
-
   "buildOptions": {
     "emitEntryPoint": true,
     "preserveCompilationContext": true,
     "warningsAsErrors": true
   },
-
-  "dependencies": {
-    "HtmlGenerator": {
-      "target": "project"
-    }
-  },
-
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
@@ -26,6 +18,9 @@
         "System.Reflection.TypeExtensions": "4.1.0"
       }
     },
-    "net45": { }
+    "net45": {}
+  },
+  "dependencies": {
+    "HtmlGenerator": "1.0.15"
   }
 }
