@@ -47,8 +47,6 @@ namespace HtmlGenerator.Tests
             Assert.Equal(value, document.Doctype);
         }
 
-<<<<<<< HEAD
-=======
         [Fact]
         public void Head_SetExisting_NonNull_RemovesElement()
         {
@@ -145,7 +143,6 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, document.Equals(other));
         }
 
->>>>>>> a8516e4... Cleanup meta project (#46)
         [Theory]
         [MemberData(nameof(Doctype_TestData))]
         public void Serialize_NullDoctype_NotIncluded(string doctype)

@@ -1,8 +1,6 @@
-﻿using HtmlGenerator;
-
-namespace WebsiteGenerator
+﻿namespace HtmlGenerator.Tests
 {
-    internal class Demo
+    public class Demo
     {
         public void SendError(string errorMessage, string errorDescription)
         {
@@ -11,22 +9,22 @@ namespace WebsiteGenerator
             var head = html.Head;
             var body = html.Body;
 
-            head.AddChild(Tag
+            head.Add(Tag
                 .Title
                 .WithInnerText(errorMessage));
 
-            head.AddChild(Tag
+            head.Add(Tag
                .Link
                .WithRel("stylesheet")
                .WithHref("css/styles.css"));
 
-            body.AddChild(Tag
+            body.Add(Tag
                 .H1
                 .WithInnerText(errorMessage));
 
-            body.AddChild(Tag.Hr);
+            body.Add(Tag.Hr);
 
-            body.AddChild(Tag
+            body.Add(Tag
                 .P
                 .WithInnerText(errorDescription));
         }
