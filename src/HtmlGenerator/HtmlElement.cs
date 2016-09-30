@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace HtmlGenerator
 {
@@ -155,90 +156,87 @@ namespace HtmlGenerator
 
         public virtual string Serialize(HtmlSerializeType serializeType, int depth)
         {
-            var openingTag = SerializeOpenTag();
+            StringBuilder stringBuilder = new StringBuilder();
+            Serialize(stringBuilder, serializeType, depth);
+            return stringBuilder.ToString();
+        }
+
+        internal void Serialize(StringBuilder stringBuilder, HtmlSerializeType serializeType, int depth)
+        {
+            SerializeOpenTag(stringBuilder);
             if (serializeType == HtmlSerializeType.PrettyPrint)
             {
                 if ((string.IsNullOrEmpty(InnerText) && Children.Count > 0) || IsVoid)
                 {
-                    openingTag += "\r";
+                    stringBuilder.Append("\r");
                 }
             }
 
             if (IsVoid)
             {
-                return openingTag;
-            }
-
-            var closingTag = "</" + ElementTag + ">";
-            if (depth > MaximumIndentDepth)
-            {
-                depth = MaximumIndentDepth;
-                closingTag = "\t" + closingTag;
+                return;
             }
 
             var shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
-
-            if (shouldIndent)
-            {
-                for (var counter = 0; counter < depth - 1; counter++)
-                {
-                    closingTag = "\t" + closingTag;
-                }
-            }
-
-            var innerText = InnerText ?? "";
+            stringBuilder.Append(InnerText ?? "");
             foreach (var child in Children)
             {
                 if (shouldIndent)
                 {
-                    for (var counter = 0; counter < depth; counter++)
-                    {
-                        innerText += "\t";
-                    }
+                    stringBuilder.Append('\t', depth);
                 }
                 if (!string.IsNullOrWhiteSpace(child.InnerText) && child.Children.Count == 0)
                 {
-                    innerText += child.Serialize(serializeType, 0);
+                    child.Serialize(stringBuilder, serializeType, 0);
                 }
                 else
                 {
-                    innerText += child.Serialize(serializeType, depth + 1);
+                    child.Serialize(stringBuilder, serializeType, depth + 1);
                 }
             }
+            
+            if (depth > MaximumIndentDepth)
+            {
+                depth = MaximumIndentDepth;
+                stringBuilder.Append('\t');
+            }
 
-            var html = openingTag + innerText + closingTag;
+            if (shouldIndent && depth - 2 >= 0)
+            {
+                stringBuilder.Append('\t', depth - 2);
+            }
+            stringBuilder.Append("</");
+            stringBuilder.Append(ElementTag);
+            stringBuilder.Append('>');
+            
             if (serializeType == HtmlSerializeType.PrettyPrint)
             {
-                html += "\r";
+                stringBuilder.Append("\r");
             }
-            return html;
         }
 
-        private string SerializeOpenTag()
+        private void SerializeOpenTag(StringBuilder stringBuilder)
         {
-            var tagOpener = "<" + ElementTag;
-            var tagCloser = ">";
-
-            if (IsVoid)
+            stringBuilder.Append("<");
+            stringBuilder.Append(ElementTag);
+            
+            if (Attributes != null && Attributes.Count != 0)
             {
-                tagCloser = "/>";
+                foreach (var attribute in Attributes)
+                {
+                    stringBuilder.Append(" ");
+                    attribute.Serialize(stringBuilder);
+                }
             }
-
-            if (Attributes == null || Attributes.Count == 0)
-            {
-                return tagOpener + tagCloser;
-            }
-
-            var attributes = "";
-            foreach (var attribute in Attributes)
-            {
-                attributes += " " + attribute.Serialize();
-            }
-
-            return tagOpener + attributes + tagCloser;
+            stringBuilder.Append(IsVoid ? "/>" : ">");
         }
 
-        public override string ToString() => SerializeOpenTag();
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            SerializeOpenTag(stringBuilder);
+            return stringBuilder.ToString();
+        }
     }
 
     public static class HtmlElementExtensions
