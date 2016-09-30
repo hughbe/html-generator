@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace HtmlGenerator
 {
@@ -42,16 +43,25 @@ namespace HtmlGenerator
 
         public string Serialize()
         {
-            string attribute;
-            if (IsVoid || Value == null) //No attribute content
+            StringBuilder stringBuilder = new StringBuilder();
+            Serialize(stringBuilder);
+            return stringBuilder.ToString();
+        }
+
+        internal void Serialize(StringBuilder stringBuilder)
+        {
+            if (IsVoid || Value == null) // No attribute content
             {
-                attribute = Name;
+                stringBuilder.Append(Name);
             }
             else
             {
-                attribute = Name + "=" + "\"" + Value + "\"";
+                stringBuilder.Append(Name);
+                stringBuilder.Append("=");
+                stringBuilder.Append("\"");
+                stringBuilder.Append(Value);
+                stringBuilder.Append("\"");
             }
-            return attribute;
         }
 
         public override string ToString() => Serialize();
