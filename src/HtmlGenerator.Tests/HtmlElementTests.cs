@@ -950,6 +950,96 @@ namespace HtmlGenerator.Tests
             Assert.Empty(element.PreviousElements("any"));
         }
 
+        [Fact]
+        public void RemoveFromParent_OnlyChild_Works()
+        {
+            HtmlElement child = new HtmlElement("h1");
+            HtmlElement parent = new HtmlElement("div", child);
+
+            child.RemoveFromParent();
+            Assert.Null(child.Parent);
+            Assert.Empty(parent.Elements());
+            Assert.False(parent.HasElements);
+        }
+
+        [Fact]
+        public void RemoveFromParent_FirstChild_Works()
+        {
+            HtmlElement child1 = new HtmlElement("h1");
+            HtmlElement child2 = new HtmlElement("h2");
+            HtmlElement child3 = new HtmlElement("h3");
+            HtmlElement parent = new HtmlElement("div", child1, child2, child3);
+
+            // Updates Elements
+            child1.RemoveFromParent();
+            Assert.Null(child1.Parent);
+            Assert.Equal(new HtmlElement[] { child2, child3 }, parent.Elements());
+            Assert.True(parent.HasElements);
+
+            // Updates LinkedList
+            Assert.Null(child1.PreviousElement);
+            Assert.Null(child1.NextElement);
+            Assert.Null(child2.PreviousElement);
+            Assert.Equal(child3, child2.NextElement);
+            Assert.Equal(child2, child3.PreviousElement);
+            Assert.Null(child3.NextElement);
+        }
+
+        [Fact]
+        public void RemoveFromParent_LastChild_Works()
+        {
+            HtmlElement child1 = new HtmlElement("h1");
+            HtmlElement child2 = new HtmlElement("h2");
+            HtmlElement child3 = new HtmlElement("h3");
+            HtmlElement parent = new HtmlElement("div", child1, child2, child3);
+
+            // Updates Elements
+            child3.RemoveFromParent();
+            Assert.Null(child3.Parent);
+            Assert.Equal(new HtmlElement[] { child1, child2 }, parent.Elements());
+            Assert.True(parent.HasElements);
+
+            // Updates LinkedList
+            Assert.Null(child1.PreviousElement);
+            Assert.Equal(child2, child1.NextElement);
+            Assert.Equal(child1, child2.PreviousElement);
+            Assert.Null(child2.NextElement);
+            Assert.Null(child3.PreviousElement);
+            Assert.Null(child3.NextElement);
+        }
+
+        [Fact]
+        public void RemoveFromParent_MiddleChild_Works()
+        {
+            HtmlElement child1 = new HtmlElement("h1");
+            HtmlElement child2 = new HtmlElement("h2");
+            HtmlElement child3 = new HtmlElement("h3");
+            HtmlElement parent = new HtmlElement("div", child1, child2, child3);
+
+            // Updates Elements
+            child2.RemoveFromParent();
+            Assert.Null(child2.Parent);
+            Assert.Equal(new HtmlElement[] { child1, child3 }, parent.Elements());
+            Assert.True(parent.HasElements);
+
+            // Updates LinkedList
+            Assert.Null(child1.PreviousElement);
+            Assert.Equal(child3, child1.NextElement);
+            Assert.Null(child2.PreviousElement);
+            Assert.Null(child2.NextElement);
+            Assert.Equal(child1, child3.PreviousElement);
+            Assert.Null(child3.NextElement);
+        }
+
+        [Fact]
+        public void RemoveFromParent_NoParent_DoesNothing()
+        {
+            HtmlElement element = new HtmlElement("html");
+            element.RemoveFromParent();
+
+            Assert.Null(element.Parent);
+        }
+
         public class CustomHtmlObject : HtmlObject { }
     }
 }
