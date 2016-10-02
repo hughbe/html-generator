@@ -1133,6 +1133,82 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, element.Descendants(tag));
             Assert.Equal(expectedIncludingSelf, element.DescendantsAndSelf(tag));
         }
+        
+        [Fact]
+        public void Ancestors_OneLayerOfElements_ReturnsExpected()
+        {
+            HtmlElement parent = new HtmlElement("Parent");
+            HtmlElement child1 = new HtmlElement("Child1");
+            HtmlElement child2 = new HtmlElement("Child2");
+
+            parent.Add(child1, child2);
+
+            VerifyAncestors(child1, null, new HtmlElement[] { parent });
+            VerifyAncestors(child1, "Parent", new HtmlElement[] { parent });
+            VerifyAncestors(child1, "Child1", new HtmlElement[0]);
+            VerifyAncestors(child1, "any", new HtmlElement[0]);
+        }
+
+        [Fact]
+        public void Ancestors_TwoLayersOfElements_ReturnsExpected()
+        {
+            HtmlElement parent = new HtmlElement("Parent");
+            HtmlElement child1 = new HtmlElement("Child");
+            HtmlElement grandchild1 = new HtmlElement("Child");
+
+            HtmlElement child2 = new HtmlElement("Child");
+
+            parent.Add(child1, child2);
+            child1.Add(grandchild1);
+
+            VerifyAncestors(grandchild1, null, new HtmlElement[] { child1, parent });
+            VerifyAncestors(grandchild1, "Child", new HtmlElement[] { child1 });
+            VerifyAncestors(grandchild1, "Parent", new HtmlElement[] { parent });
+            VerifyAncestors(grandchild1, "any", new HtmlElement[0]);
+        }
+
+        [Fact]
+        public void Ancestors_ThreeLayersOfElements_ReturnsExpected()
+        {
+            HtmlElement parent = new HtmlElement("Parent");
+            HtmlElement child1 = new HtmlElement("Child");
+            HtmlElement grandchild1 = new HtmlElement("Child");
+            HtmlElement greatGrandchild = new HtmlElement("GreatGrandchild");
+
+            HtmlElement child2 = new HtmlElement("Child");
+            HtmlElement grandchild2 = new HtmlElement("Grandchild");
+
+            parent.Add(child1, child2);
+            child1.Add(grandchild1);
+            child2.Add(grandchild2);
+
+            grandchild1.Add(greatGrandchild);
+
+            VerifyAncestors(greatGrandchild, null, new HtmlElement[] { grandchild1, child1, parent });
+            VerifyAncestors(greatGrandchild, "Child", new HtmlElement[] { grandchild1, child1 });
+            VerifyAncestors(greatGrandchild, "Parent", new HtmlElement[] { parent });
+            VerifyAncestors(greatGrandchild, "GreatGrandchild", new HtmlElement[0]);
+            VerifyAncestors(greatGrandchild, "any", new HtmlElement[0]);
+        }
+
+        [Fact]
+        public void Ancestors_NoAncestors_ReturnsEmpty()
+        {
+            HtmlElement parent = new HtmlElement("Parent");
+
+            VerifyAncestors(parent, null, new HtmlElement[0]);
+            VerifyAncestors(parent, "Parent", new HtmlElement[0]);
+            VerifyAncestors(parent, "any", new HtmlElement[0]);
+        }
+
+        private static void VerifyAncestors(HtmlElement element, string tag, HtmlElement[] expected)
+        {
+            if (tag == null)
+            {
+                Assert.Equal(expected, element.Ancestors());
+            }
+            Assert.Equal(expected, element.Ancestors(tag));
+        }
 
         public class CustomHtmlObject : HtmlObject { }
     }
