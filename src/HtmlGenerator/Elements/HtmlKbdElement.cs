@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlKbdElement : HtmlElement 
+    public class HtmlKbdElement : HtmlElement
     {
         public HtmlKbdElement() : base("kbd", false) 
         {    
         }
 
-        public new HtmlKbdElement WithChild(HtmlElement child) => (HtmlKbdElement)base.WithChild(child);
-        public new HtmlKbdElement WithChildren(Collection<HtmlElement> children) => (HtmlKbdElement)base.WithChildren(children);
+        public new HtmlKbdElement WithElement(HtmlElement element) => (HtmlKbdElement)base.WithElement(element);
+        public new HtmlKbdElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlKbdElement)base.WithElements(elements);
 
         public new HtmlKbdElement WithInnerText(string innerText) => (HtmlKbdElement)base.WithInnerText(innerText);
 
         public new HtmlKbdElement WithAttribute(HtmlAttribute attribute) => (HtmlKbdElement)base.WithAttribute(attribute);
-        public new HtmlKbdElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlKbdElement)base.WithAttributes(attributes);
+        public new HtmlKbdElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlKbdElement)base.WithAttributes(attributes);
 
 		public HtmlKbdElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

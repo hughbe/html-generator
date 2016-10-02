@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlSmallElement : HtmlElement 
+    public class HtmlSmallElement : HtmlElement
     {
         public HtmlSmallElement() : base("small", false) 
         {    
         }
 
-        public new HtmlSmallElement WithChild(HtmlElement child) => (HtmlSmallElement)base.WithChild(child);
-        public new HtmlSmallElement WithChildren(Collection<HtmlElement> children) => (HtmlSmallElement)base.WithChildren(children);
+        public new HtmlSmallElement WithElement(HtmlElement element) => (HtmlSmallElement)base.WithElement(element);
+        public new HtmlSmallElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlSmallElement)base.WithElements(elements);
 
         public new HtmlSmallElement WithInnerText(string innerText) => (HtmlSmallElement)base.WithInnerText(innerText);
 
         public new HtmlSmallElement WithAttribute(HtmlAttribute attribute) => (HtmlSmallElement)base.WithAttribute(attribute);
-        public new HtmlSmallElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlSmallElement)base.WithAttributes(attributes);
+        public new HtmlSmallElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlSmallElement)base.WithAttributes(attributes);
 
 		public HtmlSmallElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlFooterElement : HtmlElement 
+    public class HtmlFooterElement : HtmlElement
     {
         public HtmlFooterElement() : base("footer", false) 
         {    
         }
 
-        public new HtmlFooterElement WithChild(HtmlElement child) => (HtmlFooterElement)base.WithChild(child);
-        public new HtmlFooterElement WithChildren(Collection<HtmlElement> children) => (HtmlFooterElement)base.WithChildren(children);
+        public new HtmlFooterElement WithElement(HtmlElement element) => (HtmlFooterElement)base.WithElement(element);
+        public new HtmlFooterElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlFooterElement)base.WithElements(elements);
 
         public new HtmlFooterElement WithInnerText(string innerText) => (HtmlFooterElement)base.WithInnerText(innerText);
 
         public new HtmlFooterElement WithAttribute(HtmlAttribute attribute) => (HtmlFooterElement)base.WithAttribute(attribute);
-        public new HtmlFooterElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlFooterElement)base.WithAttributes(attributes);
+        public new HtmlFooterElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlFooterElement)base.WithAttributes(attributes);
 
 		public HtmlFooterElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlTimeElement : HtmlElement 
+    public class HtmlTimeElement : HtmlElement
     {
         public HtmlTimeElement() : base("time", false) 
         {    
         }
 
-        public new HtmlTimeElement WithChild(HtmlElement child) => (HtmlTimeElement)base.WithChild(child);
-        public new HtmlTimeElement WithChildren(Collection<HtmlElement> children) => (HtmlTimeElement)base.WithChildren(children);
+        public new HtmlTimeElement WithElement(HtmlElement element) => (HtmlTimeElement)base.WithElement(element);
+        public new HtmlTimeElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlTimeElement)base.WithElements(elements);
 
         public new HtmlTimeElement WithInnerText(string innerText) => (HtmlTimeElement)base.WithInnerText(innerText);
 
         public new HtmlTimeElement WithAttribute(HtmlAttribute attribute) => (HtmlTimeElement)base.WithAttribute(attribute);
-        public new HtmlTimeElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTimeElement)base.WithAttributes(attributes);
+        public new HtmlTimeElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlTimeElement)base.WithAttributes(attributes);
 
 		public HtmlTimeElement WithDateTime(string value) => WithAttribute(Attribute.DateTime(value));
 

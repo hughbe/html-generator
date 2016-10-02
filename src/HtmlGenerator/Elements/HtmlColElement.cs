@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlColElement : HtmlElement 
+    public class HtmlColElement : HtmlElement
     {
         public HtmlColElement() : base("col", true) 
         {    
         }
 
-        public new HtmlColElement WithChild(HtmlElement child) => (HtmlColElement)base.WithChild(child);
-        public new HtmlColElement WithChildren(Collection<HtmlElement> children) => (HtmlColElement)base.WithChildren(children);
+        public new HtmlColElement WithElement(HtmlElement element) => (HtmlColElement)base.WithElement(element);
+        public new HtmlColElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlColElement)base.WithElements(elements);
 
         public new HtmlColElement WithInnerText(string innerText) => (HtmlColElement)base.WithInnerText(innerText);
 
         public new HtmlColElement WithAttribute(HtmlAttribute attribute) => (HtmlColElement)base.WithAttribute(attribute);
-        public new HtmlColElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlColElement)base.WithAttributes(attributes);
+        public new HtmlColElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlColElement)base.WithAttributes(attributes);
 
 		public HtmlColElement WithSpan(string value) => WithAttribute(Attribute.Span(value));
 

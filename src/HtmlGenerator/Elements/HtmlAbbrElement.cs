@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlAbbrElement : HtmlElement 
+    public class HtmlAbbrElement : HtmlElement
     {
         public HtmlAbbrElement() : base("abbr", false) 
         {    
         }
 
-        public new HtmlAbbrElement WithChild(HtmlElement child) => (HtmlAbbrElement)base.WithChild(child);
-        public new HtmlAbbrElement WithChildren(Collection<HtmlElement> children) => (HtmlAbbrElement)base.WithChildren(children);
+        public new HtmlAbbrElement WithElement(HtmlElement element) => (HtmlAbbrElement)base.WithElement(element);
+        public new HtmlAbbrElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlAbbrElement)base.WithElements(elements);
 
         public new HtmlAbbrElement WithInnerText(string innerText) => (HtmlAbbrElement)base.WithInnerText(innerText);
 
         public new HtmlAbbrElement WithAttribute(HtmlAttribute attribute) => (HtmlAbbrElement)base.WithAttribute(attribute);
-        public new HtmlAbbrElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlAbbrElement)base.WithAttributes(attributes);
+        public new HtmlAbbrElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlAbbrElement)base.WithAttributes(attributes);
 
 		public HtmlAbbrElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

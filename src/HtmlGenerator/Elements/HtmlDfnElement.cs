@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlDfnElement : HtmlElement 
+    public class HtmlDfnElement : HtmlElement
     {
         public HtmlDfnElement() : base("dfn", false) 
         {    
         }
 
-        public new HtmlDfnElement WithChild(HtmlElement child) => (HtmlDfnElement)base.WithChild(child);
-        public new HtmlDfnElement WithChildren(Collection<HtmlElement> children) => (HtmlDfnElement)base.WithChildren(children);
+        public new HtmlDfnElement WithElement(HtmlElement element) => (HtmlDfnElement)base.WithElement(element);
+        public new HtmlDfnElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlDfnElement)base.WithElements(elements);
 
         public new HtmlDfnElement WithInnerText(string innerText) => (HtmlDfnElement)base.WithInnerText(innerText);
 
         public new HtmlDfnElement WithAttribute(HtmlAttribute attribute) => (HtmlDfnElement)base.WithAttribute(attribute);
-        public new HtmlDfnElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDfnElement)base.WithAttributes(attributes);
+        public new HtmlDfnElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlDfnElement)base.WithAttributes(attributes);
 
 		public HtmlDfnElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

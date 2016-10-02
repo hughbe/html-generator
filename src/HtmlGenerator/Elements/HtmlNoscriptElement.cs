@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlNoscriptElement : HtmlElement 
+    public class HtmlNoscriptElement : HtmlElement
     {
         public HtmlNoscriptElement() : base("noscript", false) 
         {    
         }
 
-        public new HtmlNoscriptElement WithChild(HtmlElement child) => (HtmlNoscriptElement)base.WithChild(child);
-        public new HtmlNoscriptElement WithChildren(Collection<HtmlElement> children) => (HtmlNoscriptElement)base.WithChildren(children);
+        public new HtmlNoscriptElement WithElement(HtmlElement element) => (HtmlNoscriptElement)base.WithElement(element);
+        public new HtmlNoscriptElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlNoscriptElement)base.WithElements(elements);
 
         public new HtmlNoscriptElement WithInnerText(string innerText) => (HtmlNoscriptElement)base.WithInnerText(innerText);
 
         public new HtmlNoscriptElement WithAttribute(HtmlAttribute attribute) => (HtmlNoscriptElement)base.WithAttribute(attribute);
-        public new HtmlNoscriptElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlNoscriptElement)base.WithAttributes(attributes);
+        public new HtmlNoscriptElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlNoscriptElement)base.WithAttributes(attributes);
 
 		public HtmlNoscriptElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

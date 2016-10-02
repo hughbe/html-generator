@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlMeterElement : HtmlElement 
+    public class HtmlMeterElement : HtmlElement
     {
         public HtmlMeterElement() : base("meter", false) 
         {    
         }
 
-        public new HtmlMeterElement WithChild(HtmlElement child) => (HtmlMeterElement)base.WithChild(child);
-        public new HtmlMeterElement WithChildren(Collection<HtmlElement> children) => (HtmlMeterElement)base.WithChildren(children);
+        public new HtmlMeterElement WithElement(HtmlElement element) => (HtmlMeterElement)base.WithElement(element);
+        public new HtmlMeterElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlMeterElement)base.WithElements(elements);
 
         public new HtmlMeterElement WithInnerText(string innerText) => (HtmlMeterElement)base.WithInnerText(innerText);
 
         public new HtmlMeterElement WithAttribute(HtmlAttribute attribute) => (HtmlMeterElement)base.WithAttribute(attribute);
-        public new HtmlMeterElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlMeterElement)base.WithAttributes(attributes);
+        public new HtmlMeterElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlMeterElement)base.WithAttributes(attributes);
 
 		public HtmlMeterElement WithForm(string value) => WithAttribute(Attribute.Form(value));
 

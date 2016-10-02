@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlOlElement : HtmlElement 
+    public class HtmlOlElement : HtmlElement
     {
         public HtmlOlElement() : base("ol", false) 
         {    
         }
 
-        public new HtmlOlElement WithChild(HtmlElement child) => (HtmlOlElement)base.WithChild(child);
-        public new HtmlOlElement WithChildren(Collection<HtmlElement> children) => (HtmlOlElement)base.WithChildren(children);
+        public new HtmlOlElement WithElement(HtmlElement element) => (HtmlOlElement)base.WithElement(element);
+        public new HtmlOlElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlOlElement)base.WithElements(elements);
 
         public new HtmlOlElement WithInnerText(string innerText) => (HtmlOlElement)base.WithInnerText(innerText);
 
         public new HtmlOlElement WithAttribute(HtmlAttribute attribute) => (HtmlOlElement)base.WithAttribute(attribute);
-        public new HtmlOlElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlOlElement)base.WithAttributes(attributes);
+        public new HtmlOlElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlOlElement)base.WithAttributes(attributes);
 
 		public HtmlOlElement WithReversed(string value) => WithAttribute(Attribute.Reversed(value));
 

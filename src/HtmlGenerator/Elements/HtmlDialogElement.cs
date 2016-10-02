@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlDialogElement : HtmlElement 
+    public class HtmlDialogElement : HtmlElement
     {
         public HtmlDialogElement() : base("dialog", false) 
         {    
         }
 
-        public new HtmlDialogElement WithChild(HtmlElement child) => (HtmlDialogElement)base.WithChild(child);
-        public new HtmlDialogElement WithChildren(Collection<HtmlElement> children) => (HtmlDialogElement)base.WithChildren(children);
+        public new HtmlDialogElement WithElement(HtmlElement element) => (HtmlDialogElement)base.WithElement(element);
+        public new HtmlDialogElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlDialogElement)base.WithElements(elements);
 
         public new HtmlDialogElement WithInnerText(string innerText) => (HtmlDialogElement)base.WithInnerText(innerText);
 
         public new HtmlDialogElement WithAttribute(HtmlAttribute attribute) => (HtmlDialogElement)base.WithAttribute(attribute);
-        public new HtmlDialogElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDialogElement)base.WithAttributes(attributes);
+        public new HtmlDialogElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlDialogElement)base.WithAttributes(attributes);
 
 		public HtmlDialogElement WithOpen(string value) => WithAttribute(Attribute.Open(value));
 

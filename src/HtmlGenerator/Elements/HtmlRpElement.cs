@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlRpElement : HtmlElement 
+    public class HtmlRpElement : HtmlElement
     {
         public HtmlRpElement() : base("rp", false) 
         {    
         }
 
-        public new HtmlRpElement WithChild(HtmlElement child) => (HtmlRpElement)base.WithChild(child);
-        public new HtmlRpElement WithChildren(Collection<HtmlElement> children) => (HtmlRpElement)base.WithChildren(children);
+        public new HtmlRpElement WithElement(HtmlElement element) => (HtmlRpElement)base.WithElement(element);
+        public new HtmlRpElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlRpElement)base.WithElements(elements);
 
         public new HtmlRpElement WithInnerText(string innerText) => (HtmlRpElement)base.WithInnerText(innerText);
 
         public new HtmlRpElement WithAttribute(HtmlAttribute attribute) => (HtmlRpElement)base.WithAttribute(attribute);
-        public new HtmlRpElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlRpElement)base.WithAttributes(attributes);
+        public new HtmlRpElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlRpElement)base.WithAttributes(attributes);
 
 		public HtmlRpElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

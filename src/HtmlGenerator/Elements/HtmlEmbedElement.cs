@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlEmbedElement : HtmlElement 
+    public class HtmlEmbedElement : HtmlElement
     {
         public HtmlEmbedElement() : base("embed", true) 
         {    
         }
 
-        public new HtmlEmbedElement WithChild(HtmlElement child) => (HtmlEmbedElement)base.WithChild(child);
-        public new HtmlEmbedElement WithChildren(Collection<HtmlElement> children) => (HtmlEmbedElement)base.WithChildren(children);
+        public new HtmlEmbedElement WithElement(HtmlElement element) => (HtmlEmbedElement)base.WithElement(element);
+        public new HtmlEmbedElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlEmbedElement)base.WithElements(elements);
 
         public new HtmlEmbedElement WithInnerText(string innerText) => (HtmlEmbedElement)base.WithInnerText(innerText);
 
         public new HtmlEmbedElement WithAttribute(HtmlAttribute attribute) => (HtmlEmbedElement)base.WithAttribute(attribute);
-        public new HtmlEmbedElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlEmbedElement)base.WithAttributes(attributes);
+        public new HtmlEmbedElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlEmbedElement)base.WithAttributes(attributes);
 
 		public HtmlEmbedElement WithHeight(string value) => WithAttribute(Attribute.Height(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlLabelElement : HtmlElement 
+    public class HtmlLabelElement : HtmlElement
     {
         public HtmlLabelElement() : base("label", false) 
         {    
         }
 
-        public new HtmlLabelElement WithChild(HtmlElement child) => (HtmlLabelElement)base.WithChild(child);
-        public new HtmlLabelElement WithChildren(Collection<HtmlElement> children) => (HtmlLabelElement)base.WithChildren(children);
+        public new HtmlLabelElement WithElement(HtmlElement element) => (HtmlLabelElement)base.WithElement(element);
+        public new HtmlLabelElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlLabelElement)base.WithElements(elements);
 
         public new HtmlLabelElement WithInnerText(string innerText) => (HtmlLabelElement)base.WithInnerText(innerText);
 
         public new HtmlLabelElement WithAttribute(HtmlAttribute attribute) => (HtmlLabelElement)base.WithAttribute(attribute);
-        public new HtmlLabelElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlLabelElement)base.WithAttributes(attributes);
+        public new HtmlLabelElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlLabelElement)base.WithAttributes(attributes);
 
 		public HtmlLabelElement WithFor(string value) => WithAttribute(Attribute.For(value));
 

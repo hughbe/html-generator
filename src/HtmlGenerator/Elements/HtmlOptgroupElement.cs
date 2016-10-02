@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlOptgroupElement : HtmlElement 
+    public class HtmlOptgroupElement : HtmlElement
     {
         public HtmlOptgroupElement() : base("optgroup", false) 
         {    
         }
 
-        public new HtmlOptgroupElement WithChild(HtmlElement child) => (HtmlOptgroupElement)base.WithChild(child);
-        public new HtmlOptgroupElement WithChildren(Collection<HtmlElement> children) => (HtmlOptgroupElement)base.WithChildren(children);
+        public new HtmlOptgroupElement WithElement(HtmlElement element) => (HtmlOptgroupElement)base.WithElement(element);
+        public new HtmlOptgroupElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlOptgroupElement)base.WithElements(elements);
 
         public new HtmlOptgroupElement WithInnerText(string innerText) => (HtmlOptgroupElement)base.WithInnerText(innerText);
 
         public new HtmlOptgroupElement WithAttribute(HtmlAttribute attribute) => (HtmlOptgroupElement)base.WithAttribute(attribute);
-        public new HtmlOptgroupElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlOptgroupElement)base.WithAttributes(attributes);
+        public new HtmlOptgroupElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlOptgroupElement)base.WithAttributes(attributes);
 
 		public HtmlOptgroupElement WithDisabled() => WithAttribute(Attribute.Disabled);
 

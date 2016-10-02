@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlDdElement : HtmlElement 
+    public class HtmlDdElement : HtmlElement
     {
         public HtmlDdElement() : base("dd", false) 
         {    
         }
 
-        public new HtmlDdElement WithChild(HtmlElement child) => (HtmlDdElement)base.WithChild(child);
-        public new HtmlDdElement WithChildren(Collection<HtmlElement> children) => (HtmlDdElement)base.WithChildren(children);
+        public new HtmlDdElement WithElement(HtmlElement element) => (HtmlDdElement)base.WithElement(element);
+        public new HtmlDdElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlDdElement)base.WithElements(elements);
 
         public new HtmlDdElement WithInnerText(string innerText) => (HtmlDdElement)base.WithInnerText(innerText);
 
         public new HtmlDdElement WithAttribute(HtmlAttribute attribute) => (HtmlDdElement)base.WithAttribute(attribute);
-        public new HtmlDdElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDdElement)base.WithAttributes(attributes);
+        public new HtmlDdElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlDdElement)base.WithAttributes(attributes);
 
 		public HtmlDdElement WithNoWrap(string value) => WithAttribute(Attribute.NoWrap(value));
 

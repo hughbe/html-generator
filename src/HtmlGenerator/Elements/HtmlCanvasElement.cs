@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlCanvasElement : HtmlElement 
+    public class HtmlCanvasElement : HtmlElement
     {
         public HtmlCanvasElement() : base("canvas", false) 
         {    
         }
 
-        public new HtmlCanvasElement WithChild(HtmlElement child) => (HtmlCanvasElement)base.WithChild(child);
-        public new HtmlCanvasElement WithChildren(Collection<HtmlElement> children) => (HtmlCanvasElement)base.WithChildren(children);
+        public new HtmlCanvasElement WithElement(HtmlElement element) => (HtmlCanvasElement)base.WithElement(element);
+        public new HtmlCanvasElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlCanvasElement)base.WithElements(elements);
 
         public new HtmlCanvasElement WithInnerText(string innerText) => (HtmlCanvasElement)base.WithInnerText(innerText);
 
         public new HtmlCanvasElement WithAttribute(HtmlAttribute attribute) => (HtmlCanvasElement)base.WithAttribute(attribute);
-        public new HtmlCanvasElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlCanvasElement)base.WithAttributes(attributes);
+        public new HtmlCanvasElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlCanvasElement)base.WithAttributes(attributes);
 
 		public HtmlCanvasElement WithHeight(string value) => WithAttribute(Attribute.Height(value));
 

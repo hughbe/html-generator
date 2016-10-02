@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlLiElement : HtmlElement 
+    public class HtmlLiElement : HtmlElement
     {
         public HtmlLiElement() : base("li", false) 
         {    
         }
 
-        public new HtmlLiElement WithChild(HtmlElement child) => (HtmlLiElement)base.WithChild(child);
-        public new HtmlLiElement WithChildren(Collection<HtmlElement> children) => (HtmlLiElement)base.WithChildren(children);
+        public new HtmlLiElement WithElement(HtmlElement element) => (HtmlLiElement)base.WithElement(element);
+        public new HtmlLiElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlLiElement)base.WithElements(elements);
 
         public new HtmlLiElement WithInnerText(string innerText) => (HtmlLiElement)base.WithInnerText(innerText);
 
         public new HtmlLiElement WithAttribute(HtmlAttribute attribute) => (HtmlLiElement)base.WithAttribute(attribute);
-        public new HtmlLiElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlLiElement)base.WithAttributes(attributes);
+        public new HtmlLiElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlLiElement)base.WithAttributes(attributes);
 
 		public HtmlLiElement WithValue(string value) => WithAttribute(Attribute.Value(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlOptionElement : HtmlElement 
+    public class HtmlOptionElement : HtmlElement
     {
         public HtmlOptionElement() : base("option", false) 
         {    
         }
 
-        public new HtmlOptionElement WithChild(HtmlElement child) => (HtmlOptionElement)base.WithChild(child);
-        public new HtmlOptionElement WithChildren(Collection<HtmlElement> children) => (HtmlOptionElement)base.WithChildren(children);
+        public new HtmlOptionElement WithElement(HtmlElement element) => (HtmlOptionElement)base.WithElement(element);
+        public new HtmlOptionElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlOptionElement)base.WithElements(elements);
 
         public new HtmlOptionElement WithInnerText(string innerText) => (HtmlOptionElement)base.WithInnerText(innerText);
 
         public new HtmlOptionElement WithAttribute(HtmlAttribute attribute) => (HtmlOptionElement)base.WithAttribute(attribute);
-        public new HtmlOptionElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlOptionElement)base.WithAttributes(attributes);
+        public new HtmlOptionElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlOptionElement)base.WithAttributes(attributes);
 
 		public HtmlOptionElement WithDisabled() => WithAttribute(Attribute.Disabled);
 

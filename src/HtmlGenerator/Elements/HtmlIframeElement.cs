@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlIframeElement : HtmlElement 
+    public class HtmlIframeElement : HtmlElement
     {
         public HtmlIframeElement() : base("iframe", false) 
         {    
         }
 
-        public new HtmlIframeElement WithChild(HtmlElement child) => (HtmlIframeElement)base.WithChild(child);
-        public new HtmlIframeElement WithChildren(Collection<HtmlElement> children) => (HtmlIframeElement)base.WithChildren(children);
+        public new HtmlIframeElement WithElement(HtmlElement element) => (HtmlIframeElement)base.WithElement(element);
+        public new HtmlIframeElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlIframeElement)base.WithElements(elements);
 
         public new HtmlIframeElement WithInnerText(string innerText) => (HtmlIframeElement)base.WithInnerText(innerText);
 
         public new HtmlIframeElement WithAttribute(HtmlAttribute attribute) => (HtmlIframeElement)base.WithAttribute(attribute);
-        public new HtmlIframeElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlIframeElement)base.WithAttributes(attributes);
+        public new HtmlIframeElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlIframeElement)base.WithAttributes(attributes);
 
 		public HtmlIframeElement WithAllowFullScreen() => WithAttribute(Attribute.AllowFullScreen);
 

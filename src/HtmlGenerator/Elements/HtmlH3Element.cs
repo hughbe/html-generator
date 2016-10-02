@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlH3Element : HtmlElement 
+    public class HtmlH3Element : HtmlElement
     {
         public HtmlH3Element() : base("h3", false) 
         {    
         }
 
-        public new HtmlH3Element WithChild(HtmlElement child) => (HtmlH3Element)base.WithChild(child);
-        public new HtmlH3Element WithChildren(Collection<HtmlElement> children) => (HtmlH3Element)base.WithChildren(children);
+        public new HtmlH3Element WithElement(HtmlElement element) => (HtmlH3Element)base.WithElement(element);
+        public new HtmlH3Element WithElements(IEnumerable<HtmlElement> elements) => (HtmlH3Element)base.WithElements(elements);
 
         public new HtmlH3Element WithInnerText(string innerText) => (HtmlH3Element)base.WithInnerText(innerText);
 
         public new HtmlH3Element WithAttribute(HtmlAttribute attribute) => (HtmlH3Element)base.WithAttribute(attribute);
-        public new HtmlH3Element WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlH3Element)base.WithAttributes(attributes);
+        public new HtmlH3Element WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlH3Element)base.WithAttributes(attributes);
 
 		public HtmlH3Element WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

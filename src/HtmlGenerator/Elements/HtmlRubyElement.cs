@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlRubyElement : HtmlElement 
+    public class HtmlRubyElement : HtmlElement
     {
         public HtmlRubyElement() : base("ruby", false) 
         {    
         }
 
-        public new HtmlRubyElement WithChild(HtmlElement child) => (HtmlRubyElement)base.WithChild(child);
-        public new HtmlRubyElement WithChildren(Collection<HtmlElement> children) => (HtmlRubyElement)base.WithChildren(children);
+        public new HtmlRubyElement WithElement(HtmlElement element) => (HtmlRubyElement)base.WithElement(element);
+        public new HtmlRubyElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlRubyElement)base.WithElements(elements);
 
         public new HtmlRubyElement WithInnerText(string innerText) => (HtmlRubyElement)base.WithInnerText(innerText);
 
         public new HtmlRubyElement WithAttribute(HtmlAttribute attribute) => (HtmlRubyElement)base.WithAttribute(attribute);
-        public new HtmlRubyElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlRubyElement)base.WithAttributes(attributes);
+        public new HtmlRubyElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlRubyElement)base.WithAttributes(attributes);
 
 		public HtmlRubyElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

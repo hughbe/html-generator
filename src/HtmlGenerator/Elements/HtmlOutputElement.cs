@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlOutputElement : HtmlElement 
+    public class HtmlOutputElement : HtmlElement
     {
         public HtmlOutputElement() : base("output", false) 
         {    
         }
 
-        public new HtmlOutputElement WithChild(HtmlElement child) => (HtmlOutputElement)base.WithChild(child);
-        public new HtmlOutputElement WithChildren(Collection<HtmlElement> children) => (HtmlOutputElement)base.WithChildren(children);
+        public new HtmlOutputElement WithElement(HtmlElement element) => (HtmlOutputElement)base.WithElement(element);
+        public new HtmlOutputElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlOutputElement)base.WithElements(elements);
 
         public new HtmlOutputElement WithInnerText(string innerText) => (HtmlOutputElement)base.WithInnerText(innerText);
 
         public new HtmlOutputElement WithAttribute(HtmlAttribute attribute) => (HtmlOutputElement)base.WithAttribute(attribute);
-        public new HtmlOutputElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlOutputElement)base.WithAttributes(attributes);
+        public new HtmlOutputElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlOutputElement)base.WithAttributes(attributes);
 
 		public HtmlOutputElement WithFor(string value) => WithAttribute(Attribute.For(value));
 

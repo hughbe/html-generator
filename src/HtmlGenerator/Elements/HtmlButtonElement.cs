@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlButtonElement : HtmlElement 
+    public class HtmlButtonElement : HtmlElement
     {
         public HtmlButtonElement() : base("button", false) 
         {    
         }
 
-        public new HtmlButtonElement WithChild(HtmlElement child) => (HtmlButtonElement)base.WithChild(child);
-        public new HtmlButtonElement WithChildren(Collection<HtmlElement> children) => (HtmlButtonElement)base.WithChildren(children);
+        public new HtmlButtonElement WithElement(HtmlElement element) => (HtmlButtonElement)base.WithElement(element);
+        public new HtmlButtonElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlButtonElement)base.WithElements(elements);
 
         public new HtmlButtonElement WithInnerText(string innerText) => (HtmlButtonElement)base.WithInnerText(innerText);
 
         public new HtmlButtonElement WithAttribute(HtmlAttribute attribute) => (HtmlButtonElement)base.WithAttribute(attribute);
-        public new HtmlButtonElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlButtonElement)base.WithAttributes(attributes);
+        public new HtmlButtonElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlButtonElement)base.WithAttributes(attributes);
 
 		public HtmlButtonElement WithAutoFocus() => WithAttribute(Attribute.AutoFocus);
 

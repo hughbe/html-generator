@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlMapElement : HtmlElement 
+    public class HtmlMapElement : HtmlElement
     {
         public HtmlMapElement() : base("map", false) 
         {    
         }
 
-        public new HtmlMapElement WithChild(HtmlElement child) => (HtmlMapElement)base.WithChild(child);
-        public new HtmlMapElement WithChildren(Collection<HtmlElement> children) => (HtmlMapElement)base.WithChildren(children);
+        public new HtmlMapElement WithElement(HtmlElement element) => (HtmlMapElement)base.WithElement(element);
+        public new HtmlMapElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlMapElement)base.WithElements(elements);
 
         public new HtmlMapElement WithInnerText(string innerText) => (HtmlMapElement)base.WithInnerText(innerText);
 
         public new HtmlMapElement WithAttribute(HtmlAttribute attribute) => (HtmlMapElement)base.WithAttribute(attribute);
-        public new HtmlMapElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlMapElement)base.WithAttributes(attributes);
+        public new HtmlMapElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlMapElement)base.WithAttributes(attributes);
 
 		public HtmlMapElement WithName(string value) => WithAttribute(Attribute.Name(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlSourceElement : HtmlElement 
+    public class HtmlSourceElement : HtmlElement
     {
         public HtmlSourceElement() : base("source", true) 
         {    
         }
 
-        public new HtmlSourceElement WithChild(HtmlElement child) => (HtmlSourceElement)base.WithChild(child);
-        public new HtmlSourceElement WithChildren(Collection<HtmlElement> children) => (HtmlSourceElement)base.WithChildren(children);
+        public new HtmlSourceElement WithElement(HtmlElement element) => (HtmlSourceElement)base.WithElement(element);
+        public new HtmlSourceElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlSourceElement)base.WithElements(elements);
 
         public new HtmlSourceElement WithInnerText(string innerText) => (HtmlSourceElement)base.WithInnerText(innerText);
 
         public new HtmlSourceElement WithAttribute(HtmlAttribute attribute) => (HtmlSourceElement)base.WithAttribute(attribute);
-        public new HtmlSourceElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlSourceElement)base.WithAttributes(attributes);
+        public new HtmlSourceElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlSourceElement)base.WithAttributes(attributes);
 
 		public HtmlSourceElement WithSrc(string value) => WithAttribute(Attribute.Src(value));
 

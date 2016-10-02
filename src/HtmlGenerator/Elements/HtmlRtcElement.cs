@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlRtcElement : HtmlElement 
+    public class HtmlRtcElement : HtmlElement
     {
         public HtmlRtcElement() : base("rtc", false) 
         {    
         }
 
-        public new HtmlRtcElement WithChild(HtmlElement child) => (HtmlRtcElement)base.WithChild(child);
-        public new HtmlRtcElement WithChildren(Collection<HtmlElement> children) => (HtmlRtcElement)base.WithChildren(children);
+        public new HtmlRtcElement WithElement(HtmlElement element) => (HtmlRtcElement)base.WithElement(element);
+        public new HtmlRtcElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlRtcElement)base.WithElements(elements);
 
         public new HtmlRtcElement WithInnerText(string innerText) => (HtmlRtcElement)base.WithInnerText(innerText);
 
         public new HtmlRtcElement WithAttribute(HtmlAttribute attribute) => (HtmlRtcElement)base.WithAttribute(attribute);
-        public new HtmlRtcElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlRtcElement)base.WithAttributes(attributes);
+        public new HtmlRtcElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlRtcElement)base.WithAttributes(attributes);
 
 		public HtmlRtcElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlUlElement : HtmlElement 
+    public class HtmlUlElement : HtmlElement
     {
         public HtmlUlElement() : base("ul", false) 
         {    
         }
 
-        public new HtmlUlElement WithChild(HtmlElement child) => (HtmlUlElement)base.WithChild(child);
-        public new HtmlUlElement WithChildren(Collection<HtmlElement> children) => (HtmlUlElement)base.WithChildren(children);
+        public new HtmlUlElement WithElement(HtmlElement element) => (HtmlUlElement)base.WithElement(element);
+        public new HtmlUlElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlUlElement)base.WithElements(elements);
 
         public new HtmlUlElement WithInnerText(string innerText) => (HtmlUlElement)base.WithInnerText(innerText);
 
         public new HtmlUlElement WithAttribute(HtmlAttribute attribute) => (HtmlUlElement)base.WithAttribute(attribute);
-        public new HtmlUlElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlUlElement)base.WithAttributes(attributes);
+        public new HtmlUlElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlUlElement)base.WithAttributes(attributes);
 
 		public HtmlUlElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

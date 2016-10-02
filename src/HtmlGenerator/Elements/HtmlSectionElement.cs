@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlSectionElement : HtmlElement 
+    public class HtmlSectionElement : HtmlElement
     {
         public HtmlSectionElement() : base("section", false) 
         {    
         }
 
-        public new HtmlSectionElement WithChild(HtmlElement child) => (HtmlSectionElement)base.WithChild(child);
-        public new HtmlSectionElement WithChildren(Collection<HtmlElement> children) => (HtmlSectionElement)base.WithChildren(children);
+        public new HtmlSectionElement WithElement(HtmlElement element) => (HtmlSectionElement)base.WithElement(element);
+        public new HtmlSectionElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlSectionElement)base.WithElements(elements);
 
         public new HtmlSectionElement WithInnerText(string innerText) => (HtmlSectionElement)base.WithInnerText(innerText);
 
         public new HtmlSectionElement WithAttribute(HtmlAttribute attribute) => (HtmlSectionElement)base.WithAttribute(attribute);
-        public new HtmlSectionElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlSectionElement)base.WithAttributes(attributes);
+        public new HtmlSectionElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlSectionElement)base.WithAttributes(attributes);
 
 		public HtmlSectionElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlFormElement : HtmlElement 
+    public class HtmlFormElement : HtmlElement
     {
         public HtmlFormElement() : base("form", false) 
         {    
         }
 
-        public new HtmlFormElement WithChild(HtmlElement child) => (HtmlFormElement)base.WithChild(child);
-        public new HtmlFormElement WithChildren(Collection<HtmlElement> children) => (HtmlFormElement)base.WithChildren(children);
+        public new HtmlFormElement WithElement(HtmlElement element) => (HtmlFormElement)base.WithElement(element);
+        public new HtmlFormElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlFormElement)base.WithElements(elements);
 
         public new HtmlFormElement WithInnerText(string innerText) => (HtmlFormElement)base.WithInnerText(innerText);
 
         public new HtmlFormElement WithAttribute(HtmlAttribute attribute) => (HtmlFormElement)base.WithAttribute(attribute);
-        public new HtmlFormElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlFormElement)base.WithAttributes(attributes);
+        public new HtmlFormElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlFormElement)base.WithAttributes(attributes);
 
 		public HtmlFormElement WithAcceptCharset(string value) => WithAttribute(Attribute.AcceptCharset(value));
 

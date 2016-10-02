@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlFieldsetElement : HtmlElement 
+    public class HtmlFieldsetElement : HtmlElement
     {
         public HtmlFieldsetElement() : base("fieldset", false) 
         {    
         }
 
-        public new HtmlFieldsetElement WithChild(HtmlElement child) => (HtmlFieldsetElement)base.WithChild(child);
-        public new HtmlFieldsetElement WithChildren(Collection<HtmlElement> children) => (HtmlFieldsetElement)base.WithChildren(children);
+        public new HtmlFieldsetElement WithElement(HtmlElement element) => (HtmlFieldsetElement)base.WithElement(element);
+        public new HtmlFieldsetElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlFieldsetElement)base.WithElements(elements);
 
         public new HtmlFieldsetElement WithInnerText(string innerText) => (HtmlFieldsetElement)base.WithInnerText(innerText);
 
         public new HtmlFieldsetElement WithAttribute(HtmlAttribute attribute) => (HtmlFieldsetElement)base.WithAttribute(attribute);
-        public new HtmlFieldsetElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlFieldsetElement)base.WithAttributes(attributes);
+        public new HtmlFieldsetElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlFieldsetElement)base.WithAttributes(attributes);
 
 		public HtmlFieldsetElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

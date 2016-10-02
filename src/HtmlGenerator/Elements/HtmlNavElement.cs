@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlNavElement : HtmlElement 
+    public class HtmlNavElement : HtmlElement
     {
         public HtmlNavElement() : base("nav", false) 
         {    
         }
 
-        public new HtmlNavElement WithChild(HtmlElement child) => (HtmlNavElement)base.WithChild(child);
-        public new HtmlNavElement WithChildren(Collection<HtmlElement> children) => (HtmlNavElement)base.WithChildren(children);
+        public new HtmlNavElement WithElement(HtmlElement element) => (HtmlNavElement)base.WithElement(element);
+        public new HtmlNavElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlNavElement)base.WithElements(elements);
 
         public new HtmlNavElement WithInnerText(string innerText) => (HtmlNavElement)base.WithInnerText(innerText);
 
         public new HtmlNavElement WithAttribute(HtmlAttribute attribute) => (HtmlNavElement)base.WithAttribute(attribute);
-        public new HtmlNavElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlNavElement)base.WithAttributes(attributes);
+        public new HtmlNavElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlNavElement)base.WithAttributes(attributes);
 
 		public HtmlNavElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

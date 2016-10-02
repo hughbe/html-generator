@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlQElement : HtmlElement 
+    public class HtmlQElement : HtmlElement
     {
         public HtmlQElement() : base("q", false) 
         {    
         }
 
-        public new HtmlQElement WithChild(HtmlElement child) => (HtmlQElement)base.WithChild(child);
-        public new HtmlQElement WithChildren(Collection<HtmlElement> children) => (HtmlQElement)base.WithChildren(children);
+        public new HtmlQElement WithElement(HtmlElement element) => (HtmlQElement)base.WithElement(element);
+        public new HtmlQElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlQElement)base.WithElements(elements);
 
         public new HtmlQElement WithInnerText(string innerText) => (HtmlQElement)base.WithInnerText(innerText);
 
         public new HtmlQElement WithAttribute(HtmlAttribute attribute) => (HtmlQElement)base.WithAttribute(attribute);
-        public new HtmlQElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlQElement)base.WithAttributes(attributes);
+        public new HtmlQElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlQElement)base.WithAttributes(attributes);
 
 		public HtmlQElement WithCite(string value) => WithAttribute(Attribute.Cite(value));
 

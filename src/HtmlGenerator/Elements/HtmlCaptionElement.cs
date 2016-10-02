@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlCaptionElement : HtmlElement 
+    public class HtmlCaptionElement : HtmlElement
     {
         public HtmlCaptionElement() : base("caption", false) 
         {    
         }
 
-        public new HtmlCaptionElement WithChild(HtmlElement child) => (HtmlCaptionElement)base.WithChild(child);
-        public new HtmlCaptionElement WithChildren(Collection<HtmlElement> children) => (HtmlCaptionElement)base.WithChildren(children);
+        public new HtmlCaptionElement WithElement(HtmlElement element) => (HtmlCaptionElement)base.WithElement(element);
+        public new HtmlCaptionElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlCaptionElement)base.WithElements(elements);
 
         public new HtmlCaptionElement WithInnerText(string innerText) => (HtmlCaptionElement)base.WithInnerText(innerText);
 
         public new HtmlCaptionElement WithAttribute(HtmlAttribute attribute) => (HtmlCaptionElement)base.WithAttribute(attribute);
-        public new HtmlCaptionElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlCaptionElement)base.WithAttributes(attributes);
+        public new HtmlCaptionElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlCaptionElement)base.WithAttributes(attributes);
 
 		public HtmlCaptionElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

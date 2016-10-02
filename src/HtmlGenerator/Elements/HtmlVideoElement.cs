@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlVideoElement : HtmlElement 
+    public class HtmlVideoElement : HtmlElement
     {
         public HtmlVideoElement() : base("video", false) 
         {    
         }
 
-        public new HtmlVideoElement WithChild(HtmlElement child) => (HtmlVideoElement)base.WithChild(child);
-        public new HtmlVideoElement WithChildren(Collection<HtmlElement> children) => (HtmlVideoElement)base.WithChildren(children);
+        public new HtmlVideoElement WithElement(HtmlElement element) => (HtmlVideoElement)base.WithElement(element);
+        public new HtmlVideoElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlVideoElement)base.WithElements(elements);
 
         public new HtmlVideoElement WithInnerText(string innerText) => (HtmlVideoElement)base.WithInnerText(innerText);
 
         public new HtmlVideoElement WithAttribute(HtmlAttribute attribute) => (HtmlVideoElement)base.WithAttribute(attribute);
-        public new HtmlVideoElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlVideoElement)base.WithAttributes(attributes);
+        public new HtmlVideoElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlVideoElement)base.WithAttributes(attributes);
 
 		public HtmlVideoElement WithAutoPlay(string value) => WithAttribute(Attribute.AutoPlay(value));
 

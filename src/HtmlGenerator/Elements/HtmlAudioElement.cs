@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlAudioElement : HtmlElement 
+    public class HtmlAudioElement : HtmlElement
     {
         public HtmlAudioElement() : base("audio", false) 
         {    
         }
 
-        public new HtmlAudioElement WithChild(HtmlElement child) => (HtmlAudioElement)base.WithChild(child);
-        public new HtmlAudioElement WithChildren(Collection<HtmlElement> children) => (HtmlAudioElement)base.WithChildren(children);
+        public new HtmlAudioElement WithElement(HtmlElement element) => (HtmlAudioElement)base.WithElement(element);
+        public new HtmlAudioElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlAudioElement)base.WithElements(elements);
 
         public new HtmlAudioElement WithInnerText(string innerText) => (HtmlAudioElement)base.WithInnerText(innerText);
 
         public new HtmlAudioElement WithAttribute(HtmlAttribute attribute) => (HtmlAudioElement)base.WithAttribute(attribute);
-        public new HtmlAudioElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlAudioElement)base.WithAttributes(attributes);
+        public new HtmlAudioElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlAudioElement)base.WithAttributes(attributes);
 
 		public HtmlAudioElement WithAutoPlay(string value) => WithAttribute(Attribute.AutoPlay(value));
 

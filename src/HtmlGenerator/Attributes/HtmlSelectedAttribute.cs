@@ -1,9 +1,7 @@
 namespace HtmlGenerator
 {
-    public class HtmlSelectedAttribute : HtmlAttribute 
+    public class HtmlSelectedAttribute : HtmlAttribute
     {
-        public HtmlSelectedAttribute() : base("selected", "Selected", null, true, false) 
-        {
-        }
+        public HtmlSelectedAttribute() : base("selected") {}
     }
 }
