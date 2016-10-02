@@ -290,6 +290,40 @@ namespace HtmlGenerator
         public HtmlElement NextElement => (HtmlElement)_next;
         public HtmlElement PreviousElement => (HtmlElement)_previous;
 
+        public IEnumerable<HtmlElement> NextElements() => NextElements(null);
+
+        public IEnumerable<HtmlElement> NextElements(string tag)
+        {
+            bool isDefaultTag = string.IsNullOrEmpty(tag);
+
+            HtmlElement nextElement = (HtmlElement)_next;
+            while (nextElement != null)
+            {
+                if (isDefaultTag || nextElement.Tag == tag)
+                {
+                    yield return nextElement;
+                }
+                nextElement = (HtmlElement)nextElement._next;
+            }
+        }
+
+        public IEnumerable<HtmlElement> PreviousElements() => PreviousElements(null);
+
+        public IEnumerable<HtmlElement> PreviousElements(string tag)
+        {
+            bool isDefaultTag = string.IsNullOrEmpty(tag);
+
+            HtmlElement previousElement = (HtmlElement)_previous;
+            while (previousElement != null)
+            {
+                if (isDefaultTag || previousElement.Tag == tag)
+                {
+                    yield return previousElement;
+                }
+                previousElement = (HtmlElement)previousElement._previous;
+            }
+        }
+
         private int _minimumIndentDepth = 1;
         public int MinimumIndentDepth
         {
