@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlLegendElement : HtmlElement 
+    public class HtmlLegendElement : HtmlElement
     {
         public HtmlLegendElement() : base("legend", false) 
         {    
         }
 
-        public new HtmlLegendElement WithChild(HtmlElement child) => (HtmlLegendElement)base.WithChild(child);
-        public new HtmlLegendElement WithChildren(Collection<HtmlElement> children) => (HtmlLegendElement)base.WithChildren(children);
+        public new HtmlLegendElement WithElement(HtmlElement element) => (HtmlLegendElement)base.WithElement(element);
+        public new HtmlLegendElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlLegendElement)base.WithElements(elements);
 
         public new HtmlLegendElement WithInnerText(string innerText) => (HtmlLegendElement)base.WithInnerText(innerText);
 
         public new HtmlLegendElement WithAttribute(HtmlAttribute attribute) => (HtmlLegendElement)base.WithAttribute(attribute);
-        public new HtmlLegendElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlLegendElement)base.WithAttributes(attributes);
+        public new HtmlLegendElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlLegendElement)base.WithAttributes(attributes);
 
 		public HtmlLegendElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

@@ -1,9 +1,7 @@
 namespace HtmlGenerator
 {
-    public class HtmlFormNoValidateAttribute : HtmlAttribute 
+    public class HtmlFormNoValidateAttribute : HtmlAttribute
     {
-        public HtmlFormNoValidateAttribute() : base("formnovalidate", "FormNoValidate", null, true, false) 
-        {
-        }
+        public HtmlFormNoValidateAttribute() : base("formnovalidate") {}
     }
 }

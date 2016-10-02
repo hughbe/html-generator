@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlCiteElement : HtmlElement 
+    public class HtmlCiteElement : HtmlElement
     {
         public HtmlCiteElement() : base("cite", false) 
         {    
         }
 
-        public new HtmlCiteElement WithChild(HtmlElement child) => (HtmlCiteElement)base.WithChild(child);
-        public new HtmlCiteElement WithChildren(Collection<HtmlElement> children) => (HtmlCiteElement)base.WithChildren(children);
+        public new HtmlCiteElement WithElement(HtmlElement element) => (HtmlCiteElement)base.WithElement(element);
+        public new HtmlCiteElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlCiteElement)base.WithElements(elements);
 
         public new HtmlCiteElement WithInnerText(string innerText) => (HtmlCiteElement)base.WithInnerText(innerText);
 
         public new HtmlCiteElement WithAttribute(HtmlAttribute attribute) => (HtmlCiteElement)base.WithAttribute(attribute);
-        public new HtmlCiteElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlCiteElement)base.WithAttributes(attributes);
+        public new HtmlCiteElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlCiteElement)base.WithAttributes(attributes);
 
 		public HtmlCiteElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

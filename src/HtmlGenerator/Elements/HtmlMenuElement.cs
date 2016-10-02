@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlMenuElement : HtmlElement 
+    public class HtmlMenuElement : HtmlElement
     {
         public HtmlMenuElement() : base("menu", false) 
         {    
         }
 
-        public new HtmlMenuElement WithChild(HtmlElement child) => (HtmlMenuElement)base.WithChild(child);
-        public new HtmlMenuElement WithChildren(Collection<HtmlElement> children) => (HtmlMenuElement)base.WithChildren(children);
+        public new HtmlMenuElement WithElement(HtmlElement element) => (HtmlMenuElement)base.WithElement(element);
+        public new HtmlMenuElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlMenuElement)base.WithElements(elements);
 
         public new HtmlMenuElement WithInnerText(string innerText) => (HtmlMenuElement)base.WithInnerText(innerText);
 
         public new HtmlMenuElement WithAttribute(HtmlAttribute attribute) => (HtmlMenuElement)base.WithAttribute(attribute);
-        public new HtmlMenuElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlMenuElement)base.WithAttributes(attributes);
+        public new HtmlMenuElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlMenuElement)base.WithAttributes(attributes);
 
 		public HtmlMenuElement WithLabel(string value) => WithAttribute(Attribute.Label(value));
 

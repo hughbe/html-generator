@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlTextAreaElement : HtmlElement 
+    public class HtmlTextAreaElement : HtmlElement
     {
         public HtmlTextAreaElement() : base("textarea", false) 
         {    
         }
 
-        public new HtmlTextAreaElement WithChild(HtmlElement child) => (HtmlTextAreaElement)base.WithChild(child);
-        public new HtmlTextAreaElement WithChildren(Collection<HtmlElement> children) => (HtmlTextAreaElement)base.WithChildren(children);
+        public new HtmlTextAreaElement WithElement(HtmlElement element) => (HtmlTextAreaElement)base.WithElement(element);
+        public new HtmlTextAreaElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlTextAreaElement)base.WithElements(elements);
 
         public new HtmlTextAreaElement WithInnerText(string innerText) => (HtmlTextAreaElement)base.WithInnerText(innerText);
 
         public new HtmlTextAreaElement WithAttribute(HtmlAttribute attribute) => (HtmlTextAreaElement)base.WithAttribute(attribute);
-        public new HtmlTextAreaElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTextAreaElement)base.WithAttributes(attributes);
+        public new HtmlTextAreaElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlTextAreaElement)base.WithAttributes(attributes);
 
 		public HtmlTextAreaElement WithAutoComplete(string value) => WithAttribute(Attribute.AutoComplete(value));
 

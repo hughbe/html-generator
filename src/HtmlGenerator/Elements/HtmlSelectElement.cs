@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlSelectElement : HtmlElement 
+    public class HtmlSelectElement : HtmlElement
     {
         public HtmlSelectElement() : base("select", false) 
         {    
         }
 
-        public new HtmlSelectElement WithChild(HtmlElement child) => (HtmlSelectElement)base.WithChild(child);
-        public new HtmlSelectElement WithChildren(Collection<HtmlElement> children) => (HtmlSelectElement)base.WithChildren(children);
+        public new HtmlSelectElement WithElement(HtmlElement element) => (HtmlSelectElement)base.WithElement(element);
+        public new HtmlSelectElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlSelectElement)base.WithElements(elements);
 
         public new HtmlSelectElement WithInnerText(string innerText) => (HtmlSelectElement)base.WithInnerText(innerText);
 
         public new HtmlSelectElement WithAttribute(HtmlAttribute attribute) => (HtmlSelectElement)base.WithAttribute(attribute);
-        public new HtmlSelectElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlSelectElement)base.WithAttributes(attributes);
+        public new HtmlSelectElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlSelectElement)base.WithAttributes(attributes);
 
 		public HtmlSelectElement WithAutoFocus() => WithAttribute(Attribute.AutoFocus);
 

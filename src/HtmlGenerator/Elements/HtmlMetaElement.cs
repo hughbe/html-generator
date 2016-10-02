@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlMetaElement : HtmlElement 
+    public class HtmlMetaElement : HtmlElement
     {
         public HtmlMetaElement() : base("meta", true) 
         {    
         }
 
-        public new HtmlMetaElement WithChild(HtmlElement child) => (HtmlMetaElement)base.WithChild(child);
-        public new HtmlMetaElement WithChildren(Collection<HtmlElement> children) => (HtmlMetaElement)base.WithChildren(children);
+        public new HtmlMetaElement WithElement(HtmlElement element) => (HtmlMetaElement)base.WithElement(element);
+        public new HtmlMetaElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlMetaElement)base.WithElements(elements);
 
         public new HtmlMetaElement WithInnerText(string innerText) => (HtmlMetaElement)base.WithInnerText(innerText);
 
         public new HtmlMetaElement WithAttribute(HtmlAttribute attribute) => (HtmlMetaElement)base.WithAttribute(attribute);
-        public new HtmlMetaElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlMetaElement)base.WithAttributes(attributes);
+        public new HtmlMetaElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlMetaElement)base.WithAttributes(attributes);
 
 		public HtmlMetaElement WithCharset(string value) => WithAttribute(Attribute.Charset(value));
 

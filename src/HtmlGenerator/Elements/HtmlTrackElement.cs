@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlTrackElement : HtmlElement 
+    public class HtmlTrackElement : HtmlElement
     {
         public HtmlTrackElement() : base("track", true) 
         {    
         }
 
-        public new HtmlTrackElement WithChild(HtmlElement child) => (HtmlTrackElement)base.WithChild(child);
-        public new HtmlTrackElement WithChildren(Collection<HtmlElement> children) => (HtmlTrackElement)base.WithChildren(children);
+        public new HtmlTrackElement WithElement(HtmlElement element) => (HtmlTrackElement)base.WithElement(element);
+        public new HtmlTrackElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlTrackElement)base.WithElements(elements);
 
         public new HtmlTrackElement WithInnerText(string innerText) => (HtmlTrackElement)base.WithInnerText(innerText);
 
         public new HtmlTrackElement WithAttribute(HtmlAttribute attribute) => (HtmlTrackElement)base.WithAttribute(attribute);
-        public new HtmlTrackElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTrackElement)base.WithAttributes(attributes);
+        public new HtmlTrackElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlTrackElement)base.WithAttributes(attributes);
 
 		public HtmlTrackElement WithDefault() => WithAttribute(Attribute.Default);
 

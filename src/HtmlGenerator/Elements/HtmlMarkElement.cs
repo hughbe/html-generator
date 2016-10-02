@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlMarkElement : HtmlElement 
+    public class HtmlMarkElement : HtmlElement
     {
         public HtmlMarkElement() : base("mark", false) 
         {    
         }
 
-        public new HtmlMarkElement WithChild(HtmlElement child) => (HtmlMarkElement)base.WithChild(child);
-        public new HtmlMarkElement WithChildren(Collection<HtmlElement> children) => (HtmlMarkElement)base.WithChildren(children);
+        public new HtmlMarkElement WithElement(HtmlElement element) => (HtmlMarkElement)base.WithElement(element);
+        public new HtmlMarkElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlMarkElement)base.WithElements(elements);
 
         public new HtmlMarkElement WithInnerText(string innerText) => (HtmlMarkElement)base.WithInnerText(innerText);
 
         public new HtmlMarkElement WithAttribute(HtmlAttribute attribute) => (HtmlMarkElement)base.WithAttribute(attribute);
-        public new HtmlMarkElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlMarkElement)base.WithAttributes(attributes);
+        public new HtmlMarkElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlMarkElement)base.WithAttributes(attributes);
 
 		public HtmlMarkElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

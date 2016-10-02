@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlImgElement : HtmlElement 
+    public class HtmlImgElement : HtmlElement
     {
         public HtmlImgElement() : base("img", true) 
         {    
         }
 
-        public new HtmlImgElement WithChild(HtmlElement child) => (HtmlImgElement)base.WithChild(child);
-        public new HtmlImgElement WithChildren(Collection<HtmlElement> children) => (HtmlImgElement)base.WithChildren(children);
+        public new HtmlImgElement WithElement(HtmlElement element) => (HtmlImgElement)base.WithElement(element);
+        public new HtmlImgElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlImgElement)base.WithElements(elements);
 
         public new HtmlImgElement WithInnerText(string innerText) => (HtmlImgElement)base.WithInnerText(innerText);
 
         public new HtmlImgElement WithAttribute(HtmlAttribute attribute) => (HtmlImgElement)base.WithAttribute(attribute);
-        public new HtmlImgElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlImgElement)base.WithAttributes(attributes);
+        public new HtmlImgElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlImgElement)base.WithAttributes(attributes);
 
 		public HtmlImgElement WithAlt(string value) => WithAttribute(Attribute.Alt(value));
 

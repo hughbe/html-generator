@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlFigCaptionElement : HtmlElement 
+    public class HtmlFigCaptionElement : HtmlElement
     {
         public HtmlFigCaptionElement() : base("figcaption", false) 
         {    
         }
 
-        public new HtmlFigCaptionElement WithChild(HtmlElement child) => (HtmlFigCaptionElement)base.WithChild(child);
-        public new HtmlFigCaptionElement WithChildren(Collection<HtmlElement> children) => (HtmlFigCaptionElement)base.WithChildren(children);
+        public new HtmlFigCaptionElement WithElement(HtmlElement element) => (HtmlFigCaptionElement)base.WithElement(element);
+        public new HtmlFigCaptionElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlFigCaptionElement)base.WithElements(elements);
 
         public new HtmlFigCaptionElement WithInnerText(string innerText) => (HtmlFigCaptionElement)base.WithInnerText(innerText);
 
         public new HtmlFigCaptionElement WithAttribute(HtmlAttribute attribute) => (HtmlFigCaptionElement)base.WithAttribute(attribute);
-        public new HtmlFigCaptionElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlFigCaptionElement)base.WithAttributes(attributes);
+        public new HtmlFigCaptionElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlFigCaptionElement)base.WithAttributes(attributes);
 
 		public HtmlFigCaptionElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

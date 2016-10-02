@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlAreaElement : HtmlElement 
+    public class HtmlAreaElement : HtmlElement
     {
         public HtmlAreaElement() : base("area", true) 
         {    
         }
 
-        public new HtmlAreaElement WithChild(HtmlElement child) => (HtmlAreaElement)base.WithChild(child);
-        public new HtmlAreaElement WithChildren(Collection<HtmlElement> children) => (HtmlAreaElement)base.WithChildren(children);
+        public new HtmlAreaElement WithElement(HtmlElement element) => (HtmlAreaElement)base.WithElement(element);
+        public new HtmlAreaElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlAreaElement)base.WithElements(elements);
 
         public new HtmlAreaElement WithInnerText(string innerText) => (HtmlAreaElement)base.WithInnerText(innerText);
 
         public new HtmlAreaElement WithAttribute(HtmlAttribute attribute) => (HtmlAreaElement)base.WithAttribute(attribute);
-        public new HtmlAreaElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlAreaElement)base.WithAttributes(attributes);
+        public new HtmlAreaElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlAreaElement)base.WithAttributes(attributes);
 
 		public HtmlAreaElement WithAlt(string value) => WithAttribute(Attribute.Alt(value));
 

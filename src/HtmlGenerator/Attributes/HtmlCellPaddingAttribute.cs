@@ -1,13 +1,7 @@
-namespace HtmlGenerator.Attributes
+namespace HtmlGenerator
 {
     public class HtmlCellPaddingAttribute : HtmlAttribute
     {
-        public HtmlCellPaddingAttribute() : base("cellpadding", "Cellpadding", null, false, false)
-        {
-        }
-
-        public HtmlCellPaddingAttribute(string value) : base("cellpadding", "Cellpadding", value, false, false)
-        {
-        }
+        public HtmlCellPaddingAttribute(string value) : base("cellpadding", value) {}
     }
 }

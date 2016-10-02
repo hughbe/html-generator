@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlTrElement : HtmlElement 
+    public class HtmlTrElement : HtmlElement
     {
         public HtmlTrElement() : base("tr", false) 
         {    
         }
 
-        public new HtmlTrElement WithChild(HtmlElement child) => (HtmlTrElement)base.WithChild(child);
-        public new HtmlTrElement WithChildren(Collection<HtmlElement> children) => (HtmlTrElement)base.WithChildren(children);
+        public new HtmlTrElement WithElement(HtmlElement element) => (HtmlTrElement)base.WithElement(element);
+        public new HtmlTrElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlTrElement)base.WithElements(elements);
 
         public new HtmlTrElement WithInnerText(string innerText) => (HtmlTrElement)base.WithInnerText(innerText);
 
         public new HtmlTrElement WithAttribute(HtmlAttribute attribute) => (HtmlTrElement)base.WithAttribute(attribute);
-        public new HtmlTrElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTrElement)base.WithAttributes(attributes);
+        public new HtmlTrElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlTrElement)base.WithAttributes(attributes);
 
 		public HtmlTrElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

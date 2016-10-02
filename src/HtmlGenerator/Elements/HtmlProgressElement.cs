@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlProgressElement : HtmlElement 
+    public class HtmlProgressElement : HtmlElement
     {
         public HtmlProgressElement() : base("progress", false) 
         {    
         }
 
-        public new HtmlProgressElement WithChild(HtmlElement child) => (HtmlProgressElement)base.WithChild(child);
-        public new HtmlProgressElement WithChildren(Collection<HtmlElement> children) => (HtmlProgressElement)base.WithChildren(children);
+        public new HtmlProgressElement WithElement(HtmlElement element) => (HtmlProgressElement)base.WithElement(element);
+        public new HtmlProgressElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlProgressElement)base.WithElements(elements);
 
         public new HtmlProgressElement WithInnerText(string innerText) => (HtmlProgressElement)base.WithInnerText(innerText);
 
         public new HtmlProgressElement WithAttribute(HtmlAttribute attribute) => (HtmlProgressElement)base.WithAttribute(attribute);
-        public new HtmlProgressElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlProgressElement)base.WithAttributes(attributes);
+        public new HtmlProgressElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlProgressElement)base.WithAttributes(attributes);
 
 		public HtmlProgressElement WithMax(string value) => WithAttribute(Attribute.Max(value));
 

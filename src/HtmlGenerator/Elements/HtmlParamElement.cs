@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlParamElement : HtmlElement 
+    public class HtmlParamElement : HtmlElement
     {
         public HtmlParamElement() : base("param", true) 
         {    
         }
 
-        public new HtmlParamElement WithChild(HtmlElement child) => (HtmlParamElement)base.WithChild(child);
-        public new HtmlParamElement WithChildren(Collection<HtmlElement> children) => (HtmlParamElement)base.WithChildren(children);
+        public new HtmlParamElement WithElement(HtmlElement element) => (HtmlParamElement)base.WithElement(element);
+        public new HtmlParamElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlParamElement)base.WithElements(elements);
 
         public new HtmlParamElement WithInnerText(string innerText) => (HtmlParamElement)base.WithInnerText(innerText);
 
         public new HtmlParamElement WithAttribute(HtmlAttribute attribute) => (HtmlParamElement)base.WithAttribute(attribute);
-        public new HtmlParamElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlParamElement)base.WithAttributes(attributes);
+        public new HtmlParamElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlParamElement)base.WithAttributes(attributes);
 
 		public HtmlParamElement WithName(string value) => WithAttribute(Attribute.Name(value));
 

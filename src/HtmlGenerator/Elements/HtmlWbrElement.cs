@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlWbrElement : HtmlElement 
+    public class HtmlWbrElement : HtmlElement
     {
         public HtmlWbrElement() : base("wbr", false) 
         {    
         }
 
-        public new HtmlWbrElement WithChild(HtmlElement child) => (HtmlWbrElement)base.WithChild(child);
-        public new HtmlWbrElement WithChildren(Collection<HtmlElement> children) => (HtmlWbrElement)base.WithChildren(children);
+        public new HtmlWbrElement WithElement(HtmlElement element) => (HtmlWbrElement)base.WithElement(element);
+        public new HtmlWbrElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlWbrElement)base.WithElements(elements);
 
         public new HtmlWbrElement WithInnerText(string innerText) => (HtmlWbrElement)base.WithInnerText(innerText);
 
         public new HtmlWbrElement WithAttribute(HtmlAttribute attribute) => (HtmlWbrElement)base.WithAttribute(attribute);
-        public new HtmlWbrElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlWbrElement)base.WithAttributes(attributes);
+        public new HtmlWbrElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlWbrElement)base.WithAttributes(attributes);
 
 		public HtmlWbrElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

@@ -1,9 +1,7 @@
 namespace HtmlGenerator
 {
-    public class HtmlMultipleAttribute : HtmlAttribute 
+    public class HtmlMultipleAttribute : HtmlAttribute
     {
-        public HtmlMultipleAttribute() : base("multiple", "Multiple", null, true, false) 
-        {
-        }
+        public HtmlMultipleAttribute() : base("multiple") {}
     }
 }

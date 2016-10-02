@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlAddressElement : HtmlElement 
+    public class HtmlAddressElement : HtmlElement
     {
         public HtmlAddressElement() : base("address", false) 
         {    
         }
 
-        public new HtmlAddressElement WithChild(HtmlElement child) => (HtmlAddressElement)base.WithChild(child);
-        public new HtmlAddressElement WithChildren(Collection<HtmlElement> children) => (HtmlAddressElement)base.WithChildren(children);
+        public new HtmlAddressElement WithElement(HtmlElement element) => (HtmlAddressElement)base.WithElement(element);
+        public new HtmlAddressElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlAddressElement)base.WithElements(elements);
 
         public new HtmlAddressElement WithInnerText(string innerText) => (HtmlAddressElement)base.WithInnerText(innerText);
 
         public new HtmlAddressElement WithAttribute(HtmlAttribute attribute) => (HtmlAddressElement)base.WithAttribute(attribute);
-        public new HtmlAddressElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlAddressElement)base.WithAttributes(attributes);
+        public new HtmlAddressElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlAddressElement)base.WithAttributes(attributes);
 
 		public HtmlAddressElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

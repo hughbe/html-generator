@@ -1,9 +1,7 @@
 namespace HtmlGenerator
 {
-    public class HtmlDisabledAttribute : HtmlAttribute 
+    public class HtmlDisabledAttribute : HtmlAttribute
     {
-        public HtmlDisabledAttribute() : base("disabled", "Disabled", null, true, false) 
-        {
-        }
+        public HtmlDisabledAttribute() : base("disabled") {}
     }
 }

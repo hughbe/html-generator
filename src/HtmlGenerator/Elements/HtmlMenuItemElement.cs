@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlMenuItemElement : HtmlElement 
+    public class HtmlMenuItemElement : HtmlElement
     {
         public HtmlMenuItemElement() : base("menutiem", true) 
         {    
         }
 
-        public new HtmlMenuItemElement WithChild(HtmlElement child) => (HtmlMenuItemElement)base.WithChild(child);
-        public new HtmlMenuItemElement WithChildren(Collection<HtmlElement> children) => (HtmlMenuItemElement)base.WithChildren(children);
+        public new HtmlMenuItemElement WithElement(HtmlElement element) => (HtmlMenuItemElement)base.WithElement(element);
+        public new HtmlMenuItemElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlMenuItemElement)base.WithElements(elements);
 
         public new HtmlMenuItemElement WithInnerText(string innerText) => (HtmlMenuItemElement)base.WithInnerText(innerText);
 
         public new HtmlMenuItemElement WithAttribute(HtmlAttribute attribute) => (HtmlMenuItemElement)base.WithAttribute(attribute);
-        public new HtmlMenuItemElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlMenuItemElement)base.WithAttributes(attributes);
+        public new HtmlMenuItemElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlMenuItemElement)base.WithAttributes(attributes);
 
 		public HtmlMenuItemElement WithChecked() => WithAttribute(Attribute.Checked);
 

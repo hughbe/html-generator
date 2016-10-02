@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlStrongElement : HtmlElement 
+    public class HtmlStrongElement : HtmlElement
     {
         public HtmlStrongElement() : base("strong", false) 
         {    
         }
 
-        public new HtmlStrongElement WithChild(HtmlElement child) => (HtmlStrongElement)base.WithChild(child);
-        public new HtmlStrongElement WithChildren(Collection<HtmlElement> children) => (HtmlStrongElement)base.WithChildren(children);
+        public new HtmlStrongElement WithElement(HtmlElement element) => (HtmlStrongElement)base.WithElement(element);
+        public new HtmlStrongElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlStrongElement)base.WithElements(elements);
 
         public new HtmlStrongElement WithInnerText(string innerText) => (HtmlStrongElement)base.WithInnerText(innerText);
 
         public new HtmlStrongElement WithAttribute(HtmlAttribute attribute) => (HtmlStrongElement)base.WithAttribute(attribute);
-        public new HtmlStrongElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlStrongElement)base.WithAttributes(attributes);
+        public new HtmlStrongElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlStrongElement)base.WithAttributes(attributes);
 
 		public HtmlStrongElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

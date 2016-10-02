@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
@@ -8,13 +8,13 @@ namespace HtmlGenerator
         {
         }
 
-        public new HtmlTdElement WithChild(HtmlElement child) => (HtmlTdElement)base.WithChild(child);
-        public new HtmlTdElement WithChildren(Collection<HtmlElement> children) => (HtmlTdElement)base.WithChildren(children);
+        public new HtmlTdElement WithElement(HtmlElement child) => (HtmlTdElement)base.WithElement(child);
+        public new HtmlTdElement WithElements(IEnumerable<HtmlElement> children) => (HtmlTdElement)base.WithElements(children);
 
         public new HtmlTdElement WithInnerText(string innerText) => (HtmlTdElement)base.WithInnerText(innerText);
 
         public new HtmlTdElement WithAttribute(HtmlAttribute attribute) => (HtmlTdElement)base.WithAttribute(attribute);
-        public new HtmlTdElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTdElement)base.WithAttributes(attributes);
+        public new HtmlTdElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlTdElement)base.WithAttributes(attributes);
 
         public HtmlTdElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlPElement : HtmlElement 
+    public class HtmlPElement : HtmlElement
     {
         public HtmlPElement() : base("p", false) 
         {    
         }
 
-        public new HtmlPElement WithChild(HtmlElement child) => (HtmlPElement)base.WithChild(child);
-        public new HtmlPElement WithChildren(Collection<HtmlElement> children) => (HtmlPElement)base.WithChildren(children);
+        public new HtmlPElement WithElement(HtmlElement element) => (HtmlPElement)base.WithElement(element);
+        public new HtmlPElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlPElement)base.WithElements(elements);
 
         public new HtmlPElement WithInnerText(string innerText) => (HtmlPElement)base.WithInnerText(innerText);
 
         public new HtmlPElement WithAttribute(HtmlAttribute attribute) => (HtmlPElement)base.WithAttribute(attribute);
-        public new HtmlPElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlPElement)base.WithAttributes(attributes);
+        public new HtmlPElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlPElement)base.WithAttributes(attributes);
 
 		public HtmlPElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

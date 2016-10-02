@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlDelElement : HtmlElement 
+    public class HtmlDelElement : HtmlElement
     {
         public HtmlDelElement() : base("del", false) 
         {    
         }
 
-        public new HtmlDelElement WithChild(HtmlElement child) => (HtmlDelElement)base.WithChild(child);
-        public new HtmlDelElement WithChildren(Collection<HtmlElement> children) => (HtmlDelElement)base.WithChildren(children);
+        public new HtmlDelElement WithElement(HtmlElement element) => (HtmlDelElement)base.WithElement(element);
+        public new HtmlDelElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlDelElement)base.WithElements(elements);
 
         public new HtmlDelElement WithInnerText(string innerText) => (HtmlDelElement)base.WithInnerText(innerText);
 
         public new HtmlDelElement WithAttribute(HtmlAttribute attribute) => (HtmlDelElement)base.WithAttribute(attribute);
-        public new HtmlDelElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDelElement)base.WithAttributes(attributes);
+        public new HtmlDelElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlDelElement)base.WithAttributes(attributes);
 
 		public HtmlDelElement WithCite(string value) => WithAttribute(Attribute.Cite(value));
 

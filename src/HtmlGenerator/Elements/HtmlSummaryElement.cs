@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlSummaryElement : HtmlElement 
+    public class HtmlSummaryElement : HtmlElement
     {
         public HtmlSummaryElement() : base("summary", false) 
         {    
         }
 
-        public new HtmlSummaryElement WithChild(HtmlElement child) => (HtmlSummaryElement)base.WithChild(child);
-        public new HtmlSummaryElement WithChildren(Collection<HtmlElement> children) => (HtmlSummaryElement)base.WithChildren(children);
+        public new HtmlSummaryElement WithElement(HtmlElement element) => (HtmlSummaryElement)base.WithElement(element);
+        public new HtmlSummaryElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlSummaryElement)base.WithElements(elements);
 
         public new HtmlSummaryElement WithInnerText(string innerText) => (HtmlSummaryElement)base.WithInnerText(innerText);
 
         public new HtmlSummaryElement WithAttribute(HtmlAttribute attribute) => (HtmlSummaryElement)base.WithAttribute(attribute);
-        public new HtmlSummaryElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlSummaryElement)base.WithAttributes(attributes);
+        public new HtmlSummaryElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlSummaryElement)base.WithAttributes(attributes);
 
 		public HtmlSummaryElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

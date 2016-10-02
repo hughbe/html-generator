@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlInputElement : HtmlElement 
+    public class HtmlInputElement : HtmlElement
     {
         public HtmlInputElement() : base("input", true) 
         {    
         }
 
-        public new HtmlInputElement WithChild(HtmlElement child) => (HtmlInputElement)base.WithChild(child);
-        public new HtmlInputElement WithChildren(Collection<HtmlElement> children) => (HtmlInputElement)base.WithChildren(children);
+        public new HtmlInputElement WithElement(HtmlElement element) => (HtmlInputElement)base.WithElement(element);
+        public new HtmlInputElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlInputElement)base.WithElements(elements);
 
         public new HtmlInputElement WithInnerText(string innerText) => (HtmlInputElement)base.WithInnerText(innerText);
 
         public new HtmlInputElement WithAttribute(HtmlAttribute attribute) => (HtmlInputElement)base.WithAttribute(attribute);
-        public new HtmlInputElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlInputElement)base.WithAttributes(attributes);
+        public new HtmlInputElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlInputElement)base.WithAttributes(attributes);
 
 		public HtmlInputElement WithAccept(string value) => WithAttribute(Attribute.Accept(value));
 

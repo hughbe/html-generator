@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlStyleElement : HtmlElement 
+    public class HtmlStyleElement : HtmlElement
     {
         public HtmlStyleElement() : base("style", false) 
         {    
         }
 
-        public new HtmlStyleElement WithChild(HtmlElement child) => (HtmlStyleElement)base.WithChild(child);
-        public new HtmlStyleElement WithChildren(Collection<HtmlElement> children) => (HtmlStyleElement)base.WithChildren(children);
+        public new HtmlStyleElement WithElement(HtmlElement element) => (HtmlStyleElement)base.WithElement(element);
+        public new HtmlStyleElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlStyleElement)base.WithElements(elements);
 
         public new HtmlStyleElement WithInnerText(string innerText) => (HtmlStyleElement)base.WithInnerText(innerText);
 
         public new HtmlStyleElement WithAttribute(HtmlAttribute attribute) => (HtmlStyleElement)base.WithAttribute(attribute);
-        public new HtmlStyleElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlStyleElement)base.WithAttributes(attributes);
+        public new HtmlStyleElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlStyleElement)base.WithAttributes(attributes);
 
 		public HtmlStyleElement WithDisabled() => WithAttribute(Attribute.Disabled);
 

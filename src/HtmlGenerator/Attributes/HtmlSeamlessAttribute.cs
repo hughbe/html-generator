@@ -1,9 +1,7 @@
 namespace HtmlGenerator
 {
-    public class HtmlSeamlessAttribute : HtmlAttribute 
+    public class HtmlSeamlessAttribute : HtmlAttribute
     {
-        public HtmlSeamlessAttribute() : base("seamless", "Seamless", null, true, false) 
-        {
-        }
+        public HtmlSeamlessAttribute() : base("seamless") {}
     }
 }

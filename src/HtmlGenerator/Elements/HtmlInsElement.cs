@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlInsElement : HtmlElement 
+    public class HtmlInsElement : HtmlElement
     {
         public HtmlInsElement() : base("ins", false) 
         {    
         }
 
-        public new HtmlInsElement WithChild(HtmlElement child) => (HtmlInsElement)base.WithChild(child);
-        public new HtmlInsElement WithChildren(Collection<HtmlElement> children) => (HtmlInsElement)base.WithChildren(children);
+        public new HtmlInsElement WithElement(HtmlElement element) => (HtmlInsElement)base.WithElement(element);
+        public new HtmlInsElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlInsElement)base.WithElements(elements);
 
         public new HtmlInsElement WithInnerText(string innerText) => (HtmlInsElement)base.WithInnerText(innerText);
 
         public new HtmlInsElement WithAttribute(HtmlAttribute attribute) => (HtmlInsElement)base.WithAttribute(attribute);
-        public new HtmlInsElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlInsElement)base.WithAttributes(attributes);
+        public new HtmlInsElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlInsElement)base.WithAttributes(attributes);
 
 		public HtmlInsElement WithCite(string value) => WithAttribute(Attribute.Cite(value));
 

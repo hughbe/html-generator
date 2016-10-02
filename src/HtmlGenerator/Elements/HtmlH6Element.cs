@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlH6Element : HtmlElement 
+    public class HtmlH6Element : HtmlElement
     {
         public HtmlH6Element() : base("h6", false) 
         {    
         }
 
-        public new HtmlH6Element WithChild(HtmlElement child) => (HtmlH6Element)base.WithChild(child);
-        public new HtmlH6Element WithChildren(Collection<HtmlElement> children) => (HtmlH6Element)base.WithChildren(children);
+        public new HtmlH6Element WithElement(HtmlElement element) => (HtmlH6Element)base.WithElement(element);
+        public new HtmlH6Element WithElements(IEnumerable<HtmlElement> elements) => (HtmlH6Element)base.WithElements(elements);
 
         public new HtmlH6Element WithInnerText(string innerText) => (HtmlH6Element)base.WithInnerText(innerText);
 
         public new HtmlH6Element WithAttribute(HtmlAttribute attribute) => (HtmlH6Element)base.WithAttribute(attribute);
-        public new HtmlH6Element WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlH6Element)base.WithAttributes(attributes);
+        public new HtmlH6Element WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlH6Element)base.WithAttributes(attributes);
 
 		public HtmlH6Element WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

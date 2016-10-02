@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlDatalistElement : HtmlElement 
+    public class HtmlDatalistElement : HtmlElement
     {
         public HtmlDatalistElement() : base("datalist", false) 
         {    
         }
 
-        public new HtmlDatalistElement WithChild(HtmlElement child) => (HtmlDatalistElement)base.WithChild(child);
-        public new HtmlDatalistElement WithChildren(Collection<HtmlElement> children) => (HtmlDatalistElement)base.WithChildren(children);
+        public new HtmlDatalistElement WithElement(HtmlElement element) => (HtmlDatalistElement)base.WithElement(element);
+        public new HtmlDatalistElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlDatalistElement)base.WithElements(elements);
 
         public new HtmlDatalistElement WithInnerText(string innerText) => (HtmlDatalistElement)base.WithInnerText(innerText);
 
         public new HtmlDatalistElement WithAttribute(HtmlAttribute attribute) => (HtmlDatalistElement)base.WithAttribute(attribute);
-        public new HtmlDatalistElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlDatalistElement)base.WithAttributes(attributes);
+        public new HtmlDatalistElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlDatalistElement)base.WithAttributes(attributes);
 
 		public HtmlDatalistElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

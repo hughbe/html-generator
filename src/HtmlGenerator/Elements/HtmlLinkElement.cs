@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlLinkElement : HtmlElement 
+    public class HtmlLinkElement : HtmlElement
     {
         public HtmlLinkElement() : base("link", true) 
         {    
         }
 
-        public new HtmlLinkElement WithChild(HtmlElement child) => (HtmlLinkElement)base.WithChild(child);
-        public new HtmlLinkElement WithChildren(Collection<HtmlElement> children) => (HtmlLinkElement)base.WithChildren(children);
+        public new HtmlLinkElement WithElement(HtmlElement element) => (HtmlLinkElement)base.WithElement(element);
+        public new HtmlLinkElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlLinkElement)base.WithElements(elements);
 
         public new HtmlLinkElement WithInnerText(string innerText) => (HtmlLinkElement)base.WithInnerText(innerText);
 
         public new HtmlLinkElement WithAttribute(HtmlAttribute attribute) => (HtmlLinkElement)base.WithAttribute(attribute);
-        public new HtmlLinkElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlLinkElement)base.WithAttributes(attributes);
+        public new HtmlLinkElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlLinkElement)base.WithAttributes(attributes);
 
 		public HtmlLinkElement WithCrossOrigin(string value) => WithAttribute(Attribute.CrossOrigin(value));
 

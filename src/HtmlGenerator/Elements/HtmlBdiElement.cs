@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlBdiElement : HtmlElement 
+    public class HtmlBdiElement : HtmlElement
     {
         public HtmlBdiElement() : base("bdi", false) 
         {    
         }
 
-        public new HtmlBdiElement WithChild(HtmlElement child) => (HtmlBdiElement)base.WithChild(child);
-        public new HtmlBdiElement WithChildren(Collection<HtmlElement> children) => (HtmlBdiElement)base.WithChildren(children);
+        public new HtmlBdiElement WithElement(HtmlElement element) => (HtmlBdiElement)base.WithElement(element);
+        public new HtmlBdiElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlBdiElement)base.WithElements(elements);
 
         public new HtmlBdiElement WithInnerText(string innerText) => (HtmlBdiElement)base.WithInnerText(innerText);
 
         public new HtmlBdiElement WithAttribute(HtmlAttribute attribute) => (HtmlBdiElement)base.WithAttribute(attribute);
-        public new HtmlBdiElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlBdiElement)base.WithAttributes(attributes);
+        public new HtmlBdiElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlBdiElement)base.WithAttributes(attributes);
 
 		public HtmlBdiElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlTfootElement : HtmlElement 
+    public class HtmlTfootElement : HtmlElement
     {
         public HtmlTfootElement() : base("tfoot", false) 
         {    
         }
 
-        public new HtmlTfootElement WithChild(HtmlElement child) => (HtmlTfootElement)base.WithChild(child);
-        public new HtmlTfootElement WithChildren(Collection<HtmlElement> children) => (HtmlTfootElement)base.WithChildren(children);
+        public new HtmlTfootElement WithElement(HtmlElement element) => (HtmlTfootElement)base.WithElement(element);
+        public new HtmlTfootElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlTfootElement)base.WithElements(elements);
 
         public new HtmlTfootElement WithInnerText(string innerText) => (HtmlTfootElement)base.WithInnerText(innerText);
 
         public new HtmlTfootElement WithAttribute(HtmlAttribute attribute) => (HtmlTfootElement)base.WithAttribute(attribute);
-        public new HtmlTfootElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTfootElement)base.WithAttributes(attributes);
+        public new HtmlTfootElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlTfootElement)base.WithAttributes(attributes);
 
 		public HtmlTfootElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

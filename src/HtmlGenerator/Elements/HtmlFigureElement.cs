@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlFigureElement : HtmlElement 
+    public class HtmlFigureElement : HtmlElement
     {
         public HtmlFigureElement() : base("figure", false) 
         {    
         }
 
-        public new HtmlFigureElement WithChild(HtmlElement child) => (HtmlFigureElement)base.WithChild(child);
-        public new HtmlFigureElement WithChildren(Collection<HtmlElement> children) => (HtmlFigureElement)base.WithChildren(children);
+        public new HtmlFigureElement WithElement(HtmlElement element) => (HtmlFigureElement)base.WithElement(element);
+        public new HtmlFigureElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlFigureElement)base.WithElements(elements);
 
         public new HtmlFigureElement WithInnerText(string innerText) => (HtmlFigureElement)base.WithInnerText(innerText);
 
         public new HtmlFigureElement WithAttribute(HtmlAttribute attribute) => (HtmlFigureElement)base.WithAttribute(attribute);
-        public new HtmlFigureElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlFigureElement)base.WithAttributes(attributes);
+        public new HtmlFigureElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlFigureElement)base.WithAttributes(attributes);
 
 		public HtmlFigureElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

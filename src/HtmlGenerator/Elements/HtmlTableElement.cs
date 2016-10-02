@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlTableElement : HtmlElement 
+    public class HtmlTableElement : HtmlElement
     {
         public HtmlTableElement() : base("table", false) 
         {    
         }
 
-        public new HtmlTableElement WithChild(HtmlElement child) => (HtmlTableElement)base.WithChild(child);
-        public new HtmlTableElement WithChildren(Collection<HtmlElement> children) => (HtmlTableElement)base.WithChildren(children);
+        public new HtmlTableElement WithElement(HtmlElement element) => (HtmlTableElement)base.WithElement(element);
+        public new HtmlTableElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlTableElement)base.WithElements(elements);
 
         public new HtmlTableElement WithInnerText(string innerText) => (HtmlTableElement)base.WithInnerText(innerText);
 
         public new HtmlTableElement WithAttribute(HtmlAttribute attribute) => (HtmlTableElement)base.WithAttribute(attribute);
-        public new HtmlTableElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlTableElement)base.WithAttributes(attributes);
+        public new HtmlTableElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlTableElement)base.WithAttributes(attributes);
 
 		public HtmlTableElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

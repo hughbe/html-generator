@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlHrElement : HtmlElement 
+    public class HtmlHrElement : HtmlElement
     {
         public HtmlHrElement() : base("hr", true) 
         {    
         }
 
-        public new HtmlHrElement WithChild(HtmlElement child) => (HtmlHrElement)base.WithChild(child);
-        public new HtmlHrElement WithChildren(Collection<HtmlElement> children) => (HtmlHrElement)base.WithChildren(children);
+        public new HtmlHrElement WithElement(HtmlElement element) => (HtmlHrElement)base.WithElement(element);
+        public new HtmlHrElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlHrElement)base.WithElements(elements);
 
         public new HtmlHrElement WithInnerText(string innerText) => (HtmlHrElement)base.WithInnerText(innerText);
 
         public new HtmlHrElement WithAttribute(HtmlAttribute attribute) => (HtmlHrElement)base.WithAttribute(attribute);
-        public new HtmlHrElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlHrElement)base.WithAttributes(attributes);
+        public new HtmlHrElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlHrElement)base.WithAttributes(attributes);
 
 		public HtmlHrElement WithColor(string value) => WithAttribute(Attribute.Color(value));
 

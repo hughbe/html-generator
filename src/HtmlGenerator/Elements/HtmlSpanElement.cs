@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlSpanElement : HtmlElement 
+    public class HtmlSpanElement : HtmlElement
     {
         public HtmlSpanElement() : base("span", false) 
         {    
         }
 
-        public new HtmlSpanElement WithChild(HtmlElement child) => (HtmlSpanElement)base.WithChild(child);
-        public new HtmlSpanElement WithChildren(Collection<HtmlElement> children) => (HtmlSpanElement)base.WithChildren(children);
+        public new HtmlSpanElement WithElement(HtmlElement element) => (HtmlSpanElement)base.WithElement(element);
+        public new HtmlSpanElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlSpanElement)base.WithElements(elements);
 
         public new HtmlSpanElement WithInnerText(string innerText) => (HtmlSpanElement)base.WithInnerText(innerText);
 
         public new HtmlSpanElement WithAttribute(HtmlAttribute attribute) => (HtmlSpanElement)base.WithAttribute(attribute);
-        public new HtmlSpanElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlSpanElement)base.WithAttributes(attributes);
+        public new HtmlSpanElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlSpanElement)base.WithAttributes(attributes);
 
 		public HtmlSpanElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
 

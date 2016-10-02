@@ -1,20 +1,20 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public class HtmlScriptElement : HtmlElement 
+    public class HtmlScriptElement : HtmlElement
     {
         public HtmlScriptElement() : base("script", false) 
         {    
         }
 
-        public new HtmlScriptElement WithChild(HtmlElement child) => (HtmlScriptElement)base.WithChild(child);
-        public new HtmlScriptElement WithChildren(Collection<HtmlElement> children) => (HtmlScriptElement)base.WithChildren(children);
+        public new HtmlScriptElement WithElement(HtmlElement element) => (HtmlScriptElement)base.WithElement(element);
+        public new HtmlScriptElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlScriptElement)base.WithElements(elements);
 
         public new HtmlScriptElement WithInnerText(string innerText) => (HtmlScriptElement)base.WithInnerText(innerText);
 
         public new HtmlScriptElement WithAttribute(HtmlAttribute attribute) => (HtmlScriptElement)base.WithAttribute(attribute);
-        public new HtmlScriptElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlScriptElement)base.WithAttributes(attributes);
+        public new HtmlScriptElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlScriptElement)base.WithAttributes(attributes);
 
 		public HtmlScriptElement WithAsync(string value) => WithAttribute(Attribute.Async(value));
 
