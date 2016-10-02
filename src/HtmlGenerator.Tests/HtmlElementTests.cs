@@ -854,6 +854,102 @@ namespace HtmlGenerator.Tests
             Assert.Null(element.PreviousElement);
         }
 
+        [Fact]
+        public void NextElements_NoTag_ReturnsExpected()
+        {
+            HtmlElement first = new HtmlElement("h1");
+            HtmlElement second = new HtmlElement("h2");
+            HtmlElement third = new HtmlElement("h3");
+            HtmlElement parent = new HtmlElement("div", first, second, third);
+
+            Assert.Equal(new HtmlElement[] { second, third }, first.NextElements());
+            Assert.Equal(new HtmlElement[] { third }, second.NextElements());
+            Assert.Empty(third.NextElements());
+        }
+
+        [Fact]
+        public void NextElements_CustomTag_ReturnsExpected()
+        {
+            HtmlElement first = new HtmlElement("h1");
+            HtmlElement second = new HtmlElement("h2");
+            HtmlElement third = new HtmlElement("h2");
+            HtmlElement fourth = new HtmlElement("h4");
+            HtmlElement parent = new HtmlElement("div", first, second, third, fourth);
+
+            Assert.Equal(new HtmlElement[] { second, third }, first.NextElements("h2"));
+            Assert.Equal(new HtmlElement[] { third }, second.NextElements("h2"));
+            Assert.Equal(new HtmlElement[] { fourth }, third.NextElements("h4"));
+            Assert.Empty(third.NextElements("h1"));
+        }
+
+        [Fact]
+        public void NextElements_NoSuchTag_ReturnsEmpty()
+        {
+            HtmlElement first = new HtmlElement("h1");
+            HtmlElement second = new HtmlElement("h2");
+            HtmlElement third = new HtmlElement("h2");
+            HtmlElement parent = new HtmlElement("div", first, second, third);
+
+            Assert.Empty(first.NextElements("h1"));
+            Assert.Empty(first.NextElements("h4"));
+        }
+
+        [Fact]
+        public void NextElements_NoParent_ReturnsEmpty()
+        {
+            HtmlElement element = new HtmlElement("div");
+            Assert.Empty(element.NextElements());
+            Assert.Empty(element.NextElements("any"));
+        }
+
+        [Fact]
+        public void PreviousElements_NoTag_ReturnsExpected()
+        {
+            HtmlElement first = new HtmlElement("h1");
+            HtmlElement second = new HtmlElement("h2");
+            HtmlElement third = new HtmlElement("h3");
+            HtmlElement parent = new HtmlElement("div", first, second, third);
+
+            Assert.Empty(first.PreviousElements());
+            Assert.Equal(new HtmlElement[] { first }, second.PreviousElements());
+            Assert.Equal(new HtmlElement[] { second, first }, third.PreviousElements());
+        }
+
+        [Fact]
+        public void PreviousElements_CustomTag_ReturnsExpected()
+        {
+            HtmlElement first = new HtmlElement("h1");
+            HtmlElement second = new HtmlElement("h2");
+            HtmlElement third = new HtmlElement("h2");
+            HtmlElement fourth = new HtmlElement("h4");
+            HtmlElement parent = new HtmlElement("div", first, second, third, fourth);
+
+            Assert.Empty(first.PreviousElements("h4"));
+            Assert.Equal(new HtmlElement[] { first }, second.PreviousElements("h1"));
+            Assert.Equal(new HtmlElement[] { second }, third.PreviousElements("h2"));
+            Assert.Equal(new HtmlElement[] { third, second }, fourth.PreviousElements("h2"));
+        }
+
+        [Fact]
+        public void PreviousElements_NoSuchTag_ReturnsEmpty()
+        {
+            HtmlElement first = new HtmlElement("h1");
+            HtmlElement second = new HtmlElement("h1");
+            HtmlElement third = new HtmlElement("h2");
+            HtmlElement parent = new HtmlElement("div", first, second, third);
+
+            Assert.Empty(third.PreviousElements("h2"));
+            Assert.Empty(third.PreviousElements("h4"));
+        }
+
+        [Fact]
+        public void PreviousElements_NoParent_ReturnsEmpty()
+        {
+            HtmlElement element = new HtmlElement("div");
+            Assert.Empty(element.PreviousElements());
+            Assert.Empty(element.PreviousElements("any"));
+        }
+
         public class CustomHtmlObject : HtmlObject { }
     }
 }
