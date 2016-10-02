@@ -6,8 +6,8 @@ namespace HtmlGenerator
 {
     public class HtmlElement : SerializableHtmlObject
     {
-        private LinkedList<HtmlAttribute> _attributes = new LinkedList<HtmlAttribute>();
-        private LinkedList<HtmlElement> _elements = new LinkedList<HtmlElement>();
+        private HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
+        private HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
         
         public HtmlElement(string tag)
         {
@@ -198,10 +198,10 @@ namespace HtmlGenerator
             InnerText = value;
         }
 
-        public HtmlElement FirstElement => _elements.First?.Value;
-        public HtmlElement LastElement => _elements.Last?.Value;
+        public HtmlElement FirstElement => _elements._first;
+        public HtmlElement LastElement => _elements._last;
 
-        public bool HasElements => _elements.Count != 0;
+        public bool HasElements => _elements._count != 0;
 
         public IEnumerable<HtmlElement> Elements() => Elements(null);
 
@@ -209,30 +209,29 @@ namespace HtmlGenerator
         {
             bool isDefaultTag = string.IsNullOrEmpty(tag);
 
-            LinkedListNode<HtmlElement> elementNode = _elements.First;
-            while (elementNode != null)
+            HtmlElement element = _elements._first;
+            while (element != null)
             {
-                HtmlElement element = elementNode.Value;
                 if (isDefaultTag || element.Tag == tag)
                 {
                     yield return element;
                 }
-                elementNode = elementNode.Next;
+                element = (HtmlElement)element._next;
             }
         }
 
-        public HtmlAttribute FirstAttribute => _attributes.First?.Value;
-        public HtmlAttribute LastAttribute => _attributes.Last?.Value;
+        public HtmlAttribute FirstAttribute => _attributes._first;
+        public HtmlAttribute LastAttribute => _attributes._last;
 
-        public bool HasAttributes => _attributes.Count != 0;
+        public bool HasAttributes => _attributes._count != 0;
 
         public IEnumerable<HtmlAttribute> Attributes()
         {
-            LinkedListNode<HtmlAttribute> attributeNode = _attributes.First;
+            HtmlAttribute attributeNode = _attributes._first;
             while (attributeNode != null)
             {
-                yield return attributeNode.Value;
-                attributeNode = attributeNode.Next;
+                yield return attributeNode;
+                attributeNode = (HtmlAttribute)attributeNode._next;
             }
         }
 
@@ -254,16 +253,15 @@ namespace HtmlGenerator
         {
             Requires.NotNullOrWhitespace(tag, nameof(tag));
 
-            LinkedListNode<HtmlElement> elementNode = _elements.First;
-            while (elementNode != null)
+            HtmlElement current = _elements._first;
+            while (current != null)
             {
-                HtmlElement nodeElement = elementNode.Value;
-                if (nodeElement.Tag == tag)
+                if (current.Tag == tag)
                 {
-                    element = nodeElement;
+                    element = current;
                     return true;
                 }
-                elementNode = elementNode.Next;
+                current = (HtmlElement)current._next;
             }
 
             element = null;
@@ -274,16 +272,15 @@ namespace HtmlGenerator
         {
             Requires.NotNullOrWhitespace(name, nameof(name));
 
-            LinkedListNode<HtmlAttribute> attributeNode = _attributes.First;
-            while (attributeNode != null)
+            HtmlAttribute current = _attributes._first;
+            while (current != null)
             {
-                HtmlAttribute nodeAttribute = attributeNode.Value;
-                if (nodeAttribute.Name == name)
+                if (current.Name == name)
                 {
-                    attribute = nodeAttribute;
+                    attribute = current;
                     return true;
                 }
-                attributeNode = attributeNode.Next;
+                current = (HtmlAttribute)current._next;
             }
 
             attribute = null;
@@ -356,7 +353,7 @@ namespace HtmlGenerator
                 {
                     stringBuilder.Append(' ', depth * 2);
                 }
-                if (!string.IsNullOrWhiteSpace(child.InnerText) && child._elements.Count == 0)
+                if (!string.IsNullOrWhiteSpace(child.InnerText) && child._elements._count == 0)
                 {
                     child.Serialize(stringBuilder, serializeType, depth);
                 }
@@ -390,7 +387,7 @@ namespace HtmlGenerator
             stringBuilder.Append('<');
             stringBuilder.Append(Tag);
 
-            if (_attributes.Count != 0)
+            if (_attributes._count != 0)
             {
                 foreach (var attribute in Attributes())
                 {
