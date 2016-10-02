@@ -13,7 +13,8 @@ before_build:
   - dotnet restore
 
 build_script:
-  - ps: dotnet build -c Release -f $env:LibFramework src/HtmlGenerator
+  - ps: dotnet build -c Release -f $env:LIBFRAMEWORK src/HtmlGenerator
+  - ps: dotnet build -c Release -f $env:FRAMEWORK src/HtmlGenerator.Tests
 
 test_script:
   - ps: dotnet run -c Release -f $env:Framework -p src/HtmlGeneratorMeta -- $env:APPVEYOR_BUILD_FOLDER

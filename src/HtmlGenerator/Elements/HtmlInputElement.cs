@@ -1,105 +1,71 @@
-using System.Collections.ObjectModel;
-
 namespace HtmlGenerator
 {
-    public class HtmlInputElement : HtmlElement 
+    public class HtmlInputElement : HtmlElement
     {
-        public HtmlInputElement() : base("input", true) 
-        {    
-        }
+        public HtmlInputElement() : base("input", isVoid: true) { }
 
-        public new HtmlInputElement WithChild(HtmlElement child) => (HtmlInputElement)base.WithChild(child);
-        public new HtmlInputElement WithChildren(Collection<HtmlElement> children) => (HtmlInputElement)base.WithChildren(children);
+        public HtmlInputElement WithAccept(string value) => this.WithAttribute(Attribute.Accept(value));
 
-        public new HtmlInputElement WithInnerText(string innerText) => (HtmlInputElement)base.WithInnerText(innerText);
+        public HtmlInputElement WithAutoComplete(string value) => this.WithAttribute(Attribute.AutoComplete(value));
 
-        public new HtmlInputElement WithAttribute(HtmlAttribute attribute) => (HtmlInputElement)base.WithAttribute(attribute);
-        public new HtmlInputElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlInputElement)base.WithAttributes(attributes);
+        public HtmlInputElement WithAutoFocus() => this.WithAttribute(Attribute.AutoFocus);
 
-		public HtmlInputElement WithAccept(string value) => WithAttribute(Attribute.Accept(value));
+        public HtmlInputElement WithAutoSave(string value) => this.WithAttribute(Attribute.AutoSave(value));
 
-		public HtmlInputElement WithAutoComplete(string value) => WithAttribute(Attribute.AutoComplete(value));
+        public HtmlInputElement WithChecked() => this.WithAttribute(Attribute.Checked);
 
-		public HtmlInputElement WithAutoFocus() => WithAttribute(Attribute.AutoFocus);
+        public HtmlInputElement WithDisabled() => this.WithAttribute(Attribute.Disabled);
 
-		public HtmlInputElement WithAutoSave(string value) => WithAttribute(Attribute.AutoSave(value));
+        public HtmlInputElement WithForm(string value) => this.WithAttribute(Attribute.Form(value));
 
-		public HtmlInputElement WithChecked() => WithAttribute(Attribute.Checked);
+        public HtmlInputElement WithFormAction(string value) => this.WithAttribute(Attribute.FormAction(value));
 
-		public HtmlInputElement WithDisabled() => WithAttribute(Attribute.Disabled);
+        public HtmlInputElement WithFormEncType(string value) => this.WithAttribute(Attribute.FormEncType(value));
 
-		public HtmlInputElement WithForm(string value) => WithAttribute(Attribute.Form(value));
+        public HtmlInputElement WithFormMethod(string value) => this.WithAttribute(Attribute.FormMethod(value));
 
-		public HtmlInputElement WithFormAction(string value) => WithAttribute(Attribute.FormAction(value));
+        public HtmlInputElement WithFormNoValidate() => this.WithAttribute(Attribute.FormNoValidate);
 
-		public HtmlInputElement WithFormEncType(string value) => WithAttribute(Attribute.FormEncType(value));
+        public HtmlInputElement WithFormTarget(string value) => this.WithAttribute(Attribute.FormTarget(value));
 
-		public HtmlInputElement WithFormMethod(string value) => WithAttribute(Attribute.FormMethod(value));
+        public HtmlInputElement WithHeight(string value) => this.WithAttribute(Attribute.Height(value));
 
-		public HtmlInputElement WithFormNoValidate() => WithAttribute(Attribute.FormNoValidate);
+        public HtmlInputElement WithInputMode(string value) => this.WithAttribute(Attribute.InputMode(value));
 
-		public HtmlInputElement WithFormTarget(string value) => WithAttribute(Attribute.FormTarget(value));
+        public HtmlInputElement WithList(string value) => this.WithAttribute(Attribute.List(value));
 
-		public HtmlInputElement WithHeight(string value) => WithAttribute(Attribute.Height(value));
+        public HtmlInputElement WithMax(string value) => this.WithAttribute(Attribute.Max(value));
 
-		public HtmlInputElement WithInputMode(string value) => WithAttribute(Attribute.InputMode(value));
+        public HtmlInputElement WithMaxLength(string value) => this.WithAttribute(Attribute.MaxLength(value));
 
-		public HtmlInputElement WithList(string value) => WithAttribute(Attribute.List(value));
+        public HtmlInputElement WithMin(string value) => this.WithAttribute(Attribute.Min(value));
 
-		public HtmlInputElement WithMax(string value) => WithAttribute(Attribute.Max(value));
+        public HtmlInputElement WithMinLength(string value) => this.WithAttribute(Attribute.MinLength(value));
 
-		public HtmlInputElement WithMaxLength(string value) => WithAttribute(Attribute.MaxLength(value));
+        public HtmlInputElement WithMultiple() => this.WithAttribute(Attribute.Multiple);
 
-		public HtmlInputElement WithMin(string value) => WithAttribute(Attribute.Min(value));
+        public HtmlInputElement WithName(string value) => this.WithAttribute(Attribute.Name(value));
 
-		public HtmlInputElement WithMinLength(string value) => WithAttribute(Attribute.MinLength(value));
+        public HtmlInputElement WithPattern(string value) => this.WithAttribute(Attribute.Pattern(value));
 
-		public HtmlInputElement WithMultiple() => WithAttribute(Attribute.Multiple);
+        public HtmlInputElement WithPlaceholder(string value) => this.WithAttribute(Attribute.Placeholder(value));
 
-		public HtmlInputElement WithName(string value) => WithAttribute(Attribute.Name(value));
+        public HtmlInputElement WithReadonly() => this.WithAttribute(Attribute.Readonly);
 
-		public HtmlInputElement WithPattern(string value) => WithAttribute(Attribute.Pattern(value));
+        public HtmlInputElement WithRequired() => this.WithAttribute(Attribute.Required);
 
-		public HtmlInputElement WithPlaceholder(string value) => WithAttribute(Attribute.Placeholder(value));
+        public HtmlInputElement WithSelectionDirection(string value) => this.WithAttribute(Attribute.SelectionDirection(value));
 
-		public HtmlInputElement WithReadonly() => WithAttribute(Attribute.Readonly);
+        public HtmlInputElement WithSize(string value) => this.WithAttribute(Attribute.Size(value));
 
-		public HtmlInputElement WithRequired() => WithAttribute(Attribute.Required);
+        public HtmlInputElement WithSrc(string value) => this.WithAttribute(Attribute.Src(value));
 
-		public HtmlInputElement WithSelectionDirection(string value) => WithAttribute(Attribute.SelectionDirection(value));
+        public HtmlInputElement WithStep(string value) => this.WithAttribute(Attribute.Step(value));
 
-		public HtmlInputElement WithSize(string value) => WithAttribute(Attribute.Size(value));
+        public HtmlInputElement WithType(string value) => this.WithAttribute(Attribute.Type(value));
 
-		public HtmlInputElement WithSrc(string value) => WithAttribute(Attribute.Src(value));
+        public HtmlInputElement WithValue(string value) => this.WithAttribute(Attribute.Value(value));
 
-		public HtmlInputElement WithStep(string value) => WithAttribute(Attribute.Step(value));
-
-		public HtmlInputElement WithType(string value) => WithAttribute(Attribute.Type(value));
-
-		public HtmlInputElement WithValue(string value) => WithAttribute(Attribute.Value(value));
-
-		public HtmlInputElement WithWidth(string value) => WithAttribute(Attribute.Width(value));
-
-		public HtmlInputElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
-
-		public HtmlInputElement WithClass(string value) => WithAttribute(Attribute.Class(value));
-
-		public HtmlInputElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
-
-		public HtmlInputElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
-
-		public HtmlInputElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
-
-		public HtmlInputElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
-
-		public HtmlInputElement WithId(string value) => WithAttribute(Attribute.Id(value));
-
-		public HtmlInputElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
-
-		public HtmlInputElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
-
-		public HtmlInputElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
-
-		public HtmlInputElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
+        public HtmlInputElement WithWidth(string value) => this.WithAttribute(Attribute.Width(value));
     }
 }

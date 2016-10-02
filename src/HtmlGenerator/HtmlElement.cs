@@ -73,18 +73,6 @@ namespace HtmlGenerator
             }
         }
 
-        public virtual HtmlElement WithChild(HtmlElement child)
-        {
-            AddChild(child);
-            return this;
-        }
-
-        public virtual HtmlElement WithChildren(Collection<HtmlElement> children)
-        {
-            AddChildren(children);
-            return this;
-        }
-
         public T InsertChild<T>(int index, T element) where T : HtmlElement
         {
             if (element == null)
@@ -120,18 +108,6 @@ namespace HtmlGenerator
         public void SetChildren(Collection<HtmlElement> children)
         {
             Children = children ?? new Collection<HtmlElement>();
-        }
-
-        public virtual HtmlElement WithAttribute(HtmlAttribute attribute)
-        {
-            AddAttribute(attribute);
-            return this;
-        }
-
-        public virtual HtmlElement WithAttributes(Collection<HtmlAttribute> attributes)
-        {
-            SetAttributes(attributes);
-            return this;
         }
         
         public void AddAttribute(HtmlAttribute attribute)
@@ -263,5 +239,60 @@ namespace HtmlGenerator
         }
 
         public override string ToString() => SerializeOpenTag();
+    }
+
+    public static class HtmlElementExtensions
+    {
+        public static T WithElement<T>(this T self, HtmlElement element) where T : HtmlElement
+        {
+            self.Add(element);
+            return self;
+        }
+
+        public static T WithElements<T>(this T self, IEnumerable<HtmlElement> elements) where T : HtmlElement
+        {
+            self.Add(elements);
+            return self;
+        }
+
+        public static T WithAttribute<T>(this T self, HtmlAttribute attribute) where T : HtmlElement
+        {
+            self.Add(attribute);
+            return self;
+        }
+
+        public static T WithAttributes<T>(this T self, IEnumerable<HtmlAttribute> attributes) where T : HtmlElement
+        {
+            self.Add(attributes);
+            return self;
+        }
+
+        public static T WithInnerText<T>(this T self, string innerText) where T : HtmlElement
+        {
+            self.SetInnerText(innerText);
+            return self;
+        }
+
+        public static T WithAccessKey<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.AccessKey(value));
+
+        public static T WithClass<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Class(value));
+
+        public static T WithContentEditable<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.ContentEditable(value));
+
+        public static T WithContextMenu<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.ContextMenu(value));
+
+        public static T WithDir<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Dir(value));
+
+        public static T WithHidden<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Hidden(value));
+
+        public static T WithId<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Id(value));
+
+        public static T WithLang<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Lang(value));
+
+        public static T WithSpellCheck<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.SpellCheck(value));
+
+        public static T WithStyle<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Style(value));
+
+        public static T WithTabIndex<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.TabIndex(value));
     }
 }

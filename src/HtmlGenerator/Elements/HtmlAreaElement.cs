@@ -1,61 +1,27 @@
-using System.Collections.ObjectModel;
-
 namespace HtmlGenerator
 {
-    public class HtmlAreaElement : HtmlElement 
+    public class HtmlAreaElement : HtmlElement
     {
-        public HtmlAreaElement() : base("area", true) 
-        {    
-        }
+        public HtmlAreaElement() : base("area", isVoid: true) { }
 
-        public new HtmlAreaElement WithChild(HtmlElement child) => (HtmlAreaElement)base.WithChild(child);
-        public new HtmlAreaElement WithChildren(Collection<HtmlElement> children) => (HtmlAreaElement)base.WithChildren(children);
+        public HtmlAreaElement WithAlt(string value) => this.WithAttribute(Attribute.Alt(value));
 
-        public new HtmlAreaElement WithInnerText(string innerText) => (HtmlAreaElement)base.WithInnerText(innerText);
+        public HtmlAreaElement WithCoords(string value) => this.WithAttribute(Attribute.Coords(value));
 
-        public new HtmlAreaElement WithAttribute(HtmlAttribute attribute) => (HtmlAreaElement)base.WithAttribute(attribute);
-        public new HtmlAreaElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlAreaElement)base.WithAttributes(attributes);
+        public HtmlAreaElement WithDownload(string value) => this.WithAttribute(Attribute.Download(value));
 
-		public HtmlAreaElement WithAlt(string value) => WithAttribute(Attribute.Alt(value));
+        public HtmlAreaElement WithHref(string value) => this.WithAttribute(Attribute.Href(value));
 
-		public HtmlAreaElement WithCoords(string value) => WithAttribute(Attribute.Coords(value));
+        public HtmlAreaElement WithHrefLang(string value) => this.WithAttribute(Attribute.HrefLang(value));
 
-		public HtmlAreaElement WithDownload(string value) => WithAttribute(Attribute.Download(value));
+        public HtmlAreaElement WithMedia(string value) => this.WithAttribute(Attribute.Media(value));
 
-		public HtmlAreaElement WithHref(string value) => WithAttribute(Attribute.Href(value));
+        public HtmlAreaElement WithRel(string value) => this.WithAttribute(Attribute.Rel(value));
 
-		public HtmlAreaElement WithHrefLang(string value) => WithAttribute(Attribute.HrefLang(value));
+        public HtmlAreaElement WithShape(string value) => this.WithAttribute(Attribute.Shape(value));
 
-		public HtmlAreaElement WithMedia(string value) => WithAttribute(Attribute.Media(value));
+        public HtmlAreaElement WithTarget(string value) => this.WithAttribute(Attribute.Target(value));
 
-		public HtmlAreaElement WithRel(string value) => WithAttribute(Attribute.Rel(value));
-
-		public HtmlAreaElement WithShape(string value) => WithAttribute(Attribute.Shape(value));
-
-		public HtmlAreaElement WithTarget(string value) => WithAttribute(Attribute.Target(value));
-
-		public HtmlAreaElement WithType(string value) => WithAttribute(Attribute.Type(value));
-
-		public HtmlAreaElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
-
-		public HtmlAreaElement WithClass(string value) => WithAttribute(Attribute.Class(value));
-
-		public HtmlAreaElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
-
-		public HtmlAreaElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
-
-		public HtmlAreaElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
-
-		public HtmlAreaElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
-
-		public HtmlAreaElement WithId(string value) => WithAttribute(Attribute.Id(value));
-
-		public HtmlAreaElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
-
-		public HtmlAreaElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
-
-		public HtmlAreaElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
-
-		public HtmlAreaElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
+        public HtmlAreaElement WithType(string value) => this.WithAttribute(Attribute.Type(value));
     }
 }

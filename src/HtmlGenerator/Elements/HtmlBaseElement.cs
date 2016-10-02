@@ -1,45 +1,11 @@
-using System.Collections.ObjectModel;
-
 namespace HtmlGenerator
 {
-    public class HtmlBaseElement : HtmlElement 
+    public class HtmlBaseElement : HtmlElement
     {
-        public HtmlBaseElement() : base("base", true) 
-        {    
-        }
+        public HtmlBaseElement() : base("base", isVoid: true) { }
 
-        public new HtmlBaseElement WithChild(HtmlElement child) => (HtmlBaseElement)base.WithChild(child);
-        public new HtmlBaseElement WithChildren(Collection<HtmlElement> children) => (HtmlBaseElement)base.WithChildren(children);
+        public HtmlBaseElement WithHref(string value) => this.WithAttribute(Attribute.Href(value));
 
-        public new HtmlBaseElement WithInnerText(string innerText) => (HtmlBaseElement)base.WithInnerText(innerText);
-
-        public new HtmlBaseElement WithAttribute(HtmlAttribute attribute) => (HtmlBaseElement)base.WithAttribute(attribute);
-        public new HtmlBaseElement WithAttributes(Collection<HtmlAttribute> attributes) => (HtmlBaseElement)base.WithAttributes(attributes);
-
-		public HtmlBaseElement WithHref(string value) => WithAttribute(Attribute.Href(value));
-
-		public HtmlBaseElement WithTarget(string value) => WithAttribute(Attribute.Target(value));
-
-		public HtmlBaseElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
-
-		public HtmlBaseElement WithClass(string value) => WithAttribute(Attribute.Class(value));
-
-		public HtmlBaseElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
-
-		public HtmlBaseElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
-
-		public HtmlBaseElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
-
-		public HtmlBaseElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
-
-		public HtmlBaseElement WithId(string value) => WithAttribute(Attribute.Id(value));
-
-		public HtmlBaseElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
-
-		public HtmlBaseElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
-
-		public HtmlBaseElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
-
-		public HtmlBaseElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
+        public HtmlBaseElement WithTarget(string value) => this.WithAttribute(Attribute.Target(value));
     }
 }
