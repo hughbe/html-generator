@@ -1,10 +1,16 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 
 namespace HtmlGenerator
 {
     public abstract class HtmlObject
     {
         public HtmlElement Parent { get; internal set; }
+
+        internal HtmlObject _previous;
+        internal HtmlObject _next;
     }
 
     public abstract class SerializableHtmlObject : HtmlObject
