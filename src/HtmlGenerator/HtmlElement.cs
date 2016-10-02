@@ -287,6 +287,9 @@ namespace HtmlGenerator
             return false;
         }
 
+        public HtmlElement NextElement => (HtmlElement)_next;
+        public HtmlElement PreviousElement => (HtmlElement)_previous;
+
         private int _minimumIndentDepth = 1;
         public int MinimumIndentDepth
         {
