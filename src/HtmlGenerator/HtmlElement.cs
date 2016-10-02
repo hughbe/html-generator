@@ -391,6 +391,22 @@ namespace HtmlGenerator
             }
         }
 
+        public IEnumerable<HtmlElement> AncestorsAndSelf() => AncestorsAndSelf(null);
+
+        public IEnumerable<HtmlElement> AncestorsAndSelf(string tag)
+        {
+            bool isDefaultTag = string.IsNullOrEmpty(tag);
+
+            if (isDefaultTag || Tag == tag)
+            {
+                yield return this;
+            }
+            foreach (HtmlElement element in Ancestors(tag))
+            {
+                yield return element;
+            }
+        }
+
         private int _minimumIndentDepth = 1;
         public int MinimumIndentDepth
         {

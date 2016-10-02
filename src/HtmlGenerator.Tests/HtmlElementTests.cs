@@ -1203,11 +1203,25 @@ namespace HtmlGenerator.Tests
 
         private static void VerifyAncestors(HtmlElement element, string tag, HtmlElement[] expected)
         {
+            HtmlElement[] expectedIncludingSelf; ;
+            if (tag == null || element.Tag == tag)
+            {
+                expectedIncludingSelf = new HtmlElement[expected.Length + 1];
+                Array.Copy(expected, 0, expectedIncludingSelf, 1, expected.Length);
+                expectedIncludingSelf[0] = element;
+            }
+            else
+            {
+                expectedIncludingSelf = expected;
+            }
+
             if (tag == null)
             {
                 Assert.Equal(expected, element.Ancestors());
+                Assert.Equal(expectedIncludingSelf, element.AncestorsAndSelf());
             }
             Assert.Equal(expected, element.Ancestors(tag));
+            Assert.Equal(expectedIncludingSelf, element.AncestorsAndSelf(tag));
         }
 
         public class CustomHtmlObject : HtmlObject { }
