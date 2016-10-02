@@ -50,6 +50,31 @@ namespace HtmlGenerator
             _count++;
         }
 
+        public void Remove(T node)
+        {
+            HtmlObject previous = node._previous;
+            HtmlObject next = node._next;
+            if (node == _first)
+            {
+                _first = (T)next;
+            }
+            if (node == _last)
+            {
+                _last = (T)previous;
+            }
+            if (previous != null)
+            {
+                previous._next = next;
+            }
+            if (next != null)
+            {
+                next._previous = previous;
+            }
+            node._previous = null;
+            node._next = null;
+            _count--;
+        }
+
         public void Clear()
         {
             HtmlObject current = _first;

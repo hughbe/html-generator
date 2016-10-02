@@ -188,6 +188,16 @@ namespace HtmlGenerator
             _attributes.Clear();
         }
 
+        public void RemoveFromParent()
+        {
+            if (Parent == null)
+            {
+                return;
+            }
+            Parent._elements.Remove(this);
+            Parent = null;
+        }
+
         public string Tag { get; }
         public bool IsVoid { get; }
         public string InnerText { get; private set; }
