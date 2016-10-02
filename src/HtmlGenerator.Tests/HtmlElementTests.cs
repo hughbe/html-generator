@@ -1040,6 +1040,77 @@ namespace HtmlGenerator.Tests
             Assert.Null(element.Parent);
         }
 
+        [Fact]
+        public void Descendants_OneLayerOfElements_ReturnsExpected()
+        {
+            HtmlElement parent = new HtmlElement("Parent");
+            HtmlElement child1 = new HtmlElement("Child1");
+            HtmlElement child2 = new HtmlElement("Child2");
+
+            parent.Add(child1, child2);
+
+            Assert.Equal(new HtmlElement[] { child1, child2 }, parent.Descendants());
+            Assert.Equal(new HtmlElement[] { child1 }, parent.Descendants("Child1"));
+            Assert.Empty(parent.Descendants("any"));
+        }
+
+        [Fact]
+        public void Descendants_TwoLayersOfElements_ReturnsExpected()
+        {
+            HtmlElement parent = new HtmlElement("Parent");
+            HtmlElement child1 = new HtmlElement("Child1");
+            HtmlElement grandchild1 = new HtmlElement("Grandchild1");
+
+            HtmlElement child2 = new HtmlElement("Child2");
+            HtmlElement grandchild2 = new HtmlElement("Grandchild2");
+            HtmlElement grandchild3 = new HtmlElement("Grandchild3");
+            HtmlElement grandchild4 = new HtmlElement("Grandchild3");
+
+            HtmlElement child3 = new HtmlElement("Child3");
+            HtmlElement child4 = new HtmlElement("Child3");
+            HtmlElement grandchild5 = new HtmlElement("Child3");
+
+            parent.Add(child1, child2, child3, child4);
+            child1.Add(grandchild1);
+            child2.Add(grandchild2, grandchild3, grandchild4);
+            child4.Add(grandchild5);
+            
+            Assert.Equal(new HtmlElement[] { child1, grandchild1, child2, grandchild2, grandchild3, grandchild4, child3, child4, grandchild5 }, parent.Descendants());
+            Assert.Equal(new HtmlElement[] { grandchild1 }, parent.Descendants("Grandchild1"));
+            Assert.Equal(new HtmlElement[] { grandchild3, grandchild4 }, parent.Descendants("Grandchild3"));
+            Assert.Equal(new HtmlElement[] { child3, child4, grandchild5 }, parent.Descendants("Child3"));
+            Assert.Empty(parent.Descendants("any"));
+        }
+
+        [Fact]
+        public void Descendants_ThreeLayersOfElements_ReturnsExpected()
+        {
+            HtmlElement parent = new HtmlElement("Parent");
+            HtmlElement child1 = new HtmlElement("Child1");
+            HtmlElement grandchild1 = new HtmlElement("Grandchild1");
+            HtmlElement greatGrandchild1 = new HtmlElement("GreatGrandchild1");
+            HtmlElement greatGrandchild2 = new HtmlElement("GreatGrandchild2");
+
+            HtmlElement child2 = new HtmlElement("Child2");
+            HtmlElement grandchild2 = new HtmlElement("Grandchild2");
+
+            parent.Add(child1, child2);
+            child1.Add(grandchild1);
+            child2.Add(grandchild2);
+            grandchild1.Add(greatGrandchild1);
+            grandchild1.Add(greatGrandchild2);
+
+            Assert.Equal(new HtmlElement[] { child1, grandchild1, greatGrandchild1, greatGrandchild2, child2, grandchild2 }, parent.Descendants());
+        }
+
+        [Fact]
+        public void Descendants_NoElements_ReturnsEmpty()
+        {
+            HtmlElement element = new HtmlElement("html");
+            Assert.Empty(element.Descendants());
+            Assert.Empty(element.Descendants("any"));
+        }
+
         public class CustomHtmlObject : HtmlObject { }
     }
 }
