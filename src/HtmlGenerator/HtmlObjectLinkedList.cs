@@ -9,17 +9,7 @@ namespace HtmlGenerator
         public T _last;
 
         public int _count;
-
-        public void AddFirst(T first)
-        {
-            AddBefore(node: _first, value: first);
-            _first = first;
-            if (_last == null)
-            {
-                _last = _first;
-            }
-        }
-
+        
         public void AddBefore(T node, T value)
         {
             if (node != null)
@@ -27,17 +17,15 @@ namespace HtmlGenerator
                 node._previous = value;
                 value._next = node;
             }
-            _count++;
-        }
-
-        public void AddLast(T last)
-        {
-            AddAfter(node: _last, value: last);
-            _last = last;
-            if (_first == null)
+            if (node == _first)
             {
-                _first = _last;
+                _first = value;
+                if (_last == null)
+                {
+                    _last = _first;
+                }
             }
+            _count++;
         }
 
         public void AddAfter(T node, T value)
@@ -46,6 +34,14 @@ namespace HtmlGenerator
             {
                 value._previous = node;
                 node._next = value;
+            }
+            if (node == _last)
+            {
+                _last = value;
+                if (_first == null)
+                {
+                    _first = _last;
+                }
             }
             _count++;
         }

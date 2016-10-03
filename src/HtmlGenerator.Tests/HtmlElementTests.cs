@@ -269,6 +269,34 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void AddAfterSelf_HtmlObject()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            parent.Add(child1);
+
+            HtmlElement child2 = new HtmlElement("child2");
+            child1.AddAfterSelf(child2);
+
+            Assert.Equal(parent, child2.Parent);
+            Assert.Equal(new HtmlElement[] { child1, child2 }, parent.Elements());
+        }
+
+        [Fact]
+        public void AddBeforeSelf_HtmlObject()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            parent.Add(child1);
+
+            HtmlElement child2 = new HtmlElement("child2");
+            child1.AddBeforeSelf(child2);
+
+            Assert.Equal(parent, child2.Parent);
+            Assert.Equal(new HtmlElement[] { child2, child1 }, parent.Elements());
+        }
+
+        [Fact]
         public void Add_ParamsHtmlObject_NonVoidElement()
         {
             HtmlElement element = new HtmlElement("html");
@@ -332,6 +360,38 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void AddAfterSelf_ParamsHtmlObject()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            parent.Add(child1);
+
+            HtmlElement child2 = new HtmlElement("child2");
+            HtmlElement child3 = new HtmlElement("child3");
+            child1.AddAfterSelf(new HtmlElement[] { child2, child3 });
+
+            Assert.Equal(parent, child2.Parent);
+            Assert.Equal(parent, child3.Parent);
+            Assert.Equal(new HtmlElement[] { child1, child2, child3 }, parent.Elements());
+        }
+
+        [Fact]
+        public void AddBeforeSelf_ParamsHtmlObject()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            parent.Add(child1);
+
+            HtmlElement child2 = new HtmlElement("child2");
+            HtmlElement child3 = new HtmlElement("child3");
+            child1.AddBeforeSelf(new HtmlElement[] { child2, child3 });
+
+            Assert.Equal(parent, child2.Parent);
+            Assert.Equal(parent, child3.Parent);
+            Assert.Equal(new HtmlElement[] { child3, child2, child1 }, parent.Elements());
+        }
+
+        [Fact]
         public void Add_ParamsHtmlObject_Empty()
         {
             HtmlElement element = new HtmlElement("html");
@@ -347,6 +407,26 @@ namespace HtmlGenerator.Tests
             element.AddFirst(new HtmlObject[0]);
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
+        }
+
+        [Fact]
+        public void AddAfterSelf_ParamsHtmlObject_Empty()
+        {
+            HtmlElement parent = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("body");
+            element.AddAfterSelf(new HtmlElement[0]);
+            Assert.Empty(parent.Elements());
+            Assert.Empty(parent.Attributes());
+        }
+
+        [Fact]
+        public void AddBeforeSelf_ParamsHtmlObject_Empty()
+        {
+            HtmlElement parent = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("body");
+            element.AddAfterSelf(new HtmlElement[0]);
+            Assert.Empty(parent.Elements());
+            Assert.Empty(parent.Attributes());
         }
 
         [Fact]
@@ -413,6 +493,38 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void AddAfterSelf_IEnumerableHtmlObject()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            parent.Add(child1);
+
+            HtmlElement child2 = new HtmlElement("child2");
+            HtmlElement child3 = new HtmlElement("child3");
+            child1.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { child2, child3 });
+
+            Assert.Equal(parent, child2.Parent);
+            Assert.Equal(parent, child3.Parent);
+            Assert.Equal(new HtmlElement[] { child1, child2, child3 }, parent.Elements());
+        }
+
+        [Fact]
+        public void AddBeforeSelf_IEnumerableHtmlObject()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            parent.Add(child1);
+
+            HtmlElement child2 = new HtmlElement("child2");
+            HtmlElement child3 = new HtmlElement("child3");
+            child1.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { child2, child3 });
+
+            Assert.Equal(parent, child2.Parent);
+            Assert.Equal(parent, child3.Parent);
+            Assert.Equal(new HtmlElement[] { child3, child2, child1 }, parent.Elements());
+        }
+
+        [Fact]
         public void Add_IEnumerableHtmlObject_Empty()
         {
             HtmlElement element = new HtmlElement("html");
@@ -431,6 +543,26 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void AddAfterSelf_IEnumerableHtmlObject_Empty()
+        {
+            HtmlElement parent = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("body");
+            element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[0]);
+            Assert.Empty(parent.Elements());
+            Assert.Empty(parent.Attributes());
+        }
+
+        [Fact]
+        public void AddBeforeSelf_IEnumerableHtmlObject_Empty()
+        {
+            HtmlElement parent = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("body");
+            element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[0]);
+            Assert.Empty(parent.Elements());
+            Assert.Empty(parent.Attributes());
+        }
+
+        [Fact]
         public void Add_NullContent_ThrowsArgumentNullException()
         {
             HtmlElement element = new HtmlElement("html");
@@ -441,6 +573,14 @@ namespace HtmlGenerator.Tests
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst((HtmlObject)null));
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst((HtmlObject[])null));
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst((IEnumerable<HtmlObject>)null));
+
+            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf((HtmlElement)null));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf((HtmlElement[])null));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf((IEnumerable<HtmlElement>)null));
+
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((HtmlElement)null));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((HtmlElement[])null));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((IEnumerable<HtmlElement>)null));
         }
 
         [Fact]
@@ -452,6 +592,12 @@ namespace HtmlGenerator.Tests
 
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst(new HtmlObject[] { null }));
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { null }));
+
+            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf(new HtmlElement[] { null }));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { null }));
+
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf(new HtmlElement[] { null }));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { null }));
         }
 
         [Fact]
@@ -464,6 +610,12 @@ namespace HtmlGenerator.Tests
 
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(new HtmlObject[] { element }));
             Assert.Throws<InvalidOperationException>(() => element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { element }));
+
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(new HtmlElement[] { element }));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { element }));
+
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(new HtmlElement[] { element }));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { element }));
         }
 
         [Fact]
@@ -480,6 +632,14 @@ namespace HtmlGenerator.Tests
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(newElement));
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(new HtmlObject[] { newElement }));
             Assert.Throws<InvalidOperationException>(() => element.AddFirst((IEnumerable<HtmlElement>)new HtmlElement[] { newElement }));
+
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(newElement));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(new HtmlElement[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { newElement }));
+
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(newElement));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(new HtmlElement[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { newElement }));
         }
 
         [Fact]
@@ -511,6 +671,14 @@ namespace HtmlGenerator.Tests
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(newElement));
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(new HtmlObject[] { newElement }));
             Assert.Throws<InvalidOperationException>(() => element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { newElement }));
+
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(newElement));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(new HtmlElement[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { newElement }));
+
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(newElement));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(new HtmlElement[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { newElement }));
         }
 
         [Fact]
