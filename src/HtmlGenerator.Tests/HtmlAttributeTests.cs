@@ -52,6 +52,54 @@ namespace HtmlGenerator.Tests
             Assert.Throws<ArgumentNullException>("value", () => new HtmlAttribute("name", null));
         }
 
+        [Fact]
+        public void RemoveFromParent_FirstChild()
+        {
+            HtmlAttribute attribute1 = new HtmlAttribute("Attribute1");
+            HtmlAttribute attribute2 = new HtmlAttribute("Attribute2");
+            HtmlAttribute attribute3 = new HtmlAttribute("Attribute3");
+            HtmlElement element = new HtmlElement("div", attribute1, attribute2, attribute3);
+
+            attribute1.RemoveFromParent();
+            Assert.Null(attribute1.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute2, attribute3 }, element.Attributes());
+        }
+
+        [Fact]
+        public void RemoveFromParent_LastChild()
+        {
+            HtmlAttribute attribute1 = new HtmlAttribute("Attribute1");
+            HtmlAttribute attribute2 = new HtmlAttribute("Attribute2");
+            HtmlAttribute attribute3 = new HtmlAttribute("Attribute3");
+            HtmlElement element = new HtmlElement("div", attribute1, attribute2, attribute3);
+
+            attribute3.RemoveFromParent();
+            Assert.Null(attribute3.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute1, attribute2 }, element.Attributes());
+        }
+
+        [Fact]
+        public void RemoveFromParent_MiddleChild()
+        {
+            HtmlAttribute attribute1 = new HtmlAttribute("Attribute1");
+            HtmlAttribute attribute2 = new HtmlAttribute("Attribute2");
+            HtmlAttribute attribute3 = new HtmlAttribute("Attribute3");
+            HtmlElement element = new HtmlElement("div", attribute1, attribute2, attribute3);
+
+            attribute2.RemoveFromParent();
+            Assert.Null(attribute2.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute1, attribute3 }, element.Attributes());
+        }
+
+        [Fact]
+        public void RemoveFromParent_NoParent_DoesNothing()
+        {
+            HtmlAttribute attribute = new HtmlAttribute("Attribute");
+            attribute.RemoveFromParent();
+
+            Assert.Null(attribute.Parent);
+        }
+
         public static IEnumerable<object[]> ToString_TestData()
         {
             yield return new object[] { new HtmlAttribute("name"), "name" };
