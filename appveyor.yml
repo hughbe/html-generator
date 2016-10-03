@@ -3,8 +3,8 @@ configuration: Release
 
 environment:
   matrix:
-    - FRAMEWORK: net45
-      LIBFRAMEWORK: net45
+    - FRAMEWORK: net451
+      LIBFRAMEWORK: net451
     - FRAMEWORK: netcoreapp1
       LIBFRAMEWORK: netstandard1.0
 
@@ -13,10 +13,12 @@ before_build:
   - dotnet restore
 
 build_script:
-  - ps: dotnet build -c Release -f $env:LibFramework src/HtmlGenerator
+  - ps: dotnet build -c Release -f $env:LIBFRAMEWORK src/HtmlGenerator
+  - ps: dotnet build -c Release -f $env:FRAMEWORK src/HtmlGeneratorMeta
+  - ps: dotnet build -c Release -f $env:FRAMEWORK src/HtmlGenerator.Tests
 
 test_script:
-  - ps: dotnet run -c Release -f $env:Framework -p src/HtmlGeneratorMeta -- $env:APPVEYOR_BUILD_FOLDER
+  - ps: dotnet test src/HtmlGenerator.Tests/project.json -c Release -f $env:Framework
 
 after_test:
   - ps: dotnet pack -c Release src/HtmlGenerator

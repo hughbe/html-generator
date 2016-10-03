@@ -33,7 +33,7 @@ namespace HtmlGenerator.Tests
         {
             yield return new object[] { "<!DOCTYPE html>" };
             yield return new object[] { "<!DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">" };
-            yield return new object[] { " \r \t \n" };
+            yield return new object[] { " \r \t " };
             yield return new object[] { "" };
             yield return new object[] { null };
         }

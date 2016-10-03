@@ -18,7 +18,8 @@
         "System.Reflection.TypeExtensions": "4.1.0"
       }
     },
-    "net45": {}
+    "net45": {},
+    "net451": {}
   },
   "dependencies": {
     "HtmlGenerator": "2.0.0-beta-1"
