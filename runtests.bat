@@ -1,6 +1,6 @@
 set project=HtmlGenerator
 set packages_path=C:\Users\hughb\.nuget\packages
-set tests_path=src\HtmlGenerator.Tests\bin\debug\net45\win10-x64
+set tests_path=src\HtmlGenerator.Tests\bin\debug\net451\win10-x64
 set test_name=%project%.Tests.exe
 
 set open_cover=%packages_path%\OpenCover\4.6.519\tools\OpenCover.Console.exe
