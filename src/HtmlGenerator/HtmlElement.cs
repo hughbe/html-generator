@@ -6,9 +6,9 @@ namespace HtmlGenerator
 {
     public class HtmlElement : SerializableHtmlObject
     {
-        private HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
-        private HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
-        
+        internal HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
+        internal HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
+
         public HtmlElement(string tag)
         {
             Requires.NotNullOrWhitespace(tag, nameof(tag));

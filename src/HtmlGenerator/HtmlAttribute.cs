@@ -21,6 +21,16 @@ namespace HtmlGenerator
 
         public bool IsVoid => Value == null;
 
+        public void RemoveFromParent()
+        {
+            if (Parent == null)
+            {
+                return;
+            }
+            Parent._attributes.Remove(this);
+            Parent = null;
+        }
+
         internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
         {
             int extraLength = IsVoid ? 0 : (3 + Value.Length);
