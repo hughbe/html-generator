@@ -59,6 +59,17 @@ namespace HtmlGenerator
                 AddAttribute((HtmlAttribute)content);
             }
         }
+        
+        public void AddFirst(params HtmlObject[] content) => AddFirst((IEnumerable<HtmlObject>)content);
+
+        public void AddFirst(IEnumerable<HtmlObject> content)
+        {
+            Requires.NotNull(content, nameof(content));
+            foreach (HtmlObject obj in content)
+            {
+                AddFirst(obj);
+            }
+        }
 
         private void AddElement(HtmlElement element)
         {
@@ -74,6 +85,29 @@ namespace HtmlGenerator
             _attributes.AddLast(attribute);
         }
 
+        public void AddFirst(HtmlObject content)
+        {
+            Requires.NotNull(content, nameof(content));
+            if (content.Parent == this)
+            {
+                throw new InvalidOperationException("Cannot have a duplicate element or attribute");
+            }
+
+            if (content.ObjectType == HtmlObjectType.Element)
+            {
+                if (content == this)
+                {
+                    throw new InvalidOperationException("Cannot add an object as a child to itself.");
+                }
+                ThrowIfVoid();
+                AddElementFirst((HtmlElement)content);
+            }
+            else
+            {
+                AddAttributeFirst((HtmlAttribute)content);
+            }
+        }
+
         public void Add(params HtmlObject[] content) => Add((IEnumerable<HtmlObject>)content);
 
         public void Add(IEnumerable<HtmlObject> content)
@@ -83,6 +117,20 @@ namespace HtmlGenerator
             {
                 Add(obj);
             }
+        }
+
+        private void AddElementFirst(HtmlElement element)
+        {
+            element.RemoveFromParent();
+            element.Parent = this;
+            _elements.AddFirst(element);
+        }
+
+        private void AddAttributeFirst(HtmlAttribute attribute)
+        {
+            attribute.RemoveFromParent();
+            attribute.Parent = this;
+            _attributes.AddFirst(attribute);
         }
 
         public void ReplaceAll(params HtmlObject[] content) => ReplaceAll((IEnumerable<HtmlObject>)content);
