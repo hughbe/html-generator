@@ -120,4 +120,4 @@ install:
 
 script:
   # Run tests
-  - dotnet run -c $CONFIGURATION -f netcoreapp1.0 -p src/HtmlGeneratorMeta
+  - dotnet test ./src/HtmlGenerator.Tests/project.json -c $CONFIGURATION -f netcoreapp1.0
