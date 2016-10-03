@@ -536,6 +536,65 @@ namespace HtmlGenerator.Tests
             Assert.Throws<ArgumentException>("content", () => element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { new CustomHtmlObject() }));
         }
 
+        [Fact]
+        public void Add_ElementHasDifferentParent_RemovesFromOldParent()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            HtmlElement granchild1 = new HtmlElement("grandchild1");
+            HtmlElement granchild2 = new HtmlElement("grandchild2");
+            HtmlElement granchild3 = new HtmlElement("grandchild3");
+            HtmlElement child2 = new HtmlElement("child2");
+
+            parent.Add(child1, child2);
+            child1.Add(granchild1, granchild2, granchild3);
+
+            child2.Add(granchild1);
+            Assert.Equal(child2, granchild1.Parent);
+            Assert.Equal(new HtmlElement[] { granchild1 }, child2.Elements());
+            Assert.Equal(new HtmlElement[] { granchild2, granchild3 }, child1.Elements());
+
+            child2.Add(granchild2);
+            Assert.Equal(child2, granchild2.Parent);
+            Assert.Equal(new HtmlElement[] { granchild1, granchild2 }, child2.Elements());
+            Assert.Equal(new HtmlElement[] { granchild3 }, child1.Elements());
+
+            child2.Add(granchild3);
+            Assert.Equal(child2, granchild3.Parent);
+            Assert.Equal(new HtmlElement[] { granchild1, granchild2, granchild3 }, child2.Elements());
+            Assert.Empty(child1.Elements());
+        }
+
+
+        [Fact]
+        public void Add_AttributeHasDifferentParent_RemovesFromOldParent()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            HtmlAttribute attribute1 = new HtmlAttribute("Attribute1");
+            HtmlAttribute attribute2 = new HtmlAttribute("Attribute2");
+            HtmlAttribute attribute3 = new HtmlAttribute("Attribute3");
+            HtmlElement child2 = new HtmlElement("child2");
+
+            parent.Add(child1, child2);
+            child1.Add(attribute1, attribute2, attribute3);
+
+            child2.Add(attribute1);
+            Assert.Equal(child2, attribute1.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute1 }, child2.Attributes());
+            Assert.Equal(new HtmlAttribute[] { attribute2, attribute3 }, child1.Attributes());
+
+            child2.Add(attribute2);
+            Assert.Equal(child2, attribute2.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute1, attribute2 }, child2.Attributes());
+            Assert.Equal(new HtmlAttribute[] { attribute3 }, child1.Attributes());
+
+            child2.Add(attribute3);
+            Assert.Equal(child2, attribute3.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute1, attribute2, attribute3 }, child2.Attributes());
+            Assert.Empty(child1.Attributes());
+        }
+
         [Theory]
         [MemberData(nameof(Objects_TestData))]
         public static void ReplaceAll(HtmlObject[] content)
