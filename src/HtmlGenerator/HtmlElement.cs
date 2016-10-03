@@ -83,7 +83,6 @@ namespace HtmlGenerator
         public void Add(IEnumerable<HtmlObject> content)
         {
             Requires.NotNull(content, nameof(content));
-            ThrowIfVoid();
             foreach (HtmlObject obj in content)
             {
                 Add(obj);
