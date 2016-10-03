@@ -4,7 +4,7 @@ namespace HtmlGenerator
 {
     public class HtmlMenuItemElement : HtmlElement
     {
-        public HtmlMenuItemElement() : base("menutiem", true) 
+        public HtmlMenuItemElement() : base("menuitem") 
         {    
         }
 
