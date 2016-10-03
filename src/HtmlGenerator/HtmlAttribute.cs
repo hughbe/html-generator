@@ -1,8 +1,9 @@
+using System;
 using System.Text;
 
 namespace HtmlGenerator
 {
-    public class HtmlAttribute : SerializableHtmlObject
+    public class HtmlAttribute : SerializableHtmlObject, IEquatable<HtmlAttribute>
     {
         public HtmlAttribute(string name)
         {
@@ -34,6 +35,19 @@ namespace HtmlGenerator
         {
             Requires.NotNull(value, nameof(value));
             Value = value;
+        }
+
+        public override int GetHashCode() => IsVoid ? Name.GetHashCode() : Name.GetHashCode() ^ Value.GetHashCode();
+
+        public override bool Equals(object obj) => Equals(obj as HtmlAttribute);
+        
+        public bool Equals(HtmlAttribute attribute)
+        {
+            if (attribute == null)
+            {
+                return false;
+            }
+            return Name == attribute.Name && Value == attribute.Value;
         }
 
         internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)

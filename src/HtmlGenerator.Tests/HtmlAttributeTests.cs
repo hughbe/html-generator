@@ -118,6 +118,34 @@ namespace HtmlGenerator.Tests
             Assert.Throws<ArgumentNullException>("value", () => attribute.SetValue(null));
         }
 
+        public static IEnumerable<object[]> Equals_TestData()
+        {
+            yield return new object[] { new HtmlAttribute("name"), new HtmlAttribute("name"), true };
+            yield return new object[] { new HtmlAttribute("name"), new HtmlAttribute("Name"), false };
+            yield return new object[] { new HtmlAttribute("name"), new HtmlAttribute("other-name"), false };
+            yield return new object[] { new HtmlAttribute("name"), new HtmlAttribute("name", "value"), false };
+
+            yield return new object[] { new HtmlAttribute("name", "value"), new HtmlAttribute("name"), false };
+            yield return new object[] { new HtmlAttribute("name", "value"), new HtmlAttribute("name", "value"), true };
+            yield return new object[] { new HtmlAttribute("name", "value"), new HtmlAttribute("name", "Value"), false };
+            yield return new object[] { new HtmlAttribute("name", "value"), new HtmlAttribute("name", "other-value"), false };
+
+            yield return new object[] { new HtmlAttribute("name"), new object(), false };
+            yield return new object[] { new HtmlAttribute("name"), null, false };
+        }
+
+        [Theory]
+        [MemberData(nameof(Equals_TestData))]
+        public void Equals_ReturnsExpected(HtmlAttribute attribute, object other, bool expected)
+        {
+            if (other is HtmlAttribute || other == null)
+            {
+                Assert.Equal(expected, attribute.GetHashCode().Equals(other?.GetHashCode()));
+                Assert.Equal(expected, attribute.Equals((HtmlAttribute)other));
+            }
+            Assert.Equal(expected, attribute.Equals(other));
+        }
+
         public static IEnumerable<object[]> ToString_TestData()
         {
             yield return new object[] { new HtmlAttribute("name"), "name" };
