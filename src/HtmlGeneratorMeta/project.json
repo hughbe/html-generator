@@ -21,6 +21,6 @@
     "net45": {}
   },
   "dependencies": {
-    "HtmlGenerator": "1.0.15"
+    "HtmlGenerator": "2.0.0-beta-1"
   }
 }
