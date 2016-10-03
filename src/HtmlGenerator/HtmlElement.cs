@@ -40,77 +40,46 @@ namespace HtmlGenerator
         public void Add(HtmlObject content)
         {
             Requires.NotNull(content, nameof(content));
-
-            if (content is HtmlAttribute)
+            if (content.Parent == this)
             {
-                Add((HtmlAttribute)content);
+                throw new InvalidOperationException("Cannot have a duplicate element or attribute");
             }
-            else if (content is HtmlElement)
+
+            if (content.ObjectType == HtmlObjectType.Element)
             {
-                Add((HtmlElement)content);
+                if (content == this)
+                {
+                    throw new InvalidOperationException("Cannot add an object as a child to itself.");
+                }
+                ThrowIfVoid();
+                AddElement((HtmlElement)content);
             }
             else
             {
-                throw new ArgumentException("Content must be an HtmlElement or HtmlAttribute", nameof(content));
+                AddAttribute((HtmlAttribute)content);
             }
         }
 
-        public void Add(HtmlElement element)
+        private void AddElement(HtmlElement element)
         {
-            Requires.NotNull(element, nameof(element));
-            if (element == this)
-            {
-                throw new InvalidOperationException("Cannot add an object as a child to itself.");
-            }
-            if (element.Parent == this)
-            {
-                throw new InvalidOperationException("Cannot have a duplicate element or attribute");
-            }
-            ThrowIfVoid();
-            AddElement(element);
+            element.RemoveFromParent();
+            element.Parent = this;
+            _elements.AddLast(element);
         }
 
-        public void Add(HtmlAttribute attribute)
+        private void AddAttribute(HtmlAttribute attribute)
         {
-            Requires.NotNull(attribute, nameof(attribute));
-            if (attribute.Parent == this)
-            {
-                throw new InvalidOperationException("Cannot have a duplicate element or attribute");
-            }
-            AddAttribute(attribute);
+            attribute.RemoveFromParent();
+            attribute.Parent = this;
+            _attributes.AddLast(attribute);
         }
-        
+
         public void Add(params HtmlObject[] content) => Add((IEnumerable<HtmlObject>)content);
 
         public void Add(IEnumerable<HtmlObject> content)
         {
             Requires.NotNull(content, nameof(content));
             foreach (HtmlObject obj in content)
-            {
-                Add(obj);
-            }
-        }
-
-        public void Add(params HtmlElement[] elements) => Add((IEnumerable<HtmlElement>)elements);
-
-        public void Add(IEnumerable<HtmlElement> elements)
-        {
-            Requires.NotNull(elements, nameof(elements));
-            ThrowIfVoid();
-
-            foreach (HtmlElement obj in elements)
-            {
-                Add(obj);
-            }
-        }
-
-        public void Add(params HtmlAttribute[] attributes) => Add((IEnumerable<HtmlAttribute>)attributes);
-
-        public void Add(IEnumerable<HtmlAttribute> attributes)
-        {
-            Requires.NotNull(attributes, nameof(attributes));
-
-            foreach (HtmlAttribute obj in attributes)
             {
                 Add(obj);
             }
@@ -155,20 +124,6 @@ namespace HtmlGenerator
             {
                 Add(element);
             }
-        }
-        
-        private void AddElement(HtmlElement element)
-        {
-            element.RemoveFromParent();
-            element.Parent = this;
-            _elements.AddLast(element);
-        }
-
-        private void AddAttribute(HtmlAttribute attribute)
-        {
-            attribute.RemoveFromParent();
-            attribute.Parent = this;
-            _attributes.AddLast(attribute);
         }
 
         public void RemoveAll()
