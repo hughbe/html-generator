@@ -52,7 +52,7 @@ namespace HtmlGenerator
                     throw new InvalidOperationException("Cannot add an object as a child to itself.");
                 }
                 ThrowIfVoid();
-                AddElement((HtmlElement)content);
+                AddElementAfter(this, _elements._last, (HtmlElement)content);
             }
             else
             {
@@ -60,29 +60,22 @@ namespace HtmlGenerator
             }
         }
         
-        public void AddFirst(params HtmlObject[] content) => AddFirst((IEnumerable<HtmlObject>)content);
+        public void Add(params HtmlObject[] content) => Add((IEnumerable<HtmlObject>)content);
 
-        public void AddFirst(IEnumerable<HtmlObject> content)
+        public void Add(IEnumerable<HtmlObject> content)
         {
             Requires.NotNull(content, nameof(content));
             foreach (HtmlObject obj in content)
             {
-                AddFirst(obj);
+                Add(obj);
             }
-        }
-
-        private void AddElement(HtmlElement element)
-        {
-            element.RemoveFromParent();
-            element.Parent = this;
-            _elements.AddLast(element);
         }
 
         private void AddAttribute(HtmlAttribute attribute)
         {
             attribute.RemoveFromParent();
             attribute.Parent = this;
-            _attributes.AddLast(attribute);
+            _attributes.AddAfter(_attributes._last, attribute);
         }
 
         public void AddFirst(HtmlObject content)
@@ -100,7 +93,7 @@ namespace HtmlGenerator
                     throw new InvalidOperationException("Cannot add an object as a child to itself.");
                 }
                 ThrowIfVoid();
-                AddElementFirst((HtmlElement)content);
+                AddElementBefore(this, _elements._first, (HtmlElement)content);
             }
             else
             {
@@ -108,29 +101,102 @@ namespace HtmlGenerator
             }
         }
 
-        public void Add(params HtmlObject[] content) => Add((IEnumerable<HtmlObject>)content);
+        public void AddFirst(params HtmlObject[] content) => AddFirst((IEnumerable<HtmlObject>)content);
 
-        public void Add(IEnumerable<HtmlObject> content)
+        public void AddFirst(IEnumerable<HtmlObject> content)
         {
             Requires.NotNull(content, nameof(content));
             foreach (HtmlObject obj in content)
             {
-                Add(obj);
+                AddFirst(obj);
             }
         }
-
-        private void AddElementFirst(HtmlElement element)
-        {
-            element.RemoveFromParent();
-            element.Parent = this;
-            _elements.AddFirst(element);
-        }
-
+        
         private void AddAttributeFirst(HtmlAttribute attribute)
         {
             attribute.RemoveFromParent();
             attribute.Parent = this;
-            _attributes.AddFirst(attribute);
+            _attributes.AddBefore(_attributes._first, attribute);
+        }
+
+        public void AddAfterSelf(HtmlElement content)
+        {
+            Requires.NotNull(content, nameof(content));
+
+            if (content == this)
+            {
+                throw new InvalidOperationException("Cannot add an object as a child to itself.");
+            }
+            if (content.Parent == this)
+            {
+                throw new InvalidOperationException("Element has already been added to this element.");
+            }
+            if (Parent == null)
+            {
+                throw new InvalidOperationException("This element does not have a parent.");
+            }
+            AddElementAfter(Parent, this, content);
+        }
+
+        public void AddAfterSelf(params HtmlElement[] content) => AddAfterSelf((IEnumerable<HtmlElement>)content);
+
+        public void AddAfterSelf(IEnumerable<HtmlElement> content)
+        {
+            Requires.NotNull(content, nameof(content));
+
+            HtmlElement current = this;
+            foreach (HtmlElement element in content)
+            {
+                current.AddAfterSelf(element);
+                current = element;
+            }
+        }
+
+        public void AddBeforeSelf(HtmlElement content)
+        {
+            Requires.NotNull(content, nameof(content));
+
+            if (content == this)
+            {
+                throw new InvalidOperationException("Cannot add an object as a child to itself.");
+            }
+            if (content.Parent == this)
+            {
+                throw new InvalidOperationException("Element has already been added to this element.");
+            }
+            if (Parent == null)
+            {
+                throw new InvalidOperationException("This element does not have a parent.");
+            }
+            AddElementBefore(Parent, this, content);
+        }
+
+        public void AddBeforeSelf(params HtmlElement[] content) => AddBeforeSelf((IEnumerable<HtmlElement>)content);
+
+        public void AddBeforeSelf(IEnumerable<HtmlElement> content)
+        {
+            Requires.NotNull(content, nameof(content));
+
+            HtmlElement current = this;
+            foreach (HtmlElement element in content)
+            {
+                current.AddBeforeSelf(element);
+                current = element;
+            }
+        }
+
+        private void AddElementAfter(HtmlElement parent, HtmlElement previousNode, HtmlElement element)
+        {
+            element.RemoveFromParent();
+            element.Parent = parent;
+            parent._elements.AddAfter(previousNode, element);
+        }
+
+        private void AddElementBefore(HtmlElement parent, HtmlElement nextNode, HtmlElement element)
+        {
+            element.RemoveFromParent();
+            element.Parent = parent;
+            parent._elements.AddBefore(nextNode, element);
         }
 
         public void ReplaceAll(params HtmlObject[] content) => ReplaceAll((IEnumerable<HtmlObject>)content);
