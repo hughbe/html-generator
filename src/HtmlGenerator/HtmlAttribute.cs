@@ -15,7 +15,9 @@ namespace HtmlGenerator
         {
             SetValue(value);
         }
-        
+
+        public override HtmlObjectType ObjectType => HtmlObjectType.Attribute;
+
         public string Name { get; }
         public string Value { get; private set; }
 
