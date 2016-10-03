@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace HtmlGenerator
 {
     public class HtmlScriptElement : HtmlElement
@@ -8,48 +6,18 @@ namespace HtmlGenerator
         {    
         }
 
-        public new HtmlScriptElement WithElement(HtmlElement element) => (HtmlScriptElement)base.WithElement(element);
-        public new HtmlScriptElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlScriptElement)base.WithElements(elements);
+		public HtmlScriptElement WithAsync(string value) => this.WithAttribute(Attribute.Async(value));
 
-        public new HtmlScriptElement WithInnerText(string innerText) => (HtmlScriptElement)base.WithInnerText(innerText);
+		public HtmlScriptElement WithCrossOrigin(string value) => this.WithAttribute(Attribute.CrossOrigin(value));
 
-        public new HtmlScriptElement WithAttribute(HtmlAttribute attribute) => (HtmlScriptElement)base.WithAttribute(attribute);
-        public new HtmlScriptElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlScriptElement)base.WithAttributes(attributes);
+		public HtmlScriptElement WithDefer(string value) => this.WithAttribute(Attribute.Defer(value));
 
-		public HtmlScriptElement WithAsync(string value) => WithAttribute(Attribute.Async(value));
+		public HtmlScriptElement WithIntegrity(string value) => this.WithAttribute(Attribute.Integrity(value));
 
-		public HtmlScriptElement WithCrossOrigin(string value) => WithAttribute(Attribute.CrossOrigin(value));
+		public HtmlScriptElement WithSrc(string value) => this.WithAttribute(Attribute.Src(value));
 
-		public HtmlScriptElement WithDefer(string value) => WithAttribute(Attribute.Defer(value));
+		public HtmlScriptElement WithText(string value) => this.WithAttribute(Attribute.Text(value));
 
-		public HtmlScriptElement WithIntegrity(string value) => WithAttribute(Attribute.Integrity(value));
-
-		public HtmlScriptElement WithSrc(string value) => WithAttribute(Attribute.Src(value));
-
-		public HtmlScriptElement WithText(string value) => WithAttribute(Attribute.Text(value));
-
-		public HtmlScriptElement WithType(string value) => WithAttribute(Attribute.Type(value));
-
-		public HtmlScriptElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
-
-		public HtmlScriptElement WithClass(string value) => WithAttribute(Attribute.Class(value));
-
-		public HtmlScriptElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
-
-		public HtmlScriptElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
-
-		public HtmlScriptElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
-
-		public HtmlScriptElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
-
-		public HtmlScriptElement WithId(string value) => WithAttribute(Attribute.Id(value));
-
-		public HtmlScriptElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
-
-		public HtmlScriptElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
-
-		public HtmlScriptElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
-
-		public HtmlScriptElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
+		public HtmlScriptElement WithType(string value) => this.WithAttribute(Attribute.Type(value));
     }
 }

@@ -681,35 +681,60 @@ namespace HtmlGenerator
                 throw new InvalidOperationException("Cannot set inner text for a void element");
             }
         }
+    }
 
-        public virtual HtmlElement WithElement(HtmlElement element)
+    public static class HtmlElementExtensions
+    {
+        public static T WithElement<T>(this T self, HtmlElement element) where T : HtmlElement
         {
-            Add(element);
-            return this;
+            self.Add(element);
+            return self;
         }
 
-        public virtual HtmlElement WithElements(IEnumerable<HtmlElement> elements)
+        public static T WithElements<T>(this T self, IEnumerable<HtmlElement> elements) where T : HtmlElement
         {
-            Add(elements);
-            return this;
+            self.Add(elements);
+            return self;
         }
 
-        public virtual HtmlElement WithAttribute(HtmlAttribute attribute)
+        public static T WithAttribute<T>(this T self, HtmlAttribute attribute) where T : HtmlElement
         {
-            Add(attribute);
-            return this;
+            self.Add(attribute);
+            return self;
         }
 
-        public virtual HtmlElement WithAttributes(IEnumerable<HtmlAttribute> attributes)
+        public static T WithAttributes<T>(this T self, IEnumerable<HtmlAttribute> attributes) where T : HtmlElement
         {
-            Add(attributes);
-            return this;
+            self.Add(attributes);
+            return self;
         }
 
-        public virtual HtmlElement WithInnerText(string innerText)
+        public static T WithInnerText<T>(this T self, string innerText) where T : HtmlElement
         {
-            SetInnerText(innerText);
-            return this;
+            self.SetInnerText(innerText);
+            return self;
         }
+
+        public static T WithAccessKey<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.AccessKey(value));
+
+        public static T WithClass<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Class(value));
+
+        public static T WithContentEditable<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.ContentEditable(value));
+
+        public static T WithContextMenu<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.ContextMenu(value));
+
+        public static T WithDir<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Dir(value));
+
+        public static T WithHidden<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Hidden(value));
+
+        public static T WithId<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Id(value));
+
+        public static T WithLang<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Lang(value));
+
+        public static T WithSpellCheck<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.SpellCheck(value));
+
+        public static T WithStyle<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.Style(value));
+
+        public static T WithTabIndex<T>(this T self, string value) where T : HtmlElement => self.WithAttribute(Attribute.TabIndex(value));
     }
 }

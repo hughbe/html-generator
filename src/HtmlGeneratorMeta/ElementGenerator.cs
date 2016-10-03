@@ -68,33 +68,23 @@ namespace HtmlGeneratorMeta
 
                 if (attributeInfo.IsVoid)
                 {
-                    attributeCodeFormat += "public {0}{1} With{2}() => WithAttribute(Attribute.{2});";
+                    attributeCodeFormat += "public {0}{1} With{2}() => this.WithAttribute(Attribute.{2});";
                 }
                 else
                 {
-                    attributeCodeFormat += "public {0}{1} With{2}(string value) => WithAttribute(Attribute.{2}(value));";
+                    attributeCodeFormat += "public {0}{1} With{2}(string value) => this.WithAttribute(Attribute.{2}(value));";
                 }
 
                 attributesCode += string.Format(attributeCodeFormat, methodStart, className, methodName);
             }
 
-            var code = string.Format(@"using System.Collections.Generic;
-
-namespace HtmlGenerator
+            var code = string.Format(@"namespace HtmlGenerator
 {{
     public class {0} : HtmlElement
     {{
         public {0}() : base(""{1}"", {2}) 
         {{    
-        }}
-
-        public new {0} WithElement(HtmlElement element) => ({0})base.WithElement(element);
-        public new {0} WithElements(IEnumerable<HtmlElement> elements) => ({0})base.WithElements(elements);
-
-        public new {0} WithInnerText(string innerText) => ({0})base.WithInnerText(innerText);
-
-        public new {0} WithAttribute(HtmlAttributeNew attribute) => ({0})base.WithAttribute(attribute);
-        public new {0} WithAttributes(IEnumerable<HtmlAttributeNew> attributes) => ({0})base.WithAttributes(attributes);{3}
+        }}{3}
     }}
 }}
 ", className, lowerName, isVoid, attributesCode);

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace HtmlGenerator
 {
     public class HtmlLabelElement : HtmlElement
@@ -8,38 +6,8 @@ namespace HtmlGenerator
         {    
         }
 
-        public new HtmlLabelElement WithElement(HtmlElement element) => (HtmlLabelElement)base.WithElement(element);
-        public new HtmlLabelElement WithElements(IEnumerable<HtmlElement> elements) => (HtmlLabelElement)base.WithElements(elements);
+		public HtmlLabelElement WithFor(string value) => this.WithAttribute(Attribute.For(value));
 
-        public new HtmlLabelElement WithInnerText(string innerText) => (HtmlLabelElement)base.WithInnerText(innerText);
-
-        public new HtmlLabelElement WithAttribute(HtmlAttribute attribute) => (HtmlLabelElement)base.WithAttribute(attribute);
-        public new HtmlLabelElement WithAttributes(IEnumerable<HtmlAttribute> attributes) => (HtmlLabelElement)base.WithAttributes(attributes);
-
-		public HtmlLabelElement WithFor(string value) => WithAttribute(Attribute.For(value));
-
-		public HtmlLabelElement WithForm(string value) => WithAttribute(Attribute.Form(value));
-
-		public HtmlLabelElement WithAccessKey(string value) => WithAttribute(Attribute.AccessKey(value));
-
-		public HtmlLabelElement WithClass(string value) => WithAttribute(Attribute.Class(value));
-
-		public HtmlLabelElement WithContentEditable(string value) => WithAttribute(Attribute.ContentEditable(value));
-
-		public HtmlLabelElement WithContextMenu(string value) => WithAttribute(Attribute.ContextMenu(value));
-
-		public HtmlLabelElement WithDir(string value) => WithAttribute(Attribute.Dir(value));
-
-		public HtmlLabelElement WithHidden(string value) => WithAttribute(Attribute.Hidden(value));
-
-		public HtmlLabelElement WithId(string value) => WithAttribute(Attribute.Id(value));
-
-		public HtmlLabelElement WithLang(string value) => WithAttribute(Attribute.Lang(value));
-
-		public HtmlLabelElement WithSpellCheck(string value) => WithAttribute(Attribute.SpellCheck(value));
-
-		public HtmlLabelElement WithStyle(string value) => WithAttribute(Attribute.Style(value));
-
-		public HtmlLabelElement WithTabIndex(string value) => WithAttribute(Attribute.TabIndex(value));
+		public HtmlLabelElement WithForm(string value) => this.WithAttribute(Attribute.Form(value));
     }
 }
