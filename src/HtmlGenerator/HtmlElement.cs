@@ -56,7 +56,12 @@ namespace HtmlGenerator
             }
             else
             {
-                AddAttribute((HtmlAttribute)content);
+                HtmlAttribute attribute = (HtmlAttribute)content;
+                if (HasAttribute(attribute.Name))
+                {
+                    throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
+                }
+                AddAttribute(attribute);
             }
         }
         
@@ -83,7 +88,7 @@ namespace HtmlGenerator
             Requires.NotNull(content, nameof(content));
             if (content.Parent == this)
             {
-                throw new InvalidOperationException("Cannot have a duplicate element or attribute");
+                throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
             }
 
             if (content.ObjectType == HtmlObjectType.Element)
@@ -97,7 +102,12 @@ namespace HtmlGenerator
             }
             else
             {
-                AddAttributeFirst((HtmlAttribute)content);
+                HtmlAttribute attribute = (HtmlAttribute)content;
+                if (HasAttribute(attribute.Name))
+                {
+                    throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
+                }
+                AddAttributeFirst(attribute);
             }
         }
 
