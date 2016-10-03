@@ -330,6 +330,38 @@ namespace HtmlGenerator
             }
         }
 
+        public bool HasElement(string tag)
+        {
+            Requires.NotNullOrWhitespace(tag, nameof(tag));
+
+            HtmlElement current = _elements._first;
+            while (current != null)
+            {
+                if (current.Tag == tag)
+                {
+                    return true;
+                }
+                current = (HtmlElement)current._next;
+            }
+            return false;
+        }
+
+        public bool HasAttribute(string name)
+        {
+            Requires.NotNullOrWhitespace(name, nameof(name));
+
+            HtmlAttribute current = _attributes._first;
+            while (current != null)
+            {
+                if (current.Name == name)
+                {
+                    return true;
+                }
+                current = (HtmlAttribute)current._next;
+            }
+            return false;
+        }
+
         public bool TryGetElement(string tag, out HtmlElement element)
         {
             Requires.NotNullOrWhitespace(tag, nameof(tag));
