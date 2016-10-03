@@ -86,7 +86,14 @@ namespace HtmlGenerator.Tests
             Assert.Equal(content.Where(obj => obj is HtmlAttribute).Cast<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
             Assert.Equal(content.Length, element.ElementsAndAttributes().Count());
         }
-        
+
+        [Fact]
+        public void HtmlObjectType_Get_ReturnsElement()
+        {
+            HtmlElement attribute = new HtmlElement("div");
+            Assert.Equal(HtmlObjectType.Element, attribute.ObjectType);
+        }
+
         public static IEnumerable<object[]> Attributes_TestData()
         {
             yield return new object[] { new HtmlAttribute[0] };
@@ -1511,6 +1518,6 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expectedIncludingSelf, element.AncestorsAndSelf(tag));
         }
 
-        public class CustomHtmlObject : HtmlObject { }
+        public class CustomHtmlObject : HtmlObject { public override HtmlObjectType ObjectType => HtmlObjectType.Element; }
     }
 }

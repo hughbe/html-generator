@@ -53,6 +53,13 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void HtmlObjectType_Get_ReturnsAttribute()
+        {
+            HtmlAttribute attribute = new HtmlAttribute("Attribute");
+            Assert.Equal(HtmlObjectType.Attribute, attribute.ObjectType);
+        }
+
+        [Fact]
         public void RemoveFromParent_FirstChild()
         {
             HtmlAttribute attribute1 = new HtmlAttribute("Attribute1");

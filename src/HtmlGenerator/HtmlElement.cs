@@ -35,6 +35,8 @@ namespace HtmlGenerator
             Add(content);
         }
 
+        public override HtmlObjectType ObjectType => HtmlObjectType.Element;
+
         public void Add(HtmlObject content)
         {
             Requires.NotNull(content, nameof(content));
