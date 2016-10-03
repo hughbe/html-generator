@@ -12,20 +12,7 @@ namespace HtmlGenerator.Meta
         {
             Name = name;
             IsVoid = isVoid;
-            Attributes = new List<string>(attributes)
-            {
-                "AccessKey",
-                "Class",
-                "ContentEditable",
-                "ContextMenu",
-                "Dir",
-                "Hidden",
-                "Id",
-                "Lang",
-                "SpellCheck",
-                "Style",
-                "TabIndex"
-            };
+            Attributes = new List<string>(attributes);
         }
     }
 }
