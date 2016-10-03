@@ -111,6 +111,7 @@
 
         public static ElementInfo Table => Custom("table");
         public static ElementInfo Tbody => Custom("tbody");
+        public static ElementInfo Td => Custom("td");
         public static ElementInfo Template => Custom("template");
         public static ElementInfo TextArea => Custom("textarea", "AutoComplete", "AutoFocus", "Cols", "Disabled", "Form", "MaxLength", "MinLength", "Name", "Placeholder", "Readonly", "Required", "Rows", "SelectionDirection", "Wrap");
         public static ElementInfo Tfoot => Custom("tfoot");
