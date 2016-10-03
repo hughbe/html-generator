@@ -11,7 +11,7 @@ namespace HtmlGenerator.Tests
             VerifyAttribute(Attribute.AcceptCharset("value"), "accept-charset", "value");
             VerifyAttribute(Attribute.AccessKey("value"), "accesskey", "value");
             VerifyAttribute(Attribute.Action("value"), "action", "value");
-            VerifyAttribute(Attribute.Align("value"), "align", "value");
+            VerifyAttribute(Attribute.Align, "align", null);
             VerifyAttribute(Attribute.AllowFullScreen, "allowfullscreen", null);
             VerifyAttribute(Attribute.Alt("value"), "alt", "value");
             VerifyAttribute(Attribute.Async("value"), "async", "value");
@@ -155,7 +155,7 @@ namespace HtmlGenerator.Tests
             VerifyAttribute(Attribute.Xmls("value"), "xmls", "value");
         }
 
-        public void VerifyAttribute(HtmlAttribute attribute, string name, string value)
+        private static void VerifyAttribute(HtmlAttribute attribute, string name, string value)
         {
             Assert.Equal(name, attribute.Name);
             Assert.Equal(value, attribute.Value);
