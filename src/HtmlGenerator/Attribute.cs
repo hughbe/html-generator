@@ -2,150 +2,151 @@ namespace HtmlGenerator
 {
     public static class Attribute 
     {
-		public static HtmlAcceptAttribute Accept(string value) => new HtmlAcceptAttribute(value);
-		public static HtmlAcceptCharsetAttribute AcceptCharset(string value) => new HtmlAcceptCharsetAttribute(value);
-		public static HtmlAccessKeyAttribute AccessKey(string value) => new HtmlAccessKeyAttribute(value);
-		public static HtmlActionAttribute Action(string value) => new HtmlActionAttribute(value);
-		public static HtmlAlignAttribute Align(string value) => new HtmlAlignAttribute(value);
-		public static HtmlAllowFullScreenAttribute AllowFullScreen => new HtmlAllowFullScreenAttribute();
-		public static HtmlAltAttribute Alt(string value) => new HtmlAltAttribute(value);
-		public static HtmlAsyncAttribute Async(string value) => new HtmlAsyncAttribute(value);
-		public static HtmlAutoCompleteAttribute AutoComplete(string value) => new HtmlAutoCompleteAttribute(value);
-		public static HtmlAutoFocusAttribute AutoFocus => new HtmlAutoFocusAttribute();
-		public static HtmlAutoPlayAttribute AutoPlay(string value) => new HtmlAutoPlayAttribute(value);
-		public static HtmlAutoSaveAttribute AutoSave(string value) => new HtmlAutoSaveAttribute(value);
+		public static HtmlAttribute Accept(string value) => new HtmlAttribute("accept", value);
+		public static HtmlAttribute AcceptCharset(string value) => new HtmlAttribute("accept-charset", value);
+		public static HtmlAttribute AccessKey(string value) => new HtmlAttribute("accesskey", value);
+		public static HtmlAttribute Action(string value) => new HtmlAttribute("action", value);
+		public static HtmlAttribute Align => new HtmlAttribute("align");
+		public static HtmlAttribute AllowFullScreen => new HtmlAttribute("allowfullscreen");
+		public static HtmlAttribute Alt(string value) => new HtmlAttribute("alt", value);
+		public static HtmlAttribute Async(string value) => new HtmlAttribute("async", value);
+		public static HtmlAttribute AutoComplete(string value) => new HtmlAttribute("autocomplete", value);
+		public static HtmlAttribute AutoFocus => new HtmlAttribute("autofocus");
+		public static HtmlAttribute AutoPlay(string value) => new HtmlAttribute("autoplay", value);
+		public static HtmlAttribute AutoSave(string value) => new HtmlAttribute("autosave", value);
 
-		public static HtmlBgColorAttribute BgColor(string value) => new HtmlBgColorAttribute(value);
-		public static HtmlBorderAttribute Border(string value) => new HtmlBorderAttribute(value);
+		public static HtmlAttribute BgColor(string value) => new HtmlAttribute("bgcolor", value);
+		public static HtmlAttribute Border(string value) => new HtmlAttribute("border", value);
 
-		public static HtmlCellPaddingAttribute CellPadding(string value) => new HtmlCellPaddingAttribute(value);
-		public static HtmlCellSpacingAttribute CellSpacing(string value) => new HtmlCellSpacingAttribute(value);
-		public static HtmlCharsetAttribute Charset(string value) => new HtmlCharsetAttribute(value);
-		public static HtmlCheckedAttribute Checked => new HtmlCheckedAttribute();
-		public static HtmlCiteAttribute Cite(string value) => new HtmlCiteAttribute(value);
-		public static HtmlClassAttribute Class(string value) => new HtmlClassAttribute(value);
-		public static HtmlColorAttribute Color(string value) => new HtmlColorAttribute(value);
-		public static HtmlColsAttribute Cols(string value) => new HtmlColsAttribute(value);
-		public static HtmlColSpanAttribute ColSpan(string value) => new HtmlColSpanAttribute(value);
-		public static HtmlCommandAttribute Command(string value) => new HtmlCommandAttribute(value);
-		public static HtmlCompactAttribute Compact(string value) => new HtmlCompactAttribute(value);
-		public static HtmlContentAttribute Content(string value) => new HtmlContentAttribute(value);
-		public static HtmlContentEditableAttribute ContentEditable(string value) => new HtmlContentEditableAttribute(value);
-		public static HtmlContextMenuAttribute ContextMenu(string value) => new HtmlContextMenuAttribute(value);
-		public static HtmlControlsAttribute Controls => new HtmlControlsAttribute();
-		public static HtmlCoordsAttribute Coords(string value) => new HtmlCoordsAttribute(value);
-		public static HtmlCrossOriginAttribute CrossOrigin(string value) => new HtmlCrossOriginAttribute(value);
+		public static HtmlAttribute CellPadding(string value) => new HtmlAttribute("cellpadding", value);
+		public static HtmlAttribute CellSpacing(string value) => new HtmlAttribute("cellspacing", value);
+		public static HtmlAttribute Charset(string value) => new HtmlAttribute("charset", value);
+		public static HtmlAttribute Checked => new HtmlAttribute("checked");
+		public static HtmlAttribute Cite(string value) => new HtmlAttribute("cite", value);
+		public static HtmlAttribute Class(string value) => new HtmlAttribute("class", value);
+		public static HtmlAttribute Color(string value) => new HtmlAttribute("color", value);
+		public static HtmlAttribute Cols(string value) => new HtmlAttribute("cols", value);
+		public static HtmlAttribute ColSpan(string value) => new HtmlAttribute("colspan", value);
+		public static HtmlAttribute Command(string value) => new HtmlAttribute("command", value);
+		public static HtmlAttribute Compact(string value) => new HtmlAttribute("compact", value);
+		public static HtmlAttribute Content(string value) => new HtmlAttribute("content", value);
+		public static HtmlAttribute ContentEditable(string value) => new HtmlAttribute("contentEditable", value);
+		public static HtmlAttribute ContextMenu(string value) => new HtmlAttribute("contextMenu", value);
+		public static HtmlAttribute Controls => new HtmlAttribute("controls");
+		public static HtmlAttribute Coords(string value) => new HtmlAttribute("coords", value);
+		public static HtmlAttribute CrossOrigin(string value) => new HtmlAttribute("crossorigin", value);
 
-		public static HtmlDataAttribute Data(string value) => new HtmlDataAttribute(value);
-		public static HtmlDateTimeAttribute DateTime(string value) => new HtmlDateTimeAttribute(value);
-		public static HtmlDefaultAttribute Default => new HtmlDefaultAttribute();
-		public static HtmlDefaultStyleAttribute DefaultStyle(string value) => new HtmlDefaultStyleAttribute(value);
-		public static HtmlDeferAttribute Defer(string value) => new HtmlDeferAttribute(value);
-		public static HtmlDirAttribute Dir(string value) => new HtmlDirAttribute(value);
-		public static HtmlDisabledAttribute Disabled => new HtmlDisabledAttribute();
-		public static HtmlDownloadAttribute Download(string value) => new HtmlDownloadAttribute(value);
-		public static HtmlDraggableAttribute Draggable(string value) => new HtmlDraggableAttribute(value);
-		public static HtmlDropZoneAttribute DropZone(string value) => new HtmlDropZoneAttribute(value);
+		public static HtmlAttribute Data(string value) => new HtmlAttribute("data", value);
+		public static HtmlAttribute DateTime(string value) => new HtmlAttribute("datetime", value);
+		public static HtmlAttribute Default => new HtmlAttribute("default");
+		public static HtmlAttribute DefaultStyle(string value) => new HtmlAttribute("default-style", value);
+		public static HtmlAttribute Defer(string value) => new HtmlAttribute("defer", value);
+		public static HtmlAttribute Dir(string value) => new HtmlAttribute("dir", value);
+		public static HtmlAttribute Disabled => new HtmlAttribute("disabled");
+		public static HtmlAttribute Download(string value) => new HtmlAttribute("download", value);
+		public static HtmlAttribute Draggable(string value) => new HtmlAttribute("draggable", value);
+		public static HtmlAttribute DropZone(string value) => new HtmlAttribute("dropzone", value);
 
-		public static HtmlEncTypeAttribute EncType(string value) => new HtmlEncTypeAttribute(value);
+		public static HtmlAttribute EncType(string value) => new HtmlAttribute("enctype", value);
 
-		public static HtmlForAttribute For(string value) => new HtmlForAttribute(value);
-		public static HtmlFormAttribute Form(string value) => new HtmlFormAttribute(value);
-		public static HtmlFormActionAttribute FormAction(string value) => new HtmlFormActionAttribute(value);
-		public static HtmlFormEncTypeAttribute FormEncType(string value) => new HtmlFormEncTypeAttribute(value);
-		public static HtmlFormMethodAttribute FormMethod(string value) => new HtmlFormMethodAttribute(value);
-		public static HtmlFormNoValidateAttribute FormNoValidate => new HtmlFormNoValidateAttribute();
-		public static HtmlFormTargetAttribute FormTarget(string value) => new HtmlFormTargetAttribute(value);
+		public static HtmlAttribute For(string value) => new HtmlAttribute("for", value);
+		public static HtmlAttribute Form(string value) => new HtmlAttribute("form", value);
+		public static HtmlAttribute FormAction(string value) => new HtmlAttribute("formaction", value);
+		public static HtmlAttribute FormEncType(string value) => new HtmlAttribute("formenctype", value);
+		public static HtmlAttribute FormMethod(string value) => new HtmlAttribute("formmethod", value);
+		public static HtmlAttribute FormNoValidate => new HtmlAttribute("formnovalidate");
+		public static HtmlAttribute FormTarget(string value) => new HtmlAttribute("formtarget", value);
 
-		public static HtmlHeadersAttribute Headers(string value) => new HtmlHeadersAttribute(value);
-		public static HtmlHeightAttribute Height(string value) => new HtmlHeightAttribute(value);
-		public static HtmlHiddenAttribute Hidden(string value) => new HtmlHiddenAttribute(value);
-		public static HtmlHighAttribute High(string value) => new HtmlHighAttribute(value);
-		public static HtmlHrefAttribute Href(string value) => new HtmlHrefAttribute(value);
-		public static HtmlHrefLangAttribute HrefLang(string value) => new HtmlHrefLangAttribute(value);
-		public static HtmlHttpEquivAttribute HttpEquiv(string value) => new HtmlHttpEquivAttribute(value);
+		public static HtmlAttribute Headers(string value) => new HtmlAttribute("headers", value);
+		public static HtmlAttribute Height(string value) => new HtmlAttribute("height", value);
+		public static HtmlAttribute Hidden(string value) => new HtmlAttribute("hidden", value);
+		public static HtmlAttribute High(string value) => new HtmlAttribute("high", value);
+		public static HtmlAttribute Href(string value) => new HtmlAttribute("href", value);
+		public static HtmlAttribute HrefLang(string value) => new HtmlAttribute("hreflang", value);
+		public static HtmlAttribute HttpEquiv(string value) => new HtmlAttribute("http-equiv", value);
 
-		public static HtmlIconAttribute Icon(string value) => new HtmlIconAttribute(value);
-		public static HtmlIdAttribute Id(string value) => new HtmlIdAttribute(value);
-		public static HtmlInputModeAttribute InputMode(string value) => new HtmlInputModeAttribute(value);
-		public static HtmlIntegrityAttribute Integrity(string value) => new HtmlIntegrityAttribute(value);
-		public static HtmlIsMapAttribute IsMap(string value) => new HtmlIsMapAttribute(value);
+		public static HtmlAttribute Icon(string value) => new HtmlAttribute("icon", value);
+		public static HtmlAttribute Id(string value) => new HtmlAttribute("id", value);
+		public static HtmlAttribute InputMode(string value) => new HtmlAttribute("inputmode", value);
+		public static HtmlAttribute Integrity(string value) => new HtmlAttribute("integrity", value);
+		public static HtmlAttribute IsMap(string value) => new HtmlAttribute("ismap", value);
 
-		public static HtmlKindAttribute Kind(string value) => new HtmlKindAttribute(value);
+		public static HtmlAttribute Kind(string value) => new HtmlAttribute("kind", value);
 
-		public static HtmlLabelAttribute Label(string value) => new HtmlLabelAttribute(value);
-		public static HtmlLangAttribute Lang(string value) => new HtmlLangAttribute(value);
-		public static HtmlListAttribute List(string value) => new HtmlListAttribute(value);
-		public static HtmlLongDescAttribute LongDesc(string value) => new HtmlLongDescAttribute(value);
-		public static HtmlLoopAttribute Loop(string value) => new HtmlLoopAttribute(value);
-		public static HtmlLowAttribute Low(string value) => new HtmlLowAttribute(value);
+		public static HtmlAttribute Label(string value) => new HtmlAttribute("label", value);
+		public static HtmlAttribute Lang(string value) => new HtmlAttribute("lang", value);
+		public static HtmlAttribute List(string value) => new HtmlAttribute("list", value);
+		public static HtmlAttribute LongDesc(string value) => new HtmlAttribute("longdesc", value);
+		public static HtmlAttribute Loop(string value) => new HtmlAttribute("loop", value);
+		public static HtmlAttribute Low(string value) => new HtmlAttribute("low", value);
 
-		public static HtmlMaxAttribute Max(string value) => new HtmlMaxAttribute(value);
-		public static HtmlMaxLengthAttribute MaxLength(string value) => new HtmlMaxLengthAttribute(value);
-		public static HtmlMediaAttribute Media(string value) => new HtmlMediaAttribute(value);
-		public static HtmlMethodAttribute Method(string value) => new HtmlMethodAttribute(value);
-		public static HtmlMinAttribute Min(string value) => new HtmlMinAttribute(value);
-		public static HtmlMinLengthAttribute MinLength(string value) => new HtmlMinLengthAttribute(value);
-		public static HtmlMultipleAttribute Multiple => new HtmlMultipleAttribute();
-		public static HtmlMutedAttribute Muted(string value) => new HtmlMutedAttribute(value);
+		public static HtmlAttribute Max(string value) => new HtmlAttribute("max", value);
+		public static HtmlAttribute MaxLength(string value) => new HtmlAttribute("maxLength", value);
+		public static HtmlAttribute Media(string value) => new HtmlAttribute("media", value);
+		public static HtmlAttribute Method(string value) => new HtmlAttribute("method", value);
+		public static HtmlAttribute Min(string value) => new HtmlAttribute("min", value);
+		public static HtmlAttribute MinLength(string value) => new HtmlAttribute("minLength", value);
+		public static HtmlAttribute Multiple => new HtmlAttribute("multiple");
+		public static HtmlAttribute Muted(string value) => new HtmlAttribute("muted", value);
 
-		public static HtmlNameAttribute Name(string value) => new HtmlNameAttribute(value);
-		public static HtmlNoValidateAttribute NoValidate => new HtmlNoValidateAttribute();
-		public static HtmlNoWrapAttribute NoWrap(string value) => new HtmlNoWrapAttribute(value);
+		public static HtmlAttribute Name(string value) => new HtmlAttribute("name", value);
+		public static HtmlAttribute NoValidate => new HtmlAttribute("novalidate");
+		public static HtmlAttribute NoWrap(string value) => new HtmlAttribute("nowrap", value);
 
-		public static HtmlOptimumAttribute Optimum(string value) => new HtmlOptimumAttribute(value);
-		public static HtmlOpenAttribute Open(string value) => new HtmlOpenAttribute(value);
+		public static HtmlAttribute Optimum(string value) => new HtmlAttribute("optimum", value);
+		public static HtmlAttribute Open(string value) => new HtmlAttribute("open", value);
 
-		public static HtmlPatternAttribute Pattern(string value) => new HtmlPatternAttribute(value);
-		public static HtmlPingAttribute Ping(string value) => new HtmlPingAttribute(value);
-		public static HtmlPlaceholderAttribute Placeholder(string value) => new HtmlPlaceholderAttribute(value);
-		public static HtmlPreloadAttribute Preload(string value) => new HtmlPreloadAttribute(value);
-		public static HtmlPosterAttribute Poster(string value) => new HtmlPosterAttribute(value);
+		public static HtmlAttribute Pattern(string value) => new HtmlAttribute("pattern", value);
+		public static HtmlAttribute Ping(string value) => new HtmlAttribute("ping", value);
+		public static HtmlAttribute Placeholder(string value) => new HtmlAttribute("placeholder", value);
+		public static HtmlAttribute Preload(string value) => new HtmlAttribute("preload", value);
+		public static HtmlAttribute Poster(string value) => new HtmlAttribute("poster", value);
 
-		public static HtmlRadioGroupAttribute RadioGroup(string value) => new HtmlRadioGroupAttribute(value);
-		public static HtmlReadonlyAttribute Readonly => new HtmlReadonlyAttribute();
-		public static HtmlRefreshAttribute Refresh(string value) => new HtmlRefreshAttribute(value);
-		public static HtmlRelAttribute Rel(string value) => new HtmlRelAttribute(value);
-		public static HtmlRequiredAttribute Required => new HtmlRequiredAttribute();
-		public static HtmlReversedAttribute Reversed(string value) => new HtmlReversedAttribute(value);
-		public static HtmlRowsAttribute Rows(string value) => new HtmlRowsAttribute(value);
-		public static HtmlRowSpanAttribute RowSpan(string value) => new HtmlRowSpanAttribute(value);
+		public static HtmlAttribute RadioGroup(string value) => new HtmlAttribute("radiogroup", value);
+		public static HtmlAttribute Readonly => new HtmlAttribute("readonly");
+		public static HtmlAttribute Refresh(string value) => new HtmlAttribute("refresh", value);
+		public static HtmlAttribute Rel(string value) => new HtmlAttribute("rel", value);
+		public static HtmlAttribute Required => new HtmlAttribute("required");
+		public static HtmlAttribute Reversed(string value) => new HtmlAttribute("reversed", value);
+		public static HtmlAttribute Rows(string value) => new HtmlAttribute("rows", value);
+		public static HtmlAttribute RowSpan(string value) => new HtmlAttribute("rowspan", value);
 
-		public static HtmlSandboxAttribute Sandbox => new HtmlSandboxAttribute();
-		public static HtmlSeamlessAttribute Seamless => new HtmlSeamlessAttribute();
-		public static HtmlSelectedAttribute Selected => new HtmlSelectedAttribute();
-		public static HtmlSelectionDirectionAttribute SelectionDirection(string value) => new HtmlSelectionDirectionAttribute(value);
-		public static HtmlScopeAttribute Scope(string value) => new HtmlScopeAttribute(value);
-		public static HtmlScopedAttribute Scoped => new HtmlScopedAttribute();
-		public static HtmlShapeAttribute Shape(string value) => new HtmlShapeAttribute(value);
-		public static HtmlSizeAttribute Size(string value) => new HtmlSizeAttribute(value);
-		public static HtmlSizesAttribute Sizes(string value) => new HtmlSizesAttribute(value);
-		public static HtmlSpanAttribute Span(string value) => new HtmlSpanAttribute(value);
-		public static HtmlSpellCheckAttribute SpellCheck(string value) => new HtmlSpellCheckAttribute(value);
-		public static HtmlSrcAttribute Src(string value) => new HtmlSrcAttribute(value);
-		public static HtmlSrcDocAttribute SrcDoc(string value) => new HtmlSrcDocAttribute(value);
-		public static HtmlSrcLangAttribute SrcLang(string value) => new HtmlSrcLangAttribute(value);
-		public static HtmlSrcSetAttribute SrcSet(string value) => new HtmlSrcSetAttribute(value);
-		public static HtmlStartAttribute Start(string value) => new HtmlStartAttribute(value);
-		public static HtmlStepAttribute Step(string value) => new HtmlStepAttribute(value);
-		public static HtmlStyleAttribute Style(string value) => new HtmlStyleAttribute(value);
+		public static HtmlAttribute Sandbox => new HtmlAttribute("sandbox");
+		public static HtmlAttribute Seamless => new HtmlAttribute("seamless");
+		public static HtmlAttribute Selected => new HtmlAttribute("selected");
+		public static HtmlAttribute SelectionDirection(string value) => new HtmlAttribute("selectionDirection", value);
+		public static HtmlAttribute Scope(string value) => new HtmlAttribute("scope", value);
+		public static HtmlAttribute Scoped => new HtmlAttribute("scoped");
+		public static HtmlAttribute Shape(string value) => new HtmlAttribute("shape", value);
+		public static HtmlAttribute Size(string value) => new HtmlAttribute("size", value);
+		public static HtmlAttribute Sizes(string value) => new HtmlAttribute("sizes", value);
+		public static HtmlAttribute Span(string value) => new HtmlAttribute("span", value);
+		public static HtmlAttribute SpellCheck(string value) => new HtmlAttribute("spellCheck", value);
+		public static HtmlAttribute Src(string value) => new HtmlAttribute("src", value);
+		public static HtmlAttribute SrcDoc(string value) => new HtmlAttribute("srcdoc", value);
+		public static HtmlAttribute SrcLang(string value) => new HtmlAttribute("srclang", value);
+		public static HtmlAttribute SrcSet(string value) => new HtmlAttribute("srcset", value);
+		public static HtmlAttribute Start(string value) => new HtmlAttribute("start", value);
+		public static HtmlAttribute Step(string value) => new HtmlAttribute("step", value);
+		public static HtmlAttribute Style(string value) => new HtmlAttribute("style", value);
 
-		public static HtmlTabIndexAttribute TabIndex(string value) => new HtmlTabIndexAttribute(value);
-		public static HtmlTargetAttribute Target(string value) => new HtmlTargetAttribute(value);
-		public static HtmlTextAttribute Text(string value) => new HtmlTextAttribute(value);
-		public static HtmlTitleAttribute Title(string value) => new HtmlTitleAttribute(value);
-		public static HtmlTranslateAttribute Translate(string value) => new HtmlTranslateAttribute(value);
-		public static HtmlTypeAttribute Type(string value) => new HtmlTypeAttribute(value);
-		public static HtmlTypeMustMatchAttribute TypeMustMatch => new HtmlTypeMustMatchAttribute();
+		public static HtmlAttribute TabIndex(string value) => new HtmlAttribute("tabIndex", value);
+		public static HtmlAttribute Target(string value) => new HtmlAttribute("target", value);
+		public static HtmlAttribute Text(string value) => new HtmlAttribute("text", value);
+		public static HtmlAttribute Title(string value) => new HtmlAttribute("title", value);
+		public static HtmlAttribute Translate(string value) => new HtmlAttribute("translate", value);
+		public static HtmlAttribute Type(string value) => new HtmlAttribute("type", value);
+		public static HtmlAttribute TypeMustMatch => new HtmlAttribute("typemustmatch");
 
-		public static HtmlUseMapAttribute UseMap(string value) => new HtmlUseMapAttribute(value);
+		public static HtmlAttribute UseMap(string value) => new HtmlAttribute("usemap", value);
 
-		public static HtmlValueAttribute Value(string value) => new HtmlValueAttribute(value);
-		public static HtmlVolumeAttribute Volume(string value) => new HtmlVolumeAttribute(value);
+		public static HtmlAttribute Value(string value) => new HtmlAttribute("value", value);
+		public static HtmlAttribute Volume(string value) => new HtmlAttribute("volume", value);
 
-		public static HtmlWidthAttribute Width(string value) => new HtmlWidthAttribute(value);
-		public static HtmlWrapAttribute Wrap(string value) => new HtmlWrapAttribute(value);
+		public static HtmlAttribute Width(string value) => new HtmlAttribute("width", value);
+		public static HtmlAttribute Wrap(string value) => new HtmlAttribute("wrap", value);
 
-		public static HtmlXmlsAttribute Xmls(string value) => new HtmlXmlsAttribute(value);
+		public static HtmlAttribute Xmls(string value) => new HtmlAttribute("xmls", value);
+
     }
 }

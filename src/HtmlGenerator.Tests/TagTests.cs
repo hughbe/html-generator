@@ -288,12 +288,11 @@ namespace HtmlGenerator.Tests
 
             foreach (string attributeName in attributeNames)
             {
-                Type attributeType = typeof(HtmlAttribute).GetTypeInfo().Assembly.GetType("HtmlGenerator.Html" + attributeName + "Attribute");
                 bool attributeIsVoid = typeof(Attribute).GetMethod(attributeName) == null;
                 MethodInfo method = element.GetType().GetMethod("With" + attributeName);
                 if (attributeIsVoid)
                 {
-                    HtmlAttribute expectedAttribute = (HtmlAttribute)Activator.CreateInstance(attributeType);   
+                    HtmlAttribute expectedAttribute = (HtmlAttribute)typeof(Attribute).GetProperty(attributeName).GetValue(null);   
 
                     Assert.Empty(method.GetParameters());
                     Assert.Same(element, method.Invoke(element, new object[0]));
@@ -304,7 +303,7 @@ namespace HtmlGenerator.Tests
                 }
                 else
                 {
-                    HtmlAttribute expectedAttribute = (HtmlAttribute)Activator.CreateInstance(attributeType, new object[] { "value" });
+                    HtmlAttribute expectedAttribute = (HtmlAttribute)typeof(Attribute).GetMethod(attributeName).Invoke(null, new object[] { "value" });
 
                     Assert.Equal(new Type[] { typeof(string) }, method.GetParameters().Select(parameter => parameter.ParameterType));
                     Assert.Same(element, method.Invoke(element, new object[] { "value" }));
