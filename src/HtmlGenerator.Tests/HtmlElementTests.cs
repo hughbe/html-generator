@@ -128,13 +128,39 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(TryGetElement_TestData))]
-        public void TryGetElement(HtmlElement[] elements, string name, HtmlElement expected)
+        public void TryGetElement(HtmlElement[] elements, string tag, HtmlElement expected)
         {
             HtmlElement parent = new HtmlElement("html", elements);
 
             HtmlElement element;
-            Assert.Equal(expected != null, parent.TryGetElement(name, out element));
+            Assert.Equal(expected != null, parent.TryGetElement(tag, out element));
             Assert.Equal(expected, element);
+
+            Assert.Equal(expected != null, parent.HasElement(tag));
+        }
+
+        [Fact]
+        public void TryGetElement_NullName_ThrowsArgumentNullException()
+        {
+            HtmlElement element = new HtmlElement("html");
+            HtmlElement resultElement = null;
+            Assert.Throws<ArgumentNullException>("tag", () => element.TryGetElement(null, out resultElement));
+            Assert.Null(resultElement);
+
+            Assert.Throws<ArgumentNullException>("tag", () => element.HasElement(null));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" \r \t \n")]
+        public void TryGetElement_WhitespaceName_ThrowsArgumentException(string tag)
+        {
+            HtmlElement element = new HtmlElement("html");
+            HtmlElement resultElement = null;
+            Assert.Throws<ArgumentException>("tag", () => element.TryGetElement(tag, out resultElement));
+            Assert.Null(resultElement);
+
+            Assert.Throws<ArgumentException>("tag", () => element.HasElement(tag));
         }
 
         public static IEnumerable<object[]> TryGetAttribute_TestData()
@@ -163,6 +189,8 @@ namespace HtmlGenerator.Tests
             HtmlAttribute attribute;
             Assert.Equal(expected != null, parent.TryGetAttribute(name, out attribute));
             Assert.Equal(expected, attribute);
+
+            Assert.Equal(expected != null, parent.HasAttribute(name));
         }
 
         [Fact]
@@ -172,6 +200,8 @@ namespace HtmlGenerator.Tests
             HtmlAttribute attribute = null;
             Assert.Throws<ArgumentNullException>("name", () => element.TryGetAttribute(null, out attribute));
             Assert.Null(attribute);
+
+            Assert.Throws<ArgumentNullException>("name", () => element.HasAttribute(null));
         }
 
         [Theory]
@@ -181,8 +211,10 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("html");
             HtmlAttribute attribute = null;
-            Assert.Throws<ArgumentNullException>("name", () => element.TryGetAttribute(null, out attribute));
+            Assert.Throws<ArgumentException>("name", () => element.TryGetAttribute(name, out attribute));
             Assert.Null(attribute);
+
+            Assert.Throws<ArgumentException>("name", () => element.HasAttribute(name));
         }
 
         public static IEnumerable<object[]> Elements_Method_TestData()
