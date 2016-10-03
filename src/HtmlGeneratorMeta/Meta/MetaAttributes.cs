@@ -6,6 +6,7 @@
         public static AttributeInfo AcceptCharset => Basic("accept-charset");
         public static AttributeInfo AccessKey => Global("accesskey");
         public static AttributeInfo Action => Basic("action");
+        public static AttributeInfo Align => Void("align");
         public static AttributeInfo AllowFullScreen => Void("allowfullscreen");
         public static AttributeInfo Alt => Basic("alt");
         public static AttributeInfo Async => Basic("async");
@@ -14,6 +15,11 @@
         public static AttributeInfo AutoPlay => Basic("autoplay");
         public static AttributeInfo AutoSave => Basic("autosave");
 
+        public static AttributeInfo BgColor => Basic("bgcolor");
+        public static AttributeInfo Border => Basic("border");
+
+        public static AttributeInfo CellPadding => Basic("cellpadding");
+        public static AttributeInfo CellSpacing => Basic("cellspacing");
         public static AttributeInfo Charset => Basic("charset");
         public static AttributeInfo Checked => Void("checked");
         public static AttributeInfo Cite => Basic("cite");
@@ -139,12 +145,9 @@
 
         public static AttributeInfo Width => Basic("width");
         public static AttributeInfo Wrap => Basic("wrap");
+
         public static AttributeInfo Xmls => Basic("xmls");
-        public static AttributeInfo Align => Basic("align");
-        public static AttributeInfo BgColor => Basic("bgcolor");
-        public static AttributeInfo Border => Basic("border");
-        public static AttributeInfo CellPadding => Basic("cellpadding");
-        public static AttributeInfo CellSpacing => Basic("cellspacing");
+
         private static AttributeInfo Basic(string key) => Custom(key, false, false);
         private static AttributeInfo Void(string key) => Custom(key, true, false);
         private static AttributeInfo Global(string key) => Custom(key, false, true);

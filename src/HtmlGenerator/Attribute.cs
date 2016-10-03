@@ -6,6 +6,7 @@ namespace HtmlGenerator
 		public static HtmlAcceptCharsetAttribute AcceptCharset(string value) => new HtmlAcceptCharsetAttribute(value);
 		public static HtmlAccessKeyAttribute AccessKey(string value) => new HtmlAccessKeyAttribute(value);
 		public static HtmlActionAttribute Action(string value) => new HtmlActionAttribute(value);
+		public static HtmlAlignAttribute Align(string value) => new HtmlAlignAttribute(value);
 		public static HtmlAllowFullScreenAttribute AllowFullScreen => new HtmlAllowFullScreenAttribute();
 		public static HtmlAltAttribute Alt(string value) => new HtmlAltAttribute(value);
 		public static HtmlAsyncAttribute Async(string value) => new HtmlAsyncAttribute(value);
@@ -14,6 +15,11 @@ namespace HtmlGenerator
 		public static HtmlAutoPlayAttribute AutoPlay(string value) => new HtmlAutoPlayAttribute(value);
 		public static HtmlAutoSaveAttribute AutoSave(string value) => new HtmlAutoSaveAttribute(value);
 
+		public static HtmlBgColorAttribute BgColor(string value) => new HtmlBgColorAttribute(value);
+		public static HtmlBorderAttribute Border(string value) => new HtmlBorderAttribute(value);
+
+		public static HtmlCellPaddingAttribute CellPadding(string value) => new HtmlCellPaddingAttribute(value);
+		public static HtmlCellSpacingAttribute CellSpacing(string value) => new HtmlCellSpacingAttribute(value);
 		public static HtmlCharsetAttribute Charset(string value) => new HtmlCharsetAttribute(value);
 		public static HtmlCheckedAttribute Checked => new HtmlCheckedAttribute();
 		public static HtmlCiteAttribute Cite(string value) => new HtmlCiteAttribute(value);
@@ -141,14 +147,5 @@ namespace HtmlGenerator
 		public static HtmlWrapAttribute Wrap(string value) => new HtmlWrapAttribute(value);
 
 		public static HtmlXmlsAttribute Xmls(string value) => new HtmlXmlsAttribute(value);
-
-		public static HtmlAlignAttribute Align(string value) => new HtmlAlignAttribute(value);
-
-		public static HtmlBgColorAttribute BgColor(string value) => new HtmlBgColorAttribute(value);
-		public static HtmlBorderAttribute Border(string value) => new HtmlBorderAttribute(value);
-
-		public static HtmlCellPaddingAttribute CellPadding(string value) => new HtmlCellPaddingAttribute(value);
-		public static HtmlCellSpacingAttribute CellSpacing(string value) => new HtmlCellSpacingAttribute(value);
-
     }
 }
