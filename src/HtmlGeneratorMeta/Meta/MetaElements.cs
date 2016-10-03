@@ -71,7 +71,7 @@
         public static ElementInfo Map => Custom("map", "Name");
         public static ElementInfo Mark => Custom("mark");
         public static ElementInfo Menu => Custom("menu", "Label", "Type");
-        public static ElementInfo MenuItem => Custom("menutiem", true, "Checked", "Command", "Default", "Disabled", "Icon", "Label", "RadioGroup", "Type");
+        public static ElementInfo MenuItem => Custom("menuitem", "Checked", "Command", "Default", "Disabled", "Icon", "Label", "RadioGroup", "Type");
         public static ElementInfo Meta => Custom("meta", true, "Charset", "Content", "HttpEquiv", "DefaultStyle", "Refresh", "Name");
         public static ElementInfo Meter => Custom("meter", "Form", "Low", "High", "Min", "Max", "Optimum", "Value");
         public static ElementInfo Nav => Custom("nav");
