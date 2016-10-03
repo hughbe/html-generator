@@ -5,6 +5,7 @@ namespace HtmlGenerator
     public abstract class HtmlObject
     {
         public HtmlElement Parent { get; internal set; }
+        public abstract HtmlObjectType ObjectType { get; }
 
         internal HtmlObject _previous;
         internal HtmlObject _next;
