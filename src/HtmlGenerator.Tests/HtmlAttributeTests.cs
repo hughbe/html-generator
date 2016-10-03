@@ -100,6 +100,24 @@ namespace HtmlGenerator.Tests
             Assert.Null(attribute.Parent);
         }
 
+        [Theory]
+        [InlineData("Value")]
+        [InlineData(" \r \n \t")]
+        [InlineData("")]
+        public void SetValue(string value)
+        {
+            HtmlAttribute attribute = new HtmlAttribute("Attribute");
+            attribute.SetValue(value);
+            Assert.Equal(value, attribute.Value);
+        }
+
+        [Fact]
+        public void SetValue_NullValue_ThrowsArgumentNullException()
+        {
+            HtmlAttribute attribute = new HtmlAttribute("Attribute");
+            Assert.Throws<ArgumentNullException>("value", () => attribute.SetValue(null));
+        }
+
         public static IEnumerable<object[]> ToString_TestData()
         {
             yield return new object[] { new HtmlAttribute("name"), "name" };

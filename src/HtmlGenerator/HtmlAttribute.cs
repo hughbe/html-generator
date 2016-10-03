@@ -12,12 +12,11 @@ namespace HtmlGenerator
 
         public HtmlAttribute(string name, string value) : this(name)
         {
-            Requires.NotNull(value, nameof(value));
-            Value = value;
+            SetValue(value);
         }
         
         public string Name { get; }
-        public string Value { get; }
+        public string Value { get; private set; }
 
         public bool IsVoid => Value == null;
 
@@ -29,6 +28,12 @@ namespace HtmlGenerator
             }
             Parent._attributes.Remove(this);
             Parent = null;
+        }
+
+        public void SetValue(string value)
+        {
+            Requires.NotNull(value, nameof(value));
+            Value = value;
         }
 
         internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
