@@ -1655,5 +1655,80 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, element.Ancestors(tag));
             Assert.Equal(expectedIncludingSelf, element.AncestorsAndSelf(tag));
         }
+
+        public static IEnumerable<object[]> Equals_TestData()
+        {
+            // Tag
+            yield return new object[] { new HtmlElement("Tag"), new HtmlElement("Tag"), true };
+            yield return new object[] { new HtmlElement("Tag"), new HtmlElement("tag"), false };
+            yield return new object[] { new HtmlElement("Tag"), new HtmlElement("other-tag"), false };
+
+            // Void
+            yield return new object[] { new HtmlElement("tag", isVoid: true), new HtmlElement("tag", isVoid: true), true };
+            yield return new object[] { new HtmlElement("tag", isVoid: true), new HtmlElement("tag", isVoid: false), false };
+
+            // InnerText
+            yield return new object[] { new HtmlElement("tag").WithInnerText("Inner Text"), new HtmlElement("tag").WithInnerText("Inner Text"), true };
+            yield return new object[] { new HtmlElement("tag").WithInnerText("Inner Text"), new HtmlElement("tag").WithInnerText("inner text"), false };
+            yield return new object[] { new HtmlElement("tag").WithInnerText("Inner Text"), new HtmlElement("tag").WithInnerText("other-inner-text"), false };
+
+            // Elements
+            yield return new object[]
+            {
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
+                true
+            };
+            yield return new object[]
+            {
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
+                new HtmlElement("tag", new HtmlElement("Element"), new HtmlAttribute("attribute")),
+                false
+            };
+            yield return new object[]
+            {
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
+                new HtmlElement("tag", new HtmlElement("other-element"), new HtmlAttribute("attribute")),
+                false
+            };
+            yield return new object[]
+            {
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
+                new HtmlElement("tag", new HtmlAttribute("attribute")),
+                false
+            };
+
+            // Attributes
+            yield return new object[]
+            {
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("Attribute")),
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
+                false
+            };
+            yield return new object[]
+            {
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("Attribute")),
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("other-attribute")),
+                false
+            };
+            yield return new object[]
+            {
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("Attribute")),
+                new HtmlElement("tag", new HtmlElement("element")),
+                false
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(Equals_TestData))]
+        public void Equals(HtmlElement element, object other, bool expected)
+        {
+            Assert.Equal(element.GetHashCode(), element.GetHashCode());
+            if (other is HtmlElement || other == null)
+            {
+                Assert.Equal(expected, element.Equals((HtmlElement)other));
+            }
+            Assert.Equal(expected, element.Equals(other));
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HtmlGenerator
 {
-    public class HtmlElement : SerializableHtmlObject
+    public class HtmlElement : SerializableHtmlObject, IEquatable<HtmlElement>
     {
         internal HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
         internal HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
@@ -473,6 +473,52 @@ namespace HtmlGenerator
             {
                 yield return element;
             }
+        }
+
+        public override int GetHashCode() => InnerText == null ? Tag.GetHashCode() : Tag.GetHashCode() ^ InnerText.GetHashCode();
+
+        public override bool Equals(object obj) => Equals(obj as HtmlElement);
+
+        public bool Equals(HtmlElement element)
+        {
+            if (element == null)
+            {
+                return false;
+            }
+            if (Tag != element.Tag || InnerText != element.InnerText || IsVoid != element.IsVoid)
+            {
+                return false;
+            }
+            if (_elements._count != element._elements._count || _attributes._count != element._attributes._count)
+            {
+                return false;
+            }
+            if (_elements._count > 0)
+            {
+                IEnumerator<HtmlElement> thisElements = Elements().GetEnumerator();
+                IEnumerator<HtmlElement> otherElements = element.Elements().GetEnumerator();
+                while (thisElements.MoveNext() && otherElements.MoveNext())
+                {
+                    if (!thisElements.Current.Equals(otherElements.Current))
+                    {
+                        return false;
+                    }
+                }
+            }
+            if (_attributes._count > 0)
+            {
+                IEnumerator<HtmlAttribute> thisAttributes = Attributes().GetEnumerator();
+                IEnumerator<HtmlAttribute> otherAttributes = element.Attributes().GetEnumerator();
+                while (thisAttributes.MoveNext() && otherAttributes.MoveNext())
+                {
+                    if (!thisAttributes.Current.Equals(otherAttributes.Current))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         private int _minimumIndentDepth = 1;
