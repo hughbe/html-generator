@@ -158,12 +158,14 @@ namespace HtmlGenerator
         
         private void AddElement(HtmlElement element)
         {
+            element.RemoveFromParent();
             element.Parent = this;
             _elements.AddLast(element);
         }
 
         private void AddAttribute(HtmlAttribute attribute)
         {
+            attribute.RemoveFromParent();
             attribute.Parent = this;
             _attributes.AddLast(attribute);
         }
