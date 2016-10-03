@@ -16,8 +16,7 @@ namespace HtmlGeneratorMeta
 
             var type = typeof(MetaAttributes);
             var properties = type.GetProperties();
-
-            var baseList = "";
+            
             var createList = "";
             
             foreach (var property in properties)
@@ -34,56 +33,28 @@ namespace HtmlGeneratorMeta
                 var isVoid = htmlObject.IsVoid ? "true" : "false";
                 var isGlobal = htmlObject.IsGlobal ? "true" : "false";
 
-                var className = "Html" + upperName + "Attribute";
-
-                string basePropertyCode = string.Format("\t\tpublic static {0} {1} => new {0}();", className, upperName);
-                string createPropertyCode = basePropertyCode;
-
-                if (!htmlObject.IsVoid)
-                { 
-                    createPropertyCode = string.Format("\t\tpublic static {0} {1}(string value) => new {0}(value);", className, upperName);
+                string createPropertyCode;
+                if (htmlObject.IsVoid)
+                {
+                    createPropertyCode = string.Format($"\t\tpublic static HtmlAttribute {upperName} => new HtmlAttribute(\"{lowerName}\");");
+                }
+                else
+                {
+                    createPropertyCode = string.Format($"\t\tpublic static HtmlAttribute {upperName}(string value) => new HtmlAttribute(\"{lowerName}\", value);");
                 }
 
                 if (!string.IsNullOrEmpty(PreviousName))
                 {
-                    basePropertyCode = "\n" + basePropertyCode;
                     createPropertyCode = "\n" + createPropertyCode;
 
                     if (upperName[0] != PreviousName[0])
                     {
-                        basePropertyCode = "\n" + basePropertyCode;
                         createPropertyCode = "\n" + createPropertyCode;
                     }
                 }
-
-                baseList += basePropertyCode;
                 createList += createPropertyCode;
-
-                var ctorCode = "";
-                if (htmlObject.IsVoid)
-                {
-                    ctorCode = $"public {className}() : base(\"{lowerName}\") {{}}";
-                }
-                else
-                {
-                    ctorCode = $"public {className}(string value) : base(\"{lowerName}\", value) {{}}";
-                }
-
-                var code = string.Format(@"namespace HtmlGenerator
-{{
-    public class {0} : HtmlAttribute
-    {{
-        {1}
-    }}
-}}
-", className, ctorCode);
-
-                GenerateClass(className, code);
-                
                 PreviousName = upperName;
             }
-
-            GenerateList("BaseAttribute", "public", "", baseList);
 
             createList += Environment.NewLine;
             GenerateList("Attribute", "public", "", createList);
