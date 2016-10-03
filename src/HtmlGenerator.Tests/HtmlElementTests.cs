@@ -565,7 +565,6 @@ namespace HtmlGenerator.Tests
             Assert.Empty(child1.Elements());
         }
 
-
         [Fact]
         public void Add_AttributeHasDifferentParent_RemovesFromOldParent()
         {
@@ -604,6 +603,28 @@ namespace HtmlGenerator.Tests
             Assert.Equal(content.Where(obj => obj is HtmlElement).Cast<HtmlElement>().ToArray(), element.Elements().ToArray());
             Assert.Equal(content.Where(obj => obj is HtmlAttribute).Cast<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
             Assert.Equal(content.Length, element.ElementsAndAttributes().Count());
+        }
+
+        [Fact]
+        public void ReplaceAll_ParamsHtmlObject_AttributeToVoidElement()
+        {
+            HtmlElement element = new HtmlElement("br", isVoid: true);
+            element.Add(new HtmlAttribute("a"));
+
+            HtmlAttribute[] attributes = new HtmlAttribute[] { new HtmlAttribute("b"), new HtmlAttribute("c") };
+            element.ReplaceAll(attributes);
+            Assert.Equal(attributes, element.Attributes());
+        }
+
+        [Fact]
+        public void ReplaceAll_IEnumerableHtmlObject_AttributeToVoidElement()
+        {
+            HtmlElement element = new HtmlElement("br", isVoid: true);
+            element.Add(new HtmlAttribute("a"));
+
+            HtmlAttribute[] attributes = new HtmlAttribute[] { new HtmlAttribute("b"), new HtmlAttribute("c") };
+            element.ReplaceAll((IEnumerable<HtmlObject>)attributes);
+            Assert.Equal(attributes, element.Attributes());
         }
 
         [Fact]
@@ -740,6 +761,17 @@ namespace HtmlGenerator.Tests
             Assert.Equal(1 + attributes.Length, element.ElementsAndAttributes().Count());
         }
 
+        [Fact]
+        public void ReplaceAttributes_ParamsHtmlAttribute_VoidElement()
+        {
+            HtmlElement element = new HtmlElement("br", isVoid: true);
+            element.Add(new HtmlAttribute("a"));
+
+            HtmlAttribute[] attributes = new HtmlAttribute[] { new HtmlAttribute("b"), new HtmlAttribute("c") };
+            element.ReplaceAttributes(attributes);
+            Assert.Equal(attributes, element.Attributes());
+        }
+
         [Theory]
         [MemberData(nameof(Attributes_TestData))]
         public void ReplaceAttributes_IEnumerableHtmlAttribute(HtmlAttribute[] attributes)
@@ -749,6 +781,17 @@ namespace HtmlGenerator.Tests
             Assert.Equal(1, element.Elements().Count());
             Assert.Equal(attributes, element.Attributes().ToArray());
             Assert.Equal(1 + attributes.Length, element.ElementsAndAttributes().Count());
+        }
+
+        [Fact]
+        public void ReplaceAttributes_IEnumerableHtmlAttribute_VoidElement()
+        {
+            HtmlElement element = new HtmlElement("br", isVoid: true);
+            element.Add(new HtmlAttribute("a"));
+
+            HtmlAttribute[] attributes = new HtmlAttribute[] { new HtmlAttribute("b"), new HtmlAttribute("c") };
+            element.ReplaceAttributes((IEnumerable<HtmlAttribute>)attributes);
+            Assert.Equal(attributes, element.Attributes());
         }
 
         [Fact]
