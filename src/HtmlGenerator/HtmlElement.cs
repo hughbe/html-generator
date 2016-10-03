@@ -133,7 +133,6 @@ namespace HtmlGenerator
         public void ReplaceAttributes(IEnumerable<HtmlAttribute> attributes)
         {
             Requires.NotNull(attributes, nameof(attributes));
-            ThrowIfVoid();
 
             _attributes.Clear();
             foreach (HtmlAttribute attribute in attributes)
