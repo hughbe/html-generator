@@ -7,7 +7,9 @@ namespace HtmlGenerator
     public class HtmlElement : SerializableHtmlObject, IEquatable<HtmlElement>
     {
         private readonly HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
-        private readonly HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
+        private HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
+
+        private HtmlElement() { }
 
         public HtmlElement(string tag)
         {
@@ -64,7 +66,7 @@ namespace HtmlGenerator
                 AddAttribute(attribute);
             }
         }
-        
+
         public void Add(params HtmlObject[] content) => Add((IEnumerable<HtmlObject>)content);
 
         public void Add(IEnumerable<HtmlObject> content)
@@ -121,7 +123,7 @@ namespace HtmlGenerator
                 AddFirst(obj);
             }
         }
-        
+
         private void AddAttributeFirst(HtmlAttribute attribute)
         {
             attribute.RemoveFromParent();
@@ -279,14 +281,14 @@ namespace HtmlGenerator
             Parent = null;
         }
 
-		internal void RemoveAttribute(HtmlAttribute attribute)
-		{
-			_attributes.Remove(attribute);
-			attribute.Parent = null;
-		}
+        internal void RemoveAttribute(HtmlAttribute attribute)
+        {
+            _attributes.Remove(attribute);
+            attribute.Parent = null;
+        }
+        public string Tag { get; private set; }
+        public bool IsVoid { get; private set; }
 
-        public string Tag { get; }
-        public bool IsVoid { get; }
         public string InnerText { get; private set; }
 
         public void SetInnerText(string value)
@@ -619,7 +621,7 @@ namespace HtmlGenerator
             {
                 return;
             }
-            
+
             if (InnerText != null)
             {
                 stringBuilder.Append(InnerText);
@@ -685,6 +687,389 @@ namespace HtmlGenerator
             if (IsVoid)
             {
                 throw new InvalidOperationException("Cannot set inner text for a void element");
+            }
+        }
+
+        public static HtmlElement Parse(string text)
+        {
+            HtmlElement element;
+            if (!TryParse(text, out element))
+            {
+                return null;
+            }
+            return element;
+        }
+
+        public static bool TryParse(string text, out HtmlElement element)
+        {
+            element = null;
+            if (text == null || text.Length == 0)
+            {
+                return false;
+            }
+
+            Parser parser = new Parser(text);
+            if (parser.Parse())
+            {
+                element = parser.rootElement;
+                return true;
+            }
+            return false;
+        }
+
+        private struct Parser
+        {
+            public Parser(string text)
+            {
+                this.text = text;
+                currentIndex = -1;
+                currentChar = char.MinValue;
+                currentElement = null;
+                rootElement = null;
+            }
+
+            private string text;
+            private int currentIndex;
+            private char currentChar;
+
+            public HtmlElement rootElement;
+            private HtmlElement currentElement;
+
+            public string Remaining => text.Substring(currentIndex);
+
+            public bool ParseOpening()
+            {
+                if (currentChar != '<')
+                {
+                    // No opening tag, e.g. "abc"
+                    return false;
+                }
+                ReadAndSkipWhitespace();
+                if (currentChar == '/')
+                {
+                    if (!TryParseClosingTag())
+                    {
+                        return false;
+                    }
+                    if (currentIndex + 1 < text.Length)
+                    {
+                        // Got more to parse?
+                        return ParseOpening();
+                    }
+                    // Finished parsing
+                    return true;
+                }
+                if (!IsLetter(currentChar))
+                {
+                    // No valid tag, e.g. "<>", "<1"
+                    return false;
+                }
+
+                int tagStartIndex = currentIndex;
+                int tagEndIndex = -1;
+                bool foundTagEnd = false;
+                while (ReadNext())
+                {
+                    foundTagEnd = currentChar == '/' || currentChar == '>';
+                    if (foundTagEnd || char.IsWhiteSpace(currentChar))
+                    {
+                        tagEndIndex = currentIndex - 1;
+                        break;
+                    }
+                }
+                if (tagEndIndex == -1)
+                {
+                    // No end of tag, e.g. "<abc", "<abc "
+                    return false;
+                }
+
+                string tag = text.Substring(tagStartIndex, tagEndIndex - tagStartIndex + 1);
+                HtmlObjectLinkedList<HtmlAttribute> attributes = null;
+                if (!foundTagEnd && !TryParseAttributes(out attributes))
+                {
+                    // Could not parse attributes
+                    return false;
+                }
+
+                bool isVoid = false;
+                if (currentChar == '/')
+                {
+                    // Void element?
+                    ReadAndSkipWhitespace();
+                    if (currentChar != '>')
+                    {
+                        // No end of void tag, e.g. "<abc/", "<abc/a>"
+                        return false;
+                    }
+                    isVoid = true;
+                    ReadAndSkipWhitespace();
+                }
+
+                HtmlElement element = new HtmlElement(tag, isVoid);
+                if (attributes != null)
+                {
+                    element._attributes = attributes;
+                }
+                if (rootElement == null)
+                {
+                    currentElement = element;
+                    rootElement = element;
+                }
+                else
+                {
+                    currentElement.Add(element);
+                    if (!element.IsVoid)
+                    {
+                        currentElement = element;
+                    }
+                }
+
+                if (!element.IsVoid && !TryParseInnerText())
+                {
+                    return false;
+                }
+                if (currentIndex + 1 < text.Length || !element.IsVoid)
+                {
+                    return ParseOpening();
+                }
+
+                return true;
+            }
+
+            private bool TryParseAttributes(out HtmlObjectLinkedList<HtmlAttribute> attributes)
+            {
+                attributes = new HtmlObjectLinkedList<HtmlAttribute>();
+                ReadAndSkipWhitespace();
+
+                while (currentChar != '/' && currentChar != '>')
+                {
+                    HtmlAttribute attribute;
+                    if (!TryParseAttribute(out attribute))
+                    {
+                        // Could not parse an attribute
+                        return false;
+                    }
+                    attributes.AddAfter(attributes._last, attribute);
+                }
+                return true;
+            }
+
+            private bool TryParseAttributeName(out string name, out bool isExtendedAttribute, out bool isFinalAttribute)
+            {
+                name = null;
+                isExtendedAttribute = false;
+                isFinalAttribute = false;
+
+                int nameStartIndex = currentIndex;
+                int nameEndIndex = -1;
+                bool foundWhitespace = false;
+                while (ReadNext())
+                {
+                    if (!foundWhitespace && char.IsWhiteSpace(currentChar))
+                    {
+                        if (nameEndIndex == -1)
+                        {
+                            nameEndIndex = currentIndex - 1;
+                        }
+                        ReadAndSkipWhitespace();
+                        foundWhitespace = true;
+                    }
+                    if (currentChar == '/' || currentChar == '>')
+                    {
+                        if (nameEndIndex == -1)
+                        {
+                            nameEndIndex = currentIndex - 1;
+                        }
+                        isFinalAttribute = true;
+                        break;
+                    }
+                    else if (currentChar == '=')
+                    {
+                        if (nameEndIndex == -1)
+                        {
+                            nameEndIndex = currentIndex - 1;
+                        }
+                        isExtendedAttribute = true;
+                        ReadAndSkipWhitespace();
+                        break;
+                    }
+                    else if (nameEndIndex != -1)
+                    {
+                        // Found another attribute
+                        break;
+                    }
+                }
+                if (nameEndIndex == -1)
+                {
+                    return false;
+                }
+
+                name = text.Substring(nameStartIndex, nameEndIndex - nameStartIndex + 1);
+                return true;
+            }
+
+            private bool TryParseAttribute(out HtmlAttribute attribute)
+            {
+                attribute = null;
+                string name;
+                bool isExtendedAttribute;
+                bool isFinalAttribute;
+
+                if (!TryParseAttributeName(out name, out isExtendedAttribute, out isFinalAttribute))
+                {
+                    return false;
+                }
+                if (isFinalAttribute || !isExtendedAttribute)
+                {
+                    attribute = new HtmlAttribute(name);
+                    return true;
+                }
+                if (currentChar != '"')
+                {
+                    // Invalid character after equals, e.g. "<abc attribute=!"
+                    return false;
+                }
+                int valueStartIndex = currentIndex + 1;
+                int valueEndIndex = -1;
+                while (ReadNext())
+                {
+                    if (currentChar == '"')
+                    {
+                        valueEndIndex = currentIndex - 1;
+                        break;
+                    }
+                }
+                if (valueEndIndex == -1)
+                {
+                    // No end of attribute value, e.g. "<abc attribute=" or "<abc attribute="a
+                    return false;
+                }
+                string value = text.Substring(valueStartIndex, valueEndIndex - valueStartIndex + 1);
+                attribute = new HtmlAttribute(name, value);
+                return ReadAndSkipWhitespace();
+            }
+
+            private bool TryParseInnerText()
+            {
+                ReadAndSkipWhitespace();
+                int innerTextStartIndex = currentIndex;
+                while (currentChar != '<' && ReadNext()) ;
+
+                int innerTextLength = currentIndex - innerTextStartIndex;
+                if (innerTextLength < 0)
+                {
+                    // No end of non-void tag, e.g. "<abc>", "<abc>  ", "<abc>InnerText"
+                    return false;
+                }
+                if (innerTextLength != 0)
+                {
+                    currentElement.InnerText = text.Substring(innerTextStartIndex, innerTextLength);
+                }
+                return true;
+            }
+
+            public bool Parse()
+            {
+                ReadAndSkipWhitespace();
+                return ParseOpening();
+            }
+
+            private bool TryParseClosingTag()
+            {
+                ReadAndSkipWhitespace();
+                int tagStartingIndex = currentIndex;
+                int tagClosingIndex = -1;
+                // Non-void closing tag, e.g. "<abc></abc>"
+                while (ReadNext())
+                {
+                    if (currentChar == '>')
+                    {
+                        // Found terminating '>'
+                        tagClosingIndex = currentIndex - 1;
+                        break;
+                    }
+                    else if (char.IsWhiteSpace(currentChar))
+                    {
+                        tagClosingIndex = currentIndex - 1;
+                        ReadAndSkipWhitespace();
+                        if (currentChar == '>')
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            // Can only have '>' after whitespace, e.g. <abc></abc "
+                            return false;
+                        }
+                    }
+                }
+                if (tagClosingIndex == -1)
+                {
+                    // Invalid closing tag, e.g. "<abc></", "<abc></abc", "<abc></abc  "
+                    return false;
+                }
+                string tag = text.Substring(tagStartingIndex, tagClosingIndex - tagStartingIndex + 1);
+                if (tag != currentElement.Tag)
+                {
+                    // Non matching closing tag, e.g. "<abc></def>"
+                    return false;
+                }
+                currentElement = currentElement.Parent;
+                ReadAndSkipWhitespace();
+                return true;
+            }
+
+            private static bool IsLetter(char c)
+            {
+                return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+            }
+
+            private static bool IsNumber(char c)
+            {
+                return (c >= '0' && c <= '9');
+            }
+
+            private void ReadPrevious()
+            {
+                currentIndex--;
+                currentChar = text[currentIndex];
+            }
+
+            private char NextCharAfterWhitespace()
+            {
+                for (int i = currentIndex; i < text.Length; i++)
+                {
+                    char c = text[i];
+                    if (!char.IsWhiteSpace(c))
+                    {
+                        return c;
+                    }
+                }
+                return char.MinValue;
+            }
+
+            private bool ReadNext()
+            {
+                currentChar = char.MinValue;
+                if (currentIndex + 1 >= text.Length)
+                {
+                    return false;
+                }
+                currentIndex++;
+                currentChar = text[currentIndex];
+                return true;
+            }
+
+            private bool ReadAndSkipWhitespace()
+            {
+                while (ReadNext())
+                {
+                    if (!char.IsWhiteSpace(currentChar))
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
         }
     }

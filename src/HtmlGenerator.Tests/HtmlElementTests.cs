@@ -35,7 +35,7 @@ namespace HtmlGenerator.Tests
             Assert.Empty(element.Attributes());
             Assert.Empty(element.ElementsAndAttributes());
         }
-        
+
         [Theory]
         [InlineData("html", "inner-text")]
         [InlineData("HtMl", " \t \r \n ")]
@@ -309,7 +309,7 @@ namespace HtmlGenerator.Tests
             Assert.Equal(new HtmlObject[] { newElement }, element.Elements());
             Assert.Equal(new HtmlAttribute[] { newAttribute }, element.Attributes());
         }
-        
+
         [Fact]
         public void AddFirst_ParamsHtmlObject_NonVoidElement()
         {
@@ -348,7 +348,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("html");
             HtmlAttribute newAttribute1 = new HtmlAttribute("Attribute1");
             element.Add(newAttribute1);
-            
+
             HtmlAttribute newAttribute2 = new HtmlAttribute("Attribute2");
             HtmlAttribute newAttribute3 = new HtmlAttribute("Attribute3");
             element.AddFirst(new HtmlObject[] { newAttribute2, newAttribute3 });
@@ -532,7 +532,7 @@ namespace HtmlGenerator.Tests
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
         }
-        
+
         [Fact]
         public void AddFirst_IEnumerableHtmlObject_Empty()
         {
@@ -833,7 +833,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("br", isVoid: true);
             HtmlElement newElement = new HtmlElement("p");
-            
+
             Assert.Throws<InvalidOperationException>(() => element.ReplaceAll(new HtmlObject[] { newElement }));
             Assert.Throws<InvalidOperationException>(() => element.ReplaceAll((IEnumerable<HtmlObject>)new HtmlObject[] { newElement }));
         }
@@ -883,7 +883,7 @@ namespace HtmlGenerator.Tests
             Assert.Throws<ArgumentNullException>("content", () => element.ReplaceElements(new HtmlElement[] { null }));
             Assert.Throws<ArgumentNullException>("content", () => element.ReplaceElements((IEnumerable<HtmlElement>)new HtmlElement[] { null }));
         }
-        
+
         [Fact]
         public void ReplaceElements_SameElementInElements_ThrowsInvalidOperationException()
         {
@@ -1104,7 +1104,7 @@ namespace HtmlGenerator.Tests
             element.Add(new HtmlAttribute("attribute"));
             Assert.Null(element.FirstElement);
         }
-        
+
         [Fact]
         public void FirstElement_LastElement_OneElement_ReturnsSame()
         {
@@ -1158,7 +1158,7 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, element.FirstAttribute);
             Assert.Equal(element.FirstAttribute, element.LastAttribute);
         }
-        
+
         [Fact]
         public void HasElements_HasElements_ReturnsTrue()
         {
@@ -1524,7 +1524,7 @@ namespace HtmlGenerator.Tests
             child1.Add(grandchild1);
             child2.Add(grandchild2, grandchild3, grandchild4);
             child4.Add(grandchild5);
-            
+
             VerifyDescendants(parent, null, new HtmlElement[] { child1, grandchild1, child2, grandchild2, grandchild3, grandchild4, child3, child4, grandchild5 });
             VerifyDescendants(parent, "Grandchild1", new HtmlElement[] { grandchild1 });
             VerifyDescendants(parent, "Grandchild3", new HtmlElement[] { grandchild3, grandchild4 });
@@ -1563,7 +1563,7 @@ namespace HtmlGenerator.Tests
 
         private static void VerifyDescendants(HtmlElement element, string tag, HtmlElement[] expected)
         {
-            HtmlElement[] expectedIncludingSelf;;
+            HtmlElement[] expectedIncludingSelf; ;
             if (tag == null || element.Tag == tag)
             {
                 expectedIncludingSelf = new HtmlElement[expected.Length + 1];
@@ -1583,7 +1583,7 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, element.Descendants(tag));
             Assert.Equal(expectedIncludingSelf, element.DescendantsAndSelf(tag));
         }
-        
+
         [Fact]
         public void Ancestors_OneLayerOfElements_ReturnsExpected()
         {

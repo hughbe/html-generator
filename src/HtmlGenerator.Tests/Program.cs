@@ -6,9 +6,9 @@ namespace HtmlGenerator.Tests
     {
         public static void Main(string[] args)
         {
-            HtmlElement element = new HtmlElement("br");
-            Console.WriteLine(element.Serialize());
+			Console.WriteLine(HtmlElement.Parse(@"<div   allowfullscreen  ></div>"));
 
+            Console.WriteLine("Done");
             Console.ReadLine();
         }
     }
