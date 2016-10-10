@@ -1,18 +1,22 @@
 {
   "version": "2.0.0-beta-1",
   "title": "HtmlGenerator",
+  "packOptions": {
+    "summary": "A library that simplifies generating complex HTML files from C# code.",
+    "tags": [ "html", "generator", "web" ],
+    "projectUrl": "https://github.com/hughbe/html-generator/",
+    "licenseUrl": "https://github.com/hughbe/html-generator/blob/master/LICENSE",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/hughbe/html-generator"
+    }
+  },
   "description": "A library that simplifies generating complex HTML files from C# code.",
   "authors": [ "Hugh Bellamy" ],
-  "copyright": "Hugh Bellamy 2015",
+  "copyright": "Hugh Bellamy 2016",
   "buildOptions": {
     "preserveCompilationContext": true,
     "warningsAsErrors": true
-  },
-  "packOptions": {
-    "tags": [ "html generator web" ],
-    "projectUrl": "https://github.com/hughbe/html-generator/",
-    "licenseUrl": "https://github.com/hughbe/html-generator/blob/master/LICENSE",
-    "summary": "A library that simplifies generating complex HTML files from C# code."
   },
   "frameworks": {
     "netstandard1.0": {
