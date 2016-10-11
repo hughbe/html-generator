@@ -6,8 +6,8 @@ namespace HtmlGenerator
 {
     public class HtmlElement : SerializableHtmlObject, IEquatable<HtmlElement>
     {
-        internal HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
-        internal HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
+        private readonly HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
+        private readonly HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
 
         public HtmlElement(string tag)
         {
@@ -40,14 +40,14 @@ namespace HtmlGenerator
         public void Add(HtmlObject content)
         {
             Requires.NotNull(content, nameof(content));
-            if (content.Parent == this)
+            if (ReferenceEquals(this, content.Parent))
             {
                 throw new InvalidOperationException("Cannot have a duplicate element or attribute");
             }
 
             if (content.ObjectType == HtmlObjectType.Element)
             {
-                if (content == this)
+                if (ReferenceEquals(this, content))
                 {
                     throw new InvalidOperationException("Cannot add an object as a child to itself.");
                 }
@@ -86,14 +86,14 @@ namespace HtmlGenerator
         public void AddFirst(HtmlObject content)
         {
             Requires.NotNull(content, nameof(content));
-            if (content.Parent == this)
+            if (ReferenceEquals(this, content.Parent))
             {
                 throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
             }
 
             if (content.ObjectType == HtmlObjectType.Element)
             {
-                if (content == this)
+                if (ReferenceEquals(this, content))
                 {
                     throw new InvalidOperationException("Cannot add an object as a child to itself.");
                 }
@@ -133,11 +133,11 @@ namespace HtmlGenerator
         {
             Requires.NotNull(content, nameof(content));
 
-            if (content == this)
+            if (ReferenceEquals(this, content))
             {
                 throw new InvalidOperationException("Cannot add an object as a child to itself.");
             }
-            if (content.Parent == this)
+            if (ReferenceEquals(this, content.Parent))
             {
                 throw new InvalidOperationException("Element has already been added to this element.");
             }
@@ -166,11 +166,11 @@ namespace HtmlGenerator
         {
             Requires.NotNull(content, nameof(content));
 
-            if (content == this)
+            if (ReferenceEquals(this, content))
             {
                 throw new InvalidOperationException("Cannot add an object as a child to itself.");
             }
-            if (content.Parent == this)
+            if (ReferenceEquals(this, content.Parent))
             {
                 throw new InvalidOperationException("Element has already been added to this element.");
             }
@@ -195,14 +195,14 @@ namespace HtmlGenerator
             }
         }
 
-        private void AddElementAfter(HtmlElement parent, HtmlElement previousNode, HtmlElement element)
+        private static void AddElementAfter(HtmlElement parent, HtmlElement previousNode, HtmlElement element)
         {
             element.RemoveFromParent();
             element.Parent = parent;
             parent._elements.AddAfter(previousNode, element);
         }
 
-        private void AddElementBefore(HtmlElement parent, HtmlElement nextNode, HtmlElement element)
+        private static void AddElementBefore(HtmlElement parent, HtmlElement nextNode, HtmlElement element)
         {
             element.RemoveFromParent();
             element.Parent = parent;
@@ -278,6 +278,12 @@ namespace HtmlGenerator
             Parent._elements.Remove(this);
             Parent = null;
         }
+
+		internal void RemoveAttribute(HtmlAttribute attribute)
+		{
+			_attributes.Remove(attribute);
+			attribute.Parent = null;
+		}
 
         public string Tag { get; }
         public bool IsVoid { get; }
