@@ -29,8 +29,7 @@ namespace HtmlGenerator
             {
                 return;
             }
-            Parent._attributes.Remove(this);
-            Parent = null;
+	        Parent.RemoveAttribute(this);
         }
 
         public void SetValue(string value)
