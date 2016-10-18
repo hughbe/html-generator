@@ -8,13 +8,13 @@ namespace HtmlGenerator.Tests
     public class HtmlElementTests
     {
         [Theory]
-        [InlineData("html")]
-        [InlineData("HtMl")]
-        [InlineData("no-such-tag")]
-        public static void Ctor_String(string tag)
+        [InlineData("html", "html")]
+        [InlineData("HtMl", "html")]
+        [InlineData("no-such-tag", "no-such-tag")]
+        public static void Ctor_String(string tag, string expectedTag)
         {
             HtmlElement element = new HtmlElement(tag);
-            Assert.Equal(tag, element.Tag);
+            Assert.Equal(expectedTag, element.Tag);
             Assert.Null(element.InnerText);
             Assert.False(element.IsVoid);
             Assert.Empty(element.Elements());
@@ -23,13 +23,13 @@ namespace HtmlGenerator.Tests
         }
 
         [Theory]
-        [InlineData("html", true)]
-        [InlineData("HtMl", false)]
-        [InlineData("no-such-tag", false)]
-        public static void Ctor_String_Bool(string tag, bool isVoid)
+        [InlineData("html", true, "html")]
+        [InlineData("HtMl", false, "html")]
+        [InlineData("no-such-tag", false, "no-such-tag")]
+        public static void Ctor_String_Bool(string tag, bool isVoid, string expectedTag)
         {
             HtmlElement element = new HtmlElement(tag, isVoid);
-            Assert.Equal(tag, element.Tag);
+            Assert.Equal(expectedTag, element.Tag);
             Assert.Equal(isVoid, element.IsVoid);
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
@@ -37,14 +37,14 @@ namespace HtmlGenerator.Tests
         }
 
         [Theory]
-        [InlineData("html", "inner-text")]
-        [InlineData("HtMl", " \t \r \n ")]
-        [InlineData("no-such-tag", "")]
-        [InlineData("no-such-tag", null)]
-        public static void Ctor_String_String(string tag, string innerText)
+        [InlineData("html", "inner-text", "html")]
+        [InlineData("HtMl", " \t \r \n ", "html")]
+        [InlineData("no-such-tag", "", "no-such-tag")]
+        [InlineData("no-such-tag", null, "no-such-tag")]
+        public static void Ctor_String_String(string tag, string innerText, string expectedTag)
         {
             HtmlElement element = new HtmlElement(tag, innerText);
-            Assert.Equal(tag, element.Tag);
+            Assert.Equal(expectedTag, element.Tag);
             Assert.Equal(innerText, element.InnerText);
             Assert.False(element.IsVoid);
             Assert.Empty(element.Elements());
@@ -55,10 +55,10 @@ namespace HtmlGenerator.Tests
         public static IEnumerable<object[]> Objects_TestData()
         {
             yield return new object[] { new HtmlObject[0] };
-            yield return new object[] { new HtmlObject[] { new HtmlAttribute("Attribute1") } };
+            yield return new object[] { new HtmlObject[] { new HtmlAttribute("attribute1") } };
             yield return new object[] { new HtmlObject[] { new HtmlElement("h1") } };
-            yield return new object[] { new HtmlObject[] { new HtmlAttribute("Attribute1"), new HtmlElement("h1") } };
-            yield return new object[] { new HtmlObject[] { new HtmlAttribute("Attribute1"), new HtmlElement("h1"), new HtmlElement("h1"), new HtmlAttribute("Attribute2") } };
+            yield return new object[] { new HtmlObject[] { new HtmlAttribute("attribute1"), new HtmlElement("h1") } };
+            yield return new object[] { new HtmlObject[] { new HtmlAttribute("attribute1"), new HtmlElement("h1"), new HtmlElement("h1"), new HtmlAttribute("attribute2") } };
         }
 
         [Theory]
@@ -97,8 +97,8 @@ namespace HtmlGenerator.Tests
         public static IEnumerable<object[]> Attributes_TestData()
         {
             yield return new object[] { new HtmlAttribute[0] };
-            yield return new object[] { new HtmlAttribute[] { new HtmlAttribute("Attribute1") } };
-            yield return new object[] { new HtmlAttribute[] { new HtmlAttribute("Attribute1"), new HtmlAttribute("Attribute2") } };
+            yield return new object[] { new HtmlAttribute[] { new HtmlAttribute("attribute1") } };
+            yield return new object[] { new HtmlAttribute[] { new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2") } };
         }
 
         [Theory]
@@ -109,21 +109,51 @@ namespace HtmlGenerator.Tests
             Assert.Equal(attributes, element.Attributes().ToArray());
         }
 
+        [Fact]
+        public void Elements_String_ReturnsExpected()
+        {
+            HtmlElement element1 = new HtmlElement("div");
+            HtmlElement element2 = new HtmlElement("div");
+            HtmlElement element3 = new HtmlElement("h1");
+
+            HtmlElement element = new HtmlElement("html", element1, element2, element3);
+            Assert.Equal(new HtmlElement[] { element1, element2 }, element.Elements("div"));
+            Assert.Equal(new HtmlElement[] { element1, element2 }, element.Elements("DIV"));
+            Assert.Equal(new HtmlElement[] { element3 }, element.Elements("h1"));
+        }
+
+        [Fact]
+        public void Elements_String_NoSuchTag_ReturnsEmpty()
+        {
+            HtmlElement element = new HtmlElement("html", new HtmlElement("div"), new HtmlElement("h1"));
+            Assert.Empty(element.Elements("no-such-tag"));
+        }
+
+        [Fact]
+        public void Elements_String_NoChildren_ReturnsEmpty()
+        {
+            HtmlElement element = new HtmlElement("html");
+            Assert.Empty(element.Elements(null));
+            Assert.Empty(element.Elements("no-such-tag"));
+        }
+
         public static IEnumerable<object[]> TryGetElement_TestData()
         {
             HtmlElement[] count0 = new HtmlElement[0];
-            HtmlElement[] count1 = new HtmlElement[] { new HtmlElement("Element1") };
-            HtmlElement[] count2 = new HtmlElement[] { new HtmlElement("Element1"), new HtmlElement("Element2") };
+            HtmlElement[] count1 = new HtmlElement[] { new HtmlElement("element1") };
+            HtmlElement[] count2 = new HtmlElement[] { new HtmlElement("element1"), new HtmlElement("element2") };
 
             // Element exists
-            yield return new object[] { count1, "Element1", count1[0] };
-            yield return new object[] { count2, "Element1", count2[0] };
-            yield return new object[] { count2, "Element2", count2[1] };
+            yield return new object[] { count1, "element1", count1[0] };
+            yield return new object[] { count1, "ELEMENT1", count1[0] };
+            yield return new object[] { count2, "element1", count2[0] };
+            yield return new object[] { count2, "element2", count2[1] };
+            yield return new object[] { count2, "ELEMENT2", count2[1] };
 
             // No such Element
-            yield return new object[] { count0, "No-Such-Element", null };
-            yield return new object[] { count1, "No-Such-Element", null };
-            yield return new object[] { count2, "No-Such-Element", null };
+            yield return new object[] { count0, "no-such-element", null };
+            yield return new object[] { count1, "no-such-element", null };
+            yield return new object[] { count2, "no-such-element", null };
         }
 
         [Theory]
@@ -140,18 +170,20 @@ namespace HtmlGenerator.Tests
         public static IEnumerable<object[]> TryGetAttribute_TestData()
         {
             HtmlAttribute[] count0 = new HtmlAttribute[0];
-            HtmlAttribute[] count1 = new HtmlAttribute[] { new HtmlAttribute("Attribute1") };
-            HtmlAttribute[] count2 = new HtmlAttribute[] { new HtmlAttribute("Attribute1"), new HtmlAttribute("Attribute2") };
+            HtmlAttribute[] count1 = new HtmlAttribute[] { new HtmlAttribute("attribute1") };
+            HtmlAttribute[] count2 = new HtmlAttribute[] { new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2") };
 
             // Attribute exists
-            yield return new object[] { count1, "Attribute1", count1[0] };
-            yield return new object[] { count2, "Attribute1", count2[0] };
-            yield return new object[] { count2, "Attribute2", count2[1] };
+            yield return new object[] { count1, "attribute1", count1[0] };
+            yield return new object[] { count1, "ATTRIBUTE1", count1[0] };
+            yield return new object[] { count2, "attribute1", count2[0] };
+            yield return new object[] { count2, "attribute2", count2[1] };
+            yield return new object[] { count2, "ATTRIBUTE2", count2[1] };
 
             // No such attribute
-            yield return new object[] { count0, "No-Such-Attribute", null };
-            yield return new object[] { count1, "No-Such-Attribute", null };
-            yield return new object[] { count2, "No-Such-Attribute", null };
+            yield return new object[] { count0, "no-such-attribute", null };
+            yield return new object[] { count1, "no-such-attribute", null };
+            yield return new object[] { count2, "no-such-attribute", null };
         }
 
         [Theory]
@@ -199,15 +231,17 @@ namespace HtmlGenerator.Tests
 
             // Element exists
             yield return new object[] { count1, "h1", new HtmlElement[] { count1[0] } };
+            yield return new object[] { count1, "H1", new HtmlElement[] { count1[0] } };
             yield return new object[] { count2, "h1", new HtmlElement[] { count2[0] } };
             yield return new object[] { count2, "h2", new HtmlElement[] { count2[1] } };
             yield return new object[] { count3, "h1", new HtmlElement[] { count3[0], count3[2] } };
+            yield return new object[] { count3, "H1", new HtmlElement[] { count3[0], count3[2] } };
 
             // Element does not exist
-            yield return new object[] { count0, "No-Such-Element-Tag", new HtmlElement[0] };
-            yield return new object[] { count1, "No-Such-Element-Tag", new HtmlElement[0] };
-            yield return new object[] { count2, "No-Such-Element-Tag", new HtmlElement[0] };
-            yield return new object[] { count2, "No-Such-Element-Tag", new HtmlElement[0] };
+            yield return new object[] { count0, "no-such-element", new HtmlElement[0] };
+            yield return new object[] { count1, "no-such-element", new HtmlElement[0] };
+            yield return new object[] { count2, "no-such-element", new HtmlElement[0] };
+            yield return new object[] { count2, "no-such-element", new HtmlElement[0] };
         }
 
         [Theory]
@@ -228,7 +262,7 @@ namespace HtmlGenerator.Tests
         public void Add_HtmlObject(bool isVoid)
         {
             HtmlElement element = new HtmlElement("html", isVoid);
-            HtmlAttribute attribute = new HtmlAttribute("Attribute1");
+            HtmlAttribute attribute = new HtmlAttribute("attribute1");
             element.Add(attribute);
             Assert.Equal(element, attribute.Parent);
             Assert.Equal(new HtmlAttribute[] { attribute }, element.Attributes());
@@ -248,23 +282,23 @@ namespace HtmlGenerator.Tests
         public void AddFirst_HtmlObject(bool isVoid)
         {
             HtmlElement element = new HtmlElement("html", isVoid);
-            HtmlAttribute attribute1 = new HtmlAttribute("Attribute1");
+            HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
             element.Add(attribute1);
 
-            HtmlAttribute attribute2 = new HtmlAttribute("Attribute2");
+            HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
             element.AddFirst(attribute2);
             Assert.Equal(element, attribute2.Parent);
             Assert.Equal(new HtmlAttribute[] { attribute2, attribute1 }, element.Attributes());
 
             if (!isVoid)
             {
-                HtmlElement newElement1 = new HtmlElement("body");
-                element.Add(newElement1);
+                HtmlElement newelement1 = new HtmlElement("body");
+                element.Add(newelement1);
 
-                HtmlElement newElement2 = new HtmlElement("head");
-                element.AddFirst(newElement2);
-                Assert.Equal(element, newElement2.Parent);
-                Assert.Equal(new HtmlElement[] { newElement2, newElement1 }, element.Elements());
+                HtmlElement newelement2 = new HtmlElement("head");
+                element.AddFirst(newelement2);
+                Assert.Equal(element, newelement2.Parent);
+                Assert.Equal(new HtmlElement[] { newelement2, newelement1 }, element.Elements());
             }
         }
 
@@ -314,17 +348,17 @@ namespace HtmlGenerator.Tests
         public void AddFirst_ParamsHtmlObject_NonVoidElement()
         {
             HtmlElement element = new HtmlElement("html");
-            HtmlElement newElement1 = new HtmlElement("body");
-            HtmlAttribute newAttribute1 = new HtmlAttribute("Attribute1");
-            element.Add(new HtmlObject[] { newElement1, newAttribute1 });
+            HtmlElement newelement1 = new HtmlElement("body");
+            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
+            element.Add(new HtmlObject[] { newelement1, newAttribute1 });
 
-            HtmlElement newElement2 = new HtmlElement("head");
-            HtmlAttribute newAttribute2 = new HtmlAttribute("Attribute2");
-            element.AddFirst(new HtmlObject[] { newElement2, newAttribute2 });
+            HtmlElement newelement2 = new HtmlElement("head");
+            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
+            element.AddFirst(new HtmlObject[] { newelement2, newAttribute2 });
 
-            Assert.Equal(element, newElement2.Parent);
+            Assert.Equal(element, newelement2.Parent);
             Assert.Equal(element, newAttribute2.Parent);
-            Assert.Equal(new HtmlObject[] { newElement2, newElement1 }, element.Elements());
+            Assert.Equal(new HtmlObject[] { newelement2, newelement1 }, element.Elements());
             Assert.Equal(new HtmlAttribute[] { newAttribute2, newAttribute1 }, element.Attributes());
         }
 
@@ -332,8 +366,8 @@ namespace HtmlGenerator.Tests
         public void Add_ParamsHtmlObject_VoidElement()
         {
             HtmlElement element = new HtmlElement("html", isVoid: true);
-            HtmlAttribute newAttribute1 = new HtmlAttribute("Attribute1");
-            HtmlAttribute newAttribute2 = new HtmlAttribute("Attribute2");
+            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
+            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
             element.Add(new HtmlObject[] { newAttribute1, newAttribute2 });
 
             Assert.Equal(element, newAttribute1.Parent);
@@ -346,11 +380,11 @@ namespace HtmlGenerator.Tests
         public void AddFirst_ParamsHtmlObject_VoidElement()
         {
             HtmlElement element = new HtmlElement("html");
-            HtmlAttribute newAttribute1 = new HtmlAttribute("Attribute1");
+            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
             element.Add(newAttribute1);
 
-            HtmlAttribute newAttribute2 = new HtmlAttribute("Attribute2");
-            HtmlAttribute newAttribute3 = new HtmlAttribute("Attribute3");
+            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
+            HtmlAttribute newAttribute3 = new HtmlAttribute("attribute3");
             element.AddFirst(new HtmlObject[] { newAttribute2, newAttribute3 });
 
             Assert.Equal(element, newAttribute2.Parent);
@@ -447,17 +481,17 @@ namespace HtmlGenerator.Tests
         public void AddFirst_IEnumerableHtmlObject_NonVoidElement()
         {
             HtmlElement element = new HtmlElement("html");
-            HtmlElement newElement1 = new HtmlElement("body");
-            HtmlAttribute newAttribute1 = new HtmlAttribute("Attribute1");
-            element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { newElement1, newAttribute1 });
+            HtmlElement newelement1 = new HtmlElement("body");
+            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
+            element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { newelement1, newAttribute1 });
 
-            HtmlElement newElement2 = new HtmlElement("head");
-            HtmlAttribute newAttribute2 = new HtmlAttribute("Attribute2");
-            element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { newElement2, newAttribute2 });
+            HtmlElement newelement2 = new HtmlElement("head");
+            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
+            element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { newelement2, newAttribute2 });
 
-            Assert.Equal(element, newElement2.Parent);
+            Assert.Equal(element, newelement2.Parent);
             Assert.Equal(element, newAttribute2.Parent);
-            Assert.Equal(new HtmlObject[] { newElement2, newElement1 }, element.Elements());
+            Assert.Equal(new HtmlObject[] { newelement2, newelement1 }, element.Elements());
             Assert.Equal(new HtmlAttribute[] { newAttribute2, newAttribute1 }, element.Attributes());
         }
 
@@ -465,8 +499,8 @@ namespace HtmlGenerator.Tests
         public void Add_IEnumerableHtmlObject_VoidElement()
         {
             HtmlElement element = new HtmlElement("html", isVoid: true);
-            HtmlAttribute newAttribute1 = new HtmlAttribute("Attribute1");
-            HtmlAttribute newAttribute2 = new HtmlAttribute("Attribute2");
+            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
+            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
             element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { newAttribute1, newAttribute2 });
 
             Assert.Equal(element, newAttribute1.Parent);
@@ -479,11 +513,11 @@ namespace HtmlGenerator.Tests
         public void AddFirst_IEnumerableHtmlObject_VoidElement()
         {
             HtmlElement element = new HtmlElement("html");
-            HtmlAttribute newAttribute1 = new HtmlAttribute("Attribute1");
+            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
             element.Add(newAttribute1);
 
-            HtmlAttribute newAttribute2 = new HtmlAttribute("Attribute2");
-            HtmlAttribute newAttribute3 = new HtmlAttribute("Attribute3");
+            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
+            HtmlAttribute newAttribute3 = new HtmlAttribute("attribute3");
             element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { newAttribute2, newAttribute3 });
 
             Assert.Equal(element, newAttribute2.Parent);
@@ -733,9 +767,9 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement parent = new HtmlElement("parent");
             HtmlElement child1 = new HtmlElement("child1");
-            HtmlAttribute attribute1 = new HtmlAttribute("Attribute1");
-            HtmlAttribute attribute2 = new HtmlAttribute("Attribute2");
-            HtmlAttribute attribute3 = new HtmlAttribute("Attribute3");
+            HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
+            HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
+            HtmlAttribute attribute3 = new HtmlAttribute("attribute3");
             HtmlElement child2 = new HtmlElement("child2");
 
             parent.Add(child1, child2);
@@ -821,7 +855,7 @@ namespace HtmlGenerator.Tests
         public void ReplaceAll_DuplicateAttributeInContents_ThrowsInvalidOperationException()
         {
             HtmlElement element = new HtmlElement("html");
-            HtmlAttribute newAttribute = new HtmlAttribute("Attribute1");
+            HtmlAttribute newAttribute = new HtmlAttribute("attribute1");
             element.Add(newAttribute);
 
             Assert.Throws<InvalidOperationException>(() => element.ReplaceAll(new HtmlObject[] { newAttribute }));
@@ -977,7 +1011,7 @@ namespace HtmlGenerator.Tests
         public void ReplaceAttributes_DuplicateAttributeInAttribues_ThrowsInvalidOperationException()
         {
             HtmlElement element = new HtmlElement("html");
-            HtmlAttribute newAttribute = new HtmlAttribute("Attribute1");
+            HtmlAttribute newAttribute = new HtmlAttribute("attribute1");
             element.Add(newAttribute);
 
             Assert.Throws<InvalidOperationException>(() => element.ReplaceAttributes(new HtmlAttribute[] { newAttribute }));
@@ -1117,8 +1151,8 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void FirstAttribute_HasAttributes_ReturnsExpected()
         {
-            HtmlAttribute expected = new HtmlAttribute("Attribute1");
-            HtmlElement element = new HtmlElement("html", expected, new HtmlAttribute("Attribute2"));
+            HtmlAttribute expected = new HtmlAttribute("attribute1");
+            HtmlElement element = new HtmlElement("html", expected, new HtmlAttribute("attribute2"));
             Assert.Equal(expected, element.FirstAttribute);
         }
 
@@ -1135,8 +1169,8 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void LastAttribute_HasAttributes_ReturnsExpected()
         {
-            HtmlAttribute expected = new HtmlAttribute("Attribute2");
-            HtmlElement element = new HtmlElement("html", new HtmlAttribute("Attribute1"), expected);
+            HtmlAttribute expected = new HtmlAttribute("attribute2");
+            HtmlElement element = new HtmlElement("html", new HtmlAttribute("attribute1"), expected);
             Assert.Equal(expected, element.LastAttribute);
         }
 
@@ -1327,6 +1361,7 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("div", first, second, third, fourth);
 
             Assert.Equal(new HtmlElement[] { second, third }, first.NextElements("h2"));
+            Assert.Equal(new HtmlElement[] { second, third }, first.NextElements("H2"));
             Assert.Equal(new HtmlElement[] { third }, second.NextElements("h2"));
             Assert.Equal(new HtmlElement[] { fourth }, third.NextElements("h4"));
             Assert.Empty(third.NextElements("h1"));
@@ -1376,6 +1411,7 @@ namespace HtmlGenerator.Tests
 
             Assert.Empty(first.PreviousElements("h4"));
             Assert.Equal(new HtmlElement[] { first }, second.PreviousElements("h1"));
+            Assert.Equal(new HtmlElement[] { first }, second.PreviousElements("H1"));
             Assert.Equal(new HtmlElement[] { second }, third.PreviousElements("h2"));
             Assert.Equal(new HtmlElement[] { third, second }, fourth.PreviousElements("h2"));
         }
@@ -1493,32 +1529,33 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Descendants_OneLayerOfElements_ReturnsExpected()
         {
-            HtmlElement parent = new HtmlElement("Parent");
-            HtmlElement child1 = new HtmlElement("Child1");
-            HtmlElement child2 = new HtmlElement("Child2");
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            HtmlElement child2 = new HtmlElement("child2");
 
             parent.Add(child1, child2);
 
             VerifyDescendants(parent, null, new HtmlElement[] { child1, child2 });
-            VerifyDescendants(parent, "Child1", new HtmlElement[] { child1 });
+            VerifyDescendants(parent, "child1", new HtmlElement[] { child1 });
+            VerifyDescendants(parent, "CHILD1", new HtmlElement[] { child1 });
             VerifyDescendants(parent, "any", new HtmlElement[0]);
         }
 
         [Fact]
         public void Descendants_TwoLayersOfElements_ReturnsExpected()
         {
-            HtmlElement parent = new HtmlElement("Parent");
-            HtmlElement child1 = new HtmlElement("Child1");
-            HtmlElement grandchild1 = new HtmlElement("Grandchild1");
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            HtmlElement grandchild1 = new HtmlElement("grandchild1");
 
-            HtmlElement child2 = new HtmlElement("Child2");
-            HtmlElement grandchild2 = new HtmlElement("Grandchild2");
-            HtmlElement grandchild3 = new HtmlElement("Grandchild3");
-            HtmlElement grandchild4 = new HtmlElement("Grandchild3");
+            HtmlElement child2 = new HtmlElement("child2");
+            HtmlElement grandchild2 = new HtmlElement("grandchild2");
+            HtmlElement grandchild3 = new HtmlElement("grandchild3");
+            HtmlElement grandchild4 = new HtmlElement("grandchild3");
 
-            HtmlElement child3 = new HtmlElement("Child3");
-            HtmlElement child4 = new HtmlElement("Child3");
-            HtmlElement grandchild5 = new HtmlElement("Child3");
+            HtmlElement child3 = new HtmlElement("child3");
+            HtmlElement child4 = new HtmlElement("child3");
+            HtmlElement grandchild5 = new HtmlElement("child3");
 
             parent.Add(child1, child2, child3, child4);
             child1.Add(grandchild1);
@@ -1526,16 +1563,17 @@ namespace HtmlGenerator.Tests
             child4.Add(grandchild5);
 
             VerifyDescendants(parent, null, new HtmlElement[] { child1, grandchild1, child2, grandchild2, grandchild3, grandchild4, child3, child4, grandchild5 });
-            VerifyDescendants(parent, "Grandchild1", new HtmlElement[] { grandchild1 });
-            VerifyDescendants(parent, "Grandchild3", new HtmlElement[] { grandchild3, grandchild4 });
-            VerifyDescendants(parent, "Child3", new HtmlElement[] { child3, child4, grandchild5 });
+            VerifyDescendants(parent, "grandchild1", new HtmlElement[] { grandchild1 });
+            VerifyDescendants(parent, "grandchild3", new HtmlElement[] { grandchild3, grandchild4 });
+            VerifyDescendants(parent, "GRANDCHILD3", new HtmlElement[] { grandchild3, grandchild4 });
+            VerifyDescendants(parent, "child3", new HtmlElement[] { child3, child4, grandchild5 });
             VerifyDescendants(parent, "any", new HtmlElement[0]);
         }
 
         [Fact]
         public void Descendants_ThreeLayersOfElements_ReturnsExpected()
         {
-            HtmlElement parent = new HtmlElement("Parent");
+            HtmlElement parent = new HtmlElement("parent");
             HtmlElement child1 = new HtmlElement("Child1");
             HtmlElement grandchild1 = new HtmlElement("Grandchild1");
             HtmlElement greatGrandchild1 = new HtmlElement("GreatGrandchild1");
@@ -1563,7 +1601,7 @@ namespace HtmlGenerator.Tests
 
         private static void VerifyDescendants(HtmlElement element, string tag, HtmlElement[] expected)
         {
-            HtmlElement[] expectedIncludingSelf; ;
+            HtmlElement[] expectedIncludingSelf;
             if (tag == null || element.Tag == tag)
             {
                 expectedIncludingSelf = new HtmlElement[expected.Length + 1];
@@ -1587,46 +1625,48 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Ancestors_OneLayerOfElements_ReturnsExpected()
         {
-            HtmlElement parent = new HtmlElement("Parent");
-            HtmlElement child1 = new HtmlElement("Child1");
-            HtmlElement child2 = new HtmlElement("Child2");
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child1");
+            HtmlElement child2 = new HtmlElement("child2");
 
             parent.Add(child1, child2);
 
             VerifyAncestors(child1, null, new HtmlElement[] { parent });
-            VerifyAncestors(child1, "Parent", new HtmlElement[] { parent });
-            VerifyAncestors(child1, "Child1", new HtmlElement[0]);
+            VerifyAncestors(child1, "parent", new HtmlElement[] { parent });
+            VerifyAncestors(child1, "PARENT", new HtmlElement[] { parent });
+            VerifyAncestors(child1, "child1", new HtmlElement[0]);
             VerifyAncestors(child1, "any", new HtmlElement[0]);
         }
 
         [Fact]
         public void Ancestors_TwoLayersOfElements_ReturnsExpected()
         {
-            HtmlElement parent = new HtmlElement("Parent");
-            HtmlElement child1 = new HtmlElement("Child");
-            HtmlElement grandchild1 = new HtmlElement("Child");
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child");
+            HtmlElement grandchild1 = new HtmlElement("child");
 
-            HtmlElement child2 = new HtmlElement("Child");
+            HtmlElement child2 = new HtmlElement("child");
 
             parent.Add(child1, child2);
             child1.Add(grandchild1);
 
             VerifyAncestors(grandchild1, null, new HtmlElement[] { child1, parent });
-            VerifyAncestors(grandchild1, "Child", new HtmlElement[] { child1 });
-            VerifyAncestors(grandchild1, "Parent", new HtmlElement[] { parent });
+            VerifyAncestors(grandchild1, "child", new HtmlElement[] { child1 });
+            VerifyAncestors(grandchild1, "parent", new HtmlElement[] { parent });
+            VerifyAncestors(grandchild1, "PARENT", new HtmlElement[] { parent });
             VerifyAncestors(grandchild1, "any", new HtmlElement[0]);
         }
 
         [Fact]
         public void Ancestors_ThreeLayersOfElements_ReturnsExpected()
         {
-            HtmlElement parent = new HtmlElement("Parent");
-            HtmlElement child1 = new HtmlElement("Child");
-            HtmlElement grandchild1 = new HtmlElement("Child");
-            HtmlElement greatGrandchild = new HtmlElement("GreatGrandchild");
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement child1 = new HtmlElement("child");
+            HtmlElement grandchild1 = new HtmlElement("child");
+            HtmlElement greatGrandchild = new HtmlElement("greatgrandchild");
 
-            HtmlElement child2 = new HtmlElement("Child");
-            HtmlElement grandchild2 = new HtmlElement("Grandchild");
+            HtmlElement child2 = new HtmlElement("child");
+            HtmlElement grandchild2 = new HtmlElement("grandchild");
 
             parent.Add(child1, child2);
             child1.Add(grandchild1);
@@ -1635,25 +1675,26 @@ namespace HtmlGenerator.Tests
             grandchild1.Add(greatGrandchild);
 
             VerifyAncestors(greatGrandchild, null, new HtmlElement[] { grandchild1, child1, parent });
-            VerifyAncestors(greatGrandchild, "Child", new HtmlElement[] { grandchild1, child1 });
-            VerifyAncestors(greatGrandchild, "Parent", new HtmlElement[] { parent });
-            VerifyAncestors(greatGrandchild, "GreatGrandchild", new HtmlElement[0]);
+            VerifyAncestors(greatGrandchild, "child", new HtmlElement[] { grandchild1, child1 });
+            VerifyAncestors(greatGrandchild, "parent", new HtmlElement[] { parent });
+            VerifyAncestors(greatGrandchild, "PARENT", new HtmlElement[] { parent });
+            VerifyAncestors(greatGrandchild, "greatgrandchild", new HtmlElement[0]);
             VerifyAncestors(greatGrandchild, "any", new HtmlElement[0]);
         }
 
         [Fact]
         public void Ancestors_NoAncestors_ReturnsEmpty()
         {
-            HtmlElement parent = new HtmlElement("Parent");
+            HtmlElement parent = new HtmlElement("parent");
 
             VerifyAncestors(parent, null, new HtmlElement[0]);
-            VerifyAncestors(parent, "Parent", new HtmlElement[0]);
+            VerifyAncestors(parent, "parent", new HtmlElement[0]);
             VerifyAncestors(parent, "any", new HtmlElement[0]);
         }
 
         private static void VerifyAncestors(HtmlElement element, string tag, HtmlElement[] expected)
         {
-            HtmlElement[] expectedIncludingSelf; ;
+            HtmlElement[] expectedIncludingSelf;
             if (tag == null || element.Tag == tag)
             {
                 expectedIncludingSelf = new HtmlElement[expected.Length + 1];
@@ -1677,9 +1718,8 @@ namespace HtmlGenerator.Tests
         public static IEnumerable<object[]> Equals_TestData()
         {
             // Tag
-            yield return new object[] { new HtmlElement("Tag"), new HtmlElement("Tag"), true };
-            yield return new object[] { new HtmlElement("Tag"), new HtmlElement("tag"), false };
-            yield return new object[] { new HtmlElement("Tag"), new HtmlElement("other-tag"), false };
+            yield return new object[] { new HtmlElement("tag"), new HtmlElement("tag"), true };
+            yield return new object[] { new HtmlElement("tag"), new HtmlElement("other-tag"), false };
 
             // Void
             yield return new object[] { new HtmlElement("tag", isVoid: true), new HtmlElement("tag", isVoid: true), true };
@@ -1700,12 +1740,6 @@ namespace HtmlGenerator.Tests
             yield return new object[]
             {
                 new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
-                new HtmlElement("tag", new HtmlElement("Element"), new HtmlAttribute("attribute")),
-                false
-            };
-            yield return new object[]
-            {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
                 new HtmlElement("tag", new HtmlElement("other-element"), new HtmlAttribute("attribute")),
                 false
             };
@@ -1719,19 +1753,13 @@ namespace HtmlGenerator.Tests
             // Attributes
             yield return new object[]
             {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("Attribute")),
                 new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
-                false
-            };
-            yield return new object[]
-            {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("Attribute")),
                 new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("other-attribute")),
                 false
             };
             yield return new object[]
             {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("Attribute")),
+                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
                 new HtmlElement("tag", new HtmlElement("element")),
                 false
             };

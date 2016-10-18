@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using HtmlGenerator.Extensions;
 
 namespace HtmlGenerator
 {
@@ -14,7 +15,7 @@ namespace HtmlGenerator
         public HtmlElement(string tag)
         {
             Requires.NotNullOrWhitespace(tag, nameof(tag));
-            Tag = tag;
+            Tag = tag.ToAsciiLower();
         }
 
         public HtmlElement(string tag, bool isVoid) : this(tag)
@@ -311,7 +312,7 @@ namespace HtmlGenerator
             HtmlElement element = _elements._first;
             while (element != null)
             {
-                if (isDefaultTag || element.Tag == tag)
+                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(element.Tag, tag))
                 {
                     yield return element;
                 }
@@ -355,7 +356,7 @@ namespace HtmlGenerator
             HtmlElement current = _elements._first;
             while (current != null)
             {
-                if (current.Tag == tag)
+                if (StringExtensions.EqualsAsciiOrdinalIgnoreCase(current.Tag, tag))
                 {
                     return true;
                 }
@@ -371,7 +372,7 @@ namespace HtmlGenerator
             HtmlAttribute current = _attributes._first;
             while (current != null)
             {
-                if (current.Name == name)
+                if (StringExtensions.EqualsAsciiOrdinalIgnoreCase(current.Name, name))
                 {
                     return true;
                 }
@@ -387,7 +388,7 @@ namespace HtmlGenerator
             HtmlElement current = _elements._first;
             while (current != null)
             {
-                if (current.Tag == tag)
+                if (StringExtensions.EqualsAsciiOrdinalIgnoreCase(current.Tag, tag))
                 {
                     element = current;
                     return true;
@@ -406,7 +407,7 @@ namespace HtmlGenerator
             HtmlAttribute current = _attributes._first;
             while (current != null)
             {
-                if (current.Name == name)
+                if (StringExtensions.EqualsAsciiOrdinalIgnoreCase(current.Name, name))
                 {
                     attribute = current;
                     return true;
@@ -430,7 +431,7 @@ namespace HtmlGenerator
             HtmlElement nextElement = (HtmlElement)_next;
             while (nextElement != null)
             {
-                if (isDefaultTag || nextElement.Tag == tag)
+                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(nextElement.Tag, tag))
                 {
                     yield return nextElement;
                 }
@@ -447,7 +448,7 @@ namespace HtmlGenerator
             HtmlElement previousElement = (HtmlElement)_previous;
             while (previousElement != null)
             {
-                if (isDefaultTag || previousElement.Tag == tag)
+                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(previousElement.Tag, tag))
                 {
                     yield return previousElement;
                 }
@@ -464,7 +465,7 @@ namespace HtmlGenerator
             HtmlElement element = _elements._first;
             while (element != null)
             {
-                if (isDefaultTag || element.Tag == tag)
+                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(element.Tag, tag))
                 {
                     yield return element;
                 }
@@ -482,7 +483,7 @@ namespace HtmlGenerator
         {
             bool isDefaultTag = string.IsNullOrEmpty(tag);
 
-            if (isDefaultTag || Tag == tag)
+            if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(Tag, tag))
             {
                 yield return this;
             }
@@ -501,7 +502,7 @@ namespace HtmlGenerator
             HtmlElement parent = Parent;
             while (parent != null)
             {
-                if (isDefaultTag || parent.Tag == tag)
+                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(parent.Tag, tag))
                 {
                     yield return parent;
                 }
@@ -515,7 +516,7 @@ namespace HtmlGenerator
         {
             bool isDefaultTag = string.IsNullOrEmpty(tag);
 
-            if (isDefaultTag || Tag == tag)
+            if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(Tag, tag))
             {
                 yield return this;
             }

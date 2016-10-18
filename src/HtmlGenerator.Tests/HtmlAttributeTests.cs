@@ -7,25 +7,25 @@ namespace HtmlGenerator.Tests
     public class HtmlAttributeTests
     {
         [Theory]
-        [InlineData("name")]
-        [InlineData("NaMe")]
-        public void Ctor_String(string name)
+        [InlineData("name", "name")]
+        [InlineData("NaMe", "name")]
+        public void Ctor_String(string name, string expectedName)
         {
             HtmlAttribute attribute = new HtmlAttribute(name);
-            Assert.Equal(name, attribute.Name);
+            Assert.Equal(expectedName, attribute.Name);
             Assert.Null(attribute.Value);
             Assert.True(attribute.IsVoid);
         }
 
         [Theory]
-        [InlineData("name", "")]
-        [InlineData("name", " \r \t \n")]
-        [InlineData("name", "value")]
-        [InlineData("NaMe", "VaLuE")]
-        public void Ctor_String_String(string name, string value)
+        [InlineData("name", "", "name")]
+        [InlineData("name", " \r \t \n", "name")]
+        [InlineData("name", "value", "name")]
+        [InlineData("NaMe", "VaLuE", "name")]
+        public void Ctor_String_String(string name, string value, string expectedName)
         {
             HtmlAttribute attribute = new HtmlAttribute(name, value);
-            Assert.Equal(name, attribute.Name);
+            Assert.Equal(expectedName, attribute.Name);
             Assert.Equal(value, attribute.Value);
             Assert.False(attribute.IsVoid);
         }
@@ -128,7 +128,6 @@ namespace HtmlGenerator.Tests
         public static IEnumerable<object[]> Equals_TestData()
         {
             yield return new object[] { new HtmlAttribute("name"), new HtmlAttribute("name"), true };
-            yield return new object[] { new HtmlAttribute("name"), new HtmlAttribute("Name"), false };
             yield return new object[] { new HtmlAttribute("name"), new HtmlAttribute("other-name"), false };
             yield return new object[] { new HtmlAttribute("name"), new HtmlAttribute("name", "value"), false };
 

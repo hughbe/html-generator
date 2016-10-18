@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using HtmlGenerator.Extensions;
 
 namespace HtmlGenerator
 {
@@ -8,7 +9,7 @@ namespace HtmlGenerator
         public HtmlAttribute(string name)
         {
             Requires.NotNullOrWhitespace(name, nameof(name));
-            Name = name;
+            Name = name.ToAsciiLower();
         }
 
         public HtmlAttribute(string name, string value) : this(name)

@@ -16,7 +16,8 @@
   "copyright": "Hugh Bellamy 2016",
   "buildOptions": {
     "preserveCompilationContext": true,
-    "warningsAsErrors": true
+    "warningsAsErrors": true,
+    "allowUnsafe": true
   },
   "frameworks": {
     "netstandard1.0": {
