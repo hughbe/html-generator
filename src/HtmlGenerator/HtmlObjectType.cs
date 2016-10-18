@@ -3,6 +3,7 @@
     public enum HtmlObjectType
     {
         Attribute,
-        Element
+        Element,
+        Comment
     }
 }

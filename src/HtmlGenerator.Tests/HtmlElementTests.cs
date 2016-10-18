@@ -88,7 +88,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void HtmlObjectType_Get_ReturnsElement()
+        public void ObjectType_Get_ReturnsElement()
         {
             HtmlElement attribute = new HtmlElement("div");
             Assert.Equal(HtmlObjectType.Element, attribute.ObjectType);

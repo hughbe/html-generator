@@ -48,16 +48,7 @@ namespace HtmlGenerator
                 throw new InvalidOperationException("Cannot have a duplicate element or attribute");
             }
 
-            if (content.ObjectType == HtmlObjectType.Element)
-            {
-                if (ReferenceEquals(this, content))
-                {
-                    throw new InvalidOperationException("Cannot add an object as a child to itself.");
-                }
-                ThrowIfVoid();
-                AddElementAfter(this, _elements._last, (HtmlElement)content);
-            }
-            else
+            if (content.ObjectType == HtmlObjectType.Attribute)
             {
                 HtmlAttribute attribute = (HtmlAttribute)content;
                 if (HasAttribute(attribute.Name))
@@ -65,6 +56,15 @@ namespace HtmlGenerator
                     throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
                 }
                 AddAttribute(attribute);
+            }
+            else
+            {
+                if (ReferenceEquals(this, content))
+                {
+                    throw new InvalidOperationException("Cannot add an object as a child to itself.");
+                }
+                ThrowIfVoid();
+                AddElementAfter(this, _elements._last, (HtmlElement)content);
             }
         }
 
@@ -760,6 +760,20 @@ namespace HtmlGenerator
                     // Finished parsing
                     return true;
                 }
+                else if (currentChar == '!')
+                {
+                    if (!TryParseComment())
+                    {
+                        return false;
+                    }
+                    if (currentIndex + 1 < text.Length)
+                    {
+                        // Got more to parse?
+                        return TryParseOpeningTag();
+                    }
+                    // Finished parsing
+                    return true;
+                }
                 if (!IsLetter(currentChar))
                 {
                     // No valid tag, e.g. "<>", "<1"
@@ -811,19 +825,7 @@ namespace HtmlGenerator
                 {
                     element._attributes = attributes;
                 }
-                if (rootElement == null)
-                {
-                    currentElement = element;
-                    rootElement = element;
-                }
-                else
-                {
-                    currentElement.Add(element);
-                    if (!element.IsVoid)
-                    {
-                        currentElement = element;
-                    }
-                }
+                SetParsing(element);
 
                 if (!element.IsVoid && !TryParseInnerText())
                 {
@@ -1012,6 +1014,62 @@ namespace HtmlGenerator
                 currentElement = currentElement.Parent;
                 ReadAndSkipWhitespace();
                 return true;
+            }
+
+            private bool TryParseComment()
+            {
+                if (!ReadNext() || currentChar != '-')
+                {
+                    // Invalid char after '!', e.g. "<!", "<!a"
+                    return false;
+                }
+                if (!ReadNext() || currentChar != '-')
+                {
+                    // Invalid char after '-', e.g. "<!-", "<!-a"
+                    return false;
+                }
+                int commentStartIndex = currentIndex + 1;
+                int commentEndIndex = -1;
+                while (ReadNext())
+                {
+                    if (currentChar == '-')
+                    {
+                        if (ReadNext() && currentChar == '-')
+                        {
+                            if (ReadNext() && currentChar == '>')
+                            {
+                                commentEndIndex = currentIndex - 3;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (commentEndIndex == -1)
+                {
+                    // No end of comment, e.g. "<!--", "<!--abc", "<!--abc-", "<!--abc-a", "<!--abc--", "<!--abc--a"
+                    return false;
+                }
+                string comment = text.Substring(commentStartIndex, commentEndIndex - commentStartIndex + 1);
+                SetParsing(new HtmlComment(comment));
+                ReadAndSkipWhitespace();
+                return true;
+            }
+
+            private void SetParsing(HtmlElement element)
+            {
+                if (rootElement == null)
+                {
+                    currentElement = element;
+                    rootElement = element;
+                }
+                else
+                {
+                    currentElement.Add(element);
+                    if (!element.IsVoid)
+                    {
+                        currentElement = element;
+                    }
+                }
             }
 
             public bool Parse()
