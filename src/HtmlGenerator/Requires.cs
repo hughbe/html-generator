@@ -12,12 +12,21 @@ namespace HtmlGenerator
             }
         }
 
+        public static void NotNullOrEmpty(string value, string paramName)
+        {
+            NotNull(value, paramName);
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException("Argument cannot be empty.", paramName);
+            }
+        }
+
         public static void NotNullOrWhitespace(string value, string paramName)
         {
             NotNull(value, paramName);
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentException("Argument cannot be empty or whitespace", paramName);
+                throw new ArgumentException("Argument cannot be empty or whitespace.", paramName);
             }
         }
     }
