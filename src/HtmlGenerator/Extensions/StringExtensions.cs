@@ -2,13 +2,15 @@
 {
     public static class StringExtensions
     {
-        public static unsafe string ToAsciiLower(this string text)
+        public static string ToAsciiLower(this string text) => ToAsciiLower(text, 0, text.Length);
+
+        public static unsafe string ToAsciiLower(this string text, int startIndex, int length)
         {
             bool hasUpperCase = false;
-            for (int i = 0; i < text.Length; i++)
+            for (int i = startIndex; i < startIndex + length ; i++)
             {
                 char c = text[i];
-                if (c >= 'A' || c <= '|')
+                if (c >= 'A' || c <= 'Z')
                 {
                     hasUpperCase = true;
                     break;
@@ -16,23 +18,23 @@
             }
             if (!hasUpperCase)
             {
-                return text;
+                return text.Substring(startIndex, length);
             }
 
-            char* copy = stackalloc char[text.Length];
-            for (int i = 0; i < text.Length; i++)
+            char* copy = stackalloc char[length];
+            for (int i = startIndex; i < startIndex + length ; i++)
             {
                 char c = text[i];
                 if (c >= 'A' || c <= 'Z')
                 {
-                    copy[i] = (char)(c | 0x20);
+                    copy[i - startIndex] = (char)(c | 0x20);
                 }
                 else
                 {
-                    copy[i] = c;
+                    copy[i - startIndex] = c;
                 }
             }
-            return new string(copy, 0, text.Length);
+            return new string(copy, 0, length);
         }
 
         public static bool EqualsAsciiOrdinalIgnoreCase(string valueA, string valueB) => EqualsAsciiOrdinalIgnoreCase(valueA, 0, valueA.Length, valueB, 0, valueB.Length);
