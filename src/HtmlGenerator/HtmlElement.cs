@@ -722,8 +722,8 @@ namespace HtmlGenerator
             public Parser(string text)
             {
                 this.text = text;
-                currentIndex = 0;
-                currentChar = text[0];
+                currentIndex = -1;
+                currentChar = char.MinValue;
                 currentElement = null;
                 rootElement = null;
             }
@@ -735,13 +735,7 @@ namespace HtmlGenerator
             public HtmlElement rootElement;
             private HtmlElement currentElement;
 
-            public string Remaining
-            {
-                get
-                {
-                    return text.Substring(currentIndex);
-                }
-            }
+            public string Remaining => text.Substring(currentIndex);
 
             public bool ParseOpening()
             {
@@ -750,20 +744,9 @@ namespace HtmlGenerator
                     // No opening tag, e.g. "abc"
                     return false;
                 }
-                SkipWhitespace();
-                if (!ReadNext())
-                {
-                    // No more, e.g. "<", "<  "
-                    return false;
-                }
-                SkipWhitespace();
+                ReadAndSkipWhitespace();
                 if (currentChar == '/')
                 {
-                    if (!ReadNext())
-                    {
-                        // No content after '/', e.g. "<abc></"
-                        return false;
-                    }
                     if (!TryParseClosingTag())
                     {
                         return false;
@@ -812,20 +795,14 @@ namespace HtmlGenerator
                 if (currentChar == '/')
                 {
                     // Void element?
-                    if (!ReadNext())
-                    {
-                        // No tag ending, e.g. "<abc/"
-                        return false;
-                    }
-                    SkipWhitespace();
+                    ReadAndSkipWhitespace();
                     if (currentChar != '>')
                     {
-                        // No end of void tag, e.g. "<abc/a>"
+                        // No end of void tag, e.g. "<abc/", "<abc/a>"
                         return false;
                     }
                     isVoid = true;
-                    ReadNext();
-                    SkipWhitespace();
+                    ReadAndSkipWhitespace();
                 }
 
                 HtmlElement element = new HtmlElement(tag, isVoid);
@@ -862,15 +839,13 @@ namespace HtmlGenerator
             private bool TryParseAttributes(out HtmlObjectLinkedList<HtmlAttribute> attributes)
             {
                 attributes = new HtmlObjectLinkedList<HtmlAttribute>();
-                SkipWhitespace();
 
                 bool isEnd = false;
-                while (currentChar != '/' && currentChar != '>')
+                while (!isEnd && ReadAndSkipWhitespace())
                 {
-                    if (currentChar == char.MinValue)
+                    if (currentChar == '/' || currentChar == '>')
                     {
-                        // No end of the attribute, e.g. "<abc attribute="""
-                        return false;
+                        return true;
                     }
                     HtmlAttribute attribute;
                     if (!TryParseAttribute(out attribute, out isEnd))
@@ -879,9 +854,8 @@ namespace HtmlGenerator
                         return false;
                     }
                     attributes.AddAfter(attributes._last, attribute);
-                    SkipWhitespace();
                 }
-                return true;
+                return isEnd;
             }
 
             private bool TryParseAttribute(out HtmlAttribute attribute, out bool isEnd)
@@ -893,20 +867,30 @@ namespace HtmlGenerator
                 int firstNameEndIndex = -1;
                 int firstEqualsIndex = -1;
                 string value = null;
-                while (ReadNext())
+                do
                 {
-                    bool isTagEnd = currentChar == '/' || currentChar == '>';
-                    if (char.IsWhiteSpace(currentChar) || isTagEnd)
+                    if (char.IsWhiteSpace(currentChar))
                     {
                         if (firstNameEndIndex == -1)
                         {
                             firstNameEndIndex = currentIndex - 1;
+                            char next = NextCharAfterWhitespace();
+                            if (next == '/' || next == '>')
+                            {
+                                ReadAndSkipWhitespace();
+                                isEnd = true;
+                                break;
+                            }
+                            else if (next == '=')
+                            {
+                                ReadAndSkipWhitespace();
+                            }
                         }
-                        if (isTagEnd)
-                        {
-                            isEnd = true;
-                            break;
-                        }
+                    }
+                    if (currentChar == '/' || currentChar == '>')
+                    {
+                        isEnd = true;
+                        break;
                     }
                     else if (currentChar == '=' && firstEqualsIndex == -1)
                     {
@@ -916,12 +900,7 @@ namespace HtmlGenerator
                             firstNameEndIndex = currentIndex - 1;
                         }
                         firstEqualsIndex = currentIndex;
-                        if (!ReadNext())
-                        {
-                            // Nothing after equals, e.g. "<abc attribute="
-                            return false;
-                        }
-                        SkipWhitespace();
+                        ReadAndSkipWhitespace();
                         if (currentChar != '"')
                         {
                             // Invalid character after equals, e.g. "<abc attribute=!"
@@ -943,7 +922,6 @@ namespace HtmlGenerator
                             return false;
                         }
                         value = text.Substring(valueStartIndex, valueEndIndex - valueStartIndex + 1);
-                        ReadNext();
                         break;
                     }
                     else if (firstNameEndIndex != -1)
@@ -951,7 +929,7 @@ namespace HtmlGenerator
                         // Found a different parameter
                         break;
                     }
-                }
+                } while (ReadNext());
                 if (firstNameEndIndex == -1)
                 {
                     // End, todo!
@@ -979,7 +957,7 @@ namespace HtmlGenerator
                     if (!foundWhitespace && char.IsWhiteSpace(currentChar))
                     {
                         foundWhitespace = true;
-                        SkipWhitespace();
+                        ReadAndSkipWhitespace();
                         innerTextStartIndex = currentIndex;
                     }
                     if (currentChar == '<')
@@ -1003,13 +981,13 @@ namespace HtmlGenerator
 
             public bool Parse()
             {
-                SkipWhitespace();
+                ReadAndSkipWhitespace();
                 return ParseOpening();
             }
 
             private bool TryParseClosingTag()
             {
-                SkipWhitespace();
+                ReadAndSkipWhitespace();
                 int tagStartingIndex = currentIndex;
                 int tagClosingIndex = -1;
                 // Non-void closing tag, e.g. "<abc></abc>"
@@ -1024,7 +1002,7 @@ namespace HtmlGenerator
                     else if (char.IsWhiteSpace(currentChar))
                     {
                         tagClosingIndex = currentIndex - 1;
-                        SkipWhitespace();
+                        ReadAndSkipWhitespace();
                         if (currentChar == '>')
                         {
                             break;
@@ -1048,9 +1026,7 @@ namespace HtmlGenerator
                     return false;
                 }
                 currentElement = currentElement.Parent;
-                SkipWhitespace();
-                ReadNext();
-                SkipWhitespace();
+                ReadAndSkipWhitespace();
                 return true;
             }
 
@@ -1070,6 +1046,19 @@ namespace HtmlGenerator
                 currentChar = text[currentIndex];
             }
 
+            private char NextCharAfterWhitespace()
+            {
+                for (int i = currentIndex; i < text.Length; i++)
+                {
+                    char c = text[i];
+                    if (!char.IsWhiteSpace(c))
+                    {
+                        return c;
+                    }
+                }
+                return char.MinValue;
+            }
+
             private bool ReadNext()
             {
                 currentChar = char.MinValue;
@@ -1082,20 +1071,16 @@ namespace HtmlGenerator
                 return true;
             }
 
-            private void SkipWhitespace()
+            private bool ReadAndSkipWhitespace()
             {
-                for (int i = currentIndex; i < text.Length; i++)
+                while (ReadNext())
                 {
-                    if (!char.IsWhiteSpace(text[i]))
+                    if (!char.IsWhiteSpace(currentChar))
                     {
-                        break;
-                    }
-                    currentIndex++;
-                    if (currentIndex < text.Length)
-                    {
-                        currentChar = text[currentIndex];
+                        return true;
                     }
                 }
+                return false;
             }
         }
     }

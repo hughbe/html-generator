@@ -6,8 +6,9 @@ namespace HtmlGenerator.Tests
     {
         public static void Main(string[] args)
         {
-			Console.WriteLine(HtmlElement.Parse(@"<br allowfullscreen/>"));
+			Console.WriteLine(HtmlElement.Parse(@"<div   allowfullscreen  ></div>"));
 
+            Console.WriteLine("Done");
             Console.ReadLine();
         }
     }
