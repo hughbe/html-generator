@@ -949,29 +949,16 @@ namespace HtmlGenerator
 
             private bool TryParseInnerText()
             {
-                int innerTextStartIndex = currentIndex + 1;
-                int innerTextEndIndex = -1;
-                bool foundWhitespace = false;
-                while (ReadNext())
-                {
-                    if (!foundWhitespace && char.IsWhiteSpace(currentChar))
-                    {
-                        foundWhitespace = true;
-                        ReadAndSkipWhitespace();
-                        innerTextStartIndex = currentIndex;
-                    }
-                    if (currentChar == '<')
-                    {
-                        innerTextEndIndex = currentIndex - 1;
-                        break;
-                    }
-                }
-                if (innerTextEndIndex == -1)
+                ReadAndSkipWhitespace();
+                int innerTextStartIndex = currentIndex;
+                while (currentChar != '<' && ReadNext()) ;
+
+                int innerTextLength = currentIndex - innerTextStartIndex;
+                if (innerTextLength < 0)
                 {
                     // No end of non-void tag, e.g. "<abc>", "<abc>  ", "<abc>InnerText"
                     return false;
                 }
-                int innerTextLength = innerTextEndIndex - innerTextStartIndex + 1;
                 if (innerTextLength != 0)
                 {
                     currentElement.InnerText = text.Substring(innerTextStartIndex, innerTextLength);
