@@ -839,112 +839,114 @@ namespace HtmlGenerator
             private bool TryParseAttributes(out HtmlObjectLinkedList<HtmlAttribute> attributes)
             {
                 attributes = new HtmlObjectLinkedList<HtmlAttribute>();
+                ReadAndSkipWhitespace();
 
-                bool isEnd = false;
-                while (!isEnd && ReadAndSkipWhitespace())
+                while (currentChar != '/' && currentChar != '>')
                 {
-                    if (currentChar == '/' || currentChar == '>')
-                    {
-                        return true;
-                    }
                     HtmlAttribute attribute;
-                    if (!TryParseAttribute(out attribute, out isEnd))
+                    if (!TryParseAttribute(out attribute))
                     {
                         // Could not parse an attribute
                         return false;
                     }
                     attributes.AddAfter(attributes._last, attribute);
                 }
-                return isEnd;
+                return true;
             }
 
-            private bool TryParseAttribute(out HtmlAttribute attribute, out bool isEnd)
+            private bool TryParseAttributeName(out string name, out bool isExtendedAttribute, out bool isFinalAttribute)
             {
-                attribute = null;
-                isEnd = false;
+                name = null;
+                isExtendedAttribute = false;
+                isFinalAttribute = false;
 
-                int attributeNameStartIndex = currentIndex;
-                int firstNameEndIndex = -1;
-                int firstEqualsIndex = -1;
-                string value = null;
-                do
+                int nameStartIndex = currentIndex;
+                int nameEndIndex = -1;
+                bool foundWhitespace = false;
+                while (ReadNext())
                 {
-                    if (char.IsWhiteSpace(currentChar))
+                    if (!foundWhitespace && char.IsWhiteSpace(currentChar))
                     {
-                        if (firstNameEndIndex == -1)
+                        if (nameEndIndex == -1)
                         {
-                            firstNameEndIndex = currentIndex - 1;
-                            char next = NextCharAfterWhitespace();
-                            if (next == '/' || next == '>')
-                            {
-                                ReadAndSkipWhitespace();
-                                isEnd = true;
-                                break;
-                            }
-                            else if (next == '=')
-                            {
-                                ReadAndSkipWhitespace();
-                            }
+                            nameEndIndex = currentIndex - 1;
                         }
+                        ReadAndSkipWhitespace();
+                        foundWhitespace = true;
                     }
                     if (currentChar == '/' || currentChar == '>')
                     {
-                        isEnd = true;
+                        if (nameEndIndex == -1)
+                        {
+                            nameEndIndex = currentIndex - 1;
+                        }
+                        isFinalAttribute = true;
                         break;
                     }
-                    else if (currentChar == '=' && firstEqualsIndex == -1)
+                    else if (currentChar == '=')
                     {
-                        if (firstNameEndIndex == -1)
+                        if (nameEndIndex == -1)
                         {
-                            // Terminate the attribute name, e.g. "<abc attribute="">"
-                            firstNameEndIndex = currentIndex - 1;
+                            nameEndIndex = currentIndex - 1;
                         }
-                        firstEqualsIndex = currentIndex;
+                        isExtendedAttribute = true;
                         ReadAndSkipWhitespace();
-                        if (currentChar != '"')
-                        {
-                            // Invalid character after equals, e.g. "<abc attribute=!"
-                            return false;
-                        }
-                        int valueStartIndex = currentIndex + 1;
-                        int valueEndIndex = -1;
-                        while (ReadNext())
-                        {
-                            if (currentChar == '"')
-                            {
-                                valueEndIndex = currentIndex - 1;
-                                break;
-                            }
-                        }
-                        if (valueEndIndex == -1)
-                        {
-                            // No end of attribute value, e.g. "<abc attribute=" or "<abc attribute="a
-                            return false;
-                        }
-                        value = text.Substring(valueStartIndex, valueEndIndex - valueStartIndex + 1);
                         break;
                     }
-                    else if (firstNameEndIndex != -1)
+                    else if (nameEndIndex != -1)
                     {
-                        // Found a different parameter
+                        // Found another attribute
                         break;
                     }
-                } while (ReadNext());
-                if (firstNameEndIndex == -1)
-                {
-                    // End, todo!
-                    return true;
                 }
-                string name = text.Substring(attributeNameStartIndex, firstNameEndIndex - attributeNameStartIndex + 1);
-                if (value == null)
+                if (nameEndIndex == -1)
+                {
+                    return false;
+                }
+
+                name = text.Substring(nameStartIndex, nameEndIndex - nameStartIndex + 1);
+                return true;
+            }
+
+            private bool TryParseAttribute(out HtmlAttribute attribute)
+            {
+                attribute = null;
+                string name;
+                bool isExtendedAttribute;
+                bool isFinalAttribute;
+
+                if (!TryParseAttributeName(out name, out isExtendedAttribute, out isFinalAttribute))
+                {
+                    return false;
+                }
+                if (isFinalAttribute || !isExtendedAttribute)
                 {
                     attribute = new HtmlAttribute(name);
+                    return true;
                 }
-                else
+                if (currentChar != '"')
                 {
-                    attribute = new HtmlAttribute(name, value);
+                    // Invalid character after equals, e.g. "<abc attribute=!"
+                    return false;
                 }
-                return true;
+                int valueStartIndex = currentIndex + 1;
+                int valueEndIndex = -1;
+                while (ReadNext())
+                {
+                    if (currentChar == '"')
+                    {
+                        valueEndIndex = currentIndex - 1;
+                        break;
+                    }
+                }
+                if (valueEndIndex == -1)
+                {
+                    // No end of attribute value, e.g. "<abc attribute=" or "<abc attribute="a
+                    return false;
+                }
+                string value = text.Substring(valueStartIndex, valueEndIndex - valueStartIndex + 1);
+                attribute = new HtmlAttribute(name, value);
+                return ReadAndSkipWhitespace();
             }
 
             private bool TryParseInnerText()
