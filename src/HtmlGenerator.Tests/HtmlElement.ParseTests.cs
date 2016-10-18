@@ -18,9 +18,20 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void NonVoidElement_NoChildren_NoWhitespace()
+        public void NonVoidElement_NoChildren_NoWhitespace_Lowercase()
         {
             Assert.Equal(new HtmlElement("div"), HtmlElement.Parse("<div></div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_NoChildren_NoWhitespace_Uppercase()
+        {
+            Assert.Equal(new HtmlElement("div"), HtmlElement.Parse("<DIV></DIV>"));
+        }
+        [Fact]
+        public void NonVoidElement_NoChildren_NoWhitespace_MixedCase()
+        {
+            Assert.Equal(new HtmlElement("div"), HtmlElement.Parse("<DiV></dIv>"));
         }
 
         [Fact]
@@ -123,10 +134,24 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace()
+        public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Lowercase()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
             Assert.Equal(expected, HtmlElement.Parse(@"<br class=""abc""/>"));
+        }
+
+        [Fact]
+        public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Uppercase()
+        {
+            HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "ABC"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<br CLASS=""ABC""/>"));
+        }
+
+        [Fact]
+        public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_MixedCase()
+        {
+            HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "AbC"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<br ClAsS=""AbC""/>"));
         }
 
         [Fact]
@@ -151,10 +176,24 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoChildren_NoInnerText_NoWhitespace()
+        public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoChildren_NoInnerText_NoWhitespace_Lowercase()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "abc"));
             Assert.Equal(expected, HtmlElement.Parse(@"<div class=""abc""></div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoChildren_NoInnerText_NoWhitespace_Uppercase()
+        {
+            HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "ABC"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div CLASS=""ABC""></div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoChildren_NoInnerText_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "aBc"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div ClAsS=""aBc""></div>"));
         }
 
         [Fact]

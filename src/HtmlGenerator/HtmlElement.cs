@@ -738,7 +738,7 @@ namespace HtmlGenerator
 
             public string Remaining => text.Substring(currentIndex);
 
-            public bool ParseOpening()
+            public bool TryParseOpeningTag()
             {
                 if (currentChar != '<')
                 {
@@ -755,7 +755,7 @@ namespace HtmlGenerator
                     if (currentIndex + 1 < text.Length)
                     {
                         // Got more to parse?
-                        return ParseOpening();
+                        return TryParseOpeningTag();
                     }
                     // Finished parsing
                     return true;
@@ -784,7 +784,7 @@ namespace HtmlGenerator
                     return false;
                 }
 
-                string tag = text.Substring(tagStartIndex, tagEndIndex - tagStartIndex + 1);
+                string tag = text.ToAsciiLower(tagStartIndex, tagEndIndex - tagStartIndex + 1);
                 HtmlObjectLinkedList<HtmlAttribute> attributes = null;
                 if (!foundTagEnd && !TryParseAttributes(out attributes))
                 {
@@ -831,7 +831,7 @@ namespace HtmlGenerator
                 }
                 if (currentIndex + 1 < text.Length || !element.IsVoid)
                 {
-                    return ParseOpening();
+                    return TryParseOpeningTag();
                 }
 
                 return true;
@@ -904,8 +904,8 @@ namespace HtmlGenerator
                 {
                     return false;
                 }
-
-                name = text.Substring(nameStartIndex, nameEndIndex - nameStartIndex + 1);
+                int nameLength = nameEndIndex - nameStartIndex + 1;
+                name = text.ToAsciiLower(nameStartIndex, nameLength);
                 return true;
             }
 
@@ -969,29 +969,23 @@ namespace HtmlGenerator
                 return true;
             }
 
-            public bool Parse()
-            {
-                ReadAndSkipWhitespace();
-                return ParseOpening();
-            }
-
             private bool TryParseClosingTag()
             {
                 ReadAndSkipWhitespace();
-                int tagStartingIndex = currentIndex;
-                int tagClosingIndex = -1;
+                int tagStartIndex = currentIndex;
+                int tagEndIndex = -1;
                 // Non-void closing tag, e.g. "<abc></abc>"
                 while (ReadNext())
                 {
                     if (currentChar == '>')
                     {
                         // Found terminating '>'
-                        tagClosingIndex = currentIndex - 1;
+                        tagEndIndex = currentIndex - 1;
                         break;
                     }
                     else if (char.IsWhiteSpace(currentChar))
                     {
-                        tagClosingIndex = currentIndex - 1;
+                        tagEndIndex = currentIndex - 1;
                         ReadAndSkipWhitespace();
                         if (currentChar == '>')
                         {
@@ -1004,13 +998,13 @@ namespace HtmlGenerator
                         }
                     }
                 }
-                if (tagClosingIndex == -1)
+                if (tagEndIndex == -1)
                 {
                     // Invalid closing tag, e.g. "<abc></", "<abc></abc", "<abc></abc  "
                     return false;
                 }
-                string tag = text.Substring(tagStartingIndex, tagClosingIndex - tagStartingIndex + 1);
-                if (tag != currentElement.Tag)
+                int tagLength = tagEndIndex - tagStartIndex + 1;
+                if (!StringExtensions.EqualsAsciiOrdinalIgnoreCase(currentElement.Tag, 0, currentElement.Tag.Length, text, tagStartIndex, tagLength))
                 {
                     // Non matching closing tag, e.g. "<abc></def>"
                     return false;
@@ -1018,6 +1012,12 @@ namespace HtmlGenerator
                 currentElement = currentElement.Parent;
                 ReadAndSkipWhitespace();
                 return true;
+            }
+
+            public bool Parse()
+            {
+                ReadAndSkipWhitespace();
+                return TryParseOpeningTag();
             }
 
             private static bool IsLetter(char c)
