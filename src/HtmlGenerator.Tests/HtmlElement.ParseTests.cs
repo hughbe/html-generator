@@ -162,6 +162,59 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void VoidElement_OneNonEmptySingleDelimitedNonVoidAttribute_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<br class='abc'/>"));
+        }
+
+        [Fact]
+        public void VoidElement_OneNonEmptySingleDelimitedNonVoidAttribute_Whitespace()
+        {
+            HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<br class  =  'abc'  />"));
+        }
+
+        [Fact]
+        public void VoidElement_MultipleNonEmptySingleDelimitedNonVoidAttribute_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("br", isVoid: true)
+                .WithAttributes(new HtmlAttribute[]
+                {
+                    new HtmlAttribute("class", "abc"),
+                    new HtmlAttribute("id", ""),
+                    new HtmlAttribute("style", "def")
+                });
+            Assert.Equal(expected, HtmlElement.Parse(@"<br class='abc' id='' style='def'/>"));
+        }
+
+        [Fact]
+        public void VoidElement_OneNonEmptyNonDelimitedNonVoidAttribute_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<br class=abc/>"));
+        }
+
+        [Fact]
+        public void VoidElement_OneNonEmptyNonDelimitedNonVoidAttribute_Whitespace()
+        {
+            HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<br class  =  abc  />"));
+        }
+
+        [Fact]
+        public void VoidElement_MultipleNonEmptyNonDelimitedNonVoidAttribute_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("br", isVoid: true)
+                .WithAttributes(new HtmlAttribute[]
+                {
+                    new HtmlAttribute("class", "abc"),
+                    new HtmlAttribute("style", "def")
+                });
+            Assert.Equal(expected, HtmlElement.Parse(@"<br class=abc style=def/>"));
+        }
+
+        [Fact]
         public void NonVoidElement_OneVoidAttribute_NoChildren_NoInnerText_NoWhitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("allowfullscreen"));
@@ -201,6 +254,45 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "abc"));
             Assert.Equal(expected, HtmlElement.Parse(@"<div   class = ""abc""  ></div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_OneNonEmptyNonVoidSingleDelimetedAttribute_NoChildren_NoInnerText_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "abc"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div class='abc'></div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_MultipleNonEmptyNonVoidSingleDelimetedAttribute_NoChildren_NoInnerText_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("div")
+                .WithAttributes(new HtmlAttribute[]
+                {
+                    new HtmlAttribute("class", "abc"),
+                    new HtmlAttribute("id", ""),
+                    new HtmlAttribute("style", "def")
+                });
+            Assert.Equal(expected, HtmlElement.Parse(@"<div class='abc' id='' style='def'></div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_OneNonEmptyNonVoidNonDelimetedAttribute_NoChildren_NoInnerText_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "abc"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div class=abc></div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_MultipleNonEmptyNonVoidNonDelimetedAttribute_NoChildren_NoInnerText_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("div")
+                .WithAttributes(new HtmlAttribute[]
+                {
+                    new HtmlAttribute("class", "abc"),
+                    new HtmlAttribute("style", "def")
+                });
+            Assert.Equal(expected, HtmlElement.Parse(@"<div class=abc style=def></div>"));
         }
 
         [Fact]
@@ -293,14 +385,25 @@ namespace HtmlGenerator.Tests
             yield return new object[] { "<abc attribute/" };
             yield return new object[] { "<abc attribute=" };
             yield return new object[] { "<abc attribute=/" };
-            yield return new object[] { "<abc attribute=/>" };
-            yield return new object[] { "<abc attribute=>" };
+            yield return new object[] { "<abc attribute=/></abc>" };
+            yield return new object[] { "<abc attribute=></abc>" };
             yield return new object[] { "<abc attribute=\"" };
+            yield return new object[] { "<abc attribute=\"a" };
             yield return new object[] { "<abc attribute=\"\"" };
             yield return new object[] { "<abc attribute=!" };
             yield return new object[] { "<abc attribute=\">" };
             yield return new object[] { "<abc attribute=\"/" };
-            yield return new object[] { "<abc attribute=\"/>" };
+            yield return new object[] { "<abc attribute=\"/></abc>" };
+            yield return new object[] { "<abc attribute='" };
+            yield return new object[] { "<abc attribute='a" };
+            yield return new object[] { "<abc attribute=''" };
+            yield return new object[] { "<abc attribute='>" };
+            yield return new object[] { "<abc attribute='/></abc>" };
+            yield return new object[] { "<abc attribute=a" };
+            yield return new object[] { "<abc attribute=!" };
+            yield return new object[] { "<abc attribute=abc\"" };
+            yield return new object[] { "<abc attribute=\"abc'></abc>" };
+            yield return new object[] { "<abc attribute='abc\"></abc>" };
 
             // No closing tag
             yield return new object[] { "<abc>" };
