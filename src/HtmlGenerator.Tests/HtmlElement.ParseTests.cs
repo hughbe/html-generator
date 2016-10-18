@@ -218,6 +218,55 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, HtmlElement.Parse(@"<div class=""abc"" id=""def"" allowfullscreen style=""""></div>"));
         }
 
+        [Fact]
+        public void Comment_HasValue_NoChildren_NoParents_Lowercase()
+        {
+            HtmlElement expected = new HtmlComment("comment");
+            Assert.Equal(expected, HtmlElement.Parse(@"<!--comment-->"));
+        }
+
+        [Fact]
+        public void Comment_HasValue_NoChildren_NoParents_Uppercase()
+        {
+            HtmlElement expected = new HtmlComment("comment");
+            Assert.Equal(expected, HtmlElement.Parse(@"<!--COMMENT-->"));
+        }
+
+        [Fact]
+        public void Comment_HasValue_NoChildren_NoParents_MixedCase()
+        {
+            HtmlElement expected = new HtmlComment("comment");
+            Assert.Equal(expected, HtmlElement.Parse(@"<!--CoMmEnT-->"));
+        }
+
+        [Fact]
+        public void Comment_LeadingAndTrailingWhitespace_NoChildren_NoParents()
+        {
+            HtmlElement expected = new HtmlComment(" comment ");
+            Assert.Equal(expected, HtmlElement.Parse(@"<!-- comment -->"));
+        }
+
+        [Fact]
+        public void Comment_OnlyWhitespace_NoChildren_NoParents()
+        {
+            HtmlElement expected = new HtmlComment("  ");
+            Assert.Equal(expected, HtmlElement.Parse(@"<!--  -->"));
+        }
+
+        [Fact]
+        public void Comment_Empty_NoChildren_NoParents()
+        {
+            HtmlElement expected = new HtmlComment("");
+            Assert.Equal(expected, HtmlElement.Parse(@"<!---->"));
+        }
+
+        [Fact]
+        public void Comment_Nested()
+        {
+            HtmlElement expected = new HtmlElement("div").WithElement(new HtmlComment("comment"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div><!--comment--></div>"));
+        }
+
         public static IEnumerable<object[]> Parse_Invalid_TestData()
         {
             // Empty
@@ -267,6 +316,17 @@ namespace HtmlGenerator.Tests
             yield return new object[] { "<abc>InnerText</abc  " };
             yield return new object[] { "<abc>InnerText</abc/" };
             yield return new object[] { "<abc>InnerText</def>" };
+
+            // Invalid comment
+            yield return new object[] { "<!" };
+            yield return new object[] { "<!a" };
+            yield return new object[] { "<!-" };
+            yield return new object[] { "<!--" };
+            yield return new object[] { "<!-a" };
+            yield return new object[] { "<!--a" };
+            yield return new object[] { "<!--a-" };
+            yield return new object[] { "<!--a-a" };
+            yield return new object[] { "<!--a--" };
         }
 
         [Theory]
