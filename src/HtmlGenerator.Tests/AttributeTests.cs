@@ -35,8 +35,8 @@ namespace HtmlGenerator.Tests
             VerifyAttribute(Attribute.Command("value"), "command", "value");
             VerifyAttribute(Attribute.Compact("value"), "compact", "value");
             VerifyAttribute(Attribute.Content("value"), "content", "value");
-            VerifyAttribute(Attribute.ContentEditable("value"), "contentEditable", "value");
-            VerifyAttribute(Attribute.ContextMenu("value"), "contextMenu", "value");
+            VerifyAttribute(Attribute.ContentEditable("value"), "contenteditable", "value");
+            VerifyAttribute(Attribute.ContextMenu("value"), "contextmenu", "value");
             VerifyAttribute(Attribute.Controls, "controls", null);
             VerifyAttribute(Attribute.Coords("value"), "coords", "value");
             VerifyAttribute(Attribute.CrossOrigin("value"), "crossorigin", "value");
@@ -87,11 +87,11 @@ namespace HtmlGenerator.Tests
 
 
             VerifyAttribute(Attribute.Max("value"), "max", "value");
-            VerifyAttribute(Attribute.MaxLength("value"), "maxLength", "value");
+            VerifyAttribute(Attribute.MaxLength("value"), "maxlength", "value");
             VerifyAttribute(Attribute.Media("value"), "media", "value");
             VerifyAttribute(Attribute.Method("value"), "method", "value");
             VerifyAttribute(Attribute.Min("value"), "min", "value");
-            VerifyAttribute(Attribute.MinLength("value"), "minLength", "value");
+            VerifyAttribute(Attribute.MinLength("value"), "minlength", "value");
             VerifyAttribute(Attribute.Multiple, "multiple", null);
             VerifyAttribute(Attribute.Muted("value"), "muted", "value");
 
@@ -122,12 +122,12 @@ namespace HtmlGenerator.Tests
             VerifyAttribute(Attribute.Scoped, "scoped", null);
             VerifyAttribute(Attribute.Seamless, "seamless", null);
             VerifyAttribute(Attribute.Selected, "selected", null);
-            VerifyAttribute(Attribute.SelectionDirection("value"), "selectionDirection", "value");
+            VerifyAttribute(Attribute.SelectionDirection("value"), "selectiondirection", "value");
             VerifyAttribute(Attribute.Shape("value"), "shape", "value");
             VerifyAttribute(Attribute.Size("value"), "size", "value");
             VerifyAttribute(Attribute.Sizes("value"), "sizes", "value");
             VerifyAttribute(Attribute.Span("value"), "span", "value");
-            VerifyAttribute(Attribute.SpellCheck("value"), "spellCheck", "value");
+            VerifyAttribute(Attribute.SpellCheck("value"), "spellcheck", "value");
             VerifyAttribute(Attribute.Src("value"), "src", "value");
             VerifyAttribute(Attribute.SrcDoc("value"), "srcdoc", "value");
             VerifyAttribute(Attribute.SrcLang("value"), "srclang", "value");
@@ -136,7 +136,7 @@ namespace HtmlGenerator.Tests
             VerifyAttribute(Attribute.Step("value"), "step", "value");
             VerifyAttribute(Attribute.Style("value"), "style", "value");
 
-            VerifyAttribute(Attribute.TabIndex("value"), "tabIndex", "value");
+            VerifyAttribute(Attribute.TabIndex("value"), "tabindex", "value");
             VerifyAttribute(Attribute.Target("value"), "target", "value");
             VerifyAttribute(Attribute.Text("value"), "text", "value");
             VerifyAttribute(Attribute.Title("value"), "title", "value");

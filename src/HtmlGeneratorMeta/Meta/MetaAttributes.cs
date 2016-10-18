@@ -30,8 +30,8 @@
         public static AttributeInfo Command => Basic("command");
         public static AttributeInfo Compact => Basic("compact");
         public static AttributeInfo Content => Basic("content");
-        public static AttributeInfo ContentEditable => Global("contentEditable");
-        public static AttributeInfo ContextMenu => Basic("contextMenu");
+        public static AttributeInfo ContentEditable => Global("contenteditable");
+        public static AttributeInfo ContextMenu => Basic("contextmenu");
         public static AttributeInfo Controls => Void("controls");
         public static AttributeInfo Coords => Basic("coords");
         public static AttributeInfo CrossOrigin => Basic("crossorigin");
@@ -81,11 +81,11 @@
         public static AttributeInfo Low => Basic("low");
 
         public static AttributeInfo Max => Basic("max");
-        public static AttributeInfo MaxLength => Basic("maxLength");
+        public static AttributeInfo MaxLength => Basic("maxlength");
         public static AttributeInfo Media => Basic("media");
         public static AttributeInfo Method => Basic("method");
         public static AttributeInfo Min => Basic("min");
-        public static AttributeInfo MinLength => Basic("minLength");
+        public static AttributeInfo MinLength => Basic("minlength");
         public static AttributeInfo Multiple => Void("multiple");
         public static AttributeInfo Muted => Basic("muted");
 
@@ -114,14 +114,14 @@
         public static AttributeInfo Sandbox => Void("sandbox");
         public static AttributeInfo Seamless => Void("seamless");
         public static AttributeInfo Selected => Void("selected");
-        public static AttributeInfo SelectionDirection => Basic("selectionDirection");
+        public static AttributeInfo SelectionDirection => Basic("selectiondirection");
         public static AttributeInfo Scope => Basic("scope");
         public static AttributeInfo Scoped => Void("scoped");
         public static AttributeInfo Shape => Basic("shape");
         public static AttributeInfo Size => Basic("size");
         public static AttributeInfo Sizes => Basic("sizes");
         public static AttributeInfo Span => Basic("span");
-        public static AttributeInfo SpellCheck => Global("spellCheck");
+        public static AttributeInfo SpellCheck => Global("spellcheck");
         public static AttributeInfo Src => Basic("src");
         public static AttributeInfo SrcDoc => Basic("srcdoc");
         public static AttributeInfo SrcLang => Basic("srclang");
@@ -130,7 +130,7 @@
         public static AttributeInfo Step => Basic("step");
         public static AttributeInfo Style => Basic("style");
 
-        public static AttributeInfo TabIndex => Global("tabIndex");
+        public static AttributeInfo TabIndex => Global("tabindex");
         public static AttributeInfo Target => Basic("target");
         public static AttributeInfo Text => Basic("text");
         public static AttributeInfo Title => Global("title");

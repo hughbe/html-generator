@@ -30,8 +30,8 @@ namespace HtmlGenerator
 		public static HtmlAttribute Command(string value) => new HtmlAttribute("command", value);
 		public static HtmlAttribute Compact(string value) => new HtmlAttribute("compact", value);
 		public static HtmlAttribute Content(string value) => new HtmlAttribute("content", value);
-		public static HtmlAttribute ContentEditable(string value) => new HtmlAttribute("contentEditable", value);
-		public static HtmlAttribute ContextMenu(string value) => new HtmlAttribute("contextMenu", value);
+		public static HtmlAttribute ContentEditable(string value) => new HtmlAttribute("contenteditable", value);
+		public static HtmlAttribute ContextMenu(string value) => new HtmlAttribute("contextmenu", value);
 		public static HtmlAttribute Controls => new HtmlAttribute("controls");
 		public static HtmlAttribute Coords(string value) => new HtmlAttribute("coords", value);
 		public static HtmlAttribute CrossOrigin(string value) => new HtmlAttribute("crossorigin", value);
@@ -81,11 +81,11 @@ namespace HtmlGenerator
 		public static HtmlAttribute Low(string value) => new HtmlAttribute("low", value);
 
 		public static HtmlAttribute Max(string value) => new HtmlAttribute("max", value);
-		public static HtmlAttribute MaxLength(string value) => new HtmlAttribute("maxLength", value);
+		public static HtmlAttribute MaxLength(string value) => new HtmlAttribute("maxlength", value);
 		public static HtmlAttribute Media(string value) => new HtmlAttribute("media", value);
 		public static HtmlAttribute Method(string value) => new HtmlAttribute("method", value);
 		public static HtmlAttribute Min(string value) => new HtmlAttribute("min", value);
-		public static HtmlAttribute MinLength(string value) => new HtmlAttribute("minLength", value);
+		public static HtmlAttribute MinLength(string value) => new HtmlAttribute("minlength", value);
 		public static HtmlAttribute Multiple => new HtmlAttribute("multiple");
 		public static HtmlAttribute Muted(string value) => new HtmlAttribute("muted", value);
 
@@ -114,14 +114,14 @@ namespace HtmlGenerator
 		public static HtmlAttribute Sandbox => new HtmlAttribute("sandbox");
 		public static HtmlAttribute Seamless => new HtmlAttribute("seamless");
 		public static HtmlAttribute Selected => new HtmlAttribute("selected");
-		public static HtmlAttribute SelectionDirection(string value) => new HtmlAttribute("selectionDirection", value);
+		public static HtmlAttribute SelectionDirection(string value) => new HtmlAttribute("selectiondirection", value);
 		public static HtmlAttribute Scope(string value) => new HtmlAttribute("scope", value);
 		public static HtmlAttribute Scoped => new HtmlAttribute("scoped");
 		public static HtmlAttribute Shape(string value) => new HtmlAttribute("shape", value);
 		public static HtmlAttribute Size(string value) => new HtmlAttribute("size", value);
 		public static HtmlAttribute Sizes(string value) => new HtmlAttribute("sizes", value);
 		public static HtmlAttribute Span(string value) => new HtmlAttribute("span", value);
-		public static HtmlAttribute SpellCheck(string value) => new HtmlAttribute("spellCheck", value);
+		public static HtmlAttribute SpellCheck(string value) => new HtmlAttribute("spellcheck", value);
 		public static HtmlAttribute Src(string value) => new HtmlAttribute("src", value);
 		public static HtmlAttribute SrcDoc(string value) => new HtmlAttribute("srcdoc", value);
 		public static HtmlAttribute SrcLang(string value) => new HtmlAttribute("srclang", value);
@@ -130,7 +130,7 @@ namespace HtmlGenerator
 		public static HtmlAttribute Step(string value) => new HtmlAttribute("step", value);
 		public static HtmlAttribute Style(string value) => new HtmlAttribute("style", value);
 
-		public static HtmlAttribute TabIndex(string value) => new HtmlAttribute("tabIndex", value);
+		public static HtmlAttribute TabIndex(string value) => new HtmlAttribute("tabindex", value);
 		public static HtmlAttribute Target(string value) => new HtmlAttribute("target", value);
 		public static HtmlAttribute Text(string value) => new HtmlAttribute("text", value);
 		public static HtmlAttribute Title(string value) => new HtmlAttribute("title", value);
