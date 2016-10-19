@@ -5,6 +5,9 @@ namespace HtmlGenerator
 {
     public abstract class HtmlNode : SerializableHtmlObject
     {
+        public HtmlNode NextNode => (HtmlNode)_next;
+        public HtmlNode PreviousNode => (HtmlNode)_previous;
+
         public void AddAfterSelf(HtmlNode content)
         {
             Requires.NotNull(content, nameof(content));
@@ -84,19 +87,6 @@ namespace HtmlGenerator
             node.Parent = parent;
             parent._nodes.AddBefore(nextNode, node);
         }
-        
-        public void RemoveFromParent()
-        {
-            if (Parent == null)
-            {
-                return;
-            }
-            Parent._nodes.Remove(this);
-            Parent = null;
-        }
-
-        public HtmlNode NextNode => (HtmlNode)_next;
-        public HtmlNode PreviousNode => (HtmlNode)_previous;
 
         public IEnumerable<HtmlNode> NextNodes()
         {
@@ -116,6 +106,16 @@ namespace HtmlGenerator
                 yield return (HtmlNode)previousNode;
                 previousNode = previousNode._previous;
             }
+        }
+
+        public void RemoveFromParent()
+        {
+            if (Parent == null)
+            {
+                return;
+            }
+            Parent._nodes.Remove(this);
+            Parent = null;
         }
     }
 }

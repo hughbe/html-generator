@@ -54,6 +54,8 @@ namespace HtmlGenerator
             _doctypeType = (HtmlDoctypeType)(-1);
         }
 
+        public override HtmlObjectType ObjectType => HtmlObjectType.Doctype;
+
         public string Doctype { get; }
 
         private HtmlDoctypeType _doctypeType;
@@ -109,8 +111,6 @@ namespace HtmlGenerator
         public bool Equals(HtmlDoctype other) => other != null && Doctype == other.Doctype;
 
         public override int GetHashCode() => Doctype.GetHashCode();
-
-        public override HtmlObjectType ObjectType => HtmlObjectType.Doctype;
 
         internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
         {

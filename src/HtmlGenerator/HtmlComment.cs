@@ -11,6 +11,8 @@ namespace HtmlGenerator
             Comment = comment;
         }
 
+        public override HtmlObjectType ObjectType => HtmlObjectType.Comment;
+
         public string Comment { get; }
 
         public override bool Equals(object obj) => Equals(obj as HtmlComment);
@@ -18,8 +20,6 @@ namespace HtmlGenerator
         public bool Equals(HtmlComment other) => other != null && Comment == other.Comment;
 
         public override int GetHashCode() => Comment.GetHashCode();
-
-        public override HtmlObjectType ObjectType => HtmlObjectType.Comment;
 
         internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
         {

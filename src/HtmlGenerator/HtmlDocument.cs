@@ -5,7 +5,12 @@ namespace HtmlGenerator
 {
     public class HtmlDocument : HtmlElement, IEquatable<HtmlDocument>
     {
-        public HtmlDocument() : base("html") { }
+        public HtmlDocument() : base("html")
+        {
+            Doctype = new HtmlDoctype(HtmlDoctypeType.Html5);
+        }
+
+        public override HtmlObjectType ObjectType => HtmlObjectType.Document;
 
         private HtmlElement _head = null;
         public HtmlElement Head
@@ -20,16 +25,6 @@ namespace HtmlGenerator
                 }
                 _head = value;
             }
-        }
-
-        public HtmlDocument AddHead()
-        {
-            if (Head != null)
-            {
-                throw new InvalidOperationException("Document already has a head element.");
-            }
-            Head = HtmlGenerator.Tag.Head;
-            return this;
         }
 
         private HtmlElement _body = null;
@@ -47,6 +42,18 @@ namespace HtmlGenerator
             }
         }
 
+        public HtmlDoctype Doctype { get; set; }
+
+        public HtmlDocument AddHead()
+        {
+            if (Head != null)
+            {
+                throw new InvalidOperationException("Document already has a head element.");
+            }
+            Head = HtmlGenerator.Tag.Head;
+            return this;
+        }
+
         public HtmlDocument AddBody()
         {
             if (Body != null)
@@ -56,10 +63,6 @@ namespace HtmlGenerator
             Body = HtmlGenerator.Tag.Body;
             return this;
         }
-
-        public HtmlDoctype Doctype { get; set; } = new HtmlDoctype(HtmlDoctypeType.Html5);
-
-        public override HtmlObjectType ObjectType => HtmlObjectType.Document;
 
         public override bool Equals(object obj) => Equals(obj as HtmlDocument);
 
