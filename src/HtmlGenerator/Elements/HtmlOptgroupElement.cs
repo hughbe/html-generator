@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlOptgroupElement : HtmlElement
     {
-        public HtmlOptgroupElement() : base("optgroup", false)
-        {
-        }
+        public HtmlOptgroupElement() : base("optgroup") { }
 
         public HtmlOptgroupElement WithDisabled() => this.WithAttribute(Attribute.Disabled);
 

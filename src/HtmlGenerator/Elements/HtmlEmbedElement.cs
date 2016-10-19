@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlEmbedElement : HtmlElement
     {
-        public HtmlEmbedElement() : base("embed", true)
-        {
-        }
+        public HtmlEmbedElement() : base("embed", isVoid: true) { }
 
         public HtmlEmbedElement WithHeight(string value) => this.WithAttribute(Attribute.Height(value));
 

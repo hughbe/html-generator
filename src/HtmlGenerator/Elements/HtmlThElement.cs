@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlThElement : HtmlElement
     {
-        public HtmlThElement() : base("th", false)
-        {
-        }
+        public HtmlThElement() : base("th") { }
 
         public HtmlThElement WithColSpan(string value) => this.WithAttribute(Attribute.ColSpan(value));
 

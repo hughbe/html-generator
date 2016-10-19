@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlAElement : HtmlElement
     {
-        public HtmlAElement() : base("a", false)
-        {
-        }
+        public HtmlAElement() : base("a") { }
 
         public HtmlAElement WithDownload(string value) => this.WithAttribute(Attribute.Download(value));
 

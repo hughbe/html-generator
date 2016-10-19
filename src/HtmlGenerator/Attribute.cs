@@ -147,6 +147,5 @@ namespace HtmlGenerator
         public static HtmlAttribute Wrap(string value) => new HtmlAttribute("wrap", value);
 
         public static HtmlAttribute Xmls(string value) => new HtmlAttribute("xmls", value);
-
     }
 }

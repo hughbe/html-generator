@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlAreaElement : HtmlElement
     {
-        public HtmlAreaElement() : base("area", true)
-        {
-        }
+        public HtmlAreaElement() : base("area", isVoid: true) { }
 
         public HtmlAreaElement WithAlt(string value) => this.WithAttribute(Attribute.Alt(value));
 

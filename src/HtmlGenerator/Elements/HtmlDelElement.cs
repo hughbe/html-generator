@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlDelElement : HtmlElement
     {
-        public HtmlDelElement() : base("del", false)
-        {
-        }
+        public HtmlDelElement() : base("del") { }
 
         public HtmlDelElement WithCite(string value) => this.WithAttribute(Attribute.Cite(value));
 

@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlInputElement : HtmlElement
     {
-        public HtmlInputElement() : base("input", true)
-        {
-        }
+        public HtmlInputElement() : base("input", isVoid: true) { }
 
         public HtmlInputElement WithAccept(string value) => this.WithAttribute(Attribute.Accept(value));
 

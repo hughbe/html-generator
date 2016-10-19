@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlObjectElement : HtmlElement
     {
-        public HtmlObjectElement() : base("object", false)
-        {
-        }
+        public HtmlObjectElement() : base("object") { }
 
         public HtmlObjectElement WithData(string value) => this.WithAttribute(Attribute.Data(value));
 

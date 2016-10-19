@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlLabelElement : HtmlElement
     {
-        public HtmlLabelElement() : base("label", false)
-        {
-        }
+        public HtmlLabelElement() : base("label") { }
 
         public HtmlLabelElement WithFor(string value) => this.WithAttribute(Attribute.For(value));
 

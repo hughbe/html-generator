@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlTrackElement : HtmlElement
     {
-        public HtmlTrackElement() : base("track", true)
-        {
-        }
+        public HtmlTrackElement() : base("track", isVoid: true) { }
 
         public HtmlTrackElement WithDefault() => this.WithAttribute(Attribute.Default);
 

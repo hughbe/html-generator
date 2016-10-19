@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlAudioElement : HtmlElement
     {
-        public HtmlAudioElement() : base("audio", false)
-        {
-        }
+        public HtmlAudioElement() : base("audio") { }
 
         public HtmlAudioElement WithAutoPlay(string value) => this.WithAttribute(Attribute.AutoPlay(value));
 

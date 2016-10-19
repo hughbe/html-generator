@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlOptionElement : HtmlElement
     {
-        public HtmlOptionElement() : base("option", false)
-        {
-        }
+        public HtmlOptionElement() : base("option") { }
 
         public HtmlOptionElement WithDisabled() => this.WithAttribute(Attribute.Disabled);
 

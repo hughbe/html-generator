@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlButtonElement : HtmlElement
     {
-        public HtmlButtonElement() : base("button", false)
-        {
-        }
+        public HtmlButtonElement() : base("button") { }
 
         public HtmlButtonElement WithAutoFocus() => this.WithAttribute(Attribute.AutoFocus);
 

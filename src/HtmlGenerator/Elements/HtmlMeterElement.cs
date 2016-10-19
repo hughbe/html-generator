@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlMeterElement : HtmlElement
     {
-        public HtmlMeterElement() : base("meter", false)
-        {
-        }
+        public HtmlMeterElement() : base("meter") { }
 
         public HtmlMeterElement WithForm(string value) => this.WithAttribute(Attribute.Form(value));
 

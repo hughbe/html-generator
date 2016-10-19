@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlMenuElement : HtmlElement
     {
-        public HtmlMenuElement() : base("menu", false)
-        {
-        }
+        public HtmlMenuElement() : base("menu") { }
 
         public HtmlMenuElement WithLabel(string value) => this.WithAttribute(Attribute.Label(value));
 

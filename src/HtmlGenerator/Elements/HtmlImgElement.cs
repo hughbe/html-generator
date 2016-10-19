@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlImgElement : HtmlElement
     {
-        public HtmlImgElement() : base("img", true)
-        {
-        }
+        public HtmlImgElement() : base("img", isVoid: true) { }
 
         public HtmlImgElement WithAlt(string value) => this.WithAttribute(Attribute.Alt(value));
 

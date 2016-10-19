@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlInsElement : HtmlElement
     {
-        public HtmlInsElement() : base("ins", false)
-        {
-        }
+        public HtmlInsElement() : base("ins") { }
 
         public HtmlInsElement WithCite(string value) => this.WithAttribute(Attribute.Cite(value));
 

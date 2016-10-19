@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlMetaElement : HtmlElement
     {
-        public HtmlMetaElement() : base("meta", true)
-        {
-        }
+        public HtmlMetaElement() : base("meta", isVoid: true) { }
 
         public HtmlMetaElement WithCharset(string value) => this.WithAttribute(Attribute.Charset(value));
 

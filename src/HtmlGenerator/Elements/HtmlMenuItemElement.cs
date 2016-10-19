@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlMenuItemElement : HtmlElement
     {
-        public HtmlMenuItemElement() : base("menuitem", false)
-        {
-        }
+        public HtmlMenuItemElement() : base("menuitem") { }
 
         public HtmlMenuItemElement WithChecked() => this.WithAttribute(Attribute.Checked);
 

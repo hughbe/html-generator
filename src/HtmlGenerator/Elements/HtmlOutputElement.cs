@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlOutputElement : HtmlElement
     {
-        public HtmlOutputElement() : base("output", false)
-        {
-        }
+        public HtmlOutputElement() : base("output") { }
 
         public HtmlOutputElement WithFor(string value) => this.WithAttribute(Attribute.For(value));
 

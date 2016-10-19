@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlScriptElement : HtmlElement
     {
-        public HtmlScriptElement() : base("script", false)
-        {
-        }
+        public HtmlScriptElement() : base("script") { }
 
         public HtmlScriptElement WithAsync(string value) => this.WithAttribute(Attribute.Async(value));
 

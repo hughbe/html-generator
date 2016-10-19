@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlSelectElement : HtmlElement
     {
-        public HtmlSelectElement() : base("select", false)
-        {
-        }
+        public HtmlSelectElement() : base("select") { }
 
         public HtmlSelectElement WithAutoFocus() => this.WithAttribute(Attribute.AutoFocus);
 

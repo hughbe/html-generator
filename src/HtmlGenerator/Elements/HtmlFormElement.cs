@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlFormElement : HtmlElement
     {
-        public HtmlFormElement() : base("form", false)
-        {
-        }
+        public HtmlFormElement() : base("form") { }
 
         public HtmlFormElement WithAcceptCharset(string value) => this.WithAttribute(Attribute.AcceptCharset(value));
 

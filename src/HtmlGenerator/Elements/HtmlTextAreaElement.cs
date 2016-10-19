@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlTextAreaElement : HtmlElement
     {
-        public HtmlTextAreaElement() : base("textarea", false)
-        {
-        }
+        public HtmlTextAreaElement() : base("textarea") { }
 
         public HtmlTextAreaElement WithAutoComplete(string value) => this.WithAttribute(Attribute.AutoComplete(value));
 

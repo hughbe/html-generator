@@ -116,7 +116,6 @@ install:
 
   # Build projects
   - dotnet build -c $CONFIGURATION -f netstandard1.0 ./src/HtmlGenerator
-  - dotnet build -c $CONFIGURATION -f netcoreapp1.0 ./src/HtmlGeneratorMeta
   - dotnet build -c $CONFIGURATION -f netcoreapp1.0 ./src/HtmlGenerator.Tests
 
 script:

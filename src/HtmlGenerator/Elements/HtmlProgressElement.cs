@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlProgressElement : HtmlElement
     {
-        public HtmlProgressElement() : base("progress", false)
-        {
-        }
+        public HtmlProgressElement() : base("progress") { }
 
         public HtmlProgressElement WithMax(string value) => this.WithAttribute(Attribute.Max(value));
 

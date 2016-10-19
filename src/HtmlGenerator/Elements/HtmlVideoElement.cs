@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlVideoElement : HtmlElement
     {
-        public HtmlVideoElement() : base("video", false)
-        {
-        }
+        public HtmlVideoElement() : base("video") { }
 
         public HtmlVideoElement WithAutoPlay(string value) => this.WithAttribute(Attribute.AutoPlay(value));
 

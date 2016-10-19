@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlOlElement : HtmlElement
     {
-        public HtmlOlElement() : base("ol", false)
-        {
-        }
+        public HtmlOlElement() : base("ol") { }
 
         public HtmlOlElement WithReversed(string value) => this.WithAttribute(Attribute.Reversed(value));
 

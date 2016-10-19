@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlStyleElement : HtmlElement
     {
-        public HtmlStyleElement() : base("style", false)
-        {
-        }
+        public HtmlStyleElement() : base("style") { }
 
         public HtmlStyleElement WithDisabled() => this.WithAttribute(Attribute.Disabled);
 

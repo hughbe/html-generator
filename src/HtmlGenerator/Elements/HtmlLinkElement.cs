@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlLinkElement : HtmlElement
     {
-        public HtmlLinkElement() : base("link", true)
-        {
-        }
+        public HtmlLinkElement() : base("link", isVoid: true) { }
 
         public HtmlLinkElement WithCrossOrigin(string value) => this.WithAttribute(Attribute.CrossOrigin(value));
 

@@ -2,9 +2,7 @@ namespace HtmlGenerator
 {
     public class HtmlIframeElement : HtmlElement
     {
-        public HtmlIframeElement() : base("iframe", false)
-        {
-        }
+        public HtmlIframeElement() : base("iframe") { }
 
         public HtmlIframeElement WithAllowFullScreen() => this.WithAttribute(Attribute.AllowFullScreen);
 
