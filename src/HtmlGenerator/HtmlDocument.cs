@@ -28,7 +28,7 @@ namespace HtmlGenerator
             {
                 throw new InvalidOperationException("Document already has a head element.");
             }
-            Head = new HtmlHeadElement();
+            Head = HtmlGenerator.Tag.Head;
             return this;
         }
 
@@ -53,7 +53,7 @@ namespace HtmlGenerator
             {
                 throw new InvalidOperationException("Document already has a body element.");
             }
-            Body = new HtmlBodyElement();
+            Body = HtmlGenerator.Tag.Body;
             return this;
         }
 

@@ -46,8 +46,8 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Head_SetExisting_NonNull_RemovesElement()
         {
-            HtmlHeadElement value = new HtmlHeadElement().WithClass("class");
-            HtmlDocument document = new HtmlDocument() { Head = new HtmlHeadElement() };
+            HtmlElement value = Tag.Head.WithClass("class");
+            HtmlDocument document = new HtmlDocument() { Head = Tag.Head };
             document.Head = value;
             Assert.Equal(new HtmlElement[] { value }, document.Elements());
             Assert.Equal(value, document.Head);
@@ -56,7 +56,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Head_SetExisting_Null_RemovesElement()
         {
-            HtmlDocument document = new HtmlDocument() { Head = new HtmlHeadElement() };
+            HtmlDocument document = new HtmlDocument() { Head = Tag.Head };
             document.Head = null;
             Assert.True(document.IsEmpty);
             Assert.Null(document.Head);
@@ -74,15 +74,15 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddHead_DocumentHasBody_ThrowsInvalidOperationException()
         {
-            HtmlDocument document = new HtmlDocument() { Head = new HtmlHeadElement() };
+            HtmlDocument document = new HtmlDocument() { Head = Tag.Head };
             Assert.Throws<InvalidOperationException>(() => document.AddHead());
         }
 
         [Fact]
         public void Body_SetExisting_NonNull_RemovesElement()
         {
-            HtmlBodyElement value = new HtmlBodyElement().WithClass("class");
-            HtmlDocument document = new HtmlDocument() { Body = new HtmlBodyElement() };
+            HtmlElement value = Tag.Body.WithClass("class");
+            HtmlDocument document = new HtmlDocument() { Body = Tag.Body };
             document.Body = value;
             Assert.Equal(new HtmlElement[] { value }, document.Elements());
             Assert.Equal(value, document.Body);
@@ -91,7 +91,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Body_SetExisting_Null_RemovesElement()
         {
-            HtmlDocument document = new HtmlDocument() { Body = new HtmlBodyElement() };
+            HtmlDocument document = new HtmlDocument() { Body = Tag.Body };
             document.Body = null;
             Assert.True(document.IsEmpty);
             Assert.Null(document.Body);
@@ -109,7 +109,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddBody_DocumentHasBody_ThrowsInvalidOperationException()
         {
-            HtmlDocument document = new HtmlDocument() { Body = new HtmlBodyElement() };
+            HtmlDocument document = new HtmlDocument() { Body = Tag.Body };
             Assert.Throws<InvalidOperationException>(() => document.AddBody());
         }
 

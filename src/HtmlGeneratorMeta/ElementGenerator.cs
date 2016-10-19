@@ -9,88 +9,80 @@ namespace HtmlGeneratorMeta
         public ElementGenerator(string folderPath) : base(folderPath)
         {
         }
-        
+
         public override void Generate()
         {
             PreviousName = null;
+            PropertyInfo[] properties = typeof(MetaElements).GetProperties();
 
-            var type = typeof(MetaElements);
-            var properties = type.GetProperties();
-
-            var list = "";
-
-            foreach (var property in properties)
+            string list = "";
+            foreach (PropertyInfo property in properties)
             {
-                var htmlObject = property.GetValue(null) as ElementInfo;
+                ElementInfo htmlObject = property.GetValue(null) as ElementInfo;
                 if (htmlObject == null)
                 {
                     continue;
                 }
 
-                var newName = property.Name;
+                var propertyName = property.Name;
 
-                var propertyCode = GenerateElement(htmlObject, newName);
+                var propertyCode = GenerateElement(htmlObject, propertyName);
+                if (!string.IsNullOrEmpty(PreviousName))
+                {
+                    propertyCode = Environment.NewLine + propertyCode;
+                    if (propertyName[0] != PreviousName[0])
+                    {
+                        propertyCode = Environment.NewLine + propertyCode;
+                    }
+                }
                 list += propertyCode;
 
-                PreviousName = newName;
+                PreviousName = propertyName;
             }
             list += Environment.NewLine;
-
             GenerateList("Tag", "public", "partial ", list);
         }
 
-        public string GenerateElement(ElementInfo element, string newName)
+        public string GenerateElement(ElementInfo element, string propertyName)
         {
-            var lowerName = element.Name;
-            var isVoid = element.IsVoid ? "true" : "false";
-            var className = "Html" + newName + "Element";
-
-            var propertyCode = string.Format("\t\tpublic static {0} {1} => new {0}();", className, newName);
-
-            if (!string.IsNullOrEmpty(PreviousName))
+            string isVoid = element.IsVoid ? "true" : "false";
+            string lowerName = element.Name;
+            if (element.Attributes.Count == 0)
             {
-                propertyCode = "\n" + propertyCode;
-                if (newName[0] != PreviousName[0])
-                {
-                    propertyCode = "\n" + propertyCode;
-                }
+                return $"        public static HtmlElement {propertyName} => new HtmlElement(\"{lowerName}\", {isVoid});";                
             }
 
-            var attributesCode = "";
-
-            foreach (var attribute in element.Attributes)
+            string className = "Html" + propertyName + "Element";
+            string propertyCode = $"        public static {className} {propertyName} => new {className}();";
+            string attributesCode = "";
+            foreach (string attribute in element.Attributes)
             {
-                var methodName = attribute;
-
-                AttributeInfo attributeInfo = (AttributeInfo)typeof(MetaAttributes).GetProperty(methodName).GetValue(null);
-                var attributeCodeFormat = "\n\n\t\t";
-                var methodStart = "";
+                AttributeInfo attributeInfo = (AttributeInfo)typeof(MetaAttributes).GetProperty(attribute).GetValue(null);
+                string attributeCodeFormat = Environment.NewLine + Environment.NewLine + "        ";
 
                 if (attributeInfo.IsVoid)
                 {
-                    attributeCodeFormat += "public {0}{1} With{2}() => this.WithAttribute(Attribute.{2});";
+                    attributeCodeFormat += "public {0} With{1}() => this.WithAttribute(Attribute.{1});";
                 }
                 else
                 {
-                    attributeCodeFormat += "public {0}{1} With{2}(string value) => this.WithAttribute(Attribute.{2}(value));";
+                    attributeCodeFormat += "public {0} With{1}(string value) => this.WithAttribute(Attribute.{1}(value));";
                 }
 
-                attributesCode += string.Format(attributeCodeFormat, methodStart, className, methodName);
+                attributesCode += string.Format(attributeCodeFormat, className, attribute);
             }
 
-            var code = string.Format(@"namespace HtmlGenerator
+            string code = $@"namespace HtmlGenerator
 {{
-    public class {0} : HtmlElement
+    public class {className} : HtmlElement
     {{
-        public {0}() : base(""{1}"", {2}) 
-        {{    
-        }}{3}
+        public {className}() : base(""{lowerName}"", {isVoid})
+        {{
+        }}{attributesCode}
     }}
 }}
-", className, lowerName, isVoid, attributesCode);
-
+";
             GenerateClass(className, code);
-
             return propertyCode;
         }
     }
