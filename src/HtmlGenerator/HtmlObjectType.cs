@@ -5,6 +5,7 @@
         Attribute,
         Element,
         Comment,
-        Doctype
+        Doctype,
+        Document
     }
 }

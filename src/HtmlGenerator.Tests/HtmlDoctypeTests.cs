@@ -34,13 +34,21 @@ namespace HtmlGenerator.Tests
         }
 
         [Theory]
-        [InlineData("doctype")]
-        [InlineData("DOCTYPE")]
-        public void Ctor_String(string doctype)
+        [InlineData("doctype", HtmlDoctypeType.Custom)]
+        [InlineData("DOCTYPE", HtmlDoctypeType.Custom)]
+        [InlineData("DOCTYPE html", HtmlDoctypeType.Html5)]
+        [InlineData("DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\"", HtmlDoctypeType.Html401Strict)]
+        [InlineData("DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"", HtmlDoctypeType.Html401Transitional)]
+        [InlineData("DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\"", HtmlDoctypeType.Html401Frameset)]
+        [InlineData("DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"", HtmlDoctypeType.XHtml10Strict)]
+        [InlineData("DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"", HtmlDoctypeType.XHtml10Transitional)]
+        [InlineData("DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\"", HtmlDoctypeType.XHtml10Frameset)]
+        [InlineData("DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\"", HtmlDoctypeType.XHtml11)]
+        public void Ctor_String(string doctype, HtmlDoctypeType expectedDoctypeType)
         {
             HtmlDoctype htmlDoctype = new HtmlDoctype(doctype);
             Assert.Equal(doctype, htmlDoctype.Doctype);
-            Assert.Equal(HtmlDoctypeType.Custom, htmlDoctype.DoctypeType);
+            Assert.Equal(expectedDoctypeType, htmlDoctype.DoctypeType);
             Assert.True(htmlDoctype.IsVoid);
             Assert.True(htmlDoctype.IsEmpty);
         }

@@ -44,19 +44,65 @@ namespace HtmlGenerator
                 throw new ArgumentException("Can't infer the doctype from the HtmlDoctypeType provided.", nameof(doctype));
             }
 
-            DoctypeType = doctype;
+            _doctypeType = doctype;
         }
 
         public HtmlDoctype(string doctype) : base("doctype", isVoid: true)
         {
             Requires.NotNullOrWhitespace(doctype, nameof(doctype));
             Doctype = doctype;
-            DoctypeType = HtmlDoctypeType.Custom;
+            _doctypeType = (HtmlDoctypeType)(-1);
         }
 
         public string Doctype { get; }
 
-        public HtmlDoctypeType DoctypeType { get; }
+        private HtmlDoctypeType _doctypeType;
+        public HtmlDoctypeType DoctypeType
+        {
+            get
+            {
+                if (_doctypeType == (HtmlDoctypeType)(-1))
+                {
+                    if (Doctype == "DOCTYPE html")
+                    {
+                        _doctypeType = HtmlDoctypeType.Html5;
+                    }
+                    else if (Doctype == "DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\"")
+                    {
+                        _doctypeType = HtmlDoctypeType.Html401Strict;
+                    }
+                    else if (Doctype == "DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"")
+                    {
+                        _doctypeType = HtmlDoctypeType.Html401Transitional;
+                    }
+                    else if (Doctype == "DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\"")
+                    {
+                        _doctypeType = HtmlDoctypeType.Html401Frameset;
+                    }
+                    else if (Doctype == "DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"")
+                    {
+                        _doctypeType = HtmlDoctypeType.XHtml10Strict;
+                    }
+                    else if (Doctype == "DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"")
+                    {
+                        _doctypeType = HtmlDoctypeType.XHtml10Transitional;
+                    }
+                    else if (Doctype == "DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\"")
+                    {
+                        _doctypeType = HtmlDoctypeType.XHtml10Frameset;
+                    }
+                    else if (Doctype == "DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\"")
+                    {
+                        _doctypeType = HtmlDoctypeType.XHtml11;
+                    }
+                    else
+                    {
+                        _doctypeType = HtmlDoctypeType.Custom;
+                    }
+                }
+                return _doctypeType;
+            }
+        }
 
         public override bool Equals(object obj) => Equals(obj as HtmlDoctype);
 

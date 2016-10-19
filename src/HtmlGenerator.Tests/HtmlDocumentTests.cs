@@ -14,12 +14,17 @@ namespace HtmlGenerator.Tests
             Assert.Equal("html", document.Tag);
             Assert.Null(document.InnerText);
             Assert.False(document.IsVoid);
-            Assert.Equal(2, document.Elements().Count());
-            Assert.Empty(document.Attributes());
-            Assert.Equal(2, document.ElementsAndAttributes().Count());
+            Assert.True(document.IsEmpty);
 
-            Assert.Equal("<head></head>", document.Head.ToString());
-            Assert.Equal("<body></body>", document.Body.ToString());
+            Assert.Null(document.Head);
+            Assert.Null(document.Body);
+        }
+
+        [Fact]
+        public void ObjectType_Get_ReturnsDocument()
+        {
+            HtmlDocument document = new HtmlDocument();
+            Assert.Equal(HtmlObjectType.Document, document.ObjectType);
         }
 
         [Fact]
@@ -149,10 +154,7 @@ namespace HtmlGenerator.Tests
             document.Doctype = doctype;
 
             string expectedDocType = doctype == null ? string.Empty : doctype + Environment.NewLine;
-            Helpers.SerializeIgnoringFormatting(document, string.Format(@"{0}<html>
-<head></head>
-<body></body>
-</html>", expectedDocType));
+            Helpers.SerializeIgnoringFormatting(document, string.Format(@"{0}<html></html>", expectedDocType));
         }
 
         [Fact]
@@ -160,16 +162,13 @@ namespace HtmlGenerator.Tests
         {
             HtmlDocument document = new HtmlDocument();
             Helpers.SerializeIgnoringFormatting(document, @"<!DOCTYPE html>
-<html>
-<head></head>
-<body></body>
-</html>");
+<html></html>");
         }
 
         [Fact]
         public void Serialize_Complex()
         {
-            HtmlDocument document = new HtmlDocument();
+            HtmlDocument document = new HtmlDocument().AddHead().AddBody();
             document.Head.Add(Tag.Title.WithInnerText("Title"));
             document.Body.Add(Tag.Header1("Header1").WithClass("aClass"));
             document.Body.Add(Tag.Br);
