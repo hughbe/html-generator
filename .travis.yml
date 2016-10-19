@@ -90,7 +90,7 @@ install:
   #
   # ```javascript
   # // the file to manipulate
-  # jsonPath = './src/HtmlGeneratorMeta/project.json';
+  # jsonPath = './src/HtmlGenerator.Tests/project.json';
   #
   # // read and parse JSON as object (aka CommonJS magic)
   # data = require(jsonPath);
@@ -109,14 +109,13 @@ install:
   - if test "$TRAVIS_OS_NAME" == "linux"; then
       nvm install stable && nvm use stable;
     fi
-  - node -e "jsonPath='./src/HtmlGeneratorMeta/project.json';data=require(jsonPath);fs=require('fs');delete data.frameworks.net45;fs.writeFileSync(jsonPath, JSON.stringify(data, null, 2))"
+  - node -e "jsonPath='./src/HtmlGenerator.Tests/project.json';data=require(jsonPath);fs=require('fs');delete data.frameworks.net45;fs.writeFileSync(jsonPath, JSON.stringify(data, null, 2))"
 
   # Restore dependencies
   - dotnet restore
 
   # Build projects
   - dotnet build -c $CONFIGURATION -f netstandard1.0 ./src/HtmlGenerator
-  - dotnet build -c $CONFIGURATION -f netcoreapp1.0 ./src/HtmlGeneratorMeta
   - dotnet build -c $CONFIGURATION -f netcoreapp1.0 ./src/HtmlGenerator.Tests
 
 script:
