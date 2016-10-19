@@ -12,64 +12,64 @@ namespace HtmlGenerator.Tests
         [InlineData(false)]
         public void Add_HtmlObject(bool isVoid)
         {
-            HtmlElement element = new HtmlElement("html", isVoid);
+            HtmlElement parent = new HtmlElement("parent", isVoid);
 
             // Atribute
-            HtmlAttribute attribute = new HtmlAttribute("attribute1");
-            element.Add(attribute);
-            Assert.Equal(element, attribute.Parent);
-            Assert.Equal(new HtmlAttribute[] { attribute }, element.Attributes());
+            HtmlAttribute attribute = new HtmlAttribute("attribute");
+            parent.Add(attribute);
+            Assert.Equal(parent, attribute.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute }, parent.Attributes());
 
             if (!isVoid)
             {
                 // Element
-                HtmlElement newElement = new HtmlElement("body");
-                element.Add(newElement);
-                Assert.Equal(element, newElement.Parent);
-                Assert.Equal(new HtmlElement[] { newElement }, element.Elements());
+                HtmlElement element = new HtmlElement("element");
+                parent.Add(element);
+                Assert.Equal(parent, element.Parent);
+                Assert.Equal(new HtmlElement[] { element }, parent.Elements());
 
                 // Comment
-                HtmlComment newComment = new HtmlComment("comment");
-                element.Add(newComment);
-                Assert.Equal(element, newComment.Parent);
-                Assert.Equal(new HtmlObject[] { newElement, newComment }, element.Nodes());
+                HtmlComment comment = new HtmlComment("comment");
+                parent.Add(comment);
+                Assert.Equal(parent, comment.Parent);
+                Assert.Equal(new HtmlObject[] { element, comment }, parent.Nodes());
             }
         }
 
         [Fact]
         public void Add_ParamsHtmlObject_NonVoidElement()
         {
-            HtmlElement element = new HtmlElement("html");
-            HtmlElement newElement = new HtmlElement("body");
-            HtmlAttribute newAttribute = new HtmlAttribute("Attribute");
-            HtmlComment newComment = new HtmlComment("comment");
-            element.Add(new HtmlObject[] { newElement, newAttribute, newComment });
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement element = new HtmlElement("element");
+            HtmlAttribute attribute = new HtmlAttribute("attribute");
+            HtmlComment comment = new HtmlComment("comment");
+            parent.Add(new HtmlObject[] { element, attribute, comment });
 
-            Assert.Equal(element, newElement.Parent);
-            Assert.Equal(element, newAttribute.Parent);
-            Assert.Equal(new HtmlObject[] { newElement }, element.Elements());
-            Assert.Equal(new HtmlAttribute[] { newAttribute }, element.Attributes());
-            Assert.Equal(new HtmlObject[] { newElement, newComment }, element.Nodes());
+            Assert.Equal(parent, element.Parent);
+            Assert.Equal(parent, attribute.Parent);
+            Assert.Equal(new HtmlObject[] { element }, parent.Elements());
+            Assert.Equal(new HtmlAttribute[] { attribute }, parent.Attributes());
+            Assert.Equal(new HtmlObject[] { element, comment }, parent.Nodes());
         }
 
         [Fact]
         public void Add_ParamsHtmlObject_VoidElement()
         {
-            HtmlElement element = new HtmlElement("html", isVoid: true);
-            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
-            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
-            element.Add(new HtmlObject[] { newAttribute1, newAttribute2 });
+            HtmlElement element = new HtmlElement("parent", isVoid: true);
+            HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
+            HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
+            element.Add(new HtmlObject[] { attribute1, attribute2 });
 
-            Assert.Equal(element, newAttribute1.Parent);
-            Assert.Equal(element, newAttribute2.Parent);
+            Assert.Equal(element, attribute1.Parent);
+            Assert.Equal(element, attribute2.Parent);
             Assert.Empty(element.Elements());
-            Assert.Equal(new HtmlAttribute[] { newAttribute1, newAttribute2 }, element.Attributes());
+            Assert.Equal(new HtmlAttribute[] { attribute1, attribute2 }, element.Attributes());
         }
 
         [Fact]
         public void Add_ParamsHtmlObject_Empty()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             element.Add(new HtmlObject[0]);
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
@@ -78,35 +78,35 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Add_IEnumerableHtmlObject_NonVoidElement()
         {
-            HtmlElement element = new HtmlElement("html");
-            HtmlElement newElement = new HtmlElement("body");
-            HtmlAttribute newAttribute = new HtmlAttribute("Attribute");
-            element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { newElement, newAttribute });
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement element = new HtmlElement("element");
+            HtmlAttribute attribute = new HtmlAttribute("Attribute");
+            parent.Add((IEnumerable<HtmlObject>)new HtmlObject[] { element, attribute });
 
-            Assert.Equal(element, newElement.Parent);
-            Assert.Equal(element, newAttribute.Parent);
-            Assert.Equal(new HtmlObject[] { newElement }, element.Elements());
-            Assert.Equal(new HtmlAttribute[] { newAttribute }, element.Attributes());
+            Assert.Equal(parent, element.Parent);
+            Assert.Equal(parent, attribute.Parent);
+            Assert.Equal(new HtmlObject[] { element }, parent.Elements());
+            Assert.Equal(new HtmlAttribute[] { attribute }, parent.Attributes());
         }
 
         [Fact]
         public void Add_IEnumerableHtmlObject_VoidElement()
         {
-            HtmlElement element = new HtmlElement("html", isVoid: true);
-            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
-            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
-            element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { newAttribute1, newAttribute2 });
+            HtmlElement parent = new HtmlElement("parent", isVoid: true);
+            HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
+            HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
+            parent.Add((IEnumerable<HtmlObject>)new HtmlObject[] { attribute1, attribute2 });
 
-            Assert.Equal(element, newAttribute1.Parent);
-            Assert.Equal(element, newAttribute2.Parent);
-            Assert.Empty(element.Elements());
-            Assert.Equal(new HtmlAttribute[] { newAttribute1, newAttribute2 }, element.Attributes());
+            Assert.Equal(parent, attribute1.Parent);
+            Assert.Equal(parent, attribute2.Parent);
+            Assert.Empty(parent.Elements());
+            Assert.Equal(new HtmlAttribute[] { attribute1, attribute2 }, parent.Attributes());
         }
 
         [Fact]
         public void Add_IEnumerableHtmlObject_Empty()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             element.Add(new HtmlObject[0]);
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
@@ -173,7 +173,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Add_NullContent_ThrowsArgumentNullException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
 
             Assert.Throws<ArgumentNullException>("content", () => element.Add((HtmlObject)null));
             Assert.Throws<ArgumentNullException>("content", () => element.Add((HtmlObject[])null));
@@ -183,7 +183,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Add_NullObjectInContent_ThrowsArgumentNullException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Throws<ArgumentNullException>("content", () => element.Add(new HtmlObject[] { null }));
             Assert.Throws<ArgumentNullException>("content", () => element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { null }));
         }
@@ -191,7 +191,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Add_SameElement_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Throws<InvalidOperationException>(() => element.Add(element));
             Assert.Throws<InvalidOperationException>(() => element.Add(new HtmlObject[] { element }));
             Assert.Throws<InvalidOperationException>(() => element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { element }));        }
@@ -199,7 +199,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Add_DuplicateElement_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             HtmlElement newElement = new HtmlElement("body");
             element.Add(newElement);
 
@@ -211,7 +211,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Add_DuplicateAttribute_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             HtmlAttribute newAttribute = new HtmlAttribute("Attribute");
             element.Add(newAttribute);
 
@@ -223,7 +223,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Add_EqualAttribute_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             HtmlAttribute attribute = new HtmlAttribute("Attribute");
             element.Add(attribute);
 
@@ -237,12 +237,12 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Add_ElementToVoidElement_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("br", isVoid: true);
-            HtmlElement newElement = new HtmlElement("p");
+            HtmlElement parent = new HtmlElement("parent", isVoid: true);
+            HtmlElement element = new HtmlElement("element");
 
-            Assert.Throws<InvalidOperationException>(() => element.Add(newElement));
-            Assert.Throws<InvalidOperationException>(() => element.Add(new HtmlObject[] { newElement }));
-            Assert.Throws<InvalidOperationException>(() => element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => parent.Add(element));
+            Assert.Throws<InvalidOperationException>(() => parent.Add(new HtmlObject[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.Add((IEnumerable<HtmlObject>)new HtmlObject[] { element }));
         }
 
         [Theory]
@@ -250,74 +250,74 @@ namespace HtmlGenerator.Tests
         [InlineData(false)]
         public void AddFirst_HtmlObject(bool isVoid)
         {
-            HtmlElement element = new HtmlElement("html", isVoid);
+            HtmlElement parent = new HtmlElement("parent", isVoid);
             HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
-            element.Add(attribute1);
+            parent.Add(attribute1);
 
             // Attribute
             HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
-            element.AddFirst(attribute2);
-            Assert.Equal(element, attribute2.Parent);
-            Assert.Equal(new HtmlAttribute[] { attribute2, attribute1 }, element.Attributes());
+            parent.AddFirst(attribute2);
+            Assert.Equal(parent, attribute2.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute2, attribute1 }, parent.Attributes());
 
             if (!isVoid)
             {
-                HtmlElement newelement1 = new HtmlElement("body");
-                element.Add(newelement1);
+                HtmlElement element1 = new HtmlElement("element1");
+                parent.Add(element1);
 
                 // Element
-                HtmlElement newelement2 = new HtmlElement("head");
-                element.AddFirst(newelement2);
-                Assert.Equal(element, newelement2.Parent);
-                Assert.Equal(new HtmlElement[] { newelement2, newelement1 }, element.Elements());
+                HtmlElement element2 = new HtmlElement("element2");
+                parent.AddFirst(element2);
+                Assert.Equal(parent, element2.Parent);
+                Assert.Equal(new HtmlElement[] { element2, element1 }, parent.Elements());
 
                 // Comment
-                HtmlComment newComment = new HtmlComment("comment");
-                element.AddFirst(newComment);
-                Assert.Equal(element, newComment.Parent);
-                Assert.Equal(new HtmlObject[] { newComment, newelement2, newelement1 }, element.Nodes());
+                HtmlComment comment = new HtmlComment("comment");
+                parent.AddFirst(comment);
+                Assert.Equal(parent, comment.Parent);
+                Assert.Equal(new HtmlObject[] { comment, element2, element1 }, parent.Nodes());
             }
         }
 
         [Fact]
         public void AddFirst_ParamsHtmlObject_NonVoidElement()
         {
-            HtmlElement element = new HtmlElement("html");
-            HtmlElement newelement1 = new HtmlElement("body");
-            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
-            element.Add(new HtmlObject[] { newelement1, newAttribute1 });
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement element1 = new HtmlElement("body");
+            HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
+            parent.Add(new HtmlObject[] { element1, attribute1 });
 
-            HtmlElement newelement2 = new HtmlElement("head");
-            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
-            element.AddFirst(new HtmlObject[] { newelement2, newAttribute2 });
+            HtmlElement element2 = new HtmlElement("head");
+            HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
+            parent.AddFirst(new HtmlObject[] { element2, attribute2 });
 
-            Assert.Equal(element, newelement2.Parent);
-            Assert.Equal(element, newAttribute2.Parent);
-            Assert.Equal(new HtmlObject[] { newelement2, newelement1 }, element.Elements());
-            Assert.Equal(new HtmlAttribute[] { newAttribute2, newAttribute1 }, element.Attributes());
+            Assert.Equal(parent, element2.Parent);
+            Assert.Equal(parent, attribute2.Parent);
+            Assert.Equal(new HtmlObject[] { element2, element1 }, parent.Elements());
+            Assert.Equal(new HtmlAttribute[] { attribute2, attribute1 }, parent.Attributes());
         }
 
         [Fact]
         public void AddFirst_ParamsHtmlObject_VoidElement()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement parent = new HtmlElement("parent");
             HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
-            element.Add(newAttribute1);
+            parent.Add(newAttribute1);
 
             HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
             HtmlAttribute newAttribute3 = new HtmlAttribute("attribute3");
-            element.AddFirst(new HtmlObject[] { newAttribute2, newAttribute3 });
+            parent.AddFirst(new HtmlObject[] { newAttribute2, newAttribute3 });
 
-            Assert.Equal(element, newAttribute2.Parent);
-            Assert.Equal(element, newAttribute3.Parent);
-            Assert.Empty(element.Elements());
-            Assert.Equal(new HtmlAttribute[] { newAttribute3, newAttribute2, newAttribute1 }, element.Attributes());
+            Assert.Equal(parent, newAttribute2.Parent);
+            Assert.Equal(parent, newAttribute3.Parent);
+            Assert.Empty(parent.Elements());
+            Assert.Equal(new HtmlAttribute[] { newAttribute3, newAttribute2, newAttribute1 }, parent.Attributes());
         }
 
         [Fact]
         public void AddFirst_ParamsHtmlObject_Empty()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             element.AddFirst(new HtmlObject[0]);
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
@@ -326,42 +326,42 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddFirst_IEnumerableHtmlObject_NonVoidElement()
         {
-            HtmlElement element = new HtmlElement("html");
-            HtmlElement newelement1 = new HtmlElement("body");
-            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
-            element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { newelement1, newAttribute1 });
+            HtmlElement element = new HtmlElement("parent");
+            HtmlElement element1 = new HtmlElement("body");
+            HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
+            element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { element1, attribute1 });
 
-            HtmlElement newelement2 = new HtmlElement("head");
-            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
-            element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { newelement2, newAttribute2 });
+            HtmlElement element2 = new HtmlElement("head");
+            HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
+            element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { element2, attribute2 });
 
-            Assert.Equal(element, newelement2.Parent);
-            Assert.Equal(element, newAttribute2.Parent);
-            Assert.Equal(new HtmlObject[] { newelement2, newelement1 }, element.Elements());
-            Assert.Equal(new HtmlAttribute[] { newAttribute2, newAttribute1 }, element.Attributes());
+            Assert.Equal(element, element2.Parent);
+            Assert.Equal(element, attribute2.Parent);
+            Assert.Equal(new HtmlObject[] { element2, element1 }, element.Elements());
+            Assert.Equal(new HtmlAttribute[] { attribute2, attribute1 }, element.Attributes());
         }
 
         [Fact]
         public void AddFirst_IEnumerableHtmlObject_VoidElement()
         {
-            HtmlElement element = new HtmlElement("html");
-            HtmlAttribute newAttribute1 = new HtmlAttribute("attribute1");
-            element.Add(newAttribute1);
+            HtmlElement element = new HtmlElement("parent");
+            HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
+            element.Add(attribute1);
 
-            HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
-            HtmlAttribute newAttribute3 = new HtmlAttribute("attribute3");
-            element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { newAttribute2, newAttribute3 });
+            HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
+            HtmlAttribute attribute3 = new HtmlAttribute("attribute3");
+            element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { attribute2, attribute3 });
 
-            Assert.Equal(element, newAttribute2.Parent);
-            Assert.Equal(element, newAttribute3.Parent);
+            Assert.Equal(element, attribute2.Parent);
+            Assert.Equal(element, attribute3.Parent);
             Assert.Empty(element.Elements());
-            Assert.Equal(new HtmlAttribute[] { newAttribute3, newAttribute2, newAttribute1 }, element.Attributes());
+            Assert.Equal(new HtmlAttribute[] { attribute3, attribute2, attribute1 }, element.Attributes());
         }
 
         [Fact]
         public void AddFirst_IEnumerableHtmlObject_Empty()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             element.AddFirst(new HtmlObject[0]);
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
@@ -428,7 +428,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddFirst_NullContent_ThrowsArgumentNullException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
 
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst((HtmlObject)null));
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst((HtmlObject[])null));
@@ -438,7 +438,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddFirst_NullObjectInContent_ThrowsArgumentNullException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
 
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst(new HtmlObject[] { null }));
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { null }));
@@ -447,7 +447,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddFirst_SameElement_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
 
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(element));
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(new HtmlObject[] { element }));
@@ -457,7 +457,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddFirst_DuplicateElement_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             HtmlElement newElement = new HtmlElement("body");
             element.Add(newElement);
             
@@ -469,7 +469,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddFirst_DuplicateAttribute_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             HtmlAttribute newAttribute = new HtmlAttribute("Attribute");
             element.Add(newAttribute);
 
@@ -481,7 +481,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddFirst_EqualAttribute_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             HtmlAttribute attribute = new HtmlAttribute("Attribute");
             element.Add(attribute);
             HtmlAttribute newAttribute = new HtmlAttribute(attribute.Name);
@@ -494,12 +494,12 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddFirst_ElementToVoidElement_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("br", isVoid: true);
-            HtmlElement newElement = new HtmlElement("p");
+            HtmlElement parent = new HtmlElement("parent", isVoid: true);
+            HtmlElement element = new HtmlElement("element");
 
-            Assert.Throws<InvalidOperationException>(() => element.AddFirst(newElement));
-            Assert.Throws<InvalidOperationException>(() => element.AddFirst(new HtmlObject[] { newElement }));
-            Assert.Throws<InvalidOperationException>(() => element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => parent.AddFirst(element));
+            Assert.Throws<InvalidOperationException>(() => parent.AddFirst(new HtmlObject[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { element }));
         }
     }
 }

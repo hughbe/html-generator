@@ -111,7 +111,7 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(Attributes_TestData))]
         public void Attributes(HtmlAttribute[] attributes)
         {
-            HtmlElement element = new HtmlElement("html", attributes);
+            HtmlElement element = new HtmlElement("element", attributes);
             Assert.Equal(attributes, element.Attributes().ToArray());
 
             // Ignores nodes
@@ -171,12 +171,12 @@ namespace HtmlGenerator.Tests
         public void Descendants_ThreeLayersOfElements_ReturnsExpected()
         {
             HtmlElement parent = new HtmlElement("parent");
-            HtmlElement child1 = new HtmlElement("Child1");
-            HtmlElement grandchild1 = new HtmlElement("Grandchild1");
-            HtmlElement greatGrandchild1 = new HtmlElement("GreatGrandchild1");
-            HtmlElement greatGrandchild2 = new HtmlElement("GreatGrandchild2");
+            HtmlElement child1 = new HtmlElement("child1");
+            HtmlElement grandchild1 = new HtmlElement("grandchild1");
+            HtmlElement greatGrandchild1 = new HtmlElement("greatgrandchild1");
+            HtmlElement greatGrandchild2 = new HtmlElement("greatgrandchild2");
 
-            HtmlElement child2 = new HtmlElement("Child2");
+            HtmlElement child2 = new HtmlElement("child2");
             HtmlElement grandchild2 = new HtmlElement("Grandchild2");
 
             parent.Add(child1, child2);
@@ -191,7 +191,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Descendants_NoElements_ReturnsEmpty()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             VerifyDescendants(element, null, new HtmlElement[0]);
             VerifyDescendants(element, "any", new HtmlElement[0]);
         }
@@ -251,7 +251,7 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(Elements_Method_TestData))]
         public void Elements(HtmlElement[] elements, string tag, HtmlElement[] expected)
         {
-            HtmlElement element = new HtmlElement("html", elements);
+            HtmlElement element = new HtmlElement("element", elements);
             if (tag == null)
             {
                 Assert.Equal(expected, element.Elements().ToArray());
@@ -273,14 +273,14 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Elements_String_ReturnsExpected()
         {
-            HtmlElement element1 = new HtmlElement("div");
-            HtmlElement element2 = new HtmlElement("div");
-            HtmlElement element3 = new HtmlElement("h1");
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlElement element2 = new HtmlElement("element1");
+            HtmlElement element3 = new HtmlElement("element2");
 
-            HtmlElement element = new HtmlElement("html", element1, element2, element3);
-            Assert.Equal(new HtmlElement[] { element1, element2 }, element.Elements("div"));
-            Assert.Equal(new HtmlElement[] { element1, element2 }, element.Elements("DIV"));
-            Assert.Equal(new HtmlElement[] { element3 }, element.Elements("h1"));
+            HtmlElement element = new HtmlElement("element", element1, element2, element3);
+            Assert.Equal(new HtmlElement[] { element1, element2 }, element.Elements("element1"));
+            Assert.Equal(new HtmlElement[] { element1, element2 }, element.Elements("ELEMENT1"));
+            Assert.Equal(new HtmlElement[] { element3 }, element.Elements("element2"));
         }
 
         [Fact]
@@ -297,14 +297,14 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Elements_String_NoSuchTag_ReturnsEmpty()
         {
-            HtmlElement element = new HtmlElement("html", new HtmlElement("div"), new HtmlElement("h1"));
+            HtmlElement element = new HtmlElement("parent", new HtmlElement("element1"), new HtmlElement("element2"));
             Assert.Empty(element.Elements("no-such-tag"));
         }
 
         [Fact]
         public void Elements_String_NoChildren_ReturnsEmpty()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             Assert.Empty(element.Elements(null));
             Assert.Empty(element.Elements("no-such-tag"));
 
@@ -318,25 +318,25 @@ namespace HtmlGenerator.Tests
         public void FirstAttribute_HasAttributes_ReturnsExpected()
         {
             HtmlAttribute expected = new HtmlAttribute("attribute1");
-            HtmlElement element = new HtmlElement("html", expected, new HtmlAttribute("attribute2"));
+            HtmlElement element = new HtmlElement("parent", expected, new HtmlAttribute("attribute2"));
             Assert.Equal(expected, element.FirstAttribute);
         }
 
         [Fact]
         public void FirstAttribute_NoAttributes_ReturnsNull()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Null(element.FirstAttribute);
 
-            element.Add(new HtmlElement("body"));
+            element.Add(new HtmlElement("element"));
             Assert.Null(element.FirstAttribute);
         }
 
         [Fact]
         public void FirstAttribute_LastAttribute_OneAttribute_ReturnsSame()
         {
-            HtmlAttribute expected = new HtmlAttribute("Attribute");
-            HtmlElement element = new HtmlElement("html", expected);
+            HtmlAttribute expected = new HtmlAttribute("attribute");
+            HtmlElement element = new HtmlElement("parent", expected);
             Assert.Equal(expected, element.FirstAttribute);
             Assert.Equal(element.FirstAttribute, element.LastAttribute);
         }
@@ -345,14 +345,14 @@ namespace HtmlGenerator.Tests
         public void FirstElement_HasElements_ReturnsExpected()
         {
             HtmlElement expected = new HtmlElement("head");
-            HtmlElement element = new HtmlElement("html", expected, new HtmlElement("body"));
+            HtmlElement element = new HtmlElement("parent", expected, new HtmlElement("element"));
             Assert.Equal(expected, element.FirstElement);
         }
 
         [Fact]
         public void FirstElement_NoElements_ReturnsNull()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Null(element.FirstElement);
 
             // Ignores attributes
@@ -367,8 +367,8 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void FirstElement_LastElement_OneElement_ReturnsSame()
         {
-            HtmlElement expected = new HtmlElement("head");
-            HtmlElement element = new HtmlElement("html", expected);
+            HtmlElement expected = new HtmlElement("element");
+            HtmlElement element = new HtmlElement("parent", expected);
             Assert.Equal(expected, element.FirstElement);
             Assert.Equal(element.FirstElement, element.LastElement);
         }
@@ -377,7 +377,7 @@ namespace HtmlGenerator.Tests
         public void FirstNode_Element_ReturnsExpected()
         {
             HtmlElement expected = new HtmlElement("head");
-            HtmlElement element = new HtmlElement("html", expected, new HtmlElement("body"));
+            HtmlElement element = new HtmlElement("parent", expected, new HtmlElement("element"));
             Assert.Equal(expected, element.FirstNode);
         }
 
@@ -385,14 +385,14 @@ namespace HtmlGenerator.Tests
         public void FirstNode_Comment_ReturnsExpected()
         {
             HtmlComment expected = new HtmlComment("comment");
-            HtmlElement element = new HtmlElement("html", expected, new HtmlElement("body"));
+            HtmlElement element = new HtmlElement("parent", expected, new HtmlElement("element"));
             Assert.Equal(expected, element.FirstNode);
         }
 
         [Fact]
         public void FirstNode_NoNodes_ReturnsNull()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Null(element.FirstNode);
 
             // Ignores attributes
@@ -403,14 +403,14 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void HasAttributes_HasAttributes_ReturnsTrue()
         {
-            HtmlElement element = new HtmlElement("html", new HtmlAttribute("attribute"));
+            HtmlElement element = new HtmlElement("parent", new HtmlAttribute("attribute"));
             Assert.True(element.HasAttributes);
         }
 
         [Fact]
         public void HasAttributes_NoAttributes_ReturnsTrue()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.False(element.HasAttributes);
 
             // Ignores elements
@@ -425,7 +425,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void HasAttribute_NullName_ThrowsArgumentNullException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             Assert.Throws<ArgumentNullException>("name", () => element.HasAttribute(null));
         }
 
@@ -434,21 +434,21 @@ namespace HtmlGenerator.Tests
         [InlineData(" \r \t \n ")]
         public void HasAttribute_InvalidName_ThrowsArgumentException(string name)
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             Assert.Throws<ArgumentException>("name", () => element.HasAttribute(name));
         }
 
         [Fact]
         public void HasElements_HasElements_ReturnsTrue()
         {
-            HtmlElement element = new HtmlElement("html", new HtmlElement("head"));
+            HtmlElement element = new HtmlElement("element", new HtmlElement("head"));
             Assert.True(element.HasElements);
         }
 
         [Fact]
         public void HasElements_NoElements_ReturnsTrue()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             Assert.False(element.HasElements);
 
             // Ignores attributes
@@ -463,7 +463,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void HasElement_NullTag_ThrowsArgumentNullException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             Assert.Throws<ArgumentNullException>("tag", () => element.HasElement(null));
         }
 
@@ -472,7 +472,7 @@ namespace HtmlGenerator.Tests
         [InlineData(" \r \t \n ")]
         public void HasElement_InvalidName_ThrowsArgumentException(string tag)
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             Assert.Throws<ArgumentException>("tag", () => element.HasElement(tag));
         }
 
@@ -480,14 +480,14 @@ namespace HtmlGenerator.Tests
         public void IsEmpty_HasElements_ReturnsTrue()
         {
             // TODO: nodes
-            HtmlElement element = new HtmlElement("html", new HtmlElement("head"));
+            HtmlElement element = new HtmlElement("parent", new HtmlElement("element"));
             Assert.False(element.IsEmpty);
         }
 
         [Fact]
         public void IsEmpty_HasAttributes_ReturnsTrue()
         {
-            HtmlElement element = new HtmlElement("html", new HtmlAttribute("attribute"));
+            HtmlElement element = new HtmlElement("parent", new HtmlAttribute("attribute"));
             Assert.False(element.IsEmpty);
         }
 
@@ -495,14 +495,14 @@ namespace HtmlGenerator.Tests
         public void IsEmpty_HasElementsAndAttributes_ReturnsTrue()
         {
             // TODO: nodes
-            HtmlElement element = new HtmlElement("html", new HtmlElement("head"), new HtmlAttribute("attribute"));
+            HtmlElement element = new HtmlElement("parent", new HtmlElement("element"), new HtmlAttribute("attribute"));
             Assert.False(element.IsEmpty);
         }
 
         [Fact]
         public void IsEmpty_HasNoNodesOrAttributes_ReturnsTrue()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.True(element.IsEmpty);
         }
 
@@ -510,32 +510,32 @@ namespace HtmlGenerator.Tests
         public void LastAttribute_HasAttributes_ReturnsExpected()
         {
             HtmlAttribute expected = new HtmlAttribute("attribute2");
-            HtmlElement element = new HtmlElement("html", new HtmlAttribute("attribute1"), expected);
+            HtmlElement element = new HtmlElement("parent", new HtmlAttribute("attribute1"), expected);
             Assert.Equal(expected, element.LastAttribute);
         }
 
         [Fact]
         public void LastAttribute_NoAttributes_ReturnsNull()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Null(element.LastAttribute);
 
-            element.Add(new HtmlElement("body"));
+            element.Add(new HtmlElement("element"));
             Assert.Null(element.LastAttribute);
         }
 
         [Fact]
         public void LastElement_HasElements_ReturnsExpected()
         {
-            HtmlElement expected = new HtmlElement("body");
-            HtmlElement element = new HtmlElement("html", new HtmlElement("head"), expected);
+            HtmlElement expected = new HtmlElement("element");
+            HtmlElement element = new HtmlElement("parent", new HtmlElement("head"), expected);
             Assert.Equal(expected, element.LastElement);
         }
 
         [Fact]
         public void LastElement_NoElements_ReturnsNull()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Null(element.LastElement);
 
             // Ignores attributes
@@ -550,8 +550,8 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void LastNode_Element_ReturnsExpected()
         {
-            HtmlElement expected = new HtmlElement("body");
-            HtmlElement element = new HtmlElement("html", new HtmlElement("head"), expected);
+            HtmlElement expected = new HtmlElement("element");
+            HtmlElement element = new HtmlElement("parent", new HtmlElement("head"), expected);
             Assert.Equal(expected, element.LastNode);
         }
 
@@ -559,14 +559,14 @@ namespace HtmlGenerator.Tests
         public void LastNode_Comment_ReturnsExpected()
         {
             HtmlComment expected = new HtmlComment("comment");
-            HtmlElement element = new HtmlElement("html", new HtmlElement("head"), expected);
+            HtmlElement element = new HtmlElement("parent", new HtmlElement("element"), expected);
             Assert.Equal(expected, element.LastNode);
         }
 
         [Fact]
         public void LastNode_NoNodes_ReturnsNull()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Null(element.LastNode);
 
             // Ignores attributes
@@ -577,68 +577,68 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void NextElement_Get_ReturnsExpected()
         {
-            HtmlElement first = new HtmlElement("h1");
-            HtmlElement second = new HtmlElement("h2");
-            HtmlElement third = new HtmlElement("h3");
-            HtmlElement parent = new HtmlElement("div", first, second, third);
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement element3 = new HtmlElement("element3");
+            HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
 
-            Assert.Equal(second, first.NextElement);
-            Assert.Equal(third, second.NextElement);
-            Assert.Null(third.NextElement);
+            Assert.Equal(element2, element1.NextElement);
+            Assert.Equal(element3, element2.NextElement);
+            Assert.Null(element3.NextElement);
         }
 
         [Fact]
         public void NextElement_NoParent_ReturnsNull()
         {
-            HtmlElement element = new HtmlElement("div");
+            HtmlElement element = new HtmlElement("element");
             Assert.Null(element.NextElement);
         }
 
         [Fact]
         public void NextElements_NoTag_ReturnsExpected()
         {
-            HtmlElement first = new HtmlElement("h1");
-            HtmlElement second = new HtmlElement("h2");
-            HtmlElement third = new HtmlElement("h3");
-            HtmlElement parent = new HtmlElement("div", first, second, third);
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement element3 = new HtmlElement("element3");
+            HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
 
-            Assert.Equal(new HtmlElement[] { second, third }, first.NextElements());
-            Assert.Equal(new HtmlElement[] { third }, second.NextElements());
-            Assert.Empty(third.NextElements());
+            Assert.Equal(new HtmlElement[] { element2, element3 }, element1.NextElements());
+            Assert.Equal(new HtmlElement[] { element3 }, element2.NextElements());
+            Assert.Empty(element3.NextElements());
         }
 
         [Fact]
         public void NextElements_CustomTag_ReturnsExpected()
         {
-            HtmlElement first = new HtmlElement("h1");
-            HtmlElement second = new HtmlElement("h2");
-            HtmlElement third = new HtmlElement("h2");
-            HtmlElement fourth = new HtmlElement("h4");
-            HtmlElement parent = new HtmlElement("div", first, second, third, fourth);
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement element3 = new HtmlElement("element2");
+            HtmlElement element4 = new HtmlElement("element3");
+            HtmlElement parent = new HtmlElement("parent", element1, element2, element3, element4);
 
-            Assert.Equal(new HtmlElement[] { second, third }, first.NextElements("h2"));
-            Assert.Equal(new HtmlElement[] { second, third }, first.NextElements("H2"));
-            Assert.Equal(new HtmlElement[] { third }, second.NextElements("h2"));
-            Assert.Equal(new HtmlElement[] { fourth }, third.NextElements("h4"));
-            Assert.Empty(third.NextElements("h1"));
+            Assert.Equal(new HtmlElement[] { element2, element3 }, element1.NextElements("element2"));
+            Assert.Equal(new HtmlElement[] { element2, element3 }, element1.NextElements("ELEMENT2"));
+            Assert.Equal(new HtmlElement[] { element3 }, element2.NextElements("element2"));
+            Assert.Equal(new HtmlElement[] { element4 }, element3.NextElements("element3"));
+            Assert.Empty(element3.NextElements("element1"));
         }
 
         [Fact]
         public void NextElements_NoSuchTag_ReturnsEmpty()
         {
-            HtmlElement first = new HtmlElement("h1");
-            HtmlElement second = new HtmlElement("h2");
-            HtmlElement third = new HtmlElement("h2");
-            HtmlElement parent = new HtmlElement("div", first, second, third);
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement element3 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
 
-            Assert.Empty(first.NextElements("h1"));
-            Assert.Empty(first.NextElements("h4"));
+            Assert.Empty(element1.NextElements("element1"));
+            Assert.Empty(element1.NextElements("element3"));
         }
 
         [Fact]
         public void NextElements_NoParent_ReturnsEmpty()
         {
-            HtmlElement element = new HtmlElement("div");
+            HtmlElement element = new HtmlElement("parent");
             Assert.Empty(element.NextElements());
             Assert.Empty(element.NextElements("any"));
         }
@@ -646,8 +646,8 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void NextElements_NoSiblings_ReturnsEmpty()
         {
-            HtmlElement parent = new HtmlElement("div");
-            HtmlElement element = new HtmlElement("p");
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement element = new HtmlElement("element");
             parent.Add(element);
             Assert.Empty(element.NextElements());
             Assert.Empty(element.NextElements("any"));
@@ -656,68 +656,68 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void PreviousElement_Get_ReturnsExpected()
         {
-            HtmlElement first = new HtmlElement("h1");
-            HtmlElement second = new HtmlElement("h2");
-            HtmlElement third = new HtmlElement("h3");
-            HtmlElement parent = new HtmlElement("div", first, second, third);
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement element3 = new HtmlElement("element3");
+            HtmlElement parent = new HtmlElement("div", element1, element2, element3);
 
-            Assert.Null(first.PreviousElement);
-            Assert.Equal(first, second.PreviousElement);
-            Assert.Equal(second, third.PreviousElement);
+            Assert.Null(element1.PreviousElement);
+            Assert.Equal(element1, element2.PreviousElement);
+            Assert.Equal(element2, element3.PreviousElement);
         }
 
         [Fact]
         public void PreviousElement_NoParent_ReturnsNull()
         {
-            HtmlElement element = new HtmlElement("div");
+            HtmlElement element = new HtmlElement("element");
             Assert.Null(element.PreviousElement);
         }
 
         [Fact]
         public void PreviousElements_NoTag_ReturnsExpected()
         {
-            HtmlElement first = new HtmlElement("h1");
-            HtmlElement second = new HtmlElement("h2");
-            HtmlElement third = new HtmlElement("h3");
-            HtmlElement parent = new HtmlElement("div", first, second, third);
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement element3 = new HtmlElement("element3");
+            HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
 
-            Assert.Empty(first.PreviousElements());
-            Assert.Equal(new HtmlElement[] { first }, second.PreviousElements());
-            Assert.Equal(new HtmlElement[] { second, first }, third.PreviousElements());
+            Assert.Empty(element1.PreviousElements());
+            Assert.Equal(new HtmlElement[] { element1 }, element2.PreviousElements());
+            Assert.Equal(new HtmlElement[] { element2, element1 }, element3.PreviousElements());
         }
 
         [Fact]
         public void PreviousElements_CustomTag_ReturnsExpected()
         {
-            HtmlElement first = new HtmlElement("h1");
-            HtmlElement second = new HtmlElement("h2");
-            HtmlElement third = new HtmlElement("h2");
-            HtmlElement fourth = new HtmlElement("h4");
-            HtmlElement parent = new HtmlElement("div", first, second, third, fourth);
+            HtmlElement first = new HtmlElement("element1");
+            HtmlElement second = new HtmlElement("element2");
+            HtmlElement third = new HtmlElement("element2");
+            HtmlElement fourth = new HtmlElement("element3");
+            HtmlElement parent = new HtmlElement("parent", first, second, third, fourth);
 
-            Assert.Empty(first.PreviousElements("h4"));
-            Assert.Equal(new HtmlElement[] { first }, second.PreviousElements("h1"));
-            Assert.Equal(new HtmlElement[] { first }, second.PreviousElements("H1"));
-            Assert.Equal(new HtmlElement[] { second }, third.PreviousElements("h2"));
-            Assert.Equal(new HtmlElement[] { third, second }, fourth.PreviousElements("h2"));
+            Assert.Empty(first.PreviousElements("element3"));
+            Assert.Equal(new HtmlElement[] { first }, second.PreviousElements("element1"));
+            Assert.Equal(new HtmlElement[] { first }, second.PreviousElements("ELEMENT1"));
+            Assert.Equal(new HtmlElement[] { second }, third.PreviousElements("element2"));
+            Assert.Equal(new HtmlElement[] { third, second }, fourth.PreviousElements("element2"));
         }
 
         [Fact]
         public void PreviousElements_NoSuchTag_ReturnsEmpty()
         {
-            HtmlElement first = new HtmlElement("h1");
-            HtmlElement second = new HtmlElement("h1");
-            HtmlElement third = new HtmlElement("h2");
-            HtmlElement parent = new HtmlElement("div", first, second, third);
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlElement element2 = new HtmlElement("element1");
+            HtmlElement element3 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
 
-            Assert.Empty(third.PreviousElements("h2"));
-            Assert.Empty(third.PreviousElements("h4"));
+            Assert.Empty(element3.PreviousElements("element2"));
+            Assert.Empty(element3.PreviousElements("element3"));
         }
 
         [Fact]
         public void PreviousElements_NoParent_ReturnsEmpty()
         {
-            HtmlElement element = new HtmlElement("div");
+            HtmlElement element = new HtmlElement("element");
             Assert.Empty(element.PreviousElements());
             Assert.Empty(element.PreviousElements("any"));
         }
@@ -725,8 +725,8 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void PreviousElements_NoSiblings_ReturnsEmpty()
         {
-            HtmlElement parent = new HtmlElement("div");
-            HtmlElement element = new HtmlElement("p");
+            HtmlElement parent = new HtmlElement("parent");
+            HtmlElement element = new HtmlElement("element");
             parent.Add(element);
             Assert.Empty(element.PreviousElements());
             Assert.Empty(element.PreviousElements("any"));
@@ -755,7 +755,7 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(TryGetAttribute_TestData))]
         public void TryGetAttribute(HtmlAttribute[] attributes, string name, HtmlAttribute expected)
         {
-            HtmlElement parent = new HtmlElement("html", attributes);
+            HtmlElement parent = new HtmlElement("element", attributes);
 
             HtmlAttribute attribute;
             Assert.Equal(expected != null, parent.TryGetAttribute(name, out attribute));
@@ -767,7 +767,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void TryGetAttribute_NullName_ThrowsArgumentNullException()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             HtmlAttribute attribute = null;
             Assert.Throws<ArgumentNullException>("name", () => element.TryGetAttribute(null, out attribute));
             Assert.Null(attribute);
@@ -778,7 +778,7 @@ namespace HtmlGenerator.Tests
         [InlineData(" \r \t \n ")]
         public void TryGetAttribute_InvalidName_ThrowsArgumentException(string name)
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             HtmlAttribute attribute = null;
             Assert.Throws<ArgumentException>("name", () => element.TryGetAttribute(name, out attribute));
             Assert.Null(attribute);
@@ -807,7 +807,7 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(TryGetElement_TestData))]
         public void TryGetElement(HtmlElement[] elements, string tag, HtmlElement expected)
         {
-            HtmlElement parent = new HtmlElement("html", elements);
+            HtmlElement parent = new HtmlElement("element", elements);
 
             HtmlElement element;
             Assert.Equal(expected != null, parent.TryGetElement(tag, out element));
@@ -832,7 +832,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void TryGetElement_NullTag_ThrowsArgumentNullException()
         {
-            HtmlElement parent = new HtmlElement("html");
+            HtmlElement parent = new HtmlElement("element");
             HtmlElement element = null;
             Assert.Throws<ArgumentNullException>("tag", () => parent.TryGetElement(null, out element));
             Assert.Null(element);
@@ -843,7 +843,7 @@ namespace HtmlGenerator.Tests
         [InlineData(" \r \t \n ")]
         public void TryGetElement_InvalidTag_ThrowsArgumentException(string tag)
         {
-            HtmlElement parent = new HtmlElement("html");
+            HtmlElement parent = new HtmlElement("element");
             HtmlElement element = null;
             Assert.Throws<ArgumentException>("tag", () => parent.TryGetElement(tag, out element));
             Assert.Null(element);
@@ -854,7 +854,7 @@ namespace HtmlGenerator.Tests
         [InlineData(" \r \t \n")]
         public void TryGetAttribute_WhitespaceName_ThrowsArgumentException(string name)
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             HtmlAttribute attribute = null;
             Assert.Throws<ArgumentNullException>("name", () => element.TryGetAttribute(null, out attribute));
             Assert.Null(attribute);

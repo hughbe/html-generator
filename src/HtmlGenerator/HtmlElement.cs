@@ -158,23 +158,22 @@ namespace HtmlGenerator
             }
         }
 
-        public void ReplaceElements(params HtmlElement[] elements) => ReplaceElements((IEnumerable<HtmlElement>)elements);
+        public void ReplaceNodes(params HtmlNode[] nodes) => ReplaceNodes((IEnumerable<HtmlNode>)nodes);
 
-        public void ReplaceElements(IEnumerable<HtmlElement> elements)
+        public void ReplaceNodes(IEnumerable<HtmlNode> nodes)
         {
-            Requires.NotNull(elements, nameof(elements));
+            Requires.NotNull(nodes, nameof(nodes));
             ThrowIfVoid();
 
             _nodes.Clear();
-            foreach (HtmlElement element in elements)
+            foreach (HtmlNode node in nodes)
             {
-                Add(element);
+                Add(node);
             }
         }
 
         public void RemoveAll()
         {
-            ThrowIfVoid();
             _nodes.Clear();
             _attributes.Clear();
         }

@@ -8,69 +8,73 @@ namespace HtmlGenerator.Tests
     public partial class HtmlElementTests
     {
         [Fact]
-        public void RemoveAll()
+        public void RemoveAll_NonVoidElement()
         {
-            HtmlElement element = new HtmlElement("html", new HtmlElement("h1"), new HtmlComment("comment"), new HtmlAttribute("a"), new HtmlAttribute("b"));
+            HtmlElement parent = new HtmlElement("parent", new HtmlElement("element"), new HtmlComment("comment"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
 
-            element.RemoveAll();
-            Assert.Equal(0, element.Nodes().Count());
-            Assert.Equal(0, element.Attributes().Count());
+            parent.RemoveAll();
+            Assert.Equal(0, parent.Nodes().Count());
+            Assert.Equal(0, parent.Attributes().Count());
 
             // Make sure we can remove from an empty element
-            element.RemoveAll();
-            Assert.Equal(0, element.Nodes().Count());
-            Assert.Equal(0, element.Attributes().Count());
+            parent.RemoveAll();
+            Assert.Equal(0, parent.Nodes().Count());
+            Assert.Equal(0, parent.Attributes().Count());
         }
 
         [Fact]
-        public void RemoveAll_VoidElement_ThrowsInvalidOperationException()
+        public void RemoveAll_VoidElement()
         {
-            HtmlElement element = new HtmlElement("html", isVoid: true);
-            Assert.Throws<InvalidOperationException>(() => element.RemoveAll());
+            HtmlElement parent = new HtmlElement("parent", new HtmlAttribute("attribute"));
+
+            parent.RemoveAll();
+            Assert.Equal(0, parent.Nodes().Count());
+            Assert.Equal(0, parent.Attributes().Count());
         }
 
         [Fact]
         public void RemoveAttributes()
         {
-            HtmlElement element = new HtmlElement("html", new HtmlElement("h1"), new HtmlComment("comment"), new HtmlAttribute("a"), new HtmlAttribute("b"));
+            HtmlElement parent = new HtmlElement("parent", new HtmlElement("element"), new HtmlComment("comment"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
 
-            element.RemoveAttributes();
-            Assert.Equal(2, element.Nodes().Count());
-            Assert.Equal(0, element.Attributes().Count());
+            parent.RemoveAttributes();
+            Assert.Equal(2, parent.Nodes().Count());
+            Assert.Equal(0, parent.Attributes().Count());
 
             // Make sure we can remove from an empty element
-            element.RemoveAttributes();
-            Assert.Equal(2, element.Nodes().Count());
-            Assert.Equal(0, element.Attributes().Count());
+            parent.RemoveAttributes();
+            Assert.Equal(2, parent.Nodes().Count());
+            Assert.Equal(0, parent.Attributes().Count());
         }
 
         [Fact]
         public void RemoveAttributes_VoidElement_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html", isVoid: true);
-            Assert.Throws<InvalidOperationException>(() => element.RemoveAttributes());
+            HtmlElement parent = new HtmlElement("parent", isVoid: true);
+            Assert.Throws<InvalidOperationException>(() => parent.RemoveAttributes());
         }
 
         [Fact]
         public void RemoveNodes()
         {
-            HtmlElement element = new HtmlElement("html", new HtmlElement("h1"), new HtmlComment("comment"), new HtmlAttribute("a"), new HtmlAttribute("b"));
+            HtmlElement parent = new HtmlElement("parent", new HtmlElement("element"), new HtmlComment("comment"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
 
-            element.RemoveNodes();
-            Assert.Equal(0, element.Nodes().Count());
-            Assert.Equal(2, element.Attributes().Count());
+            parent.RemoveNodes();
+            Assert.Equal(0, parent.Nodes().Count());
+            Assert.Equal(2, parent.Attributes().Count());
 
             // Make sure we can remove from an empty element
-            element.RemoveNodes();
-            Assert.Equal(0, element.Nodes().Count());
-            Assert.Equal(2, element.Attributes().Count());
+            parent.RemoveNodes();
+            Assert.Equal(0, parent.Nodes().Count());
+            Assert.Equal(2, parent.Attributes().Count());
         }
 
         [Fact]
         public void RemoveNodes_VoidElement_ThrowsInvalidOperationException()
         {
-            HtmlElement element = new HtmlElement("html", isVoid: true);
-            Assert.Throws<InvalidOperationException>(() => element.RemoveNodes());
+            HtmlElement parent = new HtmlElement("parent", isVoid: true);
+
+            Assert.Throws<InvalidOperationException>(() => parent.RemoveNodes());
         }
     }
 }

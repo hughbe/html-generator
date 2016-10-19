@@ -69,13 +69,13 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(Objects_TestData))]
         public void Ctor_String_ParamsHtmlObject(HtmlObject[] content)
         {
-            HtmlElement element = new HtmlElement("html", content);
-            Assert.Equal("html", element.Tag);
+            HtmlElement element = new HtmlElement("element", content);
+            Assert.Equal("element", element.Tag);
             Assert.Null(element.InnerText);
             Assert.False(element.IsVoid);
-            Assert.Equal(content.Where(obj => obj is HtmlElement).Cast<HtmlElement>().ToArray(), element.Elements().ToArray());
-            Assert.Equal(content.Where(obj => obj is HtmlAttribute).Cast<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
-            Assert.Equal(content.Where(obj => obj is HtmlNode).Cast<HtmlNode>().ToArray(), element.Nodes().ToArray());
+            Assert.Equal(content.OfType<HtmlElement>().ToArray(), element.Elements().ToArray());
+            Assert.Equal(content.OfType<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
+            Assert.Equal(content.OfType<HtmlNode>().ToArray(), element.Nodes().ToArray());
             Assert.Equal(element.Elements().Count() + element.Attributes().Count(), element.ElementsAndAttributes().Count());
             Assert.Equal(content.Length, element.NodesAndAttributes().Count());
         }
@@ -84,22 +84,44 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(Objects_TestData))]
         public void Ctor_String_String_ParamsHtmlObject(HtmlObject[] content)
         {
-            HtmlElement element = new HtmlElement("html", "inner-text", content);
-            Assert.Equal("html", element.Tag);
+            HtmlElement element = new HtmlElement("element", "inner-text", content);
+            Assert.Equal("element", element.Tag);
             Assert.Equal("inner-text", element.InnerText);
             Assert.False(element.IsVoid);
-            Assert.Equal(content.Where(obj => obj is HtmlElement).Cast<HtmlElement>().ToArray(), element.Elements().ToArray());
-            Assert.Equal(content.Where(obj => obj is HtmlAttribute).Cast<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
-            Assert.Equal(content.Where(obj => obj is HtmlNode).Cast<HtmlNode>().ToArray(), element.Nodes().ToArray());
+            Assert.Equal(content.OfType<HtmlElement>().ToArray(), element.Elements().ToArray());
+            Assert.Equal(content.OfType<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
+            Assert.Equal(content.OfType<HtmlNode>().ToArray(), element.Nodes().ToArray());
             Assert.Equal(element.Elements().Count() + element.Attributes().Count(), element.ElementsAndAttributes().Count());
             Assert.Equal(content.Length, element.NodesAndAttributes().Count());
         }
 
         [Fact]
+        public void Ctor_NullTag_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null));
+            Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null, isVoid: false));
+            Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null, "inner-text"));
+            Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null, new HtmlObject[0]));
+            Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null, "inner-text", new HtmlObject[0]));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" \r \n \t")]
+        public void Ctor_EmptyOrWhitespaceTag_ThrowsArgumentException(string tag)
+        {
+            Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag));
+            Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag, isVoid: false));
+            Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag, "inner-text"));
+            Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag, new HtmlObject[0]));
+            Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag, "inner-text", new HtmlObject[0]));
+        }
+
+        [Fact]
         public void ObjectType_Get_ReturnsElement()
         {
-            HtmlElement attribute = new HtmlElement("div");
-            Assert.Equal(HtmlObjectType.Element, attribute.ObjectType);
+            HtmlElement element = new HtmlElement("element");
+            Assert.Equal(HtmlObjectType.Element, element.ObjectType);
         }
 
         [Theory]
@@ -107,7 +129,7 @@ namespace HtmlGenerator.Tests
         [InlineData(9)]
         public void MinimumIndentLength_Set_Get_ReturnsExpected(int value)
         {
-            HtmlElement element = new HtmlElement("div");
+            HtmlElement element = new HtmlElement("element");
             Assert.Equal(1, element.MinimumIndentDepth);
 
             element.MinimumIndentDepth = value;
@@ -119,7 +141,8 @@ namespace HtmlGenerator.Tests
         [InlineData(10)]
         public void MinimumIndentLength_Set_InvalidValue_ThrowsArgumentOutOfRangeException(int value)
         {
-            HtmlElement element = new HtmlElement("div");
+            HtmlElement element = new HtmlElement("element");
+
             Assert.Throws<ArgumentOutOfRangeException>("value", () => element.MinimumIndentDepth = value);
         }
 
@@ -129,7 +152,7 @@ namespace HtmlGenerator.Tests
         [InlineData(10)]
         public void MaximumIndentLength_Set_Get_ReturnsExpected(int value)
         {
-            HtmlElement element = new HtmlElement("div");
+            HtmlElement element = new HtmlElement("element");
             Assert.Equal(9, element.MaximumIndentDepth);
 
             element.MaximumIndentDepth = value;
@@ -141,62 +164,63 @@ namespace HtmlGenerator.Tests
         [InlineData(0)]
         public void MaximumIndentLength_Set_InvalidValue_ThrowsArgumentOutOfRangeException(int value)
         {
-            HtmlElement element = new HtmlElement("div");
+            HtmlElement element = new HtmlElement("element");
+
             Assert.Throws<ArgumentOutOfRangeException>("value", () => element.MaximumIndentDepth = value);
         }
 
         public static IEnumerable<object[]> Equals_TestData()
         {
             // Tag
-            yield return new object[] { new HtmlElement("tag"), new HtmlElement("tag"), true };
-            yield return new object[] { new HtmlElement("tag"), new HtmlElement("other-tag"), false };
+            yield return new object[] { new HtmlElement("element"), new HtmlElement("element"), true };
+            yield return new object[] { new HtmlElement("element"), new HtmlElement("other-element"), false };
 
             // Void
-            yield return new object[] { new HtmlElement("tag", isVoid: true), new HtmlElement("tag", isVoid: true), true };
-            yield return new object[] { new HtmlElement("tag", isVoid: true), new HtmlElement("tag", isVoid: false), false };
+            yield return new object[] { new HtmlElement("element", isVoid: true), new HtmlElement("element", isVoid: true), true };
+            yield return new object[] { new HtmlElement("element", isVoid: true), new HtmlElement("element", isVoid: false), false };
 
             // InnerText
-            yield return new object[] { new HtmlElement("tag").WithInnerText("Inner Text"), new HtmlElement("tag").WithInnerText("Inner Text"), true };
-            yield return new object[] { new HtmlElement("tag").WithInnerText("Inner Text"), new HtmlElement("tag").WithInnerText("inner text"), false };
-            yield return new object[] { new HtmlElement("tag").WithInnerText("Inner Text"), new HtmlElement("tag").WithInnerText("other-inner-text"), false };
+            yield return new object[] { new HtmlElement("element").WithInnerText("Inner Text"), new HtmlElement("element").WithInnerText("Inner Text"), true };
+            yield return new object[] { new HtmlElement("element").WithInnerText("Inner Text"), new HtmlElement("element").WithInnerText("inner text"), false };
+            yield return new object[] { new HtmlElement("element").WithInnerText("Inner Text"), new HtmlElement("element").WithInnerText("other-inner-text"), false };
 
             // Elements
             yield return new object[]
             {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
+                new HtmlElement("element1", new HtmlElement("element2"), new HtmlAttribute("attribute")),
+                new HtmlElement("element1", new HtmlElement("element2"), new HtmlAttribute("attribute")),
                 true
             };
             yield return new object[]
             {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
-                new HtmlElement("tag", new HtmlElement("other-element"), new HtmlAttribute("attribute")),
+                new HtmlElement("element", new HtmlElement("element2"), new HtmlAttribute("attribute")),
+                new HtmlElement("element", new HtmlElement("other-element"), new HtmlAttribute("attribute")),
                 false
             };
             yield return new object[]
             {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
-                new HtmlElement("tag", new HtmlAttribute("attribute")),
+                new HtmlElement("element", new HtmlElement("element2"), new HtmlAttribute("attribute")),
+                new HtmlElement("element", new HtmlAttribute("attribute")),
                 false
             };
 
             // Attributes
             yield return new object[]
             {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("other-attribute")),
+                new HtmlElement("element1", new HtmlElement("element2"), new HtmlAttribute("attribute")),
+                new HtmlElement("element1", new HtmlElement("element2"), new HtmlAttribute("other-attribute")),
                 false
             };
             yield return new object[]
             {
-                new HtmlElement("tag", new HtmlElement("element"), new HtmlAttribute("attribute")),
-                new HtmlElement("tag", new HtmlElement("element")),
+                new HtmlElement("element1", new HtmlElement("element2"), new HtmlAttribute("attribute")),
+                new HtmlElement("element1", new HtmlElement("element2")),
                 false
             };
 
             // Other
-            yield return new object[] { new HtmlElement("tag"), new object(), false };
-            yield return new object[] { new HtmlElement("tag"), null, false };
+            yield return new object[] { new HtmlElement("element"), new object(), false };
+            yield return new object[] { new HtmlElement("element"), null, false };
         }
 
         [Theory]
