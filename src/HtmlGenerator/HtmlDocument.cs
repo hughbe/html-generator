@@ -16,11 +16,11 @@ namespace HtmlGenerator
         public HtmlElement Head { get; set; }
         public HtmlElement Body { get; set; }
 
-        public string Doctype { get; set; } = "<!DOCTYPE html>";
+        public HtmlDoctype Doctype { get; set; } = new HtmlDoctype(HtmlDoctypeType.Html5);
 
         internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
         {
-            if (!string.IsNullOrEmpty(Doctype))
+            if (Doctype != null)
             {
                 builder.Append(Doctype);
                 if (serializeType != HtmlSerializeOptions.NoFormatting)

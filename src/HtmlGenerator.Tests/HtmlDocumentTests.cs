@@ -26,21 +26,19 @@ namespace HtmlGenerator.Tests
         public void Doctype_Get_ReturnsExpected()
         {
             HtmlDocument document = new HtmlDocument();
-            Assert.Equal("<!DOCTYPE html>", document.Doctype);
+            Assert.Equal(new HtmlDoctype(HtmlDoctypeType.Html5), document.Doctype);
         }
 
         public static IEnumerable<object[]> Doctype_TestData()
         {
-            yield return new object[] { "<!DOCTYPE html>" };
-            yield return new object[] { "<!DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">" };
-            yield return new object[] { " \r \t " };
-            yield return new object[] { "" };
+            yield return new object[] { new HtmlDoctype(HtmlDoctypeType.Html5) };
+            yield return new object[] { new HtmlDoctype("doctype") };
             yield return new object[] { null };
         }
 
         [Theory]
         [MemberData(nameof(Doctype_TestData))]
-        public void Doctype_Set_Get_ReturnsExpected(string value)
+        public void Doctype_Set_Get_ReturnsExpected(HtmlDoctype value)
         {
             HtmlDocument document = new HtmlDocument();
             document.Doctype = value;
@@ -145,12 +143,12 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(Doctype_TestData))]
-        public void Serialize_NullDoctype_NotIncluded(string doctype)
+        public void Serialize_NullDoctype_NotIncluded(HtmlDoctype doctype)
         {
             HtmlDocument document = new HtmlDocument();
             document.Doctype = doctype;
 
-            string expectedDocType = string.IsNullOrEmpty(doctype) ? string.Empty : doctype + Environment.NewLine;
+            string expectedDocType = doctype == null ? string.Empty : doctype + Environment.NewLine;
             Helpers.SerializeIgnoringFormatting(document, string.Format(@"{0}<html>
 <head></head>
 <body></body>
