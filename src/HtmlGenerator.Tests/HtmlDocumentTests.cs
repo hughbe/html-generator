@@ -45,6 +45,32 @@ namespace HtmlGenerator.Tests
             Assert.Equal(value, document.Doctype);
         }
 
+        public static IEnumerable<object[]> Equals_TestData()
+        {
+            yield return new object[] { new HtmlDocument(), new HtmlDocument(), true };
+            yield return new object[] { new HtmlDocument(), new HtmlDocument().WithClass("class"), false };
+
+            yield return new object[] { new HtmlDocument() { Doctype = null }, new HtmlDocument() { Doctype = null }, true };
+            yield return new object[] { new HtmlDocument() { Doctype = null }, new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, false };
+            yield return new object[] { new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, new HtmlDocument() { Doctype = null }, false };
+            yield return new object[] { new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html401Frameset) }, false };
+        }
+
+        [Theory]
+        [MemberData(nameof(Equals_TestData))]
+        public void Equals(HtmlDocument document, object other, bool expected)
+        {
+            if (other is HtmlDocument || other == null)
+            {
+                if (expected)
+                {
+                    Assert.Equal(expected, document.GetHashCode().Equals(other?.GetHashCode()));
+                }
+                Assert.Equal(expected, document.Equals((HtmlDocument)other));
+            }
+            Assert.Equal(expected, document.Equals(other));
+        }
+
         [Theory]
         [MemberData(nameof(Doctype_TestData))]
         public void Serialize_NullDoctype_NotIncluded(HtmlDoctype doctype)
