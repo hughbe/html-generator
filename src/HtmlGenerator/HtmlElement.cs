@@ -207,6 +207,21 @@ namespace HtmlGenerator
             InnerText = value;
         }
 
+        public HtmlNode FirstNode => _nodes._first;
+        public HtmlNode LastNode => _nodes._last;
+
+        public IEnumerable<HtmlNode> Nodes()
+        {
+            HtmlObject node = _nodes._first;
+            while (node != null)
+            {
+                yield return (HtmlNode)node;
+                node = node._next;
+            }
+        }
+
+        public bool HasNodes => _nodes._count != 0;
+
         public HtmlElement FirstElement => Elements().FirstOrDefault();
         public HtmlElement LastElement
         {
@@ -261,13 +276,25 @@ namespace HtmlGenerator
             }
         }
 
-        public bool IsEmpty => !HasElements && !HasAttributes;
+        public bool IsEmpty => !HasNodes && !HasAttributes;
 
         public IEnumerable<HtmlObject> ElementsAndAttributes()
         {
             foreach (HtmlElement element in Elements())
             {
                 yield return element;
+            }
+            foreach (HtmlAttribute attribute in Attributes())
+            {
+                yield return attribute;
+            }
+        }
+
+        public IEnumerable<HtmlObject> NodesAndAttributes()
+        {
+            foreach (HtmlNode node in Nodes())
+            {
+                yield return node;
             }
             foreach (HtmlAttribute attribute in Attributes())
             {
@@ -323,8 +350,8 @@ namespace HtmlGenerator
             return false;
         }
 
-        public HtmlElement NextElement => (HtmlElement)_next;
-        public HtmlElement PreviousElement => (HtmlElement)_previous;
+        public HtmlElement NextElement => NextElements().FirstOrDefault();
+        public HtmlElement PreviousElement => PreviousElements().FirstOrDefault();
 
         public IEnumerable<HtmlElement> NextElements() => NextElements(null);
 

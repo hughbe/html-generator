@@ -94,5 +94,28 @@ namespace HtmlGenerator
             Parent._nodes.Remove(this);
             Parent = null;
         }
+
+        public HtmlNode NextNode => (HtmlNode)_next;
+        public HtmlNode PreviousNode => (HtmlNode)_previous;
+
+        public IEnumerable<HtmlNode> NextNodes()
+        {
+            HtmlObject nextNode = _next;
+            while (nextNode != null)
+            {
+                yield return (HtmlNode)nextNode;
+                nextNode = nextNode._next;
+            }
+        }
+
+        public IEnumerable<HtmlNode> PreviousNodes()
+        {
+            HtmlObject previousNode = _previous;
+            while (previousNode != null)
+            {
+                yield return (HtmlNode)previousNode;
+                previousNode = previousNode._previous;
+            }
+        }
     }
 }

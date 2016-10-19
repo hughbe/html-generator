@@ -57,7 +57,11 @@ namespace HtmlGenerator.Tests
             yield return new object[] { new HtmlObject[0] };
             yield return new object[] { new HtmlObject[] { new HtmlAttribute("attribute1") } };
             yield return new object[] { new HtmlObject[] { new HtmlElement("h1") } };
+            yield return new object[] { new HtmlObject[] { new HtmlComment("comment") } };
             yield return new object[] { new HtmlObject[] { new HtmlAttribute("attribute1"), new HtmlElement("h1") } };
+            yield return new object[] { new HtmlObject[] { new HtmlAttribute("attribute1"), new HtmlComment("comment") } };
+            yield return new object[] { new HtmlObject[] { new HtmlComment("comment"), new HtmlElement("h1") } };
+            yield return new object[] { new HtmlObject[] { new HtmlComment("attribute1"), new HtmlAttribute("attribute"), new HtmlElement("element") } };
             yield return new object[] { new HtmlObject[] { new HtmlAttribute("attribute1"), new HtmlElement("h1"), new HtmlElement("h1"), new HtmlAttribute("attribute2") } };
         }
 
@@ -71,7 +75,9 @@ namespace HtmlGenerator.Tests
             Assert.False(element.IsVoid);
             Assert.Equal(content.Where(obj => obj is HtmlElement).Cast<HtmlElement>().ToArray(), element.Elements().ToArray());
             Assert.Equal(content.Where(obj => obj is HtmlAttribute).Cast<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
-            Assert.Equal(content.Length, element.ElementsAndAttributes().Count());
+            Assert.Equal(content.Where(obj => obj is HtmlNode).Cast<HtmlNode>().ToArray(), element.Nodes().ToArray());
+            Assert.Equal(element.Elements().Count() + element.Attributes().Count(), element.ElementsAndAttributes().Count());
+            Assert.Equal(content.Length, element.NodesAndAttributes().Count());
         }
 
         [Theory]
@@ -84,7 +90,9 @@ namespace HtmlGenerator.Tests
             Assert.False(element.IsVoid);
             Assert.Equal(content.Where(obj => obj is HtmlElement).Cast<HtmlElement>().ToArray(), element.Elements().ToArray());
             Assert.Equal(content.Where(obj => obj is HtmlAttribute).Cast<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
-            Assert.Equal(content.Length, element.ElementsAndAttributes().Count());
+            Assert.Equal(content.Where(obj => obj is HtmlNode).Cast<HtmlNode>().ToArray(), element.Nodes().ToArray());
+            Assert.Equal(element.Elements().Count() + element.Attributes().Count(), element.ElementsAndAttributes().Count());
+            Assert.Equal(content.Length, element.NodesAndAttributes().Count());
         }
 
         [Fact]
@@ -377,6 +385,8 @@ namespace HtmlGenerator.Tests
         public void Add_HtmlObject(bool isVoid)
         {
             HtmlElement element = new HtmlElement("html", isVoid);
+
+            // Atribute
             HtmlAttribute attribute = new HtmlAttribute("attribute1");
             element.Add(attribute);
             Assert.Equal(element, attribute.Parent);
@@ -384,10 +394,17 @@ namespace HtmlGenerator.Tests
 
             if (!isVoid)
             {
+                // Element
                 HtmlElement newElement = new HtmlElement("body");
                 element.Add(newElement);
                 Assert.Equal(element, newElement.Parent);
                 Assert.Equal(new HtmlElement[] { newElement }, element.Elements());
+
+                // Comment
+                HtmlComment newComment = new HtmlComment("comment");
+                element.Add(newComment);
+                Assert.Equal(element, newComment.Parent);
+                Assert.Equal(new HtmlObject[] { newElement, newComment }, element.Nodes());
             }
         }
 
@@ -400,6 +417,7 @@ namespace HtmlGenerator.Tests
             HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
             element.Add(attribute1);
 
+            // Attribute
             HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
             element.AddFirst(attribute2);
             Assert.Equal(element, attribute2.Parent);
@@ -410,39 +428,58 @@ namespace HtmlGenerator.Tests
                 HtmlElement newelement1 = new HtmlElement("body");
                 element.Add(newelement1);
 
+                // Element
                 HtmlElement newelement2 = new HtmlElement("head");
                 element.AddFirst(newelement2);
                 Assert.Equal(element, newelement2.Parent);
                 Assert.Equal(new HtmlElement[] { newelement2, newelement1 }, element.Elements());
+
+                // Comment
+                HtmlComment newComment = new HtmlComment("comment");
+                element.AddFirst(newComment);
+                Assert.Equal(element, newComment.Parent);
+                Assert.Equal(new HtmlObject[] { newComment, newelement2, newelement1 }, element.Nodes());
             }
         }
 
         [Fact]
-        public void AddAfterSelf_HtmlObject()
+        public void AddAfterSelf_HtmlNode()
         {
             HtmlElement parent = new HtmlElement("parent");
             HtmlElement child1 = new HtmlElement("child1");
             parent.Add(child1);
 
+            // Element
             HtmlElement child2 = new HtmlElement("child2");
             child1.AddAfterSelf(child2);
-
             Assert.Equal(parent, child2.Parent);
             Assert.Equal(new HtmlElement[] { child1, child2 }, parent.Elements());
+
+            // Comment
+            HtmlComment comment = new HtmlComment("comment");
+            child1.AddAfterSelf(comment);
+            Assert.Equal(parent, comment.Parent);
+            Assert.Equal(new HtmlObject[] { child1, comment, child2 }, parent.Nodes());
         }
 
         [Fact]
-        public void AddBeforeSelf_HtmlObject()
+        public void AddBeforeSelf_HtmlNode()
         {
             HtmlElement parent = new HtmlElement("parent");
             HtmlElement child1 = new HtmlElement("child1");
             parent.Add(child1);
 
+            // Element
             HtmlElement child2 = new HtmlElement("child2");
             child1.AddBeforeSelf(child2);
-
             Assert.Equal(parent, child2.Parent);
             Assert.Equal(new HtmlElement[] { child2, child1 }, parent.Elements());
+
+            // Comment
+            HtmlComment comment = new HtmlComment("comment");
+            child1.AddBeforeSelf(comment);
+            Assert.Equal(parent, comment.Parent);
+            Assert.Equal(new HtmlObject[] { child2, comment, child1 }, parent.Nodes());
         }
 
         [Fact]
@@ -451,12 +488,14 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("html");
             HtmlElement newElement = new HtmlElement("body");
             HtmlAttribute newAttribute = new HtmlAttribute("Attribute");
-            element.Add(new HtmlObject[] { newElement, newAttribute });
+            HtmlComment newComment = new HtmlComment("comment");
+            element.Add(new HtmlObject[] { newElement, newAttribute, newComment });
 
             Assert.Equal(element, newElement.Parent);
             Assert.Equal(element, newAttribute.Parent);
             Assert.Equal(new HtmlObject[] { newElement }, element.Elements());
             Assert.Equal(new HtmlAttribute[] { newAttribute }, element.Attributes());
+            Assert.Equal(new HtmlObject[] { newElement, newComment }, element.Nodes());
         }
 
         [Fact]
@@ -910,11 +949,12 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(Objects_TestData))]
         public void ReplaceAll(HtmlObject[] content)
         {
-            HtmlElement element = new HtmlElement("html", new HtmlElement("h1"), new HtmlAttribute("a"), new HtmlAttribute("b"));
+            HtmlElement element = new HtmlElement("html", new HtmlElement("h1"), new HtmlAttribute("a"), new HtmlAttribute("b"), new HtmlComment("comment"));
             element.ReplaceAll(content);
             Assert.Equal(content.Where(obj => obj is HtmlElement).Cast<HtmlElement>().ToArray(), element.Elements().ToArray());
             Assert.Equal(content.Where(obj => obj is HtmlAttribute).Cast<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
-            Assert.Equal(content.Length, element.ElementsAndAttributes().Count());
+            Assert.Equal(element.Elements().Count() + element.Attributes().Count(), element.ElementsAndAttributes().Count());
+            Assert.Equal(element.Nodes().Count() + element.Attributes().Count(), element.NodesAndAttributes().Count());
         }
 
         [Fact]
@@ -1216,6 +1256,60 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("html", isVoid: true);
             Assert.Throws<InvalidOperationException>(() => element.RemoveAttributes());
+        }
+
+        [Fact]
+        public void FirstNode_Element_ReturnsExpected()
+        {
+            HtmlElement expected = new HtmlElement("head");
+            HtmlElement element = new HtmlElement("html", expected, new HtmlElement("body"));
+            Assert.Equal(expected, element.FirstNode);
+        }
+
+        [Fact]
+        public void FirstNode_Comment_ReturnsExpected()
+        {
+            HtmlComment expected = new HtmlComment("comment");
+            HtmlElement element = new HtmlElement("html", expected, new HtmlElement("body"));
+            Assert.Equal(expected, element.FirstNode);
+        }
+
+        [Fact]
+        public void FirstElement_NoNodes_ReturnsNull()
+        {
+            HtmlElement element = new HtmlElement("html");
+            Assert.Null(element.FirstNode);
+
+            // Ignores attributes
+            element.Add(new HtmlAttribute("attribute"));
+            Assert.Null(element.FirstNode);
+        }
+
+        [Fact]
+        public void LastNode_Element_ReturnsExpected()
+        {
+            HtmlElement expected = new HtmlElement("body");
+            HtmlElement element = new HtmlElement("html", new HtmlElement("head"), expected );
+            Assert.Equal(expected, element.LastNode);
+        }
+
+        [Fact]
+        public void LastNode_Comment_ReturnsExpected()
+        {
+            HtmlComment expected = new HtmlComment("comment");
+            HtmlElement element = new HtmlElement("html", new HtmlElement("head"), expected);
+            Assert.Equal(expected, element.LastNode);
+        }
+
+        [Fact]
+        public void LastNode_NoNodes_ReturnsNull()
+        {
+            HtmlElement element = new HtmlElement("html");
+            Assert.Null(element.LastNode);
+
+            // Ignores attributes
+            element.Add(new HtmlAttribute("attribute"));
+            Assert.Null(element.LastNode);
         }
 
         [Fact]
@@ -1620,10 +1714,18 @@ namespace HtmlGenerator.Tests
             // Updates LinkedList
             Assert.Null(child1.PreviousElement);
             Assert.Null(child1.NextElement);
+            Assert.Null(child1.PreviousNode);
+            Assert.Null(child1.NextNode);
+
             Assert.Null(child2.PreviousElement);
             Assert.Equal(child3, child2.NextElement);
+            Assert.Null(child2.PreviousNode);
+            Assert.Equal(child3, child2.NextNode);
+
             Assert.Equal(child2, child3.PreviousElement);
             Assert.Null(child3.NextElement);
+            Assert.Equal(child2, child3.PreviousNode);
+            Assert.Null(child3.NextNode);
         }
 
         [Fact]
@@ -1643,10 +1745,18 @@ namespace HtmlGenerator.Tests
             // Updates LinkedList
             Assert.Null(child1.PreviousElement);
             Assert.Equal(child2, child1.NextElement);
+            Assert.Null(child1.PreviousNode);
+            Assert.Equal(child2, child1.NextNode);
+
             Assert.Equal(child1, child2.PreviousElement);
             Assert.Null(child2.NextElement);
+            Assert.Equal(child1, child2.PreviousNode);
+            Assert.Null(child2.NextNode);
+
             Assert.Null(child3.PreviousElement);
             Assert.Null(child3.NextElement);
+            Assert.Null(child3.PreviousNode);
+            Assert.Null(child3.NextNode);
         }
 
         [Fact]
@@ -1666,10 +1776,18 @@ namespace HtmlGenerator.Tests
             // Updates LinkedList
             Assert.Null(child1.PreviousElement);
             Assert.Equal(child3, child1.NextElement);
+            Assert.Null(child1.PreviousNode);
+            Assert.Equal(child3, child1.NextNode);
+
             Assert.Null(child2.PreviousElement);
             Assert.Null(child2.NextElement);
+            Assert.Null(child2.PreviousNode);
+            Assert.Null(child2.NextNode);
+
             Assert.Equal(child1, child3.PreviousElement);
             Assert.Null(child3.NextElement);
+            Assert.Equal(child1, child3.PreviousNode);
+            Assert.Null(child3.NextNode);
         }
 
         [Fact]
