@@ -20,8 +20,6 @@ namespace HtmlGenerator.Tests
             HtmlDoctype htmlDoctype = new HtmlDoctype(doctype);
             Assert.Equal(expectedDoctype, htmlDoctype.Doctype);
             Assert.Equal(doctype, htmlDoctype.DoctypeType);
-            Assert.True(htmlDoctype.IsVoid);
-            Assert.True(htmlDoctype.IsEmpty);
         }
 
         [Theory]
@@ -49,8 +47,6 @@ namespace HtmlGenerator.Tests
             HtmlDoctype htmlDoctype = new HtmlDoctype(doctype);
             Assert.Equal(doctype, htmlDoctype.Doctype);
             Assert.Equal(expectedDoctypeType, htmlDoctype.DoctypeType);
-            Assert.True(htmlDoctype.IsVoid);
-            Assert.True(htmlDoctype.IsEmpty);
         }
 
         [Fact]
