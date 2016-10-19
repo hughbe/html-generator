@@ -23,8 +23,7 @@ matrix:
 
 before_install:
   # Install OpenSSL
-    export DOTNET_SDK_URL="https://go.microsoft.com/fwlink/?LinkID=809129";
-    fi
+  -  export DOTNET_SDK_URL="https://go.microsoft.com/fwlink/?LinkID=809129";
 
   - export DOTNET_INSTALL_DIR="$PWD/.dotnetcli"
 
