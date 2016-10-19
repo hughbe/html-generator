@@ -28,6 +28,7 @@ namespace HtmlGenerator.Tests
         {
             Assert.Equal(new HtmlElement("div"), HtmlElement.Parse("<DIV></DIV>"));
         }
+
         [Fact]
         public void NonVoidElement_NoChildren_NoWhitespace_MixedCase()
         {
@@ -112,7 +113,7 @@ namespace HtmlGenerator.Tests
 		<div>
 			<h2>InnerText</h2>
 			<hr/>
-			<p>Content</p>	
+			<p>Content</p>
 		</div>
 		<h3></h3>
 	</section>
@@ -360,10 +361,17 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void Doctype_Html_NoWhitespace()
+        public void Doctype_HtmlWithElement_NoWhitespace()
         {
             HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
             Assert.Equal(expected, HtmlElement.Parse(@"<!DOCTYPE html><html></html>"));
+        }
+
+        [Fact]
+        public void Doctype_HtmlWithDocument_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
+            Assert.Equal(expected, HtmlDocument.Parse(@"<!DOCTYPE html><html></html>"));
         }
 
         [Fact]
@@ -373,7 +381,21 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, HtmlElement.Parse(@"<!DOCTYPE html>"));
         }
 
-        public static IEnumerable<object[]> Parse_Invalid_TestData()
+        [Fact]
+        public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Unicode()
+        {
+            HtmlElement expected = new HtmlElement("body").WithAttribute(new HtmlAttribute("\u2345", "\u3456"));
+            Assert.Equal(expected, HtmlElement.Parse("<body \u2345=\"\u3456\"></body>"));
+        }
+
+        [Fact]
+        public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Unicode()
+        {
+            HtmlElement expected = new HtmlElement("body", isVoid: true).WithAttribute(new HtmlAttribute("\u2345", "\u3456"));
+            Assert.Equal(expected, HtmlElement.Parse("<body \u2345=\"\u3456\"/>"));
+        }
+
+        public static IEnumerable<object[]> Parse_InvalidElement_TestData()
         {
             // Empty
             yield return new object[] { "" };
@@ -437,6 +459,7 @@ namespace HtmlGenerator.Tests
             // Invalid comment
             yield return new object[] { "<!" };
             yield return new object[] { "<!a" };
+            yield return new object[] { "<div><!a></div>" };
             yield return new object[] { "<!-" };
             yield return new object[] { "<!--" };
             yield return new object[] { "<!-a" };
@@ -451,7 +474,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Theory]
-        [MemberData(nameof(Parse_Invalid_TestData))]
+        [MemberData(nameof(Parse_InvalidElement_TestData))]
         public void InvalidElement_ReturnsNull(string text)
         {
             Assert.Null(HtmlElement.Parse(text));
@@ -464,6 +487,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Theory]
+        [MemberData(nameof(Parse_InvalidElement_TestData))]
         [MemberData(nameof(Parse_InvalidDocument_TestData))]
         public void InvalidDocument_ReturnsNull(string text)
         {

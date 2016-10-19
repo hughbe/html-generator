@@ -10,7 +10,7 @@
             for (int i = startIndex; i < startIndex + length ; i++)
             {
                 char c = text[i];
-                if (c >= 'A' || c <= 'Z')
+                if (c >= 'A' && c <= 'Z')
                 {
                     hasUpperCase = true;
                     break;
@@ -25,7 +25,7 @@
             for (int i = startIndex; i < startIndex + length ; i++)
             {
                 char c = text[i];
-                if (c >= 'A' || c <= 'Z')
+                if (c >= 'A' && c <= 'Z')
                 {
                     copy[i - startIndex] = (char)(c | 0x20);
                 }
@@ -49,14 +49,7 @@
             {
                 char c1 = valueA[startIndexA + i];
                 char c2 = valueB[startIndexB + i];
-                if (c1 <= 0x7f && c2 <= 0x7f)
-                {
-                    if ((c1 | 0x20) != (c2 | 0x20))
-                    {
-                        return false;
-                    }
-                }
-                else if (c1 != c2)
+                if ((c1 | 0x20) != (c2 | 0x20))
                 {
                     return false;
                 }

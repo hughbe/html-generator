@@ -10,8 +10,6 @@ namespace HtmlGenerator
         private readonly HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
         private HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
 
-        private HtmlElement() { }
-
         public HtmlElement(string tag)
         {
             Requires.NotNullOrWhitespace(tag, nameof(tag));
@@ -1183,11 +1181,6 @@ namespace HtmlGenerator
             private static bool IsLetter(char c)
             {
                 return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
-            }
-
-            private static bool IsNumber(char c)
-            {
-                return (c >= '0' && c <= '9');
             }
 
             private bool ReadNext()
