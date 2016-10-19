@@ -709,7 +709,7 @@ namespace HtmlGenerator
                 return false;
             }
 
-            Parser parser = new Parser(text);
+            Parser parser = new Parser(text, isDocument: false);
             if (parser.Parse())
             {
                 element = parser.rootElement;
@@ -718,23 +718,28 @@ namespace HtmlGenerator
             return false;
         }
 
-        private struct Parser
+        protected internal struct Parser
         {
-            public Parser(string text)
+            public Parser(string text, bool isDocument)
             {
                 this.text = text;
                 currentIndex = -1;
                 currentChar = char.MinValue;
+                parsingDocument = isDocument;
                 currentElement = null;
                 rootElement = null;
+                doctype = null;
             }
 
             private string text;
             private int currentIndex;
             private char currentChar;
+            private bool parsingDocument;
 
             public HtmlElement rootElement;
             private HtmlElement currentElement;
+
+            private HtmlDoctype doctype;
 
             public string Remaining => text.Substring(currentIndex);
 
@@ -764,12 +769,18 @@ namespace HtmlGenerator
                 {
                     if (!TryParseComment())
                     {
+                        // Couldn't parse the comment
                         return false;
                     }
-                    if (currentIndex + 1 < text.Length)
+                    if (currentIndex < text.Length)
                     {
                         // Got more to parse?
                         return TryParseOpeningTag();
+                    }
+                    else if (rootElement == null)
+                    {
+                        // Doctype on its own
+                        rootElement = doctype;
                     }
                     // Finished parsing
                     return true;
@@ -820,7 +831,27 @@ namespace HtmlGenerator
                     ReadAndSkipWhitespace();
                 }
 
-                HtmlElement element = new HtmlElement(tag, isVoid);
+                HtmlElement element;
+                if (rootElement == null)
+                {
+                    if (tag == "html" && !isVoid)
+                    {
+                        element = new HtmlDocument() { Doctype = doctype };
+                    }
+                    else if (parsingDocument)
+                    {
+                        // First tag of a document has to be an open html tag
+                        return false;
+                    }
+                    else
+                    {
+                        element = new HtmlElement(tag, isVoid);
+                    }
+                }
+                else
+                {
+                    element = new HtmlElement(tag, isVoid);
+                }
                 if (attributes != null)
                 {
                     element._attributes = attributes;
@@ -1057,9 +1088,18 @@ namespace HtmlGenerator
 
             private bool TryParseComment()
             {
-                if (!ReadNext() || currentChar != '-')
+                if (!ReadNext())
                 {
-                    // Invalid char after '!', e.g. "<!", "<!a"
+                    // Nothing after '!', e.g. "<!"
+                    return false;
+                }
+                if (currentChar != '-')
+                {
+                    // Invalid char after '!', e.g "<!a", but maybe is a doctype if we haven't parsed anything yet
+                    if (rootElement == null)
+                    {
+                        return TryParseDoctype();
+                    }
                     return false;
                 }
                 if (!ReadNext() || currentChar != '-')
@@ -1090,6 +1130,29 @@ namespace HtmlGenerator
                 }
                 string comment = text.Substring(commentStartIndex, commentEndIndex - commentStartIndex + 1);
                 SetParsing(new HtmlComment(comment));
+                ReadAndSkipWhitespace();
+                return true;
+            }
+
+            private bool TryParseDoctype()
+            {
+                int doctypeStartIndex = currentIndex;
+                int doctypeEndIndex = -1;
+                while (ReadNext())
+                {
+                    if (currentChar == '>')
+                    {
+                        doctypeEndIndex = currentIndex - 1;
+                        break;
+                    }
+                }
+                if (doctypeEndIndex == -1)
+                {
+                    // No end of doctype found, e.g. "<!DOCTYPE html"
+                    return false;
+                }
+                string doctypeString = text.Substring(doctypeStartIndex, doctypeEndIndex - doctypeStartIndex + 1);
+                doctype = new HtmlDoctype(doctypeString);
                 ReadAndSkipWhitespace();
                 return true;
             }
@@ -1130,12 +1193,15 @@ namespace HtmlGenerator
             private bool ReadNext()
             {
                 currentChar = char.MinValue;
-                if (currentIndex + 1 >= text.Length)
+                if (currentIndex >= text.Length)
                 {
                     return false;
                 }
                 currentIndex++;
-                currentChar = text[currentIndex];
+                if (currentIndex < text.Length)
+                {
+                    currentChar = text[currentIndex];
+                }
                 return true;
             }
 

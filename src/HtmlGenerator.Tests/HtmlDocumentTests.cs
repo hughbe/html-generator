@@ -14,12 +14,10 @@ namespace HtmlGenerator.Tests
             Assert.Equal("html", document.Tag);
             Assert.Null(document.InnerText);
             Assert.False(document.IsVoid);
-            Assert.Equal(2, document.Elements().Count());
-            Assert.Empty(document.Attributes());
-            Assert.Equal(2, document.ElementsAndAttributes().Count());
+            Assert.True(document.IsEmpty);
 
-            Assert.Equal("<head></head>", document.Head.ToString());
-            Assert.Equal("<body></body>", document.Body.ToString());
+            Assert.Null(document.Head);
+            Assert.Null(document.Body);
         }
 
         [Fact]
@@ -43,6 +41,76 @@ namespace HtmlGenerator.Tests
             HtmlDocument document = new HtmlDocument();
             document.Doctype = value;
             Assert.Equal(value, document.Doctype);
+        }
+
+        [Fact]
+        public void Head_SetExisting_NonNull_RemovesElement()
+        {
+            HtmlHeadElement value = new HtmlHeadElement().WithClass("class");
+            HtmlDocument document = new HtmlDocument() { Head = new HtmlHeadElement() };
+            document.Head = value;
+            Assert.Equal(new HtmlElement[] { value }, document.Elements());
+            Assert.Equal(value, document.Head);
+        }
+
+        [Fact]
+        public void Head_SetExisting_Null_RemovesElement()
+        {
+            HtmlDocument document = new HtmlDocument() { Head = new HtmlHeadElement() };
+            document.Head = null;
+            Assert.True(document.IsEmpty);
+            Assert.Null(document.Head);
+        }
+
+        [Fact]
+        public void Head_SetNonExisting_Null_RemovesElement()
+        {
+            HtmlDocument document = new HtmlDocument() { Head = null };
+            document.Head = null;
+            Assert.True(document.IsEmpty);
+            Assert.Null(document.Head);
+        }
+        
+        [Fact]
+        public void AddHead_DocumentHasBody_ThrowsInvalidOperationException()
+        {
+            HtmlDocument document = new HtmlDocument() { Head = new HtmlHeadElement() };
+            Assert.Throws<InvalidOperationException>(() => document.AddHead());
+        }
+
+        [Fact]
+        public void Body_SetExisting_NonNull_RemovesElement()
+        {
+            HtmlBodyElement value = new HtmlBodyElement().WithClass("class");
+            HtmlDocument document = new HtmlDocument() { Body = new HtmlBodyElement() };
+            document.Body = value;
+            Assert.Equal(new HtmlElement[] { value }, document.Elements());
+            Assert.Equal(value, document.Body);
+        }
+
+        [Fact]
+        public void Body_SetExisting_Null_RemovesElement()
+        {
+            HtmlDocument document = new HtmlDocument() { Body = new HtmlBodyElement() };
+            document.Body = null;
+            Assert.True(document.IsEmpty);
+            Assert.Null(document.Body);
+        }
+
+        [Fact]
+        public void Body_SetNonExisting_Null_RemovesElement()
+        {
+            HtmlDocument document = new HtmlDocument() { Body = null };
+            document.Body = null;
+            Assert.True(document.IsEmpty);
+            Assert.Null(document.Body);
+        }
+
+        [Fact]
+        public void AddBody_DocumentHasBody_ThrowsInvalidOperationException()
+        {
+            HtmlDocument document = new HtmlDocument() { Body = new HtmlBodyElement() };
+            Assert.Throws<InvalidOperationException>(() => document.AddBody());
         }
 
         public static IEnumerable<object[]> Equals_TestData()
@@ -79,10 +147,7 @@ namespace HtmlGenerator.Tests
             document.Doctype = doctype;
 
             string expectedDocType = doctype == null ? string.Empty : doctype + Environment.NewLine;
-            Helpers.SerializeIgnoringFormatting(document, string.Format(@"{0}<html>
-<head></head>
-<body></body>
-</html>", expectedDocType));
+            Helpers.SerializeIgnoringFormatting(document, string.Format(@"{0}<html></html>", expectedDocType));
         }
 
         [Fact]
@@ -90,16 +155,13 @@ namespace HtmlGenerator.Tests
         {
             HtmlDocument document = new HtmlDocument();
             Helpers.SerializeIgnoringFormatting(document, @"<!DOCTYPE html>
-<html>
-<head></head>
-<body></body>
-</html>");
+<html></html>");
         }
 
         [Fact]
         public void Serialize_Complex()
         {
-            HtmlDocument document = new HtmlDocument();
+            HtmlDocument document = new HtmlDocument().AddHead().AddBody();
             document.Head.Add(Tag.Title.WithInnerText("Title"));
             document.Body.Add(Tag.Header1("Header1").WithClass("aClass"));
             document.Body.Add(Tag.Br);
