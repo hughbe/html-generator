@@ -4,6 +4,7 @@
     {
         Attribute,
         Element,
-        Comment
+        Comment,
+        Doctype
     }
 }
