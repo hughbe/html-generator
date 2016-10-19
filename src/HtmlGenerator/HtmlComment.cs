@@ -3,9 +3,9 @@ using System.Text;
 
 namespace HtmlGenerator
 {
-    public class HtmlComment : HtmlElement, IEquatable<HtmlComment>
+    public class HtmlComment : HtmlNode, IEquatable<HtmlComment>
     {
-        public HtmlComment(string comment) : base("comment", isVoid: true)
+        public HtmlComment(string comment)
         {
             Requires.NotNull(comment, nameof(comment));
             Comment = comment;

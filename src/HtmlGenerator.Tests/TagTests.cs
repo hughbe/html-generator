@@ -329,11 +329,11 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("html");
 
             HtmlElement element1 = new HtmlElement("h1");
-            Assert.Same(element, element.WithElement(element1));
+            Assert.Same(element, element.WithChild(element1));
             Assert.Equal(new HtmlElement[] { element1 }, element.Elements());
 
             HtmlElement element2 = new HtmlElement("h2");
-            Assert.Same(element, element.WithElements(new HtmlElement[] { element2 }));
+            Assert.Same(element, element.WithChildren(new HtmlElement[] { element2 }));
             Assert.Equal(new HtmlElement[] { element1, element2 }, element.Elements());
         }
 

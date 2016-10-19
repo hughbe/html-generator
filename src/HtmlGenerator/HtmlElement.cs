@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using HtmlGenerator.Extensions;
 
 namespace HtmlGenerator
 {
-    public class HtmlElement : SerializableHtmlObject, IEquatable<HtmlElement>
+    public class HtmlElement : HtmlNode, IEquatable<HtmlElement>
     {
-        private readonly HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
+        internal readonly HtmlObjectLinkedList<HtmlNode> _nodes = new HtmlObjectLinkedList<HtmlNode>();
         private HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
 
         public HtmlElement(string tag)
@@ -46,7 +47,16 @@ namespace HtmlGenerator
                 throw new InvalidOperationException("Cannot have a duplicate element or attribute");
             }
 
-            if (content.ObjectType == HtmlObjectType.Attribute)
+            if (content is HtmlNode)
+            {
+                if (ReferenceEquals(this, content))
+                {
+                    throw new InvalidOperationException("Cannot add an object as a child to itself.");
+                }
+                ThrowIfVoid();
+                AddNodeAfter(this, _nodes._last, (HtmlNode)content);
+            }
+            else
             {
                 HtmlAttribute attribute = (HtmlAttribute)content;
                 if (HasAttribute(attribute.Name))
@@ -54,15 +64,6 @@ namespace HtmlGenerator
                     throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
                 }
                 AddAttribute(attribute);
-            }
-            else
-            {
-                if (ReferenceEquals(this, content))
-                {
-                    throw new InvalidOperationException("Cannot add an object as a child to itself.");
-                }
-                ThrowIfVoid();
-                AddElementAfter(this, _elements._last, (HtmlElement)content);
             }
         }
 
@@ -92,14 +93,14 @@ namespace HtmlGenerator
                 throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
             }
 
-            if (content.ObjectType == HtmlObjectType.Element)
+            if (content is HtmlNode)
             {
                 if (ReferenceEquals(this, content))
                 {
                     throw new InvalidOperationException("Cannot add an object as a child to itself.");
                 }
                 ThrowIfVoid();
-                AddElementBefore(this, _elements._first, (HtmlElement)content);
+                AddNodeBefore(this, _nodes._first, (HtmlNode)content);
             }
             else
             {
@@ -130,93 +131,13 @@ namespace HtmlGenerator
             _attributes.AddBefore(_attributes._first, attribute);
         }
 
-        public void AddAfterSelf(HtmlElement content)
-        {
-            Requires.NotNull(content, nameof(content));
-
-            if (ReferenceEquals(this, content))
-            {
-                throw new InvalidOperationException("Cannot add an object as a child to itself.");
-            }
-            if (ReferenceEquals(this, content.Parent))
-            {
-                throw new InvalidOperationException("Element has already been added to this element.");
-            }
-            if (Parent == null)
-            {
-                throw new InvalidOperationException("This element does not have a parent.");
-            }
-            AddElementAfter(Parent, this, content);
-        }
-
-        public void AddAfterSelf(params HtmlElement[] content) => AddAfterSelf((IEnumerable<HtmlElement>)content);
-
-        public void AddAfterSelf(IEnumerable<HtmlElement> content)
-        {
-            Requires.NotNull(content, nameof(content));
-
-            HtmlElement current = this;
-            foreach (HtmlElement element in content)
-            {
-                current.AddAfterSelf(element);
-                current = element;
-            }
-        }
-
-        public void AddBeforeSelf(HtmlElement content)
-        {
-            Requires.NotNull(content, nameof(content));
-
-            if (ReferenceEquals(this, content))
-            {
-                throw new InvalidOperationException("Cannot add an object as a child to itself.");
-            }
-            if (ReferenceEquals(this, content.Parent))
-            {
-                throw new InvalidOperationException("Element has already been added to this element.");
-            }
-            if (Parent == null)
-            {
-                throw new InvalidOperationException("This element does not have a parent.");
-            }
-            AddElementBefore(Parent, this, content);
-        }
-
-        public void AddBeforeSelf(params HtmlElement[] content) => AddBeforeSelf((IEnumerable<HtmlElement>)content);
-
-        public void AddBeforeSelf(IEnumerable<HtmlElement> content)
-        {
-            Requires.NotNull(content, nameof(content));
-
-            HtmlElement current = this;
-            foreach (HtmlElement element in content)
-            {
-                current.AddBeforeSelf(element);
-                current = element;
-            }
-        }
-
-        private static void AddElementAfter(HtmlElement parent, HtmlElement previousNode, HtmlElement element)
-        {
-            element.RemoveFromParent();
-            element.Parent = parent;
-            parent._elements.AddAfter(previousNode, element);
-        }
-
-        private static void AddElementBefore(HtmlElement parent, HtmlElement nextNode, HtmlElement element)
-        {
-            element.RemoveFromParent();
-            element.Parent = parent;
-            parent._elements.AddBefore(nextNode, element);
-        }
-
         public void ReplaceAll(params HtmlObject[] content) => ReplaceAll((IEnumerable<HtmlObject>)content);
 
         public void ReplaceAll(IEnumerable<HtmlObject> content)
         {
             Requires.NotNull(content, nameof(content));
 
-            _elements.Clear();
+            _nodes.Clear();
             _attributes.Clear();
             foreach (HtmlObject obj in content)
             {
@@ -244,7 +165,7 @@ namespace HtmlGenerator
             Requires.NotNull(elements, nameof(elements));
             ThrowIfVoid();
 
-            _elements.Clear();
+            _nodes.Clear();
             foreach (HtmlElement element in elements)
             {
                 Add(element);
@@ -254,30 +175,20 @@ namespace HtmlGenerator
         public void RemoveAll()
         {
             ThrowIfVoid();
-            _elements.Clear();
+            _nodes.Clear();
             _attributes.Clear();
         }
 
         public void RemoveElements()
         {
             ThrowIfVoid();
-            _elements.Clear();
+            _nodes.Clear();
         }
 
         public void RemoveAttributes()
         {
             ThrowIfVoid();
             _attributes.Clear();
-        }
-
-        public void RemoveFromParent()
-        {
-            if (Parent == null)
-            {
-                return;
-            }
-            Parent._elements.Remove(this);
-            Parent = null;
         }
 
         internal void RemoveAttribute(HtmlAttribute attribute)
@@ -296,10 +207,41 @@ namespace HtmlGenerator
             InnerText = value;
         }
 
-        public HtmlElement FirstElement => _elements._first;
-        public HtmlElement LastElement => _elements._last;
+        public HtmlNode FirstNode => _nodes._first;
+        public HtmlNode LastNode => _nodes._last;
 
-        public bool HasElements => _elements._count != 0;
+        public IEnumerable<HtmlNode> Nodes()
+        {
+            HtmlObject node = _nodes._first;
+            while (node != null)
+            {
+                yield return (HtmlNode)node;
+                node = node._next;
+            }
+        }
+
+        public bool HasNodes => _nodes._count != 0;
+
+        public HtmlElement FirstElement => Elements().FirstOrDefault();
+        public HtmlElement LastElement
+        {
+            get
+            {
+                HtmlObject node = _nodes._last;
+                while (node != null)
+                {
+                    HtmlElement element = node as HtmlElement;
+                    if (element != null)
+                    {
+                        return element;
+                    }
+                    node = node._previous;
+                }
+                return null;
+            }
+        }
+
+        public bool HasElements => Elements().Any();
 
         public IEnumerable<HtmlElement> Elements() => Elements(null);
 
@@ -307,14 +249,15 @@ namespace HtmlGenerator
         {
             bool isDefaultTag = string.IsNullOrEmpty(tag);
 
-            HtmlElement element = _elements._first;
-            while (element != null)
+            HtmlObject node = _nodes._first;
+            while (node != null)
             {
-                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(element.Tag, tag))
+                HtmlElement element = node as HtmlElement;
+                if (element != null && (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(element.Tag, tag)))
                 {
                     yield return element;
                 }
-                element = (HtmlElement)element._next;
+                node = node._next;
             }
         }
 
@@ -333,7 +276,7 @@ namespace HtmlGenerator
             }
         }
 
-        public bool IsEmpty => !HasElements && !HasAttributes;
+        public bool IsEmpty => !HasNodes && !HasAttributes;
 
         public IEnumerable<HtmlObject> ElementsAndAttributes()
         {
@@ -347,20 +290,22 @@ namespace HtmlGenerator
             }
         }
 
+        public IEnumerable<HtmlObject> NodesAndAttributes()
+        {
+            foreach (HtmlNode node in Nodes())
+            {
+                yield return node;
+            }
+            foreach (HtmlAttribute attribute in Attributes())
+            {
+                yield return attribute;
+            }
+        }
+
         public bool HasElement(string tag)
         {
             Requires.NotNullOrWhitespace(tag, nameof(tag));
-
-            HtmlElement current = _elements._first;
-            while (current != null)
-            {
-                if (StringExtensions.EqualsAsciiOrdinalIgnoreCase(current.Tag, tag))
-                {
-                    return true;
-                }
-                current = (HtmlElement)current._next;
-            }
-            return false;
+            return Elements(tag).Any();
         }
 
         public bool HasAttribute(string name)
@@ -382,20 +327,8 @@ namespace HtmlGenerator
         public bool TryGetElement(string tag, out HtmlElement element)
         {
             Requires.NotNullOrWhitespace(tag, nameof(tag));
-
-            HtmlElement current = _elements._first;
-            while (current != null)
-            {
-                if (StringExtensions.EqualsAsciiOrdinalIgnoreCase(current.Tag, tag))
-                {
-                    element = current;
-                    return true;
-                }
-                current = (HtmlElement)current._next;
-            }
-
-            element = null;
-            return false;
+            element = Elements(tag).FirstOrDefault();
+            return element != null;
         }
 
         public bool TryGetAttribute(string name, out HtmlAttribute attribute)
@@ -417,8 +350,8 @@ namespace HtmlGenerator
             return false;
         }
 
-        public HtmlElement NextElement => (HtmlElement)_next;
-        public HtmlElement PreviousElement => (HtmlElement)_previous;
+        public HtmlElement NextElement => NextElements().FirstOrDefault();
+        public HtmlElement PreviousElement => PreviousElements().FirstOrDefault();
 
         public IEnumerable<HtmlElement> NextElements() => NextElements(null);
 
@@ -426,14 +359,15 @@ namespace HtmlGenerator
         {
             bool isDefaultTag = string.IsNullOrEmpty(tag);
 
-            HtmlElement nextElement = (HtmlElement)_next;
-            while (nextElement != null)
+            HtmlObject nextNode = _next;
+            while (nextNode != null)
             {
-                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(nextElement.Tag, tag))
+                HtmlElement nextElement = nextNode as HtmlElement;
+                if (nextElement != null && (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(nextElement.Tag, tag)))
                 {
                     yield return nextElement;
                 }
-                nextElement = (HtmlElement)nextElement._next;
+                nextNode = nextNode._next;
             }
         }
 
@@ -443,14 +377,15 @@ namespace HtmlGenerator
         {
             bool isDefaultTag = string.IsNullOrEmpty(tag);
 
-            HtmlElement previousElement = (HtmlElement)_previous;
-            while (previousElement != null)
+            HtmlObject previousNode = _previous;
+            while (previousNode != null)
             {
-                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(previousElement.Tag, tag))
+                HtmlElement previousElement = previousNode as HtmlElement;
+                if (previousElement != null && (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(previousElement.Tag, tag)))
                 {
                     yield return previousElement;
                 }
-                previousElement = (HtmlElement)previousElement._previous;
+                previousNode = previousNode._previous;
             }
         }
 
@@ -460,18 +395,22 @@ namespace HtmlGenerator
         {
             bool isDefaultTag = string.IsNullOrEmpty(tag);
 
-            HtmlElement element = _elements._first;
-            while (element != null)
+            HtmlNode node = _nodes._first;
+            while (node != null)
             {
-                if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(element.Tag, tag))
+                HtmlElement element = node as HtmlElement;
+                if (element != null)
                 {
-                    yield return element;
+                    if (isDefaultTag || StringExtensions.EqualsAsciiOrdinalIgnoreCase(element.Tag, tag))
+                    {
+                        yield return element;
+                    }
+                    foreach (HtmlElement child in element.Descendants(tag))
+                    {
+                        yield return child;
+                    }
                 }
-                foreach (HtmlElement child in element.Descendants(tag))
-                {
-                    yield return child;
-                }
-                element = (HtmlElement)element._next;
+                node = (HtmlElement)node._next;
             }
         }
 
@@ -538,11 +477,11 @@ namespace HtmlGenerator
             {
                 return false;
             }
-            if (_elements._count != element._elements._count || _attributes._count != element._attributes._count)
+            if (_nodes._count != element._nodes._count || _attributes._count != element._attributes._count)
             {
                 return false;
             }
-            if (_elements._count > 0)
+            if (_nodes._count > 0)
             {
                 IEnumerator<HtmlElement> thisElements = Elements().GetEnumerator();
                 IEnumerator<HtmlElement> otherElements = element.Elements().GetEnumerator();
@@ -626,7 +565,7 @@ namespace HtmlGenerator
                 stringBuilder.Append(InnerText);
             }
             var shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
-            foreach (var child in _elements)
+            foreach (var child in Elements())
             {
                 if (serializeType != HtmlSerializeOptions.NoFormatting)
                 {
@@ -636,7 +575,7 @@ namespace HtmlGenerator
                 {
                     stringBuilder.Append(' ', depth * 2);
                 }
-                if (!string.IsNullOrWhiteSpace(child.InnerText) && child._elements._count == 0)
+                if (!string.IsNullOrWhiteSpace(child.InnerText) && child._nodes._count == 0)
                 {
                     child.Serialize(stringBuilder, serializeType, depth);
                 }
@@ -645,7 +584,7 @@ namespace HtmlGenerator
                     child.Serialize(stringBuilder, serializeType, depth + 1);
                 }
             }
-            if (_elements._count > 0 && serializeType != HtmlSerializeOptions.NoFormatting)
+            if (_nodes._count > 0 && serializeType != HtmlSerializeOptions.NoFormatting)
             {
                 stringBuilder.AppendLine();
             }
@@ -775,13 +714,11 @@ namespace HtmlGenerator
                         // Got more to parse?
                         return TryParseOpeningTag();
                     }
-                    else if (rootElement == null)
+                    else
                     {
-                        // Doctype on its own
-                        rootElement = doctype;
+                        // Doctype or comment on its own, e.g. "<!--comment-->" or "<div><!--comment-->"
+                        return false;
                     }
-                    // Finished parsing
-                    return true;
                 }
                 if (!IsLetter(currentChar))
                 {
@@ -1127,7 +1064,12 @@ namespace HtmlGenerator
                     return false;
                 }
                 string comment = text.Substring(commentStartIndex, commentEndIndex - commentStartIndex + 1);
-                SetParsing(new HtmlComment(comment));
+                if (currentElement == null)
+                {
+                    // Comment on its own, e.g. "<!--comment-->"
+                    return false;
+                }
+                currentElement.Add(new HtmlComment(comment));
                 ReadAndSkipWhitespace();
                 return true;
             }
@@ -1214,13 +1156,13 @@ namespace HtmlGenerator
 
     public static class HtmlElementExtensions
     {
-        public static T WithElement<T>(this T self, HtmlElement element) where T : HtmlElement
+        public static T WithChild<T>(this T self, HtmlObject element) where T : HtmlElement
         {
             self.Add(element);
             return self;
         }
 
-        public static T WithElements<T>(this T self, IEnumerable<HtmlElement> elements) where T : HtmlElement
+        public static T WithChildren<T>(this T self, IEnumerable<HtmlObject> elements) where T : HtmlElement
         {
             self.Add(elements);
             return self;

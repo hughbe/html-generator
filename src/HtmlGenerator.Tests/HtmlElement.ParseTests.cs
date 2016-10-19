@@ -54,7 +54,7 @@ namespace HtmlGenerator.Tests
         public void NonVoidElement_OneNonVoidChild()
         {
             HtmlElement expected = new HtmlElement("div")
-                .WithElement(new HtmlElement("p"));
+                .WithChild(new HtmlElement("p"));
 
             Assert.Equal(expected, HtmlElement.Parse("<div><p></p></div>"));
         }
@@ -63,7 +63,7 @@ namespace HtmlGenerator.Tests
         public void NonVoidElement_OneVoidChild()
         {
             HtmlElement expected = new HtmlElement("div")
-                .WithElement(new HtmlElement("br", isVoid: true));
+                .WithChild(new HtmlElement("br", isVoid: true));
 
             Assert.Equal(expected, HtmlElement.Parse("<div><br/></div>"));
         }
@@ -72,8 +72,8 @@ namespace HtmlGenerator.Tests
         public void NonVoidElement_MultipleChildren()
         {
             HtmlElement expected = new HtmlElement("div")
-                .WithElement(new HtmlElement("p"))
-                .WithElement(new HtmlElement("h1"));
+                .WithChild(new HtmlElement("p"))
+                .WithChild(new HtmlElement("h1"));
 
             Assert.Equal(expected, HtmlElement.Parse("<div><p></p><h1></h1></div>"));
         }
@@ -82,17 +82,17 @@ namespace HtmlGenerator.Tests
         public void NonVoidElement_MultipleNestedChildren()
         {
             HtmlElement expected = new HtmlElement("div")
-                .WithElements(new HtmlElement[]
+                .WithChildren(new HtmlElement[]
                 {
-                    new HtmlElement("div").WithElements(new HtmlElement[]
+                    new HtmlElement("div").WithChildren(new HtmlElement[]
                     {
                         new HtmlElement("p").WithInnerText("Text"),
                         new HtmlElement("h1")
                     }),
                     new HtmlElement("br", isVoid: true),
-                    new HtmlElement("section").WithElements(new HtmlElement[]
+                    new HtmlElement("section").WithChildren(new HtmlElement[]
                     {
-                        new HtmlElement("div").WithElements(new HtmlElement[]
+                        new HtmlElement("div").WithChildren(new HtmlElement[]
                         {
                             new HtmlElement("h2").WithInnerText("InnerText"),
                             new HtmlElement("hr", isVoid: true),
@@ -312,52 +312,45 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void Comment_HasValue_NoChildren_NoParents_Lowercase()
+        public void Comment_LowercaseValue()
         {
-            HtmlElement expected = new HtmlComment("comment");
-            Assert.Equal(expected, HtmlElement.Parse(@"<!--comment-->"));
-        }
-
-        [Fact]
-        public void Comment_HasValue_NoChildren_NoParents_Uppercase()
-        {
-            HtmlElement expected = new HtmlComment("comment");
-            Assert.Equal(expected, HtmlElement.Parse(@"<!--COMMENT-->"));
-        }
-
-        [Fact]
-        public void Comment_HasValue_NoChildren_NoParents_MixedCase()
-        {
-            HtmlElement expected = new HtmlComment("comment");
-            Assert.Equal(expected, HtmlElement.Parse(@"<!--CoMmEnT-->"));
-        }
-
-        [Fact]
-        public void Comment_LeadingAndTrailingWhitespace_NoChildren_NoParents()
-        {
-            HtmlElement expected = new HtmlComment(" comment ");
-            Assert.Equal(expected, HtmlElement.Parse(@"<!-- comment -->"));
-        }
-
-        [Fact]
-        public void Comment_OnlyWhitespace_NoChildren_NoParents()
-        {
-            HtmlElement expected = new HtmlComment("  ");
-            Assert.Equal(expected, HtmlElement.Parse(@"<!--  -->"));
-        }
-
-        [Fact]
-        public void Comment_Empty_NoChildren_NoParents()
-        {
-            HtmlElement expected = new HtmlComment("");
-            Assert.Equal(expected, HtmlElement.Parse(@"<!---->"));
-        }
-
-        [Fact]
-        public void Comment_Nested()
-        {
-            HtmlElement expected = new HtmlElement("div").WithElement(new HtmlComment("comment"));
+            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("comment"));
             Assert.Equal(expected, HtmlElement.Parse(@"<div><!--comment--></div>"));
+        }
+
+        [Fact]
+        public void Comment_UppercaseValue()
+        {
+            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("comment"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div><!--COMMENT--></div>"));
+        }
+
+        [Fact]
+        public void Comment_MixedCaseValue()
+        {
+            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("comment"));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div><!--CoMmEnT--></div>"));
+        }
+
+        [Fact]
+        public void Comment_LeadingAndTrailingWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment(" comment "));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div><!-- comment --></div>"));
+        }
+
+        [Fact]
+        public void Comment_OnlyWhitespace()
+        {
+            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("  "));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div><!--  --></div>"));
+        }
+
+        [Fact]
+        public void Comment_Empty()
+        {
+            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment(""));
+            Assert.Equal(expected, HtmlElement.Parse(@"<div><!----></div>"));
         }
 
         [Fact]
@@ -372,13 +365,6 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
             Assert.Equal(expected, HtmlDocument.Parse(@"<!DOCTYPE html><html></html>"));
-        }
-
-        [Fact]
-        public void Doctype_NoHtml_NoWhitespace()
-        {
-            HtmlElement expected = new HtmlDoctype(HtmlDoctypeType.Html5);
-            Assert.Equal(expected, HtmlElement.Parse(@"<!DOCTYPE html>"));
         }
 
         [Fact]
@@ -455,6 +441,8 @@ namespace HtmlGenerator.Tests
             yield return new object[] { "<abc>InnerText</abc  " };
             yield return new object[] { "<abc>InnerText</abc/" };
             yield return new object[] { "<abc>InnerText</def>" };
+            yield return new object[] { "<abc>InnerText</abcd>" };
+            yield return new object[] { "<abc>InnerText</ab>" };
 
             // Invalid comment
             yield return new object[] { "<!" };
@@ -468,9 +456,18 @@ namespace HtmlGenerator.Tests
             yield return new object[] { "<!--a-a" };
             yield return new object[] { "<!--a--" };
 
+            // Comment on its own
+            yield return new object[] { "<!--comment-->" };
+            yield return new object[] { "<!-- comment -->" };
+            yield return new object[] { "<!---->" };
+            yield return new object[] { "<!-- \r \t \n -->" };
+
             // Invalid doctype
             yield return new object[] { "<!DOCTYPE" };
             yield return new object[] { "<!DOCTYPE>a" };
+
+            // Doctype on its own
+            yield return new object[] { "<!DOCTYPE html>" };
         }
 
         [Theory]
