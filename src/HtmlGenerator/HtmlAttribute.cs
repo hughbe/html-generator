@@ -39,8 +39,6 @@ namespace HtmlGenerator
             Value = value;
         }
 
-        public override int GetHashCode() => IsVoid ? Name.GetHashCode() : Name.GetHashCode() ^ Value.GetHashCode();
-
         public override bool Equals(object obj) => Equals(obj as HtmlAttribute);
         
         public bool Equals(HtmlAttribute attribute)
@@ -51,6 +49,8 @@ namespace HtmlGenerator
             }
             return Name == attribute.Name && Value == attribute.Value;
         }
+
+        public override int GetHashCode() => IsVoid ? Name.GetHashCode() : Name.GetHashCode() ^ Value.GetHashCode();
 
         internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
         {
