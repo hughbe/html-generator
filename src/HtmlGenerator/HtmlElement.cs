@@ -10,8 +10,6 @@ namespace HtmlGenerator
         private readonly HtmlObjectLinkedList<HtmlElement> _elements = new HtmlObjectLinkedList<HtmlElement>();
         private HtmlObjectLinkedList<HtmlAttribute> _attributes = new HtmlObjectLinkedList<HtmlAttribute>();
 
-        private HtmlElement() { }
-
         public HtmlElement(string tag)
         {
             Requires.NotNullOrWhitespace(tag, nameof(tag));

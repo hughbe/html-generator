@@ -68,7 +68,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void ObjectType_Get_ReturnsDoctye()
+        public void ObjectType_Get_ReturnsDoctype()
         {
             HtmlDoctype doctype = new HtmlDoctype("doctype");
             Assert.Equal(HtmlObjectType.Doctype, doctype.ObjectType);

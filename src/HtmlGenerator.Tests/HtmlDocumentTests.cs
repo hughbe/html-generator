@@ -21,6 +21,13 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void ObjectType_Get_ReturnsDocument()
+        {
+            HtmlDocument document = new HtmlDocument();
+            Assert.Equal(HtmlObjectType.Document, document.ObjectType);
+        }
+
+        [Fact]
         public void Doctype_Get_ReturnsExpected()
         {
             HtmlDocument document = new HtmlDocument();

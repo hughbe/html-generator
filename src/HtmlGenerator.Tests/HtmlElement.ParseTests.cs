@@ -360,10 +360,17 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void Doctype_Html_NoWhitespace()
+        public void Doctype_HtmlWithElement_NoWhitespace()
         {
             HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
             Assert.Equal(expected, HtmlElement.Parse(@"<!DOCTYPE html><html></html>"));
+        }
+
+        [Fact]
+        public void Doctype_HtmlWithDocument_NoWhitespace()
+        {
+            HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
+            Assert.Equal(expected, HtmlDocument.Parse(@"<!DOCTYPE html><html></html>"));
         }
 
         [Fact]
@@ -373,7 +380,7 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, HtmlElement.Parse(@"<!DOCTYPE html>"));
         }
 
-        public static IEnumerable<object[]> Parse_Invalid_TestData()
+        public static IEnumerable<object[]> Parse_InvalidElement_TestData()
         {
             // Empty
             yield return new object[] { "" };
@@ -451,7 +458,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Theory]
-        [MemberData(nameof(Parse_Invalid_TestData))]
+        [MemberData(nameof(Parse_InvalidElement_TestData))]
         public void InvalidElement_ReturnsNull(string text)
         {
             Assert.Null(HtmlElement.Parse(text));
@@ -464,6 +471,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Theory]
+        [MemberData(nameof(Parse_InvalidElement_TestData))]
         [MemberData(nameof(Parse_InvalidDocument_TestData))]
         public void InvalidDocument_ReturnsNull(string text)
         {
