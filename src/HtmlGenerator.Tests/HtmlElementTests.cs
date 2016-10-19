@@ -158,13 +158,51 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(TryGetElement_TestData))]
-        public void TryGetElement(HtmlElement[] elements, string name, HtmlElement expected)
+        public void TryGetElement(HtmlElement[] elements, string tag, HtmlElement expected)
         {
             HtmlElement parent = new HtmlElement("html", elements);
 
             HtmlElement element;
-            Assert.Equal(expected != null, parent.TryGetElement(name, out element));
+            Assert.Equal(expected != null, parent.TryGetElement(tag, out element));
             Assert.Equal(expected, element);
+
+            Assert.Equal(expected != null, parent.HasElement(tag));
+        }
+
+        [Fact]
+        public void TryGetElement_NullTag_ThrowsArgumentNullException()
+        {
+            HtmlElement parent = new HtmlElement("html");
+            HtmlElement element = null;
+            Assert.Throws<ArgumentNullException>("tag", () => parent.TryGetElement(null, out element));
+            Assert.Null(element);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" \r \t \n ")]
+        public void TryGetElement_InvalidTag_ThrowsArgumentException(string tag)
+        {
+            HtmlElement parent = new HtmlElement("html");
+            HtmlElement element = null;
+            Assert.Throws<ArgumentException>("tag", () => parent.TryGetElement(tag, out element));
+            Assert.Null(element);
+        }
+
+        [Fact]
+        public void HasElement_NullTag_ThrowsArgumentNullException()
+        {
+            HtmlElement element = new HtmlElement("html");
+            Assert.Throws<ArgumentNullException>("tag", () => element.HasElement(null));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" \r \t \n ")]
+        public void HasElement_InvalidName_ThrowsArgumentException(string tag)
+        {
+            HtmlElement element = new HtmlElement("html");
+            Assert.Throws<ArgumentException>("tag", () => element.HasElement(tag));
         }
 
         public static IEnumerable<object[]> TryGetAttribute_TestData()
@@ -195,6 +233,8 @@ namespace HtmlGenerator.Tests
             HtmlAttribute attribute;
             Assert.Equal(expected != null, parent.TryGetAttribute(name, out attribute));
             Assert.Equal(expected, attribute);
+
+            Assert.Equal(expected != null, parent.HasAttribute(name));
         }
 
         [Fact]
@@ -204,6 +244,33 @@ namespace HtmlGenerator.Tests
             HtmlAttribute attribute = null;
             Assert.Throws<ArgumentNullException>("name", () => element.TryGetAttribute(null, out attribute));
             Assert.Null(attribute);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" \r \t \n ")]
+        public void TryGetAttribute_InvalidName_ThrowsArgumentException(string name)
+        {
+            HtmlElement element = new HtmlElement("html");
+            HtmlAttribute attribute = null;
+            Assert.Throws<ArgumentException>("name", () => element.TryGetAttribute(name, out attribute));
+            Assert.Null(attribute);
+        }
+
+        [Fact]
+        public void HasAttribute_NullName_ThrowsArgumentNullException()
+        {
+            HtmlElement element = new HtmlElement("html");
+            Assert.Throws<ArgumentNullException>("name", () => element.HasAttribute(null));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" \r \t \n ")]
+        public void HasAttribute_InvalidName_ThrowsArgumentException(string name)
+        {
+            HtmlElement element = new HtmlElement("html");
+            Assert.Throws<ArgumentException>("name", () => element.HasAttribute(name));
         }
 
         [Theory]
@@ -1763,6 +1830,10 @@ namespace HtmlGenerator.Tests
                 new HtmlElement("tag", new HtmlElement("element")),
                 false
             };
+
+            // Other
+            yield return new object[] { new HtmlElement("tag"), new object(), false };
+            yield return new object[] { new HtmlElement("tag"), null, false };
         }
 
         [Theory]

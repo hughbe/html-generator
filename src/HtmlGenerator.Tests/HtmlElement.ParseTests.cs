@@ -28,6 +28,7 @@ namespace HtmlGenerator.Tests
         {
             Assert.Equal(new HtmlElement("div"), HtmlElement.Parse("<DIV></DIV>"));
         }
+
         [Fact]
         public void NonVoidElement_NoChildren_NoWhitespace_MixedCase()
         {
@@ -112,7 +113,7 @@ namespace HtmlGenerator.Tests
 		<div>
 			<h2>InnerText</h2>
 			<hr/>
-			<p>Content</p>	
+			<p>Content</p>
 		</div>
 		<h3></h3>
 	</section>
@@ -380,6 +381,20 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, HtmlElement.Parse(@"<!DOCTYPE html>"));
         }
 
+        [Fact]
+        public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Unicode()
+        {
+            HtmlElement expected = new HtmlElement("body").WithAttribute(new HtmlAttribute("\u2345", "\u3456"));
+            Assert.Equal(expected, HtmlElement.Parse("<body \u2345=\"\u3456\"></body>"));
+        }
+
+        [Fact]
+        public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Unicode()
+        {
+            HtmlElement expected = new HtmlElement("body", isVoid: true).WithAttribute(new HtmlAttribute("\u2345", "\u3456"));
+            Assert.Equal(expected, HtmlElement.Parse("<body \u2345=\"\u3456\"/>"));
+        }
+
         public static IEnumerable<object[]> Parse_InvalidElement_TestData()
         {
             // Empty
@@ -444,6 +459,7 @@ namespace HtmlGenerator.Tests
             // Invalid comment
             yield return new object[] { "<!" };
             yield return new object[] { "<!a" };
+            yield return new object[] { "<div><!a></div>" };
             yield return new object[] { "<!-" };
             yield return new object[] { "<!--" };
             yield return new object[] { "<!-a" };
