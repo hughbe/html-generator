@@ -179,7 +179,7 @@ namespace HtmlGenerator
             _attributes.Clear();
         }
 
-        public void RemoveElements()
+        public void RemoveNodes()
         {
             ThrowIfVoid();
             _nodes.Clear();
