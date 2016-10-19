@@ -927,29 +927,68 @@ namespace HtmlGenerator
                     attribute = new HtmlAttribute(name);
                     return true;
                 }
-                if (currentChar != '"')
+                bool singleDelimeted = currentChar == '\'';
+                bool doubleDelimeted = currentChar == '"';
+                bool notDelimited = IsLetter(currentChar);
+                if (!singleDelimeted && !doubleDelimeted && !notDelimited)
                 {
-                    // Invalid character after equals, e.g. "<abc attribute=!"
+                    // Invalid character after equals, e.g. "<abc attribute=", "<abc attribute=!"
                     return false;
                 }
-                int valueStartIndex = currentIndex + 1;
+                int valueStartIndex = notDelimited ? currentIndex : currentIndex + 1;
                 int valueEndIndex = -1;
                 while (ReadNext())
                 {
-                    if (currentChar == '"')
+                    if (singleDelimeted)
                     {
-                        valueEndIndex = currentIndex - 1;
-                        break;
+                        if (currentChar == '\'')
+                        {
+                            valueEndIndex = currentIndex - 1;
+                            break;
+                        }
+                        continue;
+                    }
+                    else if (doubleDelimeted)
+                    {
+                        if (currentChar == '"')
+                        {
+                            valueEndIndex = currentIndex - 1;
+                            break;
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        bool foundWhitespace = char.IsWhiteSpace(currentChar);
+                        if (char.IsWhiteSpace(currentChar))
+                        {
+                            valueEndIndex = currentIndex - 1;
+                            ReadAndSkipWhitespace();
+                        }
+                        if (currentChar == '/' || currentChar == '>')
+                        {
+                            if (valueEndIndex == -1)
+                            {
+                                valueEndIndex = currentIndex - 1;
+                            }
+                            break;
+                        }
+                        else if (foundWhitespace)
+                        {
+                            // Found another attribute
+                            break;
+                        }
+                        continue;
                     }
                 }
                 if (valueEndIndex == -1)
                 {
-                    // No end of attribute value, e.g. "<abc attribute=" or "<abc attribute="a
+                    // No end of attribute value, e.g. "<abc attribute=", "<abc attribute=', "<abc attribute="a, "<abc attribute='a or , "<abc attribute=a
                     return false;
                 }
                 string value = text.Substring(valueStartIndex, valueEndIndex - valueStartIndex + 1);
                 attribute = new HtmlAttribute(name, value);
-                return ReadAndSkipWhitespace();
+                return notDelimited || ReadAndSkipWhitespace();
             }
 
             private bool TryParseInnerText()
@@ -1086,25 +1125,6 @@ namespace HtmlGenerator
             private static bool IsNumber(char c)
             {
                 return (c >= '0' && c <= '9');
-            }
-
-            private void ReadPrevious()
-            {
-                currentIndex--;
-                currentChar = text[currentIndex];
-            }
-
-            private char NextCharAfterWhitespace()
-            {
-                for (int i = currentIndex; i < text.Length; i++)
-                {
-                    char c = text[i];
-                    if (!char.IsWhiteSpace(c))
-                    {
-                        return c;
-                    }
-                }
-                return char.MinValue;
             }
 
             private bool ReadNext()
