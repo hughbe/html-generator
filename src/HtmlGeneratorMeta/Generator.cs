@@ -17,12 +17,12 @@ namespace HtmlGeneratorMeta
 
         public void GenerateClass(string className, string code)
         {
-            if(!Directory.Exists(FolderPath)) 
+            if (!Directory.Exists(FolderPath))
             {
                 Directory.CreateDirectory(FolderPath);
             }
-            
-            var filePath = Path.Combine(FolderPath, className + ".cs");
+
+            string filePath = Path.Combine(FolderPath, className + ".cs");
             File.WriteAllText(filePath, code);
         }
 
@@ -35,7 +35,7 @@ namespace HtmlGeneratorMeta
 {3}
     }}
 }}", accessModifier, partialModifier, fileName, list);
-            var filePath = Path.Combine(FolderPath, "../") + fileName + ".cs";
+            string filePath = Path.Combine(FolderPath, "../") + fileName + ".cs";
             File.WriteAllText(filePath, code);
         }
     }

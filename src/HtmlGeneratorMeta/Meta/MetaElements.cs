@@ -74,7 +74,7 @@
         public static ElementInfo MenuItem => Custom("menuitem", "Checked", "Command", "Default", "Disabled", "Icon", "Label", "RadioGroup", "Type");
         public static ElementInfo Meta => Custom("meta", true, "Charset", "Content", "HttpEquiv", "DefaultStyle", "Refresh", "Name");
         public static ElementInfo Meter => Custom("meter", "Form", "Low", "High", "Min", "Max", "Optimum", "Value");
-        
+
         public static ElementInfo Nav => Custom("nav");
         public static ElementInfo Noscript => Custom("noscript");
 

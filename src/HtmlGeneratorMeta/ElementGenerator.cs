@@ -32,6 +32,7 @@ namespace HtmlGeneratorMeta
                     propertyCode = Environment.NewLine + propertyCode;
                     if (propertyName[0] != PreviousName[0])
                     {
+                        // Group alphabetically by starting letter
                         propertyCode = Environment.NewLine + propertyCode;
                     }
                 }
@@ -49,7 +50,7 @@ namespace HtmlGeneratorMeta
             string lowerName = element.Name;
             if (element.Attributes.Count == 0)
             {
-                return $"        public static HtmlElement {propertyName} => new HtmlElement(\"{lowerName}\", {isVoid});";                
+                return $"        public static HtmlElement {propertyName} => new HtmlElement(\"{lowerName}\", {isVoid});";
             }
 
             string className = "Html" + propertyName + "Element";
