@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    internal class HtmlObjectLinkedList<T> : IEnumerable<T> where T : HtmlObject
+    internal class HtmlObjectLinkedList<T> where T : HtmlObject
     {
         public T _first;
         public T _last;
@@ -14,8 +14,13 @@ namespace HtmlGenerator
         {
             if (node != null)
             {
-                node._previous = value;
                 value._next = node;
+                if (node._previous != null)
+                {
+                    node._previous._next = value;
+                    value._previous = node._previous;
+                }
+                node._previous = value;
             }
             if (node == _first)
             {
@@ -33,6 +38,11 @@ namespace HtmlGenerator
             if (node != null)
             {
                 value._previous = node;
+                if (node._next != null)
+                {
+                    node._next._previous = value;
+                    value._next = node._next;
+                }
                 node._next = value;
             }
             if (node == _last)
@@ -86,17 +96,5 @@ namespace HtmlGenerator
             _first = null;
             _last = null;
         }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            T current = _first;
-            while (current != null)
-            {
-                yield return current;
-                current = (T)current._next;
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)this).GetEnumerator();
     }
 }

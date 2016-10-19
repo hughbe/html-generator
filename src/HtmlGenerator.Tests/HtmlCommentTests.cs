@@ -15,8 +15,6 @@ namespace HtmlGenerator.Tests
         {
             HtmlComment htmlComment = new HtmlComment(comment);
             Assert.Equal(comment, htmlComment.Comment);
-            Assert.True(htmlComment.IsVoid);
-            Assert.True(htmlComment.IsEmpty);
         }
 
         [Fact]

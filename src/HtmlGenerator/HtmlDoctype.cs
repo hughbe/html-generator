@@ -3,9 +3,9 @@ using System.Text;
 
 namespace HtmlGenerator
 {
-    public class HtmlDoctype : HtmlElement, IEquatable<HtmlDoctype>
+    public class HtmlDoctype : HtmlNode, IEquatable<HtmlDoctype>
     {
-        public HtmlDoctype(HtmlDoctypeType doctype) : base("doctype", isVoid: true)
+        public HtmlDoctype(HtmlDoctypeType doctype)
         {
             if (doctype == HtmlDoctypeType.Html5)
             {
@@ -47,7 +47,7 @@ namespace HtmlGenerator
             _doctypeType = doctype;
         }
 
-        public HtmlDoctype(string doctype) : base("doctype", isVoid: true)
+        public HtmlDoctype(string doctype)
         {
             Requires.NotNullOrWhitespace(doctype, nameof(doctype));
             Doctype = doctype;
