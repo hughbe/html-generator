@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Xunit;
 
 namespace HtmlGenerator.Tests
@@ -12,5 +13,12 @@ namespace HtmlGenerator.Tests
             Assert.Equal(expected, element.Serialize());
             Assert.Equal(expected.Replace(Environment.NewLine, ""), element.Serialize(HtmlSerializeOptions.NoFormatting));
         }
+    }
+
+    public class CustomHtmlObject : HtmlObject
+    {
+        public override HtmlObjectType ObjectType => HtmlObjectType.Element;
+
+        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions) { }
     }
 }

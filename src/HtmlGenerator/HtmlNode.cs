@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HtmlGenerator
 {
-    public abstract class HtmlNode : SerializableHtmlObject
+    public abstract class HtmlNode : HtmlObject
     {
         public HtmlNode NextNode => (HtmlNode)_next;
         public HtmlNode PreviousNode => (HtmlNode)_previous;

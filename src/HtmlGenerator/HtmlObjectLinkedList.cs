@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace HtmlGenerator
+﻿namespace HtmlGenerator
 {
     internal class HtmlObjectLinkedList<T> where T : HtmlObject
     {

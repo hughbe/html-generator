@@ -4,7 +4,7 @@ using HtmlGenerator.Extensions;
 
 namespace HtmlGenerator
 {
-    public class HtmlAttribute : SerializableHtmlObject, IEquatable<HtmlAttribute>
+    public class HtmlAttribute : HtmlObject, IEquatable<HtmlAttribute>
     {
         public HtmlAttribute(string name)
         {
@@ -52,7 +52,7 @@ namespace HtmlGenerator
 
         public override int GetHashCode() => IsVoid ? Name.GetHashCode() : Name.GetHashCode() ^ Value.GetHashCode();
 
-        internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
+        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions)
         {
             int extraLength = IsVoid ? 0 : (3 + Value.Length);
             builder.EnsureCapacity(builder.Capacity + Name.Length + extraLength);

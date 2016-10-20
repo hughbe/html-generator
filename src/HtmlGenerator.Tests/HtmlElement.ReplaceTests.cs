@@ -61,6 +61,15 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void ReplaceAll_ContentNotNodeOrAttribute_ThrowsArgumentException()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            
+            Assert.Throws<ArgumentException>("content", () => parent.ReplaceAll(new HtmlObject[] { new CustomHtmlObject() }));
+            Assert.Throws<ArgumentException>("content", () => parent.ReplaceAll((IEnumerable<HtmlObject>)new HtmlObject[] { new CustomHtmlObject() }));
+        }
+
+        [Fact]
         public void ReplaceAll_DuplicateElementInContents_ThrowsInvalidOperationException()
         {
             HtmlElement parent = new HtmlElement("parent");

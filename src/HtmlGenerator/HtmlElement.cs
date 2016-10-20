@@ -135,7 +135,7 @@ namespace HtmlGenerator
                 ThrowIfVoid();
                 AddNodeAfter(this, _nodes._last, (HtmlNode)content);
             }
-            else
+            else if (content is HtmlAttribute)
             {
                 HtmlAttribute attribute = (HtmlAttribute)content;
                 if (HasAttribute(attribute.Name))
@@ -143,6 +143,10 @@ namespace HtmlGenerator
                     throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
                 }
                 AddAttribute(attribute);
+            }
+            else
+            {
+                throw new ArgumentException("The object to add was not a node or attribute", nameof(content));
             }
         }
 
@@ -181,7 +185,7 @@ namespace HtmlGenerator
                 ThrowIfVoid();
                 AddNodeBefore(this, _nodes._first, (HtmlNode)content);
             }
-            else
+            else if (content is HtmlAttribute)
             {
                 HtmlAttribute attribute = (HtmlAttribute)content;
                 if (HasAttribute(attribute.Name))
@@ -189,6 +193,10 @@ namespace HtmlGenerator
                     throw new InvalidOperationException("Cannot have a duplicate element or attribute.");
                 }
                 AddAttributeFirst(attribute);
+            }
+            else
+            {
+                throw new ArgumentException("The object to add was not a node or attribute", nameof(content));
             }
         }
 
@@ -547,14 +555,14 @@ namespace HtmlGenerator
 
         public override int GetHashCode() => InnerText == null ? Tag.GetHashCode() : Tag.GetHashCode() ^ InnerText.GetHashCode();
 
-        internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
+        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions)
         {
-            Serialize(builder, serializeType, 0);
+            Serialize(builder, serializeOptions, 0);
         }
 
-        private void Serialize(StringBuilder stringBuilder, HtmlSerializeOptions serializeType, int depth)
+        private void Serialize(StringBuilder stringBuilder, HtmlSerializeOptions serializeOptions, int depth)
         {
-            SerializeOpenTag(stringBuilder, serializeType);
+            SerializeOpenTag(stringBuilder, serializeOptions);
             if (IsVoid)
             {
                 return;
@@ -567,7 +575,7 @@ namespace HtmlGenerator
             var shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
             foreach (var child in Elements())
             {
-                if (serializeType != HtmlSerializeOptions.NoFormatting)
+                if (serializeOptions != HtmlSerializeOptions.NoFormatting)
                 {
                     stringBuilder.AppendLine();
                 }
@@ -577,14 +585,14 @@ namespace HtmlGenerator
                 }
                 if (!string.IsNullOrWhiteSpace(child.InnerText) && child._nodes._count == 0)
                 {
-                    child.Serialize(stringBuilder, serializeType, depth);
+                    child.Serialize(stringBuilder, serializeOptions, depth);
                 }
                 else
                 {
-                    child.Serialize(stringBuilder, serializeType, depth + 1);
+                    child.Serialize(stringBuilder, serializeOptions, depth + 1);
                 }
             }
-            if (_nodes._count > 0 && serializeType != HtmlSerializeOptions.NoFormatting)
+            if (_nodes._count > 0 && serializeOptions != HtmlSerializeOptions.NoFormatting)
             {
                 stringBuilder.AppendLine();
             }
@@ -604,7 +612,7 @@ namespace HtmlGenerator
             stringBuilder.Append('>');
         }
 
-        private void SerializeOpenTag(StringBuilder stringBuilder, HtmlSerializeOptions serializeType)
+        private void SerializeOpenTag(StringBuilder stringBuilder, HtmlSerializeOptions serializeOptions)
         {
             stringBuilder.Append('<');
             stringBuilder.Append(Tag);
@@ -614,7 +622,7 @@ namespace HtmlGenerator
                 foreach (var attribute in Attributes())
                 {
                     stringBuilder.Append(' ');
-                    attribute.Serialize(stringBuilder, serializeType);
+                    attribute.Serialize(stringBuilder, serializeOptions);
                 }
             }
             stringBuilder.Append(IsVoid ? " />" : ">");

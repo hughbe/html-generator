@@ -21,7 +21,7 @@ namespace HtmlGenerator
 
         public override int GetHashCode() => Comment.GetHashCode();
 
-        internal override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeType)
+        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions)
         {
             builder.Append('<');
             builder.Append('!');

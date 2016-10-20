@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace HtmlGenerator.Tests
@@ -186,6 +185,16 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("parent");
             Assert.Throws<ArgumentNullException>("content", () => element.Add(new HtmlObject[] { null }));
             Assert.Throws<ArgumentNullException>("content", () => element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { null }));
+        }
+
+        [Fact]
+        public void Add_ContentNotNodeOrAttribute_ThrowsArgumentException()
+        {
+            HtmlElement element = new HtmlElement("parent");
+
+            Assert.Throws<ArgumentException>("content", () => element.Add(new CustomHtmlObject()));
+            Assert.Throws<ArgumentException>("content", () => element.Add(new HtmlObject[] { new CustomHtmlObject() }));
+            Assert.Throws<ArgumentException>("content", () => element.Add((IEnumerable<HtmlObject>)new HtmlObject[] { new CustomHtmlObject() }));
         }
 
         [Fact]
@@ -471,6 +480,16 @@ namespace HtmlGenerator.Tests
 
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst(new HtmlObject[] { null }));
             Assert.Throws<ArgumentNullException>("content", () => element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { null }));
+        }
+
+        [Fact]
+        public void AddFirst_ContentNotNodeOrAttribute_ThrowsArgumentException()
+        {
+            HtmlElement element = new HtmlElement("parent");
+
+            Assert.Throws<ArgumentException>("content", () => element.AddFirst(new CustomHtmlObject()));
+            Assert.Throws<ArgumentException>("content", () => element.AddFirst(new HtmlObject[] { new CustomHtmlObject() }));
+            Assert.Throws<ArgumentException>("content", () => element.AddFirst((IEnumerable<HtmlObject>)new HtmlObject[] { new CustomHtmlObject() }));
         }
 
         [Fact]
