@@ -11,7 +11,6 @@ namespace HtmlGenerator.Tests
         {
             HtmlDocument document = new HtmlDocument();
             Assert.Equal("html", document.Tag);
-            Assert.Null(document.InnerText);
             Assert.False(document.IsVoid);
             Assert.True(document.IsEmpty);
 

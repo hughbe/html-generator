@@ -6,6 +6,7 @@
         Element,
         Comment,
         Doctype,
+        Text,
         Document
     }
 }

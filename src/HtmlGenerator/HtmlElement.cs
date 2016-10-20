@@ -23,16 +23,6 @@ namespace HtmlGenerator
             IsVoid = isVoid;
         }
 
-        public HtmlElement(string tag, string innerText) : this(tag)
-        {
-            InnerText = innerText;
-        }
-
-        public HtmlElement(string tag, string innerText, params HtmlObject[] content) : this(tag, innerText)
-        {
-            Add(content);
-        }
-
         public HtmlElement(string tag, params HtmlObject[] content) : this(tag)
         {
             Add(content);
@@ -42,8 +32,6 @@ namespace HtmlGenerator
 
         public string Tag { get; private set; }
         public bool IsVoid { get; private set; }
-
-        public string InnerText { get; private set; }
 
         private int _minimumIndentDepth = 1;
         public int MinimumIndentDepth
@@ -477,12 +465,6 @@ namespace HtmlGenerator
             attribute.Parent = null;
         }
 
-        public void SetInnerText(string value)
-        {
-            ThrowIfVoid();
-            InnerText = value;
-        }
-
         public bool TryGetAttribute(string name, out HtmlAttribute attribute)
         {
             Requires.NotNullOrWhitespace(name, nameof(name));
@@ -517,7 +499,7 @@ namespace HtmlGenerator
             {
                 return false;
             }
-            if (Tag != element.Tag || InnerText != element.InnerText || IsVoid != element.IsVoid)
+            if (Tag != element.Tag || IsVoid != element.IsVoid)
             {
                 return false;
             }
@@ -553,7 +535,7 @@ namespace HtmlGenerator
             return true;
         }
 
-        public override int GetHashCode() => InnerText == null ? Tag.GetHashCode() : Tag.GetHashCode() ^ InnerText.GetHashCode();
+        public override int GetHashCode() => Tag.GetHashCode();
 
         public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions)
         {
@@ -567,35 +549,26 @@ namespace HtmlGenerator
             {
                 return;
             }
-
-            if (InnerText != null)
-            {
-                stringBuilder.Append(InnerText);
-            }
             
             bool shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
             bool hasNonTextNode = false;
             foreach (HtmlNode node in Nodes())
             {
-                if (serializeOptions != HtmlSerializeOptions.NoFormatting)
+                if (node.ObjectType != HtmlObjectType.Text)
                 {
-                    stringBuilder.AppendLine();
-                }
-                if (shouldIndent)
-                {
-                    stringBuilder.Append(' ', depth * 2);
-                }
-                if (!string.IsNullOrWhiteSpace(child.InnerText) && child._nodes._count == 0)
-                {
-                    child.Serialize(stringBuilder, serializeOptions, depth);
-                }
-                else
-                {
-                    child.Serialize(stringBuilder, serializeOptions, depth + 1);
+                    hasNonTextNode = true;
+                    if (serializeOptions != HtmlSerializeOptions.NoFormatting)
+                    {
+                        stringBuilder.AppendLine();
+                    }
+                    if (shouldIndent)
+                    {
+                        stringBuilder.Append(' ', depth * 2);
+                    }
                 }
                 node.Serialize(stringBuilder, serializeOptions);
             }
-            if (_nodes._count > 0 && serializeOptions != HtmlSerializeOptions.NoFormatting)
+            if (hasNonTextNode && serializeOptions != HtmlSerializeOptions.NoFormatting)
             {
                 stringBuilder.AppendLine();
             }
@@ -975,7 +948,8 @@ namespace HtmlGenerator
                 int innerTextLength = currentIndex - innerTextStartIndex;
                 if (innerTextLength != 0)
                 {
-                    currentElement.InnerText = text.Substring(innerTextStartIndex, innerTextLength);
+                    string innerText = text.Substring(innerTextStartIndex, innerTextLength);
+                    currentElement.Add(new HtmlText(innerText));
                 }
                 return true;
             }
@@ -1181,9 +1155,9 @@ namespace HtmlGenerator
             return self;
         }
 
-        public static T WithInnerText<T>(this T self, string innerText) where T : HtmlElement
+        public static T WithInnerText<T>(this T self, HtmlText text) where T : HtmlElement
         {
-            self.SetInnerText(innerText);
+            self.Add(text);
             return self;
         }
 

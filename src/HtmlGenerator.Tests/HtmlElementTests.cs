@@ -15,7 +15,6 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement(tag);
             Assert.Equal(expectedTag, element.Tag);
-            Assert.Null(element.InnerText);
             Assert.False(element.IsVoid);
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
@@ -31,22 +30,6 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement(tag, isVoid);
             Assert.Equal(expectedTag, element.Tag);
             Assert.Equal(isVoid, element.IsVoid);
-            Assert.Empty(element.Elements());
-            Assert.Empty(element.Attributes());
-            Assert.Empty(element.ElementsAndAttributes());
-        }
-
-        [Theory]
-        [InlineData("html", "inner-text", "html")]
-        [InlineData("HtMl", " \t \r \n ", "html")]
-        [InlineData("no-such-tag", "", "no-such-tag")]
-        [InlineData("no-such-tag", null, "no-such-tag")]
-        public void Ctor_String_String(string tag, string innerText, string expectedTag)
-        {
-            HtmlElement element = new HtmlElement(tag, innerText);
-            Assert.Equal(expectedTag, element.Tag);
-            Assert.Equal(innerText, element.InnerText);
-            Assert.False(element.IsVoid);
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
             Assert.Empty(element.ElementsAndAttributes());
@@ -71,22 +54,6 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("element", content);
             Assert.Equal("element", element.Tag);
-            Assert.Null(element.InnerText);
-            Assert.False(element.IsVoid);
-            Assert.Equal(content.OfType<HtmlElement>().ToArray(), element.Elements().ToArray());
-            Assert.Equal(content.OfType<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
-            Assert.Equal(content.OfType<HtmlNode>().ToArray(), element.Nodes().ToArray());
-            Assert.Equal(element.Elements().Count() + element.Attributes().Count(), element.ElementsAndAttributes().Count());
-            Assert.Equal(content.Length, element.NodesAndAttributes().Count());
-        }
-
-        [Theory]
-        [MemberData(nameof(Objects_TestData))]
-        public void Ctor_String_String_ParamsHtmlObject(HtmlObject[] content)
-        {
-            HtmlElement element = new HtmlElement("element", "inner-text", content);
-            Assert.Equal("element", element.Tag);
-            Assert.Equal("inner-text", element.InnerText);
             Assert.False(element.IsVoid);
             Assert.Equal(content.OfType<HtmlElement>().ToArray(), element.Elements().ToArray());
             Assert.Equal(content.OfType<HtmlAttribute>().ToArray(), element.Attributes().ToArray());
@@ -100,9 +67,7 @@ namespace HtmlGenerator.Tests
         {
             Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null));
             Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null, isVoid: false));
-            Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null, "inner-text"));
             Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null, new HtmlObject[0]));
-            Assert.Throws<ArgumentNullException>("tag", () => new HtmlElement(null, "inner-text", new HtmlObject[0]));
         }
 
         [Theory]
@@ -112,9 +77,7 @@ namespace HtmlGenerator.Tests
         {
             Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag));
             Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag, isVoid: false));
-            Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag, "inner-text"));
             Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag, new HtmlObject[0]));
-            Assert.Throws<ArgumentException>("tag", () => new HtmlElement(tag, "inner-text", new HtmlObject[0]));
         }
 
         [Fact]

@@ -253,25 +253,5 @@ namespace HtmlGenerator.Tests
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes(new HtmlNode[] { element }));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes((IEnumerable<HtmlNode>)new HtmlNode[] { element }));
         }
-
-        [Theory]
-        [InlineData("InnerText")]
-        [InlineData(" \t \r \n")]
-        [InlineData("")]
-        [InlineData(null)]
-        public void SetInnerText(string innerText)
-        {
-            HtmlElement element = new HtmlElement("element");
-            element.SetInnerText(innerText);
-            Assert.Equal(innerText, element.InnerText);
-        }
-
-        [Fact]
-        public void SetInnerText_VoidElement_ThrowsInvalidOperationException()
-        {
-            HtmlElement element = new HtmlElement("element", isVoid: true);
-
-            Assert.Throws<InvalidOperationException>(() => element.SetInnerText("InnerText"));
-        }
     }
 }

@@ -318,9 +318,9 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void WithInnerText()
         {
-            HtmlElement element = new HtmlElement("html");
+            HtmlElement element = new HtmlElement("element");
             Assert.Same(element, element.WithInnerText("InnerText"));
-            Assert.Equal("InnerText", element.InnerText);
+            Assert.Equal(new HtmlNode[] { new HtmlText("InnerText") }, element.Nodes());
         }
 
         [Fact]
