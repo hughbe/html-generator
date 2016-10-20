@@ -18,31 +18,31 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void NonVoidElement_NoChildren_NoWhitespace_Lowercase()
+        public void NonVoidElement_NoInnerText_NoChildren_NoWhitespace_Lowercase()
         {
             Assert.Equal(new HtmlElement("div"), HtmlElement.Parse("<div></div>"));
         }
 
         [Fact]
-        public void NonVoidElement_NoChildren_NoWhitespace_Uppercase()
+        public void NonVoidElement_NoInnerText_NoChildren_NoWhitespace_Uppercase()
         {
             Assert.Equal(new HtmlElement("div"), HtmlElement.Parse("<DIV></DIV>"));
         }
 
         [Fact]
-        public void NonVoidElement_NoChildren_NoWhitespace_MixedCase()
+        public void NonVoidElement_NoInnerText_NoChildren_NoWhitespace_MixedCase()
         {
             Assert.Equal(new HtmlElement("div"), HtmlElement.Parse("<DiV></dIv>"));
         }
 
         [Fact]
-        public void NonVoidElement_NoChildren_Whitespace()
+        public void NonVoidElement_NoInnerText_NoChildren_Whitespace()
         {
             Assert.Equal(new HtmlElement("div"), HtmlElement.Parse(" < div >< / div > "));
         }
 
         [Fact]
-        public void NonVoidElement_InnerText()
+        public void NonVoidElement_InnerText_NoChildren()
         {
             HtmlElement expected = new HtmlElement("div")
                 .WithInnerText("InnerText");
@@ -51,7 +51,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void NonVoidElement_OneNonVoidChild()
+        public void NonVoidElement_NoInnerText_OneNonVoidChild()
         {
             HtmlElement expected = new HtmlElement("div")
                 .WithChild(new HtmlElement("p"));
@@ -60,7 +60,44 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void NonVoidElement_OneVoidChild()
+        public void NonVoidElement_InnerTextStart_OneNonVoidChild()
+        {
+            HtmlElement expected = new HtmlElement("div").WithChildren(new HtmlNode[]
+            {
+                new HtmlText("InnerText"),
+                new HtmlElement("p")
+            });
+
+            Assert.Equal(expected, HtmlElement.Parse("<div>InnerText<p></p></div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_InnerTextEnd_OneNonVoidChild()
+        {
+            HtmlElement expected = new HtmlElement("div").WithChildren(new HtmlNode[]
+            {
+                new HtmlElement("p"),
+                new HtmlText("InnerText")
+            });
+
+            Assert.Equal(expected, HtmlElement.Parse("<div><p></p>InnerText</div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_InnerTextStartAndEnd_OneNonVoidChild()
+        {
+            HtmlElement expected = new HtmlElement("div").WithChildren(new HtmlNode[]
+            {
+                new HtmlText("Inner"),
+                new HtmlElement("p"),
+                new HtmlText("Text")
+            });
+
+            Assert.Equal(expected, HtmlElement.Parse("<div>Inner<p></p>Text</div>"));
+        }
+
+        [Fact]
+        public void NonVoidElement_NoInnerText_OneVoidChild()
         {
             HtmlElement expected = new HtmlElement("div")
                 .WithChild(new HtmlElement("br", isVoid: true));
@@ -69,7 +106,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void NonVoidElement_MultipleChildren()
+        public void NonVoidElement_NoInnerText_MultipleChildren()
         {
             HtmlElement expected = new HtmlElement("div")
                 .WithChild(new HtmlElement("p"))
@@ -79,7 +116,7 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void NonVoidElement_MultipleNestedChildren()
+        public void NonVoidElement_NoInnerText_MultipleNestedChildren()
         {
             HtmlElement expected = new HtmlElement("div")
                 .WithChildren(new HtmlElement[]
@@ -392,6 +429,7 @@ namespace HtmlGenerator.Tests
             yield return new object[] { "<  " };
             yield return new object[] { "<1" };
             yield return new object[] { "<>" };
+            yield return new object[] { "Text" };
 
             // Opening tag not closed
             yield return new object[] { "<abc" };

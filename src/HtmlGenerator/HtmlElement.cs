@@ -696,7 +696,7 @@ namespace HtmlGenerator
                     if (currentIndex + 1 < text.Length)
                     {
                         // Got more to parse?
-                        return TryParseOpeningTag();
+                        return TryParseInnerText();
                     }
                     // Finished parsing
                     return true;
@@ -708,10 +708,10 @@ namespace HtmlGenerator
                         // Couldn't parse the comment
                         return false;
                     }
-                    if (currentIndex < text.Length)
+                    if (currentIndex + 1 < text.Length)
                     {
                         // Got more to parse?
-                        return TryParseOpeningTag();
+                        return TryParseInnerText();
                     }
                     else
                     {
@@ -762,8 +762,8 @@ namespace HtmlGenerator
                         return false;
                     }
                     isVoid = true;
-                    ReadAndSkipWhitespace();
                 }
+                ReadAndSkipWhitespace();
 
                 HtmlElement element;
                 if (rootElement == null)
@@ -792,11 +792,12 @@ namespace HtmlGenerator
                 }
                 SetParsing(element);
 
-                if (!element.IsVoid)
+                if (!element.IsVoid && !TryParseInnerText())
                 {
-                    TryParseInnerText();
+                    // Couldn't parse inner text, e.g. "<abc>Inner<def></def>"
+                    return false;
                 }
-                if (currentIndex + 1 < text.Length || !element.IsVoid)
+                if (currentIndex + 1 < text.Length)
                 {
                     // More to parse?
                     return TryParseOpeningTag();
@@ -956,17 +957,21 @@ namespace HtmlGenerator
 
             private bool TryParseInnerText()
             {
-                ReadAndSkipWhitespace();
                 int innerTextStartIndex = currentIndex;
                 while (currentChar != '<' && ReadNext()) ;
 
                 int innerTextLength = currentIndex - innerTextStartIndex;
                 if (innerTextLength != 0)
                 {
+                    if (currentElement == null)
+                    {
+                        // Just text, e.g. "<!DOCTYPE>a"
+                        return false;
+                    }
                     string innerText = text.Substring(innerTextStartIndex, innerTextLength);
                     currentElement.Add(new HtmlText(innerText));
                 }
-                return true;
+                return TryParseOpeningTag();
             }
 
             private bool TryParseClosingTag()
