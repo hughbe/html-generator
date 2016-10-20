@@ -6,7 +6,7 @@ namespace HtmlGenerator.Tests
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine(HtmlElement.Parse(@"<div>inner</div>"));
+            Console.WriteLine(HtmlElement.Parse(@"<div><p/></div>"));
 
             Console.WriteLine("Done");
             Console.ReadLine();

@@ -763,7 +763,10 @@ namespace HtmlGenerator
                     }
                     isVoid = true;
                 }
-                ReadAndSkipWhitespace();
+                else
+                {
+                    ReadAndSkipWhitespace();
+                }
 
                 HtmlElement element;
                 if (rootElement == null)
@@ -797,7 +800,7 @@ namespace HtmlGenerator
                     // Couldn't parse inner text, e.g. "<abc>Inner<def></def>"
                     return false;
                 }
-                if (currentIndex + 1 < text.Length)
+                if (ReadAndSkipWhitespace())
                 {
                     // More to parse?
                     return TryParseOpeningTag();
@@ -1123,28 +1126,25 @@ namespace HtmlGenerator
             private bool ReadNext()
             {
                 currentChar = char.MinValue;
-                if (currentIndex >= text.Length)
+                if (currentIndex + 1 >= text.Length)
                 {
                     return false;
                 }
                 currentIndex++;
-                if (currentIndex < text.Length)
-                {
-                    currentChar = text[currentIndex];
-                }
+                currentChar = text[currentIndex];
                 return true;
             }
 
             private bool ReadAndSkipWhitespace()
             {
-                while (true)
+                while (ReadNext())
                 {
-                    ReadNext();
                     if (!char.IsWhiteSpace(currentChar))
                     {
                         return true;
                     }
                 }
+                return false;
             }
         }
     }
