@@ -467,8 +467,18 @@ namespace HtmlGenerator.Tests
 
             // No closing tag
             yield return new object[] { "<abc>" };
+            yield return new object[] { "<abc><def>" };
+            yield return new object[] { "<abc><def/>" };
+            yield return new object[] { "<abc><def></def>" };
             yield return new object[] { "<abc>  " };
             yield return new object[] { "<abc>InnerText" };
+            yield return new object[] { "<abc>InnerText<p></p>" };
+            yield return new object[] { "<abc>InnerText<p></p>MoreInnerText" };
+            yield return new object[] { "<abc>InnerText<p>MoreInnerText" };
+            yield return new object[] { "<abc>InnerText<p>MoreInnerText</p>" };
+            yield return new object[] { "<abc>InnerText<p>" };
+            yield return new object[] { "<abc>InnerText<p/>" };
+            yield return new object[] { "<abc>InnerText<p/>MoreInnerText" };
 
             // Invalid closing tag
             yield return new object[] { "<abc>InnerText<" };

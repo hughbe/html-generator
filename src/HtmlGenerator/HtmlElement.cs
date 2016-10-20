@@ -693,9 +693,10 @@ namespace HtmlGenerator
                     {
                         return false;
                     }
-                    if (currentIndex + 1 < text.Length)
+                    if (currentElement != null || currentIndex + 1 < text.Length)
                     {
-                        // Got more to parse?
+                        // If the element we just finished parsing has a parent, that parent needs to have a closing tag too, so keep parsing.
+                        // If we have more text, then there may be more to parse.
                         return TryParseInnerText();
                     }
                     // Finished parsing
@@ -763,10 +764,7 @@ namespace HtmlGenerator
                     }
                     isVoid = true;
                 }
-                else
-                {
-                    ReadAndSkipWhitespace();
-                }
+                ReadAndSkipWhitespace();
 
                 HtmlElement element;
                 if (rootElement == null)
@@ -795,10 +793,15 @@ namespace HtmlGenerator
                 }
                 SetParsing(element);
 
-                if (!element.IsVoid && !TryParseInnerText())
+                if (element.Parent != null || !element.IsVoid)
                 {
-                    // Couldn't parse inner text, e.g. "<abc>Inner<def></def>"
-                    return false;
+                    // If the element has a parent, we need to make sure the parent has a closing tag.
+                    // If the element has no parent, but is non-void, we also need to make sure the element has a closing tag.
+                    if (!TryParseInnerText())
+                    {
+                        // Couldn't parse inner text, e.g. "<abc>Inner<def></def>"
+                        return false;
+                    }
                 }
                 if (ReadAndSkipWhitespace())
                 {
