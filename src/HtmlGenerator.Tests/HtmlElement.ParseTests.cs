@@ -321,14 +321,14 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Comment_UppercaseValue()
         {
-            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("comment"));
+            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("COMMENT"));
             Assert.Equal(expected, HtmlElement.Parse(@"<div><!--COMMENT--></div>"));
         }
 
         [Fact]
         public void Comment_MixedCaseValue()
         {
-            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("comment"));
+            HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("CoMmEnT"));
             Assert.Equal(expected, HtmlElement.Parse(@"<div><!--CoMmEnT--></div>"));
         }
 

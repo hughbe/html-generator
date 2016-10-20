@@ -527,11 +527,11 @@ namespace HtmlGenerator
             }
             if (_nodes._count > 0)
             {
-                IEnumerator<HtmlElement> thisElements = Elements().GetEnumerator();
-                IEnumerator<HtmlElement> otherElements = element.Elements().GetEnumerator();
-                while (thisElements.MoveNext() && otherElements.MoveNext())
+                IEnumerator<HtmlNode> thisNodes = Nodes().GetEnumerator();
+                IEnumerator<HtmlNode> otherNodes = element.Nodes().GetEnumerator();
+                while (thisNodes.MoveNext() && otherNodes.MoveNext())
                 {
-                    if (!thisElements.Current.Equals(otherElements.Current))
+                    if (!thisNodes.Current.Equals(otherNodes.Current))
                     {
                         return false;
                     }
@@ -572,8 +572,10 @@ namespace HtmlGenerator
             {
                 stringBuilder.Append(InnerText);
             }
-            var shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
-            foreach (var child in Elements())
+            
+            bool shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
+            bool hasNonTextNode = false;
+            foreach (HtmlNode node in Nodes())
             {
                 if (serializeOptions != HtmlSerializeOptions.NoFormatting)
                 {
@@ -591,6 +593,7 @@ namespace HtmlGenerator
                 {
                     child.Serialize(stringBuilder, serializeOptions, depth + 1);
                 }
+                node.Serialize(stringBuilder, serializeOptions);
             }
             if (_nodes._count > 0 && serializeOptions != HtmlSerializeOptions.NoFormatting)
             {

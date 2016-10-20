@@ -94,8 +94,8 @@ namespace HtmlGenerator.Tests
 <element1 />
 <element2></element2>
 <element3>
-  <element>InnerText</element>
-  <element4 name=""value""></element4>
+<element>InnerText</element>
+<element4 name=""value""></element4>
 </element3>
 </parent>");
         }
@@ -105,6 +105,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("parent", new HtmlObject[]
             {
+                new HtmlText("Inner"),
                 new HtmlAttribute("void"),
                 new HtmlAttribute("name", "value"),
                 new HtmlElement("element1", isVoid: true),
@@ -114,13 +115,13 @@ namespace HtmlGenerator.Tests
                     new HtmlElement("element").WithInnerText("InnerText"),
                     new HtmlElement("element4", new HtmlAttribute("name", "value")),
                 })
-            }).WithInnerText("Inner");
+            });
             Helpers.SerializeIgnoringFormatting(element, @"<parent void name=""value"">Inner
 <element1 />
 <element2></element2>
 <element3>
-  <element>InnerText</element>
-  <element4 name=""value""></element4>
+<element>InnerText</element>
+<element4 name=""value""></element4>
 </element3>
 </parent>");
         }
@@ -145,12 +146,12 @@ namespace HtmlGenerator.Tests
             });
             Helpers.SerializeIgnoringFormatting(element, @"<parent>
 <element1>
-  <element2>
-<element3>  </element3>
+<element2>
+<element3></element3>
 <element4>
-      <element5>    </element5>
-  </element4>
-  </element2>
+<element5></element5>
+</element4>
+</element2>
 </element1>
 </parent>");
         }
