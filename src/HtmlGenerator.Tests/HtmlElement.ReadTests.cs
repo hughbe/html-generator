@@ -537,6 +537,42 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void InnerText_OneTextNode_ReturnsExpected()
+        {
+            HtmlElement parent = new HtmlElement("parent", new HtmlText("text"), new HtmlElement("element"));
+            Assert.Equal("text", parent.InnerText);
+        }
+
+        [Fact]
+        public void InnerText_MultipleTextNodes_ReturnsExpected()
+        {
+            HtmlElement parent = new HtmlElement("parent", new HtmlText("text"), new HtmlElement("element"), new HtmlText(", more-text"), new HtmlText(" even more text "));
+            Assert.Equal("text, more-text even more text ", parent.InnerText);
+        }
+
+        [Fact]
+        public void InnerText_NoTextNodes_ReturnsEmpty()
+        {
+            HtmlElement parent = new HtmlElement("parent");
+            Assert.Empty(parent.InnerText);
+
+            // Ignores attributes
+            parent.Add(new HtmlAttribute("attribute"));
+            Assert.Empty(parent.InnerText);
+
+            // Ignores elements
+            parent.Add(new HtmlElement("element"));
+            Assert.Empty(parent.InnerText);
+        }
+
+        [Fact]
+        public void InnerText_VoidElement_ReturnsEmpty()
+        {
+            HtmlElement element = new HtmlElement("element", isVoid: true);
+            Assert.Empty(element.InnerText);
+        }
+
+        [Fact]
         public void IsEmpty_HasAttributes_ReturnsTrue()
         {
             HtmlElement parent = new HtmlElement("parent", new HtmlAttribute("attribute"));

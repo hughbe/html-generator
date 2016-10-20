@@ -79,6 +79,21 @@ namespace HtmlGenerator
         public bool HasNodes => _nodes._count != 0;
         public bool HasAttributes => _attributes._count != 0;
 
+        public string InnerText
+        {
+            get
+            {
+                string text = "";
+                foreach (HtmlNode node in Nodes())
+                {
+                    if (node is HtmlText)
+                    {
+                        text += ((HtmlText)node).Text;
+                    }
+                }
+                return text;
+            }
+        }
         public bool IsEmpty => !HasNodes && !HasAttributes;
 
         public HtmlAttribute LastAttribute => _attributes._last;
