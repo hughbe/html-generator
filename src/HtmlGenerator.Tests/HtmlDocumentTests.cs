@@ -174,14 +174,14 @@ namespace HtmlGenerator.Tests
 
             Helpers.SerializeIgnoringFormatting(document, @"<!DOCTYPE html>
 <html>
-<head>
-<title>Title</title>
-</head>
-<body>
-<h1 class=""aClass"">Header1</h1>
-<br />
-<p allowfullscreen>Paragraph</p>
-</body>
+  <head>
+    <title>Title</title>
+  </head>
+  <body>
+    <h1 class=""aClass"">Header1</h1>
+    <br />
+    <p allowfullscreen>Paragraph</p>
+  </body>
 </html>");
         }
     }

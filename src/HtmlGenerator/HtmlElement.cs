@@ -516,25 +516,46 @@ namespace HtmlGenerator
 
         public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions)
         {
+            AddDepth(builder, depth);
             SerializeOpenTag(builder, depth, serializeOptions);
             if (IsVoid)
             {
                 return;
             }
-            
+
             IEnumerable<HtmlNode> nodes = Nodes();
             bool mixedMode = nodes.Any(node => node.ObjectType == HtmlObjectType.Text);
-            foreach (HtmlNode node in Nodes())
+            //bool formattedSubNode = false;
+            foreach (HtmlNode node in nodes)
             {
-                builder.Append(' ', depth);
-                if (node.ObjectType != HtmlObjectType.Text)
+                HtmlElement element = node as HtmlElement;
+                bool nodeHasElements = element != null && element.HasElements;
+                if (mixedMode && !nodeHasElements)
                 {
+                   node.Serialize(builder, 0, serializeOptions);
                 }
-                node.Serialize(builder, depth + 1, serializeOptions);
+                else
+                {
+                    if (serializeOptions != HtmlSerializeOptions.NoFormatting)
+                    {
+                        builder.AppendLine();
+                    }
+                    node.Serialize(builder, depth + 1, serializeOptions);
+
+                    // We don't want many grandchild/greatgrandchild nodes in mixed mode printed inline.
+                    if (nodeHasElements && mixedMode && serializeOptions != HtmlSerializeOptions.NoFormatting)
+                    {
+                        builder.AppendLine();
+                    }
+                }
             }
-            if (!mixedMode && serializeOptions != HtmlSerializeOptions.NoFormatting)
+            if (!mixedMode && HasNodes)
             {
-                builder.AppendLine();
+                if (serializeOptions != HtmlSerializeOptions.NoFormatting)
+                {
+                    builder.AppendLine();
+                }
+                AddDepth(builder, depth);
             }
 
             builder.Append("</");

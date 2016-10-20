@@ -78,25 +78,179 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
-        public void NonVoidElement_NoAttributes_NoInnerText_MultipleChildren()
+        public void NonVoidElement_NoAttributes_NoInnerText_OneVoidChild()
         {
-            HtmlElement element = new HtmlElement("parent", new HtmlElement[]
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element", isVoid: true)
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent>
+  <element />
+</parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_NoInnerText_OneNonVoidChild()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent>
+  <element></element>
+</parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_NoInnerText_MultipleChild()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element1", isVoid: true),
+                new HtmlElement("element2")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent>
+  <element1 />
+  <element2></element2>
+</parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextFirst_OneVoidChild()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlText("text"),
+                new HtmlElement("element", isVoid: true)
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent>text<element /></parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextFirst_OneNonVoidChild()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlText("text"),
+                new HtmlElement("element")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent>text<element></element></parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextFirst_MultipleChildrenNextVoid()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlText("text"),
+                new HtmlElement("element1", isVoid: true),
+                new HtmlElement("element2")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent>text<element1 /><element2></element2></parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextFirst_MultipleChildrenNextNonVoid()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlText("text"),
+                new HtmlElement("element1"),
+                new HtmlElement("element2", isVoid: true)
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent>text<element1></element1><element2 /></parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextMiddle_MultipleChildrenFirstVoid()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element1", isVoid: true),
+                new HtmlText("text"),
+                new HtmlElement("element2")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent><element1 />text<element2></element2></parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextMiddle_MultipleChildrenFirstNonVoid()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element1"),
+                new HtmlText("text"),
+                new HtmlElement("element2",isVoid: true)
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent><element1></element1>text<element2 /></parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextLast_OneNonVoidChild()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element"),
+                new HtmlText("text")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent><element></element>text</parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextLast_OneVoidChild()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element", isVoid: true),
+                new HtmlText("text")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent><element />text</parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextLast_MultipleChildrenPreviousVoid()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element1"),
+                new HtmlElement("element2", isVoid: true),
+                new HtmlText("text")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent><element1></element1><element2 />text</parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_InnerTextLast_MultipleChildrenPreviousNonVoid()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
             {
                 new HtmlElement("element1", isVoid: true),
                 new HtmlElement("element2"),
-                new HtmlElement("element3", new HtmlElement[]
+                new HtmlText("text")
+            });
+            Helpers.SerializeIgnoringFormatting(element, @"<parent><element1 /><element2></element2>text</parent>");
+        }
+
+        [Fact]
+        public void NonVoidElement_NoAttributes_NoInnerText_MultipleChildren()
+        {
+            HtmlElement element = new HtmlElement("parent", new HtmlObject[]
+            {
+                new HtmlElement("element1", isVoid: true),
+                new HtmlElement("element2"),
+                new HtmlElement("element3", new HtmlObject[]
                 {
                     new HtmlElement("element").WithInnerText("InnerText"),
                     new HtmlElement("element4", new HtmlAttribute("name", "value")),
                 })
             });
             Helpers.SerializeIgnoringFormatting(element, @"<parent>
-<element1 />
-<element2></element2>
-<element3>
-<element>InnerText</element>
-<element4 name=""value""></element4>
-</element3>
+  <element1 />
+  <element2></element2>
+  <element3>
+    <element>InnerText</element>
+    <element4 name=""value""></element4>
+  </element3>
 </parent>");
         }
 
@@ -116,13 +270,11 @@ namespace HtmlGenerator.Tests
                     new HtmlElement("element4", new HtmlAttribute("name", "value")),
                 })
             });
-            Helpers.SerializeIgnoringFormatting(element, @"<parent void name=""value"">Inner
-<element1 />
-<element2></element2>
-<element3>
-<element>InnerText</element>
-<element4 name=""value""></element4>
-</element3>
+            Helpers.SerializeIgnoringFormatting(element, @"<parent void name=""value"">Inner<element1 /><element2></element2>
+  <element3>
+    <element>InnerText</element>
+    <element4 name=""value""></element4>
+  </element3>
 </parent>");
         }
     }
