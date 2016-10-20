@@ -52,7 +52,7 @@ namespace HtmlGenerator
 
         public override int GetHashCode() => IsVoid ? Name.GetHashCode() : Name.GetHashCode() ^ Value.GetHashCode();
 
-        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions)
+        public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions)
         {
             int extraLength = IsVoid ? 0 : (3 + Value.Length);
             builder.EnsureCapacity(builder.Capacity + Name.Length + extraLength);

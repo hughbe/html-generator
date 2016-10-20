@@ -514,58 +514,48 @@ namespace HtmlGenerator
 
         public override int GetHashCode() => Tag.GetHashCode();
 
-        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions)
+        public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions)
         {
-            Serialize(builder, serializeOptions, 0);
-        }
-
-        private void Serialize(StringBuilder stringBuilder, HtmlSerializeOptions serializeOptions, int depth)
-        {
-            SerializeOpenTag(stringBuilder, serializeOptions);
+            SerializeOpenTag(builder, depth, serializeOptions);
             if (IsVoid)
             {
                 return;
             }
             
-            bool hasNonTextNode = false;
+            IEnumerable<HtmlNode> nodes = Nodes();
+            bool mixedMode = nodes.Any(node => node.ObjectType == HtmlObjectType.Text);
             foreach (HtmlNode node in Nodes())
             {
+                builder.Append(' ', depth);
                 if (node.ObjectType != HtmlObjectType.Text)
                 {
-                    hasNonTextNode = true;
-                    if (serializeOptions != HtmlSerializeOptions.NoFormatting)
-                    {
-                        stringBuilder.AppendLine();
-                    }
                 }
-                node.Serialize(stringBuilder, serializeOptions);
+                node.Serialize(builder, depth + 1, serializeOptions);
             }
-            if (hasNonTextNode && serializeOptions != HtmlSerializeOptions.NoFormatting)
+            if (!mixedMode && serializeOptions != HtmlSerializeOptions.NoFormatting)
             {
-                stringBuilder.AppendLine();
-            }
-            {
+                builder.AppendLine();
             }
 
-            stringBuilder.Append("</");
-            stringBuilder.Append(Tag);
-            stringBuilder.Append('>');
+            builder.Append("</");
+            builder.Append(Tag);
+            builder.Append('>');
         }
 
-        private void SerializeOpenTag(StringBuilder stringBuilder, HtmlSerializeOptions serializeOptions)
+        private void SerializeOpenTag(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions)
         {
-            stringBuilder.Append('<');
-            stringBuilder.Append(Tag);
+            builder.Append('<');
+            builder.Append(Tag);
 
             if (_attributes._count != 0)
             {
                 foreach (var attribute in Attributes())
                 {
-                    stringBuilder.Append(' ');
-                    attribute.Serialize(stringBuilder, serializeOptions);
+                    builder.Append(' ');
+                    attribute.Serialize(builder, 0, serializeOptions);
                 }
             }
-            stringBuilder.Append(IsVoid ? " />" : ">");
+            builder.Append(IsVoid ? " />" : ">");
         }
 
         public static HtmlElement Parse(string text)

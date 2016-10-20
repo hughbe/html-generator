@@ -112,8 +112,9 @@ namespace HtmlGenerator
 
         public override int GetHashCode() => Doctype.GetHashCode();
 
-        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions)
+        public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions)
         {
+            AddDepth(builder, depth);
             builder.Append('<');
             builder.Append('!');
             builder.Append(Doctype);

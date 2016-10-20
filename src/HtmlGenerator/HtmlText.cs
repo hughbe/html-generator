@@ -21,7 +21,7 @@ namespace HtmlGenerator
 
         public override int GetHashCode() => Text.GetHashCode();
 
-        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions) => builder.Append(Text);
+        public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions) => builder.Append(Text);
 
         public static implicit operator HtmlText(string text) => new HtmlText(text);
     }

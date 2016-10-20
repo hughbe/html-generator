@@ -19,6 +19,6 @@ namespace HtmlGenerator.Tests
     {
         public override HtmlObjectType ObjectType => HtmlObjectType.Element;
 
-        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions) { }
+        public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions) { }
     }
 }

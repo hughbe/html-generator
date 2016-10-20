@@ -81,17 +81,17 @@ namespace HtmlGenerator
 
         public override int GetHashCode() => Doctype == null ? base.GetHashCode() : (base.GetHashCode() ^ Doctype.GetHashCode());
 
-        public override void Serialize(StringBuilder builder, HtmlSerializeOptions serializeOptions)
+        public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions)
         {
             if (Doctype != null)
             {
-                Doctype.Serialize(builder, serializeOptions);
+                Doctype.Serialize(builder, depth, serializeOptions);
                 if (serializeOptions != HtmlSerializeOptions.NoFormatting)
                 {
                     builder.AppendLine();
                 }
             }
-            base.Serialize(builder, serializeOptions);
+            base.Serialize(builder, depth, serializeOptions);
         }
 
         public static new HtmlDocument Parse(string text)
