@@ -439,6 +439,9 @@ namespace HtmlGenerator.Tests
             yield return new object[] { "<abc/   " };
             yield return new object[] { "<abc//" };
 
+            // Invalid void tag
+            yield return new object[] { "<abc/>a" };
+
             // Invalid attribute
             yield return new object[] { "<abc !" };
             yield return new object[] { "<abc attribute" };

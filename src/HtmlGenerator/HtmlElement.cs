@@ -763,6 +763,11 @@ namespace HtmlGenerator
                         return false;
                     }
                     isVoid = true;
+                    if (currentElement != null)
+                    {
+                        // Read on if this void element is a child
+                        ReadAndSkipWhitespace();
+                    }
                 }
                 ReadAndSkipWhitespace();
 
@@ -793,6 +798,17 @@ namespace HtmlGenerator
                 }
                 SetParsing(element);
 
+                if (element.IsVoid && element.Parent == null)
+                {
+                    if (!ReadNext() || (char.IsWhiteSpace(currentChar) && !ReadAndSkipWhitespace()))
+                    {
+                        // Valid void element without a parent, e.g. "<abc/>", "<abc/>  "
+                        return true;
+                    }
+
+                    // Invalid text after a void element without a parent, e.g. "<abc/>a"
+                    return false;
+                }
                 if (element.Parent != null || !element.IsVoid)
                 {
                     // If the element has a parent, we need to make sure the parent has a closing tag.
@@ -802,11 +818,6 @@ namespace HtmlGenerator
                         // Couldn't parse inner text, e.g. "<abc>Inner<def></def>"
                         return false;
                     }
-                }
-                if (ReadAndSkipWhitespace())
-                {
-                    // More to parse?
-                    return TryParseOpeningTag();
                 }
 
                 return true;
@@ -890,6 +901,7 @@ namespace HtmlGenerator
 
                 if (!TryParseAttributeName(out name, out isExtendedAttribute, out isFinalAttribute))
                 {
+                    // Invalid attribute, e.g. "<abc attribute"
                     return false;
                 }
                 if (isFinalAttribute || !isExtendedAttribute)
@@ -902,7 +914,7 @@ namespace HtmlGenerator
                 bool notDelimited = IsLetter(currentChar);
                 if (!singleDelimeted && !doubleDelimeted && !notDelimited)
                 {
-                    // Invalid character after equals, e.g. "<abc attribute=", "<abc attribute=!"
+                    // Invalid character after equals, e.g. "<abc attribute=" or "<abc attribute=!"
                     return false;
                 }
                 int valueStartIndex = notDelimited ? currentIndex : currentIndex + 1;
