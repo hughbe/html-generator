@@ -87,51 +87,6 @@ namespace HtmlGenerator.Tests
             Assert.Equal(HtmlObjectType.Element, element.ObjectType);
         }
 
-        [Theory]
-        [InlineData(0)]
-        [InlineData(9)]
-        public void MinimumIndentLength_Set_Get_ReturnsExpected(int value)
-        {
-            HtmlElement element = new HtmlElement("element");
-            Assert.Equal(1, element.MinimumIndentDepth);
-
-            element.MinimumIndentDepth = value;
-            Assert.Equal(value, element.MinimumIndentDepth);
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(10)]
-        public void MinimumIndentLength_Set_InvalidValue_ThrowsArgumentOutOfRangeException(int value)
-        {
-            HtmlElement element = new HtmlElement("element");
-
-            Assert.Throws<ArgumentOutOfRangeException>("value", () => element.MinimumIndentDepth = value);
-        }
-
-        [Theory]
-        [InlineData(1)]
-        [InlineData(8)]
-        [InlineData(10)]
-        public void MaximumIndentLength_Set_Get_ReturnsExpected(int value)
-        {
-            HtmlElement element = new HtmlElement("element");
-            Assert.Equal(9, element.MaximumIndentDepth);
-
-            element.MaximumIndentDepth = value;
-            Assert.Equal(value, element.MaximumIndentDepth);
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(0)]
-        public void MaximumIndentLength_Set_InvalidValue_ThrowsArgumentOutOfRangeException(int value)
-        {
-            HtmlElement element = new HtmlElement("element");
-
-            Assert.Throws<ArgumentOutOfRangeException>("value", () => element.MaximumIndentDepth = value);
-        }
-
         public static IEnumerable<object[]> Equals_TestData()
         {
             // Tag

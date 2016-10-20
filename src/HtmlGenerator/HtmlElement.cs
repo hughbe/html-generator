@@ -33,44 +33,6 @@ namespace HtmlGenerator
         public string Tag { get; private set; }
         public bool IsVoid { get; private set; }
 
-        private int _minimumIndentDepth = 1;
-        public int MinimumIndentDepth
-        {
-            get { return _minimumIndentDepth; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The minimum indent depth cannot be negative");
-                }
-                if (value > _maximumIndentDepth)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The minimum indent depth cannot be larger than the maximum indent depth");
-                }
-
-                _minimumIndentDepth = value;
-            }
-        }
-
-        private int _maximumIndentDepth = 9;
-        public int MaximumIndentDepth
-        {
-            get { return _maximumIndentDepth; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The maximum indent depth cannot be negative");
-                }
-                if (value < _minimumIndentDepth)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The maximum indent depth cannot be less than the minimum indent depth");
-                }
-
-                _maximumIndentDepth = value;
-            }
-        }
-
         public HtmlAttribute FirstAttribute => _attributes._first;
         public HtmlElement FirstElement => Elements().FirstOrDefault();
         public HtmlNode FirstNode => _nodes._first;
@@ -565,7 +527,6 @@ namespace HtmlGenerator
                 return;
             }
             
-            bool shouldIndent = depth >= MinimumIndentDepth && depth <= MaximumIndentDepth;
             bool hasNonTextNode = false;
             foreach (HtmlNode node in Nodes())
             {
@@ -576,10 +537,6 @@ namespace HtmlGenerator
                     {
                         stringBuilder.AppendLine();
                     }
-                    if (shouldIndent)
-                    {
-                        stringBuilder.Append(' ', depth * 2);
-                    }
                 }
                 node.Serialize(stringBuilder, serializeOptions);
             }
@@ -587,17 +544,9 @@ namespace HtmlGenerator
             {
                 stringBuilder.AppendLine();
             }
-
-            if (depth > MaximumIndentDepth)
             {
-                depth = MaximumIndentDepth;
-                stringBuilder.Append(' ', 2);
             }
 
-            if (shouldIndent && depth - 2 >= 0)
-            {
-                stringBuilder.Append(' ', (depth - 2) * 2);
-            }
             stringBuilder.Append("</");
             stringBuilder.Append(Tag);
             stringBuilder.Append('>');

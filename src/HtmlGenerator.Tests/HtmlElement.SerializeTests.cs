@@ -125,35 +125,5 @@ namespace HtmlGenerator.Tests
 </element3>
 </parent>");
         }
-
-        [Fact]
-        public void NonVoidElement_MultipleChildren_RespectesMaximumIndentLength()
-        {
-            HtmlElement element = new HtmlElement("parent");
-            element.Add(new HtmlObject[]
-            {
-                new HtmlElement("element1", new HtmlObject[]
-                {
-                    new HtmlElement("element2", new HtmlObject[]
-                    {
-                        new HtmlElement("element3"),
-                        new HtmlElement("element4", new HtmlObject[]
-                        {
-                            new HtmlElement("element5")
-                        })
-                    }) { MaximumIndentDepth = 1 }
-                })
-            });
-            Helpers.SerializeIgnoringFormatting(element, @"<parent>
-<element1>
-<element2>
-<element3></element3>
-<element4>
-<element5></element5>
-</element4>
-</element2>
-</element1>
-</parent>");
-        }
     }
 }
