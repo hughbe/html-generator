@@ -257,6 +257,130 @@ namespace HtmlGenerator.Tests
         }
 
         [Fact]
+        public void NextNode_Get_ReturnsExpected()
+        {
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlComment comment = new HtmlComment("comment");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, comment, element2);
+
+            Assert.Equal(comment, element1.NextNode);
+            Assert.Equal(element2, comment.NextNode);
+            Assert.Null(element2.NextNode);
+        }
+
+        [Fact]
+        public void NextNode_IgnoresAttributes()
+        {
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlComment comment = new HtmlComment("comment");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, comment, new HtmlAttribute("attribute"), element2);
+
+            Assert.Equal(element2, comment.NextNode);
+        }
+
+        [Fact]
+        public void NextNode_NoParent_ReturnsNull()
+        {
+            HtmlElement element = new HtmlElement("element");
+            Assert.Null(element.NextNode);
+        }
+
+        [Fact]
+        public void NextNodes_ReturnsExpected()
+        {
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlComment comment = new HtmlComment("comment");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, comment, element2);
+
+            Assert.Equal(new HtmlNode[] { comment, element2 }, element1.NextNodes());
+            Assert.Equal(new HtmlNode[] { element2 }, comment.NextNodes());
+            Assert.Empty(element2.NextNodes());
+        }
+
+        [Fact]
+        public void NextNodes_IgnoresAttributes()
+        {
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlComment comment = new HtmlComment("comment");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, comment, new HtmlAttribute("attribute"), element2);
+
+            Assert.Equal(new HtmlElement[] { element2 }, comment.NextNodes());
+        }
+
+        [Fact]
+        public void NextNodes_NoParent_ReturnsEmpty()
+        {
+            HtmlElement element = new HtmlElement("element");
+            Assert.Empty(element.NextNodes());
+        }
+
+        [Fact]
+        public void PreviousNode_Get_ReturnsExpected()
+        {
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlComment comment = new HtmlComment("comment");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, comment, element2);
+
+            Assert.Null(element1.PreviousNode);
+            Assert.Equal(element1, comment.PreviousNode);
+            Assert.Equal(comment, element2.PreviousNode);
+        }
+
+        [Fact]
+        public void PreviousNode_IgnoresAttributes()
+        {
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlComment comment = new HtmlComment("comment");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, comment, new HtmlAttribute("attribute"), element2);
+
+            Assert.Equal(comment, element2.PreviousNode);
+        }
+
+        [Fact]
+        public void PreviousNode_NoParent_ReturnsNull()
+        {
+            HtmlElement element = new HtmlElement("element");
+            Assert.Null(element.PreviousNode);
+        }
+
+        [Fact]
+        public void PreviousNodes_ReturnsExpected()
+        {
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlComment comment = new HtmlComment("comment");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, comment, element2);
+
+            Assert.Empty(element1.PreviousNodes());
+            Assert.Equal(new HtmlNode[] { element1 }, comment.PreviousNodes());
+            Assert.Equal(new HtmlNode[] { comment, element1 }, element2.PreviousNodes());
+        }
+
+        [Fact]
+        public void PreviousNodes_IgnoresAttributes()
+        {
+            HtmlElement element1 = new HtmlElement("element1");
+            HtmlComment comment = new HtmlComment("comment");
+            HtmlElement element2 = new HtmlElement("element2");
+            HtmlElement parent = new HtmlElement("parent", element1, comment, new HtmlAttribute("attribute"), element2);
+
+            Assert.Equal(new HtmlNode[] { comment, element1 }, element2.PreviousNodes());
+        }
+
+        [Fact]
+        public void PreviousNodes_NoParent_ReturnsEmpty()
+        {
+            HtmlElement element = new HtmlElement("element");
+            Assert.Empty(element.PreviousNodes());
+        }
+
+        [Fact]
         public void RemoveFromParent_OnlyChild_Works()
         {
             HtmlElement child = new HtmlElement("h1");

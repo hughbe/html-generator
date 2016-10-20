@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using HtmlGenerator.Extensions;
@@ -258,7 +259,7 @@ namespace HtmlGenerator
         {
             bool isDefaultTag = string.IsNullOrEmpty(tag);
 
-            HtmlNode node = _nodes._first;
+            HtmlObject node = _nodes._first;
             while (node != null)
             {
                 HtmlElement element = node as HtmlElement;
@@ -273,7 +274,7 @@ namespace HtmlGenerator
                         yield return child;
                     }
                 }
-                node = (HtmlElement)node._next;
+                node = node._next;
             }
         }
 
@@ -683,7 +684,7 @@ namespace HtmlGenerator
             {
                 if (currentChar != '<')
                 {
-                    // No opening tag, e.g. "abc"
+                    // No opening tag, e.g. "abc", "<abc>", "<abc>  " or "<abc>InnerText"
                     return false;
                 }
                 ReadAndSkipWhitespace();
@@ -792,12 +793,13 @@ namespace HtmlGenerator
                 }
                 SetParsing(element);
 
-                if (!element.IsVoid && !TryParseInnerText())
+                if (!element.IsVoid)
                 {
-                    return false;
+                    TryParseInnerText();
                 }
                 if (currentIndex + 1 < text.Length || !element.IsVoid)
                 {
+                    // More to parse?
                     return TryParseOpeningTag();
                 }
 
@@ -835,10 +837,7 @@ namespace HtmlGenerator
                 {
                     if (!foundWhitespace && char.IsWhiteSpace(currentChar))
                     {
-                        if (nameEndIndex == -1)
-                        {
-                            nameEndIndex = currentIndex - 1;
-                        }
+                        nameEndIndex = currentIndex - 1;
                         ReadAndSkipWhitespace();
                         foundWhitespace = true;
                     }
@@ -963,11 +962,6 @@ namespace HtmlGenerator
                 while (currentChar != '<' && ReadNext()) ;
 
                 int innerTextLength = currentIndex - innerTextStartIndex;
-                if (innerTextLength < 0)
-                {
-                    // No end of non-void tag, e.g. "<abc>", "<abc>  ", "<abc>InnerText"
-                    return false;
-                }
                 if (innerTextLength != 0)
                 {
                     currentElement.InnerText = text.Substring(innerTextStartIndex, innerTextLength);
@@ -1022,11 +1016,7 @@ namespace HtmlGenerator
 
             private bool TryParseComment()
             {
-                if (!ReadNext())
-                {
-                    // Nothing after '!', e.g. "<!"
-                    return false;
-                }
+                ReadNext();
                 if (currentChar != '-')
                 {
                     // Invalid char after '!', e.g "<!a", but maybe is a doctype if we haven't parsed anything yet
@@ -1116,6 +1106,7 @@ namespace HtmlGenerator
             public bool Parse()
             {
                 ReadAndSkipWhitespace();
+                Debug.Assert(Remaining != null);
                 return TryParseOpeningTag();
             }
 
@@ -1141,14 +1132,14 @@ namespace HtmlGenerator
 
             private bool ReadAndSkipWhitespace()
             {
-                while (ReadNext())
+                while (true)
                 {
+                    ReadNext();
                     if (!char.IsWhiteSpace(currentChar))
                     {
                         return true;
                     }
                 }
-                return false;
             }
         }
     }

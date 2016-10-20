@@ -28,7 +28,7 @@ namespace HtmlGenerator.Tests
                 Assert.Equal(parent, element.Parent);
                 Assert.Equal(new HtmlElement[] { element }, parent.Elements());
 
-                // Comment
+                // Nodes
                 HtmlComment comment = new HtmlComment("comment");
                 parent.Add(comment);
                 Assert.Equal(parent, comment.Parent);
@@ -248,13 +248,13 @@ namespace HtmlGenerator.Tests
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void AddFirst_HtmlObject(bool isVoid)
+        public void AddFirst_NonEmptyHtmlObject(bool isVoid)
         {
             HtmlElement parent = new HtmlElement("parent", isVoid);
             HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
             parent.Add(attribute1);
 
-            // Attribute
+            // Attributes
             HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
             parent.AddFirst(attribute2);
             Assert.Equal(parent, attribute2.Parent);
@@ -265,17 +265,46 @@ namespace HtmlGenerator.Tests
                 HtmlElement element1 = new HtmlElement("element1");
                 parent.Add(element1);
 
-                // Element
+                // Elements
                 HtmlElement element2 = new HtmlElement("element2");
                 parent.AddFirst(element2);
                 Assert.Equal(parent, element2.Parent);
                 Assert.Equal(new HtmlElement[] { element2, element1 }, parent.Elements());
 
-                // Comment
+                // Nodes
                 HtmlComment comment = new HtmlComment("comment");
                 parent.AddFirst(comment);
                 Assert.Equal(parent, comment.Parent);
                 Assert.Equal(new HtmlObject[] { comment, element2, element1 }, parent.Nodes());
+            }
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void AddFirst_EmptyHtmlObject(bool isVoid)
+        {
+            HtmlElement parent = new HtmlElement("parent", isVoid);
+
+            // Attributes
+            HtmlAttribute attribute = new HtmlAttribute("attribute1");
+            parent.AddFirst(attribute);
+            Assert.Equal(parent, attribute.Parent);
+            Assert.Equal(new HtmlAttribute[] { attribute }, parent.Attributes());
+
+            if (!isVoid)
+            {
+                // Elements
+                HtmlElement element = new HtmlElement("element1");
+                parent.AddFirst(element);
+                Assert.Equal(parent, element.Parent);
+                Assert.Equal(new HtmlElement[] { element }, parent.Elements());
+
+                // Nodes
+                HtmlComment comment = new HtmlComment("comment");
+                parent.AddFirst(comment);
+                Assert.Equal(parent, comment.Parent);
+                Assert.Equal(new HtmlObject[] { comment, element }, parent.Nodes());
             }
         }
 
