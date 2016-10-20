@@ -96,12 +96,14 @@ namespace HtmlGenerator
 
         public static new HtmlDocument Parse(string text)
         {
-            HtmlDocument document;
-            if (!TryParse(text, out document))
+            Requires.NotNullOrEmpty(text, nameof(text));
+
+            Parser parser = new Parser(text, isDocument: true);
+            if (!parser.Parse())
             {
-                return null;
+                throw parser.GetException();
             }
-            return document;
+            return (HtmlDocument)parser.rootElement;
         }
 
         public static bool TryParse(string text, out HtmlDocument document)

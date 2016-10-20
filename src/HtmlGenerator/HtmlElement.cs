@@ -621,12 +621,14 @@ namespace HtmlGenerator
 
         public static HtmlElement Parse(string text)
         {
-            HtmlElement element;
-            if (!TryParse(text, out element))
+            Requires.NotNullOrEmpty(text, nameof(text));
+            
+            Parser parser = new Parser(text, isDocument: false);
+            if (!parser.Parse())
             {
-                return null;
+                throw parser.GetException();
             }
-            return element;
+            return parser.rootElement;
         }
 
         public static bool TryParse(string text, out HtmlElement element)
@@ -665,6 +667,7 @@ namespace HtmlGenerator
                 currentElement = null;
                 rootElement = null;
                 doctype = null;
+                parseError = (HtmlParseError)(-1);
             }
 
             private string text;
@@ -677,6 +680,8 @@ namespace HtmlGenerator
 
             private HtmlDoctype doctype;
 
+            private HtmlParseError parseError;
+
             public string Remaining => text.Substring(currentIndex);
 
             public bool TryParseOpeningTag()
@@ -684,6 +689,7 @@ namespace HtmlGenerator
                 if (currentChar != '<')
                 {
                     // No opening tag, e.g. "abc", "<abc>", "<abc>  " or "<abc>InnerText"
+                    parseError = HtmlParseError.NoOpeningTag;
                     return false;
                 }
                 ReadAndSkipWhitespace();
@@ -717,12 +723,14 @@ namespace HtmlGenerator
                     else
                     {
                         // Doctype or comment on its own, e.g. "<!--comment-->" or "<div><!--comment-->"
+                        parseError = HtmlParseError.LoneDoctype;
                         return false;
                     }
                 }
                 if (!IsLetter(currentChar))
                 {
                     // No valid tag, e.g. "<>", "<1"
+                    parseError = HtmlParseError.InvalidTag;
                     return false;
                 }
 
@@ -741,6 +749,7 @@ namespace HtmlGenerator
                 if (tagEndIndex == -1)
                 {
                     // No end of tag, e.g. "<abc", "<abc "
+                    parseError = HtmlParseError.OpeningTagNotClosed;
                     return false;
                 }
 
@@ -760,6 +769,7 @@ namespace HtmlGenerator
                     if (currentChar != '>')
                     {
                         // No end of void tag, e.g. "<abc/", "<abc/a>"
+                        parseError = HtmlParseError.NodeNotClosed;
                         return false;
                     }
                     isVoid = true;
@@ -769,7 +779,10 @@ namespace HtmlGenerator
                         ReadAndSkipWhitespace();
                     }
                 }
-                ReadAndSkipWhitespace();
+                else
+                {
+                    ReadAndSkipWhitespace();
+                }
 
                 HtmlElement element;
                 if (rootElement == null)
@@ -781,6 +794,7 @@ namespace HtmlGenerator
                     else if (parsingDocument)
                     {
                         // First tag of a document has to be an open html tag
+                        parseError = HtmlParseError.FirstElementInDocumentNotHtml;
                         return false;
                     }
                     else
@@ -807,6 +821,7 @@ namespace HtmlGenerator
                     }
 
                     // Invalid text after a void element without a parent, e.g. "<abc/>a"
+                    parseError = HtmlParseError.InvalidTextAfterNode;
                     return false;
                 }
                 if (element.Parent != null || !element.IsVoid)
@@ -885,6 +900,7 @@ namespace HtmlGenerator
                 }
                 if (nameEndIndex == -1)
                 {
+                    parseError = HtmlParseError.OpeningTagNotClosedAfterAttribute;
                     return false;
                 }
                 int nameLength = nameEndIndex - nameStartIndex + 1;
@@ -915,6 +931,7 @@ namespace HtmlGenerator
                 if (!singleDelimeted && !doubleDelimeted && !notDelimited)
                 {
                     // Invalid character after equals, e.g. "<abc attribute=" or "<abc attribute=!"
+                    parseError = HtmlParseError.NoAttributeValue;
                     return false;
                 }
                 int valueStartIndex = notDelimited ? currentIndex : currentIndex + 1;
@@ -966,6 +983,7 @@ namespace HtmlGenerator
                 if (valueEndIndex == -1)
                 {
                     // No end of attribute value, e.g. "<abc attribute=", "<abc attribute=', "<abc attribute="a, "<abc attribute='a or , "<abc attribute=a
+                    parseError = HtmlParseError.OpeningTagNotClosedAfterAttribute;
                     return false;
                 }
                 string value = text.Substring(valueStartIndex, valueEndIndex - valueStartIndex + 1);
@@ -984,6 +1002,7 @@ namespace HtmlGenerator
                     if (currentElement == null)
                     {
                         // Just text, e.g. "<!DOCTYPE>a"
+                        parseError = HtmlParseError.InvalidTextAfterNode;
                         return false;
                     }
                     string innerText = text.Substring(innerTextStartIndex, innerTextLength);
@@ -1017,6 +1036,7 @@ namespace HtmlGenerator
                         else
                         {
                             // Can only have '>' after whitespace, e.g. <abc></abc "
+                            parseError = HtmlParseError.ClosingTagNotClosed;
                             return false;
                         }
                     }
@@ -1024,12 +1044,14 @@ namespace HtmlGenerator
                 if (tagEndIndex == -1)
                 {
                     // Invalid closing tag, e.g. "<abc></", "<abc></abc", "<abc></abc  "
+                    parseError = HtmlParseError.ClosingTagNotClosed;
                     return false;
                 }
                 int tagLength = tagEndIndex - tagStartIndex + 1;
                 if (!StringExtensions.EqualsAsciiOrdinalIgnoreCase(currentElement.Tag, 0, currentElement.Tag.Length, text, tagStartIndex, tagLength))
                 {
                     // Non matching closing tag, e.g. "<abc></def>"
+                    parseError = HtmlParseError.ClosingTagDoesntMatchOpeningTag;
                     return false;
                 }
                 currentElement = currentElement.Parent;
@@ -1047,11 +1069,13 @@ namespace HtmlGenerator
                     {
                         return TryParseDoctype();
                     }
+                    parseError = HtmlParseError.InvalidCommentStart;
                     return false;
                 }
                 if (!ReadNext() || currentChar != '-')
                 {
                     // Invalid char after '-', e.g. "<!-", "<!-a"
+                    parseError = HtmlParseError.InvalidCommentStart;
                     return false;
                 }
                 int commentStartIndex = currentIndex + 1;
@@ -1073,12 +1097,14 @@ namespace HtmlGenerator
                 if (commentEndIndex == -1)
                 {
                     // No end of comment, e.g. "<!--", "<!--abc", "<!--abc-", "<!--abc-a", "<!--abc--", "<!--abc--a"
+                    parseError = HtmlParseError.InvalidCommentEnd;
                     return false;
                 }
                 string comment = text.Substring(commentStartIndex, commentEndIndex - commentStartIndex + 1);
                 if (currentElement == null)
                 {
                     // Comment on its own, e.g. "<!--comment-->"
+                    parseError = HtmlParseError.LoneComment;
                     return false;
                 }
                 currentElement.Add(new HtmlComment(comment));
@@ -1101,6 +1127,7 @@ namespace HtmlGenerator
                 if (doctypeEndIndex == -1)
                 {
                     // No end of doctype found, e.g. "<!DOCTYPE html"
+                    parseError = HtmlParseError.NodeNotClosed;
                     return false;
                 }
                 string doctypeString = text.Substring(doctypeStartIndex, doctypeEndIndex - doctypeStartIndex + 1);
@@ -1129,7 +1156,6 @@ namespace HtmlGenerator
             public bool Parse()
             {
                 ReadAndSkipWhitespace();
-                Debug.Assert(Remaining != null);
                 return TryParseOpeningTag();
             }
 
@@ -1160,6 +1186,104 @@ namespace HtmlGenerator
                     }
                 }
                 return false;
+            }
+
+            public HtmlException GetException()
+            {
+                int lineNumber = 0;
+                int latestLineIndex = 0;
+                for (int i = 0; i <= currentIndex; i++)
+                {
+                    if (text[i] == '\n')
+                    {
+                        lineNumber++;
+                        latestLineIndex = i;
+                    }
+                }
+                currentIndex++;
+                int position = currentIndex - latestLineIndex;
+
+                string prefix;
+                if (parseError == HtmlParseError.NoOpeningTag)
+                {
+                    prefix = "Could not find an opening tag.";
+                }
+                else if (parseError == HtmlParseError.InvalidTag)
+                {
+                    prefix = "An opening tag was invalid.";
+                }
+                else if (parseError == HtmlParseError.OpeningTagNotClosed)
+                {
+                    prefix = "An opening tag was not closed.";
+                }
+                else if (parseError == HtmlParseError.NodeNotClosed)
+                {
+                    prefix = "A node or void element was not closed.";
+                }
+                else if (parseError == HtmlParseError.FirstElementInDocumentNotHtml)
+                {
+                    prefix = "The first element of a document was not an html element.";
+                }
+                else if (parseError == HtmlParseError.LoneDoctype)
+                {
+                    prefix = "A doctype cannot be parsed on its own.";
+                }
+                else if (parseError == HtmlParseError.OpeningTagNotClosedAfterAttribute)
+                {
+                    prefix = "Could not find the end of a tag after attributes.";
+                }
+                else if (parseError == HtmlParseError.NoAttributeValue)
+                {
+                    prefix = "Could not parse the value of an attribute.";
+                }
+                else if (parseError == HtmlParseError.InvalidTextAfterNode)
+                {
+                    prefix = "Found invalid text after a node or void element.";
+                }
+                else if (parseError == HtmlParseError.ClosingTagNotClosed)
+                {
+                    prefix = "A closing tag of an element was not closed.";
+                }
+                else if (parseError == HtmlParseError.ClosingTagDoesntMatchOpeningTag)
+                {
+                    prefix = "A closing tag of an element did not match its opening tag.";
+                }
+                else if (parseError == HtmlParseError.InvalidCommentStart)
+                {
+                    prefix = "The start of a comment was invalid.";
+                }
+                else if (parseError == HtmlParseError.InvalidCommentEnd)
+                {
+                    prefix = "The end of a comment was invalid.";
+                }
+                else if (parseError == HtmlParseError.LoneComment)
+                {
+                    prefix = "The end of a comment was invalid.";
+                }
+                else
+                {
+                    prefix = "A comment cannot be parsed on its own.";
+                }
+
+                throw new HtmlException($"{prefix} Reached position {position} on line {lineNumber}. Remaining text is \"{Remaining}\".");
+            }
+
+            private enum HtmlParseError
+            {
+                NoOpeningTag,
+                InvalidTag,
+                OpeningTagNotClosed,
+                NodeNotClosed,
+                FirstElementInDocumentNotHtml,
+                LoneDoctype,
+                OpeningTagNotClosedAfterAttribute,
+                NoAttributeValue,
+                InvalidTextAfterNode,
+                ClosingTagNotClosed,
+                ClosingTagDoesntMatchOpeningTag,
+                InvalidCommentStart,
+                InvalidCommentEnd,
+                LoneComment
             }
         }
     }

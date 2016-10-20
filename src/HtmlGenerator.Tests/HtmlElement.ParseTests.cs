@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace HtmlGenerator.Tests
@@ -47,7 +48,7 @@ namespace HtmlGenerator.Tests
             HtmlElement expected = new HtmlElement("div")
                 .WithInnerText("InnerText");
 
-            Assert.Equal(expected, HtmlElement.Parse("<div>InnerText</div>"));
+            Parse(expected, "<div>InnerText</div>");
         }
 
         [Fact]
@@ -56,7 +57,7 @@ namespace HtmlGenerator.Tests
             HtmlElement expected = new HtmlElement("div")
                 .WithChild(new HtmlElement("p"));
 
-            Assert.Equal(expected, HtmlElement.Parse("<div><p></p></div>"));
+            Parse(expected, "<div><p></p></div>");
         }
 
         [Fact]
@@ -68,7 +69,7 @@ namespace HtmlGenerator.Tests
                 new HtmlElement("p")
             });
 
-            Assert.Equal(expected, HtmlElement.Parse("<div>InnerText<p></p></div>"));
+            Parse(expected, "<div>InnerText<p></p></div>");
         }
 
         [Fact]
@@ -80,7 +81,7 @@ namespace HtmlGenerator.Tests
                 new HtmlText("InnerText")
             });
 
-            Assert.Equal(expected, HtmlElement.Parse("<div><p></p>InnerText</div>"));
+            Parse(expected, "<div><p></p>InnerText</div>");
         }
 
         [Fact]
@@ -93,7 +94,7 @@ namespace HtmlGenerator.Tests
                 new HtmlText("Text")
             });
 
-            Assert.Equal(expected, HtmlElement.Parse("<div>Inner<p></p>Text</div>"));
+            Parse(expected, "<div>Inner<p></p>Text</div>");
         }
 
         [Fact]
@@ -102,7 +103,7 @@ namespace HtmlGenerator.Tests
             HtmlElement expected = new HtmlElement("div")
                 .WithChild(new HtmlElement("br", isVoid: true));
 
-            Assert.Equal(expected, HtmlElement.Parse("<div><br/></div>"));
+            Parse(expected, "<div><br/></div>");
         }
 
         [Fact]
@@ -112,7 +113,7 @@ namespace HtmlGenerator.Tests
                 .WithChild(new HtmlElement("p"))
                 .WithChild(new HtmlElement("h1"));
 
-            Assert.Equal(expected, HtmlElement.Parse("<div><p></p><h1></h1></div>"));
+            Parse(expected, "<div><p></p><h1></h1></div>");
         }
 
         [Fact]
@@ -139,7 +140,7 @@ namespace HtmlGenerator.Tests
                     })
                 });
 
-            Assert.Equal(expected, HtmlElement.Parse(@"
+            Parse(expected, @"
 <div>
 	<div>
 		<p>Text</p>
@@ -154,63 +155,63 @@ namespace HtmlGenerator.Tests
 		</div>
 		<h3></h3>
 	</section>
-</div>"));
+</div>");
         }
 
         [Fact]
         public void VoidElement_OneVoidAttribute_NoWhitespace()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("allowfullscreen"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br allowfullscreen/>"));
+            Parse(expected, "<br allowfullscreen/>");
         }
 
         [Fact]
         public void VoidElement_OneVoidAttribute_Whitespace()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("allowfullscreen"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br   allowfullscreen  />"));
+            Parse(expected, "<br   allowfullscreen  />");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Lowercase()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br class=""abc""/>"));
+            Parse(expected, "<br class=\"abc\"/>");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Uppercase()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "ABC"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br CLASS=""ABC""/>"));
+            Parse(expected, "<br CLASS=\"ABC\"/>");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_MixedCase()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "AbC"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br ClAsS=""AbC""/>"));
+            Parse(expected, "<br ClAsS=\"AbC\"/>");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptyNonVoidAttribute_Whitespace()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br   class = ""abc""  />"));
+            Parse(expected, "<br   class = \"abc\"  />");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptySingleDelimitedNonVoidAttribute_NoWhitespace()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br class='abc'/>"));
+            Parse(expected, "<br class='abc'/>");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptySingleDelimitedNonVoidAttribute_Whitespace()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br class  =  'abc'  />"));
+            Parse(expected, "<br class  =  'abc'  />");
         }
 
         [Fact]
@@ -223,21 +224,21 @@ namespace HtmlGenerator.Tests
                     new HtmlAttribute("id", ""),
                     new HtmlAttribute("style", "def")
                 });
-            Assert.Equal(expected, HtmlElement.Parse(@"<br class='abc' id='' style='def'/>"));
+            Parse(expected, "<br class='abc' id='' style='def'/>");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptyNonDelimitedNonVoidAttribute_NoWhitespace()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br class=abc/>"));
+            Parse(expected, "<br class=abc/>");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptyNonDelimitedNonVoidAttribute_Whitespace()
         {
             HtmlElement expected = new HtmlElement("br", isVoid: true).WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<br class  =  abc  />"));
+            Parse(expected, "<br class  =  abc  />");
         }
 
         [Fact]
@@ -249,56 +250,56 @@ namespace HtmlGenerator.Tests
                     new HtmlAttribute("class", "abc"),
                     new HtmlAttribute("style", "def")
                 });
-            Assert.Equal(expected, HtmlElement.Parse(@"<br class=abc style=def/>"));
+            Parse(expected, "<br class=abc style=def/>");
         }
 
         [Fact]
         public void NonVoidElement_OneVoidAttribute_NoChildren_NoInnerText_NoWhitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("allowfullscreen"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div allowfullscreen></div>"));
+            Parse(expected, "<div allowfullscreen></div>");
         }
 
         [Fact]
         public void NonVoidElement_OneVoidAttribute_NoChildren_NoInnerText_Whitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("allowfullscreen"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div   allowfullscreen  ></div>"));
+            Parse(expected, "<div   allowfullscreen  ></div>");
         }
 
         [Fact]
         public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoChildren_NoInnerText_NoWhitespace_Lowercase()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div class=""abc""></div>"));
+            Parse(expected, "<div class=\"abc\"></div>");
         }
 
         [Fact]
         public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoChildren_NoInnerText_NoWhitespace_Uppercase()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "ABC"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div CLASS=""ABC""></div>"));
+            Parse(expected, "<div CLASS=\"ABC\"></div>");
         }
 
         [Fact]
         public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoChildren_NoInnerText_NoWhitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "aBc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div ClAsS=""aBc""></div>"));
+            Parse(expected, "<div ClAsS=\"aBc\"></div>");
         }
 
         [Fact]
         public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoChildren_NoInnerText_Whitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div   class = ""abc""  ></div>"));
+            Parse(expected, "<div   class = \"abc\"  ></div>");
         }
 
         [Fact]
         public void NonVoidElement_OneNonEmptyNonVoidSingleDelimetedAttribute_NoChildren_NoInnerText_NoWhitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div class='abc'></div>"));
+            Parse(expected, "<div class='abc'></div>");
         }
 
         [Fact]
@@ -311,14 +312,14 @@ namespace HtmlGenerator.Tests
                     new HtmlAttribute("id", ""),
                     new HtmlAttribute("style", "def")
                 });
-            Assert.Equal(expected, HtmlElement.Parse(@"<div class='abc' id='' style='def'></div>"));
+            Parse(expected, "<div class='abc' id='' style='def'></div>");
         }
 
         [Fact]
         public void NonVoidElement_OneNonEmptyNonVoidNonDelimetedAttribute_NoChildren_NoInnerText_NoWhitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithAttribute(new HtmlAttribute("class", "abc"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div class=abc></div>"));
+            Parse(expected, "<div class=abc></div>");
         }
 
         [Fact]
@@ -330,7 +331,7 @@ namespace HtmlGenerator.Tests
                     new HtmlAttribute("class", "abc"),
                     new HtmlAttribute("style", "def")
                 });
-            Assert.Equal(expected, HtmlElement.Parse(@"<div class=abc style=def></div>"));
+            Parse(expected, "<div class=abc style=def></div>");
         }
 
         [Fact]
@@ -345,83 +346,95 @@ namespace HtmlGenerator.Tests
                     new HtmlAttribute("style", "")
                 });
 
-            Assert.Equal(expected, HtmlElement.Parse(@"<div class=""abc"" id=""def"" allowfullscreen style=""""></div>"));
+            Parse(expected, "<div class=\"abc\" id=\"def\" allowfullscreen style=\"\"></div>");
         }
 
         [Fact]
         public void Comment_LowercaseValue()
         {
             HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("comment"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div><!--comment--></div>"));
+            Parse(expected, "<div><!--comment--></div>");
         }
 
         [Fact]
         public void Comment_UppercaseValue()
         {
             HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("COMMENT"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div><!--COMMENT--></div>"));
+            Parse(expected, "<div><!--COMMENT--></div>");
         }
 
         [Fact]
         public void Comment_MixedCaseValue()
         {
             HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("CoMmEnT"));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div><!--CoMmEnT--></div>"));
+            Parse(expected, "<div><!--CoMmEnT--></div>");
         }
 
         [Fact]
         public void Comment_LeadingAndTrailingWhitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment(" comment "));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div><!-- comment --></div>"));
+            Parse(expected, "<div><!-- comment --></div>");
         }
 
         [Fact]
         public void Comment_OnlyWhitespace()
         {
             HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment("  "));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div><!--  --></div>"));
+            Parse(expected, "<div><!--  --></div>");
         }
 
         [Fact]
         public void Comment_Empty()
         {
             HtmlElement expected = new HtmlElement("div").WithChild(new HtmlComment(""));
-            Assert.Equal(expected, HtmlElement.Parse(@"<div><!----></div>"));
+            Parse(expected, "<div><!----></div>");
         }
 
         [Fact]
         public void Doctype_HtmlWithElement_NoWhitespace()
         {
             HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
-            Assert.Equal(expected, HtmlElement.Parse(@"<!DOCTYPE html><html></html>"));
+            Parse(expected, "<!DOCTYPE html><html></html>");
         }
 
         [Fact]
         public void Doctype_HtmlWithDocument_NoWhitespace()
         {
             HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
-            Assert.Equal(expected, HtmlDocument.Parse(@"<!DOCTYPE html><html></html>"));
+            Assert.Equal(expected, HtmlDocument.Parse("<!DOCTYPE html><html></html>"));
+
+            HtmlDocument document;
+            Assert.True(HtmlDocument.TryParse("<!DOCTYPE html><html></html>", out document));
+            Assert.Equal(expected, document);
         }
 
         [Fact]
         public void NonVoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Unicode()
         {
             HtmlElement expected = new HtmlElement("body").WithAttribute(new HtmlAttribute("\u2345", "\u3456"));
-            Assert.Equal(expected, HtmlElement.Parse("<body \u2345=\"\u3456\"></body>"));
+            Parse(expected, "<body \u2345=\"\u3456\"></body>");
         }
 
         [Fact]
         public void VoidElement_OneNonEmptyNonVoidAttribute_NoWhitespace_Unicode()
         {
             HtmlElement expected = new HtmlElement("body", isVoid: true).WithAttribute(new HtmlAttribute("\u2345", "\u3456"));
-            Assert.Equal(expected, HtmlElement.Parse("<body \u2345=\"\u3456\"/>"));
+            Parse(expected, "<body \u2345=\"\u3456\"/>");
         }
 
-        public static IEnumerable<object[]> Parse_InvalidElement_TestData()
+        private static void Parse(HtmlElement expected, string text)
         {
-            // Empty
-            yield return new object[] { "" };
+            Assert.Equal(expected, HtmlElement.Parse(text));
+
+            HtmlElement element;
+            Assert.True(HtmlElement.TryParse(text, out element));
+            Assert.Equal(expected, element);
+        }
+
+        public static IEnumerable<object[]> Element_Invalid_TestData()
+        {
+            // All whitespace
             yield return new object[] { "   " };
 
             // No opening tag
@@ -510,6 +523,7 @@ namespace HtmlGenerator.Tests
             // Comment on its own
             yield return new object[] { "<!--comment-->" };
             yield return new object[] { "<!-- comment -->" };
+            yield return new object[] { "<!-- comment -->a" };
             yield return new object[] { "<!---->" };
             yield return new object[] { "<!-- \r \t \n -->" };
 
@@ -522,24 +536,72 @@ namespace HtmlGenerator.Tests
         }
 
         [Theory]
-        [MemberData(nameof(Parse_InvalidElement_TestData))]
-        public void InvalidElement_ReturnsNull(string text)
+        [MemberData(nameof(Element_Invalid_TestData))]
+        public void Element_Invalid(string text)
         {
-            Assert.Null(HtmlElement.Parse(text));
+            Assert.Throws<HtmlException>(() => HtmlElement.Parse(text));
+
+            HtmlElement element;
+            Assert.False(HtmlElement.TryParse(text, out element));
+            Assert.Null(element);
         }
 
-        public static IEnumerable<object[]> Parse_InvalidDocument_TestData()
+        [Fact]
+        public void Element_Invalid_NullText()
+        {
+            Assert.Throws<ArgumentNullException>("text", () => HtmlElement.Parse(null));
+
+            HtmlElement element;
+            Assert.False(HtmlElement.TryParse(null, out element));
+            Assert.Null(element);
+        }
+
+        [Fact]
+        public void Element_Invalid_EmptyText()
+        {
+            Assert.Throws<ArgumentException>("text", () => HtmlElement.Parse(""));
+
+            HtmlElement element;
+            Assert.False(HtmlElement.TryParse("", out element));
+            Assert.Null(element);
+        }
+
+        public static IEnumerable<object[]> Document_Invalid_TestData()
         {
             yield return new object[] { "<html>" };
             yield return new object[] { "<div></div>" };
         }
 
         [Theory]
-        [MemberData(nameof(Parse_InvalidElement_TestData))]
-        [MemberData(nameof(Parse_InvalidDocument_TestData))]
-        public void InvalidDocument_ReturnsNull(string text)
+        [MemberData(nameof(Element_Invalid_TestData))]
+        [MemberData(nameof(Document_Invalid_TestData))]
+        public void Document_Invalid(string text)
         {
-            Assert.Null(HtmlDocument.Parse(text));
+            Assert.Throws<HtmlException>(() => HtmlDocument.Parse(text));
+
+            HtmlDocument document;
+            Assert.False(HtmlDocument.TryParse(text, out document));
+            Assert.Null(document);
+        }
+
+        [Fact]
+        public void Document_Invalid_NullText()
+        {
+            Assert.Throws<ArgumentNullException>("text", () => HtmlDocument.Parse(null));
+
+            HtmlDocument document;
+            Assert.False(HtmlDocument.TryParse(null, out document));
+            Assert.Null(document);
+        }
+
+        [Fact]
+        public void Document_Invalid_EmptyText()
+        {
+            Assert.Throws<ArgumentException>("text", () => HtmlDocument.Parse(""));
+
+            HtmlDocument document;
+            Assert.False(HtmlDocument.TryParse("", out document));
+            Assert.Null(document);
         }
     }
 }
