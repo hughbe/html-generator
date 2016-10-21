@@ -1,7 +1,8 @@
 set project=HtmlGenerator
 set github_project_name=html-generator
+set user_name=hbellamy
 
-set user_path=C:\Users\hughb\
+set user_path=C:\Users\%user_name%\
 set packages_path=%user_path%\.nuget\packages
 set project_path=%user_path%\documents\github\%github_project_name%
 
