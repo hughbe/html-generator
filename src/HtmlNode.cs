@@ -24,6 +24,7 @@ namespace HtmlGenerator
             {
                 throw new InvalidOperationException("This node does not have a parent.");
             }
+
             AddNodeAfter(Parent, this, content);
         }
 
@@ -57,6 +58,7 @@ namespace HtmlGenerator
             {
                 throw new InvalidOperationException("This node does not have a parent.");
             }
+
             AddNodeBefore(Parent, this, content);
         }
 
@@ -67,7 +69,7 @@ namespace HtmlGenerator
             Requires.NotNull(content, nameof(content));
 
             HtmlNode current = this;
-            foreach (HtmlElement element in content)
+            foreach (HtmlNode element in content)
             {
                 current.AddBeforeSelf(element);
                 current = element;
@@ -94,6 +96,7 @@ namespace HtmlGenerator
             while (nextNode != null)
             {
                 yield return (HtmlNode)nextNode;
+
                 nextNode = nextNode._next;
             }
         }
@@ -104,6 +107,7 @@ namespace HtmlGenerator
             while (previousNode != null)
             {
                 yield return (HtmlNode)previousNode;
+
                 previousNode = previousNode._previous;
             }
         }
@@ -114,6 +118,7 @@ namespace HtmlGenerator
             {
                 return;
             }
+
             Parent._nodes.Remove(this);
             Parent = null;
         }

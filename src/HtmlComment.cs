@@ -17,7 +17,7 @@ namespace HtmlGenerator
 
         public override bool Equals(object obj) => Equals(obj as HtmlComment);
 
-        public bool Equals(HtmlComment other) => other != null && Comment == other.Comment;
+        public bool Equals(HtmlComment other) => (other != null) && (Comment == other.Comment);
 
         public override int GetHashCode() => Comment.GetHashCode();
 

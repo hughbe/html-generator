@@ -37,7 +37,9 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void ImplicitOperator_NullString_ThrowsArgumentNullException()
         {
+#pragma warning disable 219
             Assert.Throws<ArgumentNullException>("text", () => { HtmlText text = (string)null; });
+#pragma warning restore 219
         }
 
         [Fact]

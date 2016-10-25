@@ -1,4 +1,4 @@
-namespace HtmlGenerator
+namespace HtmlGenerator.Elements
 {
     public class HtmlDataElement : HtmlElement
     {

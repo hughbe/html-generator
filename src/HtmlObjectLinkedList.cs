@@ -6,7 +6,7 @@
         public T _last;
 
         public int _count;
-        
+
         public void AddBefore(T node, T value)
         {
             if (node != null)
@@ -89,6 +89,7 @@
 
                 current = next;
             }
+
             _count = 0;
             _first = null;
             _last = null;

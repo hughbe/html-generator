@@ -1,7 +1,18 @@
-﻿namespace HtmlGenerator.Extensions
+﻿using System.Collections.Generic;
+
+namespace HtmlGenerator.Extensions
 {
     public static class StringExtensions
     {
+        public class AsciiCaseInsensitiveComparer : IEqualityComparer<string>
+        {
+            public static IEqualityComparer<string> Comparer { get; } = new AsciiCaseInsensitiveComparer();
+
+            public bool Equals(string x, string y) => EqualsAsciiOrdinalIgnoreCase(x, y);
+
+            public int GetHashCode(string obj) => obj.GetHashCode();
+        }
+
         public static string ToAsciiLower(this string text) => ToAsciiLower(text, 0, text.Length);
 
         public static unsafe string ToAsciiLower(this string text, int startIndex, int length)
@@ -10,12 +21,13 @@
             for (int i = startIndex; i < startIndex + length ; i++)
             {
                 char c = text[i];
-                if (c >= 'A' && c <= 'Z')
+                if ((c >= 'A') && (c <= 'Z'))
                 {
                     hasUpperCase = true;
                     break;
                 }
             }
+
             if (!hasUpperCase)
             {
                 return text.Substring(startIndex, length);
@@ -25,7 +37,7 @@
             for (int i = startIndex; i < startIndex + length ; i++)
             {
                 char c = text[i];
-                if (c >= 'A' && c <= 'Z')
+                if ((c >= 'A') && (c <= 'Z'))
                 {
                     copy[i - startIndex] = (char)(c | 0x20);
                 }
@@ -34,6 +46,7 @@
                     copy[i - startIndex] = c;
                 }
             }
+
             return new string(copy, 0, length);
         }
 
@@ -45,6 +58,7 @@
             {
                 return false;
             }
+
             for (int i = 0; i < lengthA; i++)
             {
                 char c1 = valueA[startIndexA + i];
@@ -54,6 +68,7 @@
                     return false;
                 }
             }
+
             return true;
         }
     }

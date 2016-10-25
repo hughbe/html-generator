@@ -26,7 +26,7 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("parent", isVoid: true);
             parent.Add(new HtmlAttribute("attribute"));
 
-            HtmlAttribute[] attributes = new HtmlAttribute[] { new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2") };
+            HtmlObject[] attributes = new HtmlObject[] { new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2") };
             parent.ReplaceAll(attributes);
             Assert.Equal(attributes, parent.Attributes());
         }
@@ -56,7 +56,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement parent = new HtmlElement("parent");
 
-            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll(new HtmlObject[] { parent }));
+            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll(parent));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll((IEnumerable<HtmlObject>)new HtmlObject[] { parent }));
         }
 
@@ -76,7 +76,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("element");
             parent.Add(element);
 
-            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll(new HtmlObject[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll(element));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll((IEnumerable<HtmlObject>)new HtmlObject[] { element }));
         }
 
@@ -87,7 +87,7 @@ namespace HtmlGenerator.Tests
             HtmlAttribute attribute = new HtmlAttribute("attribute");
             parent.Add(attribute);
 
-            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll(new HtmlObject[] { attribute }));
+            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll(attribute));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll((IEnumerable<HtmlObject>)new HtmlObject[] { attribute }));
         }
 
@@ -97,7 +97,7 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("parent", isVoid: true);
             HtmlElement element = new HtmlElement("element");
 
-            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll(new HtmlObject[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll(element));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceAll((IEnumerable<HtmlObject>)new HtmlObject[] { element }));
         }
 
@@ -170,7 +170,7 @@ namespace HtmlGenerator.Tests
             HtmlAttribute attribute = new HtmlAttribute("attribute");
             parent.Add(attribute);
 
-            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAttributes(new HtmlAttribute[] { attribute }));
+            Assert.Throws<InvalidOperationException>(() => parent.ReplaceAttributes(attribute));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceAttributes((IEnumerable<HtmlAttribute>)new HtmlAttribute[] { attribute }));
         }
 
@@ -184,26 +184,26 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(Elements_TestData))]
-        public void ReplaceNodesParamsHtmlElement(HtmlElement[] elements)
+        public void ReplaceNodesParamsHtmlElement(HtmlNode[] nodes)
         {
             HtmlElement parent = new HtmlElement("parent", new HtmlElement("element"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
 
-            parent.ReplaceNodes(elements);
-            Assert.Equal(elements, parent.Elements().ToArray());
+            parent.ReplaceNodes(nodes);
+            Assert.Equal(nodes.OfType<HtmlElement>(), parent.Elements().ToArray());
             Assert.Equal(2, parent.Attributes().Count());
-            Assert.Equal(elements.Length + 2, parent.ElementsAndAttributes().Count());
+            Assert.Equal(nodes.Length + 2, parent.ElementsAndAttributes().Count());
         }
 
         [Theory]
         [MemberData(nameof(Elements_TestData))]
-        public void ReplaceNodesIEnumerableHtmlElement(HtmlElement[] elements)
+        public void ReplaceNodesIEnumerableHtmlElement(HtmlNode[] nodes)
         {
             HtmlElement parent = new HtmlElement("parent", new HtmlElement("element"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
 
-            parent.ReplaceNodes(elements);
-            Assert.Equal(elements, parent.Elements().ToArray());
+            parent.ReplaceNodes(nodes);
+            Assert.Equal(nodes.OfType<HtmlElement>(), parent.Elements().ToArray());
             Assert.Equal(2, parent.Attributes().Count());
-            Assert.Equal(elements.Length + 2, parent.ElementsAndAttributes().Count());
+            Assert.Equal(nodes.Length + 2, parent.ElementsAndAttributes().Count());
         }
 
         [Fact]
@@ -229,7 +229,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement parent = new HtmlElement("element");
 
-            Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes(new HtmlNode[] { parent }));
+            Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes(parent));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes((IEnumerable<HtmlNode>)new HtmlNode[] { parent }));
         }
 
@@ -240,7 +240,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("element");
             parent.Add(element);
 
-            Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes(new HtmlNode[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes(element));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes((IEnumerable<HtmlNode>)new HtmlNode[] { element }));
         }
 
@@ -250,7 +250,7 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("parent", isVoid: true);
             HtmlElement element = new HtmlElement("element");
 
-            Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes(new HtmlNode[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes(element));
             Assert.Throws<InvalidOperationException>(() => parent.ReplaceNodes((IEnumerable<HtmlNode>)new HtmlNode[] { element }));
         }
     }

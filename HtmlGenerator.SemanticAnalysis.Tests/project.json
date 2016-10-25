@@ -1,0 +1,29 @@
+﻿{
+  "version": "1.0.0-*",
+  "testRunner": "xunit",
+  "dependencies": {
+    "HtmlGenerator.SemanticAnalysis": "1.0.0-*",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "xunit.runner.console": "2.2.0-beta2-build3300",
+    "ReportGenerator": "2.4.5",
+    "OpenCover": "4.6.519"
+  },
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      }
+    },
+    "net451": {}
+  },
+  "runtimes": {
+    "win10-x64": {}
+  }
+}

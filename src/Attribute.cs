@@ -1,6 +1,6 @@
-namespace HtmlGenerator 
+namespace HtmlGenerator
 {
-    public static class Attribute 
+    public static class Attribute
     {
         public static HtmlAttribute Accept(string value) => new HtmlAttribute("accept", value);
         public static HtmlAttribute AcceptCharset(string value) => new HtmlAttribute("accept-charset", value);
@@ -104,7 +104,7 @@ namespace HtmlGenerator
 
         public static HtmlAttribute RadioGroup(string value) => new HtmlAttribute("radiogroup", value);
         public static HtmlAttribute Readonly => new HtmlAttribute("readonly");
-        public static HtmlAttribute Refresh(string value) => new HtmlAttribute("refresh", value);
+        public static HtmlAttribute Refresh(string value) => new HtmlAttribute("refresh", value); // TODO: remove?
         public static HtmlAttribute Rel(string value) => new HtmlAttribute("rel", value);
         public static HtmlAttribute Required => new HtmlAttribute("required");
         public static HtmlAttribute Reversed(string value) => new HtmlAttribute("reversed", value);
@@ -114,7 +114,7 @@ namespace HtmlGenerator
         public static HtmlAttribute Sandbox => new HtmlAttribute("sandbox");
         public static HtmlAttribute Seamless => new HtmlAttribute("seamless");
         public static HtmlAttribute Selected => new HtmlAttribute("selected");
-        public static HtmlAttribute SelectionDirection(string value) => new HtmlAttribute("selectiondirection", value);
+        public static HtmlAttribute SelectionDirection(string value) => new HtmlAttribute("selectiondirection", value); // TODO: remove?
         public static HtmlAttribute Scope(string value) => new HtmlAttribute("scope", value);
         public static HtmlAttribute Scoped => new HtmlAttribute("scoped");
         public static HtmlAttribute Shape(string value) => new HtmlAttribute("shape", value);
@@ -141,7 +141,7 @@ namespace HtmlGenerator
         public static HtmlAttribute UseMap(string value) => new HtmlAttribute("usemap", value);
 
         public static HtmlAttribute Value(string value) => new HtmlAttribute("value", value);
-        public static HtmlAttribute Volume(string value) => new HtmlAttribute("volume", value);
+        public static HtmlAttribute Volume(string value) => new HtmlAttribute("volume", value); // TODO: remove
 
         public static HtmlAttribute Width(string value) => new HtmlAttribute("width", value);
         public static HtmlAttribute Wrap(string value) => new HtmlAttribute("wrap", value);

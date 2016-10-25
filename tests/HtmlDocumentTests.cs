@@ -43,8 +43,7 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(Doctype_TestData))]
         public void Doctype_Set_Get_ReturnsExpected(HtmlDoctype value)
         {
-            HtmlDocument document = new HtmlDocument();
-            document.Doctype = value;
+            HtmlDocument document = new HtmlDocument { Doctype = value };
             Assert.Equal(value, document.Doctype);
         }
 
@@ -52,7 +51,7 @@ namespace HtmlGenerator.Tests
         public void Head_SetExisting_NonNull_RemovesElement()
         {
             HtmlElement value = Tag.Head.WithClass("class");
-            HtmlDocument document = new HtmlDocument() { Head = Tag.Head };
+            HtmlDocument document = new HtmlDocument { Head = Tag.Head };
             document.Head = value;
             Assert.Equal(new HtmlElement[] { value }, document.Elements());
             Assert.Equal(value, document.Head);
@@ -61,7 +60,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Head_SetExisting_Null_RemovesElement()
         {
-            HtmlDocument document = new HtmlDocument() { Head = Tag.Head };
+            HtmlDocument document = new HtmlDocument { Head = Tag.Head };
             document.Head = null;
             Assert.True(document.IsEmpty);
             Assert.Null(document.Head);
@@ -70,7 +69,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Head_SetNonExisting_Null_RemovesElement()
         {
-            HtmlDocument document = new HtmlDocument() { Head = null };
+            HtmlDocument document = new HtmlDocument { Head = null };
             document.Head = null;
             Assert.True(document.IsEmpty);
             Assert.Null(document.Head);
@@ -79,7 +78,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddHead_DocumentHasBody_ThrowsInvalidOperationException()
         {
-            HtmlDocument document = new HtmlDocument() { Head = Tag.Head };
+            HtmlDocument document = new HtmlDocument { Head = Tag.Head };
             Assert.Throws<InvalidOperationException>(() => document.AddHead());
         }
 
@@ -87,7 +86,7 @@ namespace HtmlGenerator.Tests
         public void Body_SetExisting_NonNull_RemovesElement()
         {
             HtmlElement value = Tag.Body.WithClass("class");
-            HtmlDocument document = new HtmlDocument() { Body = Tag.Body };
+            HtmlDocument document = new HtmlDocument { Body = Tag.Body };
             document.Body = value;
             Assert.Equal(new HtmlElement[] { value }, document.Elements());
             Assert.Equal(value, document.Body);
@@ -96,7 +95,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Body_SetExisting_Null_RemovesElement()
         {
-            HtmlDocument document = new HtmlDocument() { Body = Tag.Body };
+            HtmlDocument document = new HtmlDocument { Body = Tag.Body };
             document.Body = null;
             Assert.True(document.IsEmpty);
             Assert.Null(document.Body);
@@ -105,7 +104,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Body_SetNonExisting_Null_RemovesElement()
         {
-            HtmlDocument document = new HtmlDocument() { Body = null };
+            HtmlDocument document = new HtmlDocument { Body = null };
             document.Body = null;
             Assert.True(document.IsEmpty);
             Assert.Null(document.Body);
@@ -114,7 +113,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void AddBody_DocumentHasBody_ThrowsInvalidOperationException()
         {
-            HtmlDocument document = new HtmlDocument() { Body = Tag.Body };
+            HtmlDocument document = new HtmlDocument { Body = Tag.Body };
             Assert.Throws<InvalidOperationException>(() => document.AddBody());
         }
 
@@ -123,10 +122,10 @@ namespace HtmlGenerator.Tests
             yield return new object[] { new HtmlDocument(), new HtmlDocument(), true };
             yield return new object[] { new HtmlDocument(), new HtmlDocument().WithClass("class"), false };
 
-            yield return new object[] { new HtmlDocument() { Doctype = null }, new HtmlDocument() { Doctype = null }, true };
-            yield return new object[] { new HtmlDocument() { Doctype = null }, new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, false };
-            yield return new object[] { new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, new HtmlDocument() { Doctype = null }, false };
-            yield return new object[] { new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html401Frameset) }, false };
+            yield return new object[] { new HtmlDocument { Doctype = null }, new HtmlDocument { Doctype = null }, true };
+            yield return new object[] { new HtmlDocument { Doctype = null }, new HtmlDocument { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, false };
+            yield return new object[] { new HtmlDocument { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, new HtmlDocument { Doctype = null }, false };
+            yield return new object[] { new HtmlDocument { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) }, new HtmlDocument { Doctype = new HtmlDoctype(HtmlDoctypeType.Html401Frameset) }, false };
         }
 
         [Theory]
@@ -148,11 +147,10 @@ namespace HtmlGenerator.Tests
         [MemberData(nameof(Doctype_TestData))]
         public void Serialize_NullDoctype_NotIncluded(HtmlDoctype doctype)
         {
-            HtmlDocument document = new HtmlDocument();
-            document.Doctype = doctype;
+            HtmlDocument document = new HtmlDocument { Doctype = doctype };
 
             string expectedDocType = doctype == null ? string.Empty : doctype + Environment.NewLine;
-            Helpers.SerializeIgnoringFormatting(document, string.Format(@"{0}<html></html>", expectedDocType));
+            Helpers.SerializeIgnoringFormatting(document, $@"{expectedDocType}<html></html>");
         }
 
         [Fact]

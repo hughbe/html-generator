@@ -42,7 +42,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("element");
             HtmlAttribute attribute = new HtmlAttribute("attribute");
             HtmlComment comment = new HtmlComment("comment");
-            parent.Add(new HtmlObject[] { element, attribute, comment });
+            parent.Add(element, attribute, comment);
 
             Assert.Equal(parent, element.Parent);
             Assert.Equal(parent, attribute.Parent);
@@ -57,7 +57,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("parent", isVoid: true);
             HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
             HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
-            element.Add(new HtmlObject[] { attribute1, attribute2 });
+            element.Add(attribute1, attribute2);
 
             Assert.Equal(element, attribute1.Parent);
             Assert.Equal(element, attribute2.Parent);
@@ -69,7 +69,7 @@ namespace HtmlGenerator.Tests
         public void Add_ParamsHtmlObject_Empty()
         {
             HtmlElement element = new HtmlElement("parent");
-            element.Add(new HtmlObject[0]);
+            element.Add();
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
         }
@@ -106,7 +106,7 @@ namespace HtmlGenerator.Tests
         public void Add_IEnumerableHtmlObject_Empty()
         {
             HtmlElement element = new HtmlElement("parent");
-            element.Add(new HtmlObject[0]);
+            element.Add();
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
         }
@@ -323,11 +323,11 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("parent");
             HtmlElement element1 = new HtmlElement("body");
             HtmlAttribute attribute1 = new HtmlAttribute("attribute1");
-            parent.Add(new HtmlObject[] { element1, attribute1 });
+            parent.Add(element1, attribute1);
 
             HtmlElement element2 = new HtmlElement("head");
             HtmlAttribute attribute2 = new HtmlAttribute("attribute2");
-            parent.AddFirst(new HtmlObject[] { element2, attribute2 });
+            parent.AddFirst(element2, attribute2);
 
             Assert.Equal(parent, element2.Parent);
             Assert.Equal(parent, attribute2.Parent);
@@ -344,7 +344,7 @@ namespace HtmlGenerator.Tests
 
             HtmlAttribute newAttribute2 = new HtmlAttribute("attribute2");
             HtmlAttribute newAttribute3 = new HtmlAttribute("attribute3");
-            parent.AddFirst(new HtmlObject[] { newAttribute2, newAttribute3 });
+            parent.AddFirst(newAttribute2, newAttribute3);
 
             Assert.Equal(parent, newAttribute2.Parent);
             Assert.Equal(parent, newAttribute3.Parent);
@@ -356,7 +356,7 @@ namespace HtmlGenerator.Tests
         public void AddFirst_ParamsHtmlObject_Empty()
         {
             HtmlElement element = new HtmlElement("parent");
-            element.AddFirst(new HtmlObject[0]);
+            element.AddFirst();
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
         }
@@ -400,7 +400,7 @@ namespace HtmlGenerator.Tests
         public void AddFirst_IEnumerableHtmlObject_Empty()
         {
             HtmlElement element = new HtmlElement("parent");
-            element.AddFirst(new HtmlObject[0]);
+            element.AddFirst();
             Assert.Empty(element.Elements());
             Assert.Empty(element.Attributes());
         }
@@ -508,7 +508,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("parent");
             HtmlElement newElement = new HtmlElement("body");
             element.Add(newElement);
-            
+
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(newElement));
             Assert.Throws<InvalidOperationException>(() => element.AddFirst(new HtmlObject[] { newElement }));
             Assert.Throws<InvalidOperationException>(() => element.AddFirst((IEnumerable<HtmlElement>)new HtmlElement[] { newElement }));

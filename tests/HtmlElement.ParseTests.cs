@@ -394,14 +394,14 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void Doctype_HtmlWithElement_NoWhitespace()
         {
-            HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
+            HtmlElement expected = new HtmlDocument { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
             Parse(expected, "<!DOCTYPE html><html></html>");
         }
 
         [Fact]
         public void Doctype_HtmlWithDocument_NoWhitespace()
         {
-            HtmlElement expected = new HtmlDocument() { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
+            HtmlElement expected = new HtmlDocument { Doctype = new HtmlDoctype(HtmlDoctypeType.Html5) };
             Assert.Equal(expected, HtmlDocument.Parse("<!DOCTYPE html><html></html>"));
 
             HtmlDocument document;

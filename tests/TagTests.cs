@@ -10,6 +10,7 @@ namespace HtmlGenerator.Tests
         [Fact]
         public void TagConstructors()
         {
+            // TODO: turn me into MemberData
             VerifyElement(Tag.A, "a", false, "Download", "Href", "HrefLang", "Media", "Ping", "Rel", "Target", "Type");
             VerifyElement(Tag.Abbr, "abbr", false);
             VerifyElement(Tag.Address, "address", false);
@@ -292,7 +293,7 @@ namespace HtmlGenerator.Tests
                 MethodInfo method = element.GetType().GetMethod("With" + attributeName);
                 if (attributeIsVoid)
                 {
-                    HtmlAttribute expectedAttribute = (HtmlAttribute)typeof(Attribute).GetProperty(attributeName).GetValue(null);   
+                    HtmlAttribute expectedAttribute = (HtmlAttribute)typeof(Attribute).GetProperty(attributeName).GetValue(null);
 
                     Assert.Empty(method.GetParameters());
                     Assert.Same(element, method.Invoke(element, new object[0]));

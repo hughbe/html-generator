@@ -30,7 +30,8 @@ namespace HtmlGenerator
             {
                 return;
             }
-	        Parent.RemoveAttribute(this);
+
+            Parent.RemoveAttribute(this);
         }
 
         public void SetValue(string value)
@@ -40,21 +41,22 @@ namespace HtmlGenerator
         }
 
         public override bool Equals(object obj) => Equals(obj as HtmlAttribute);
-        
+
         public bool Equals(HtmlAttribute attribute)
         {
             if (attribute == null)
             {
                 return false;
             }
-            return Name == attribute.Name && Value == attribute.Value;
+
+            return (Name == attribute.Name) && (Value == attribute.Value);
         }
 
         public override int GetHashCode() => IsVoid ? Name.GetHashCode() : Name.GetHashCode() ^ Value.GetHashCode();
 
         public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions)
         {
-            int extraLength = IsVoid ? 0 : (3 + Value.Length);
+            int extraLength = IsVoid ? 0 : 3 + Value.Length;
             builder.EnsureCapacity(builder.Capacity + Name.Length + extraLength);
             builder.Append(Name);
             if (!IsVoid)

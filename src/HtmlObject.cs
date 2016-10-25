@@ -20,7 +20,7 @@ namespace HtmlGenerator
 
         public abstract void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions);
 
-        protected void AddDepth(StringBuilder builder, int depth) => builder.Append(' ', depth * 2);
+        protected static void AddDepth(StringBuilder builder, int depth) => builder.Append(' ', depth * 2);
 
         internal HtmlObject _previous;
         internal HtmlObject _next;

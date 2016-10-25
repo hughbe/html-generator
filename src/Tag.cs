@@ -1,3 +1,5 @@
+using HtmlGenerator.Elements;
+
 namespace HtmlGenerator
 {
     public static partial class Tag

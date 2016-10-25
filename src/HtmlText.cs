@@ -17,7 +17,7 @@ namespace HtmlGenerator
 
         public override bool Equals(object obj) => Equals(obj as HtmlText);
 
-        public bool Equals(HtmlText other) => other != null && Text == other.Text;
+        public bool Equals(HtmlText other) => (other != null) && (Text == other.Text);
 
         public override int GetHashCode() => Text.GetHashCode();
 

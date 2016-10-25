@@ -12,7 +12,7 @@ namespace HtmlGenerator
 
         public override HtmlObjectType ObjectType => HtmlObjectType.Document;
 
-        private HtmlElement _head = null;
+        private HtmlElement _head;
         public HtmlElement Head
         {
             get { return _head; }
@@ -27,7 +27,7 @@ namespace HtmlGenerator
             }
         }
 
-        private HtmlElement _body = null;
+        private HtmlElement _body;
         public HtmlElement Body
         {
             get { return _body; }
@@ -50,6 +50,7 @@ namespace HtmlGenerator
             {
                 throw new InvalidOperationException("Document already has a head element.");
             }
+
             Head = HtmlGenerator.Tag.Head;
             return this;
         }
@@ -60,6 +61,7 @@ namespace HtmlGenerator
             {
                 throw new InvalidOperationException("Document already has a body element.");
             }
+
             Body = HtmlGenerator.Tag.Body;
             return this;
         }
@@ -68,7 +70,7 @@ namespace HtmlGenerator
 
         public bool Equals(HtmlDocument other)
         {
-            if (!base.Equals(other))
+            if ((other == null) || !base.Equals(other))
             {
                 return false;
             }
@@ -76,10 +78,11 @@ namespace HtmlGenerator
             {
                 return other.Doctype == null;
             }
+
             return Doctype.Equals(other.Doctype);
         }
 
-        public override int GetHashCode() => Doctype == null ? base.GetHashCode() : (base.GetHashCode() ^ Doctype.GetHashCode());
+        public override int GetHashCode() => Doctype == null ? base.GetHashCode() : base.GetHashCode() ^ Doctype.GetHashCode();
 
         public override void Serialize(StringBuilder builder, int depth, HtmlSerializeOptions serializeOptions)
         {
@@ -94,7 +97,7 @@ namespace HtmlGenerator
             base.Serialize(builder, depth, serializeOptions);
         }
 
-        public static new HtmlDocument Parse(string text)
+        public new static HtmlDocument Parse(string text)
         {
             Requires.NotNullOrEmpty(text, nameof(text));
 
@@ -103,13 +106,14 @@ namespace HtmlGenerator
             {
                 throw parser.GetException();
             }
-            return (HtmlDocument)parser.rootElement;
+
+            return (HtmlDocument)parser._rootElement;
         }
 
         public static bool TryParse(string text, out HtmlDocument document)
         {
             document = null;
-            if (text == null || text.Length == 0)
+            if ((text == null) || (text.Length == 0))
             {
                 return false;
             }
@@ -117,9 +121,10 @@ namespace HtmlGenerator
             Parser parser = new Parser(text, isDocument: true);
             if (parser.Parse())
             {
-                document = (HtmlDocument)parser.rootElement;
+                document = (HtmlDocument)parser._rootElement;
                 return true;
             }
+
             return false;
         }
     }

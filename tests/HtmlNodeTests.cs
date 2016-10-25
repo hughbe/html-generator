@@ -36,7 +36,7 @@ namespace HtmlGenerator.Tests
             // Element
             HtmlElement child2 = new HtmlElement("child2");
             HtmlElement child3 = new HtmlElement("child3");
-            child1.AddAfterSelf(new HtmlElement[] { child2, child3 });
+            child1.AddAfterSelf(child2, child3);
 
             Assert.Equal(parent, child2.Parent);
             Assert.Equal(parent, child3.Parent);
@@ -48,7 +48,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement parent = new HtmlElement("html");
             HtmlElement element = new HtmlElement("body");
-            element.AddAfterSelf(new HtmlElement[0]);
+            element.AddAfterSelf();
             Assert.Empty(parent.Elements());
             Assert.Empty(parent.Attributes());
         }
@@ -94,8 +94,8 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("element");
 
-            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf(new HtmlElement[] { null }));
-            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { null }));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf(new HtmlNode[] { null }));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddAfterSelf((IEnumerable<HtmlNode>)new HtmlNode[] { null }));
         }
 
         [Fact]
@@ -104,8 +104,8 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("html");
 
             Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(element));
-            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(new HtmlElement[] { element }));
-            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { element }));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(new HtmlNode[] { element }));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf((IEnumerable<HtmlNode>)new HtmlNode[] { element }));
         }
 
         [Fact]
@@ -114,10 +114,10 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("parent");
             HtmlElement element = new HtmlElement("child");
             parent.Add(element);
-            
+
             Assert.Throws<InvalidOperationException>(() => parent.AddAfterSelf(element));
-            Assert.Throws<InvalidOperationException>(() => parent.AddAfterSelf(new HtmlElement[] { element }));
-            Assert.Throws<InvalidOperationException>(() => parent.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.AddAfterSelf(new HtmlNode[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.AddAfterSelf((IEnumerable<HtmlNode>)new HtmlNode[] { element }));
         }
 
         [Fact]
@@ -127,8 +127,8 @@ namespace HtmlGenerator.Tests
             HtmlElement newElement = new HtmlElement("p");
 
             Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(newElement));
-            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(new HtmlElement[] { newElement }));
-            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf((IEnumerable<HtmlElement>)new HtmlElement[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf(new HtmlNode[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => element.AddAfterSelf((IEnumerable<HtmlNode>)new HtmlNode[] { newElement }));
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace HtmlGenerator.Tests
             // Element
             HtmlElement child2 = new HtmlElement("child2");
             HtmlElement child3 = new HtmlElement("child3");
-            child1.AddBeforeSelf(new HtmlElement[] { child2, child3 });
+            child1.AddBeforeSelf(child2, child3);
 
             Assert.Equal(parent, child2.Parent);
             Assert.Equal(parent, child3.Parent);
@@ -173,7 +173,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement parent = new HtmlElement("html");
             HtmlElement element = new HtmlElement("body");
-            element.AddAfterSelf(new HtmlElement[0]);
+            element.AddAfterSelf();
             Assert.Empty(parent.Elements());
             Assert.Empty(parent.Attributes());
         }
@@ -209,9 +209,9 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("element");
 
-            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((HtmlElement)null));
-            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((HtmlElement[])null));
-            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((IEnumerable<HtmlElement>)null));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((HtmlNode)null));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((HtmlNode[])null));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((IEnumerable<HtmlNode>)null));
         }
 
         [Fact]
@@ -219,8 +219,8 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("element");
 
-            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf(new HtmlElement[] { null }));
-            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { null }));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf(new HtmlNode[] { null }));
+            Assert.Throws<ArgumentNullException>("content", () => element.AddBeforeSelf((IEnumerable<HtmlNode>)new HtmlElement[] { null }));
         }
 
         [Fact]
@@ -229,8 +229,8 @@ namespace HtmlGenerator.Tests
             HtmlElement element = new HtmlElement("html");
 
             Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(element));
-            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(new HtmlElement[] { element }));
-            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { element }));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(new HtmlNode[] { element }));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf((IEnumerable<HtmlNode>)new HtmlNode[] { element }));
         }
 
         [Fact]
@@ -241,8 +241,8 @@ namespace HtmlGenerator.Tests
             parent.Add(element);
 
             Assert.Throws<InvalidOperationException>(() => parent.AddBeforeSelf(element));
-            Assert.Throws<InvalidOperationException>(() => parent.AddBeforeSelf(new HtmlElement[] { element }));
-            Assert.Throws<InvalidOperationException>(() => parent.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.AddBeforeSelf(new HtmlNode[] { element }));
+            Assert.Throws<InvalidOperationException>(() => parent.AddBeforeSelf((IEnumerable<HtmlNode>)new HtmlNode[] { element }));
         }
 
         [Fact]
@@ -252,8 +252,8 @@ namespace HtmlGenerator.Tests
             HtmlElement newElement = new HtmlElement("p");
 
             Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(newElement));
-            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(new HtmlElement[] { newElement }));
-            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf((IEnumerable<HtmlElement>)new HtmlElement[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf(new HtmlNode[] { newElement }));
+            Assert.Throws<InvalidOperationException>(() => element.AddBeforeSelf((IEnumerable<HtmlNode>)new HtmlNode[] { newElement }));
         }
 
         [Fact]
@@ -263,6 +263,7 @@ namespace HtmlGenerator.Tests
             HtmlComment comment = new HtmlComment("comment");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, comment, element2);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(comment, element1.NextNode);
             Assert.Equal(element2, comment.NextNode);
@@ -276,6 +277,7 @@ namespace HtmlGenerator.Tests
             HtmlComment comment = new HtmlComment("comment");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, comment, new HtmlAttribute("attribute"), element2);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(element2, comment.NextNode);
         }
@@ -294,6 +296,7 @@ namespace HtmlGenerator.Tests
             HtmlComment comment = new HtmlComment("comment");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, comment, element2);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(new HtmlNode[] { comment, element2 }, element1.NextNodes());
             Assert.Equal(new HtmlNode[] { element2 }, comment.NextNodes());
@@ -307,6 +310,7 @@ namespace HtmlGenerator.Tests
             HtmlComment comment = new HtmlComment("comment");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, comment, new HtmlAttribute("attribute"), element2);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(new HtmlElement[] { element2 }, comment.NextNodes());
         }
@@ -325,6 +329,7 @@ namespace HtmlGenerator.Tests
             HtmlComment comment = new HtmlComment("comment");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, comment, element2);
+            Assert.True(parent.HasElements);
 
             Assert.Null(element1.PreviousNode);
             Assert.Equal(element1, comment.PreviousNode);
@@ -338,6 +343,7 @@ namespace HtmlGenerator.Tests
             HtmlComment comment = new HtmlComment("comment");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, comment, new HtmlAttribute("attribute"), element2);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(comment, element2.PreviousNode);
         }
@@ -356,6 +362,7 @@ namespace HtmlGenerator.Tests
             HtmlComment comment = new HtmlComment("comment");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, comment, element2);
+            Assert.True(parent.HasElements);
 
             Assert.Empty(element1.PreviousNodes());
             Assert.Equal(new HtmlNode[] { element1 }, comment.PreviousNodes());
@@ -369,6 +376,7 @@ namespace HtmlGenerator.Tests
             HtmlComment comment = new HtmlComment("comment");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, comment, new HtmlAttribute("attribute"), element2);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(new HtmlNode[] { comment, element1 }, element2.PreviousNodes());
         }
@@ -409,10 +417,10 @@ namespace HtmlGenerator.Tests
             // Updates LinkedList
             Assert.Null(child1.PreviousNode);
             Assert.Null(child1.NextNode);
-            
+
             Assert.Null(child2.PreviousNode);
             Assert.Equal(child3, child2.NextNode);
-            
+
             Assert.Equal(child2, child3.PreviousNode);
             Assert.Null(child3.NextNode);
         }
@@ -434,10 +442,10 @@ namespace HtmlGenerator.Tests
             // Updates LinkedList
             Assert.Null(child1.PreviousNode);
             Assert.Equal(child2, child1.NextNode);
-            
+
             Assert.Equal(child1, child2.PreviousNode);
             Assert.Null(child2.NextNode);
-            
+
             Assert.Null(child3.PreviousNode);
             Assert.Null(child3.NextNode);
         }
@@ -459,7 +467,7 @@ namespace HtmlGenerator.Tests
             // Updates LinkedList
             Assert.Null(child1.PreviousNode);
             Assert.Equal(child3, child1.NextNode);
-            
+
             Assert.Null(child2.PreviousNode);
             Assert.Null(child2.NextNode);
 

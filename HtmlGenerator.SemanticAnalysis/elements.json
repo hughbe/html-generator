@@ -1,0 +1,11 @@
+﻿{
+  "a": {
+    "tag": "a",
+    "category": "Flow, Phrasing, Interactive, Palpable",
+    "parentCategory": "Phrasing",
+    "childrenCategory": "Flow",
+    "requiredAttributes": [ "href" ],
+    "attributes": [ "href", "target", "download", "download", "rel", "rev", "rev", "hreflang", "type" ],
+    "ariaRoleAttributes": [ "link", "button", "checkbox", "menuitem", "menuitemcheckbox", "menuitemradio", "radio", "switch", "tab", "treeitem" ]
+  }
+}

@@ -106,7 +106,7 @@ namespace HtmlGenerator.Tests
         private static void VerifyAncestors(HtmlElement element, string tag, HtmlElement[] expected)
         {
             HtmlElement[] expectedIncludingSelf;
-            if (tag == null || element.Tag == tag)
+            if ((tag == null) || (element.Tag == tag))
             {
                 expectedIncludingSelf = new HtmlElement[expected.Length + 1];
                 Array.Copy(expected, 0, expectedIncludingSelf, 1, expected.Length);
@@ -135,7 +135,7 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(Attributes_TestData))]
-        public void Attributes(HtmlAttribute[] attributes)
+        public void Attributes(HtmlObject[] attributes)
         {
             HtmlElement parent = new HtmlElement("parent", attributes);
             Assert.Equal(attributes, parent.Attributes());
@@ -252,7 +252,7 @@ namespace HtmlGenerator.Tests
         private static void VerifyDescendants(HtmlElement element, string tag, HtmlElement[] expected)
         {
             HtmlElement[] expectedIncludingSelf;
-            if (tag == null || element.Tag == tag)
+            if ((tag == null) || (element.Tag == tag))
             {
                 expectedIncludingSelf = new HtmlElement[expected.Length + 1];
                 Array.Copy(expected, 0, expectedIncludingSelf, 1, expected.Length);
@@ -301,7 +301,7 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(Elements_Method_TestData))]
-        public void Elements(HtmlElement[] elements, string tag, HtmlElement[] expected)
+        public void Elements(HtmlObject[] elements, string tag, HtmlElement[] expected)
         {
             HtmlElement parent = new HtmlElement("parent", elements);
             if (tag == null)
@@ -708,6 +708,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement element3 = new HtmlElement("element3");
             HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(element2, element1.NextElement);
             Assert.Equal(element3, element2.NextElement);
@@ -720,6 +721,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element1 = new HtmlElement("element1");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, new HtmlComment("comment"), new HtmlAttribute("attribute"), element2);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(element2, element1.NextElement);
         }
@@ -738,6 +740,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement element3 = new HtmlElement("element3");
             HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(new HtmlElement[] { element2, element3 }, element1.NextElements());
             Assert.Equal(new HtmlElement[] { element3 }, element2.NextElements());
@@ -752,6 +755,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element3 = new HtmlElement("element2");
             HtmlElement element4 = new HtmlElement("element3");
             HtmlElement parent = new HtmlElement("parent", element1, element2, element3, element4);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(new HtmlElement[] { element2, element3 }, element1.NextElements("element2"));
             Assert.Equal(new HtmlElement[] { element2, element3 }, element1.NextElements("ELEMENT2"));
@@ -767,6 +771,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement element3 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
+            Assert.True(parent.HasElements);
 
             Assert.Empty(element1.NextElements("element1"));
             Assert.Empty(element1.NextElements("element3"));
@@ -798,6 +803,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element3 = new HtmlElement("element3");
             HtmlElement element4 = new HtmlElement("element4");
             HtmlElement parent = new HtmlElement("parent", element1, element2, new HtmlComment("element2"), element3, new HtmlAttribute("element2"), element4);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(new HtmlElement[] { element2, element3, element4 }, element1.NextElements());
             Assert.Equal(new HtmlElement[] { element2 }, element1.NextElements("element2"));
@@ -810,6 +816,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement element3 = new HtmlElement("element3");
             HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
+            Assert.True(parent.HasElements);
 
             Assert.Null(element1.PreviousElement);
             Assert.Equal(element1, element2.PreviousElement);
@@ -822,6 +829,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element1 = new HtmlElement("element1");
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, new HtmlComment("comment"), new HtmlAttribute("attribute"), element2);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(element1, element2.PreviousElement);
         }
@@ -840,6 +848,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element2 = new HtmlElement("element2");
             HtmlElement element3 = new HtmlElement("element3");
             HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
+            Assert.True(parent.HasElements);
 
             Assert.Empty(element1.PreviousElements());
             Assert.Equal(new HtmlElement[] { element1 }, element2.PreviousElements());
@@ -854,6 +863,7 @@ namespace HtmlGenerator.Tests
             HtmlElement third = new HtmlElement("element2");
             HtmlElement fourth = new HtmlElement("element3");
             HtmlElement parent = new HtmlElement("parent", first, second, third, fourth);
+            Assert.True(parent.HasElements);
 
             Assert.Empty(first.PreviousElements("element3"));
             Assert.Equal(new HtmlElement[] { first }, second.PreviousElements("element1"));
@@ -869,6 +879,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element2 = new HtmlElement("element1");
             HtmlElement element3 = new HtmlElement("element2");
             HtmlElement parent = new HtmlElement("parent", element1, element2, element3);
+            Assert.True(parent.HasElements);
 
             Assert.Empty(element3.PreviousElements("element2"));
             Assert.Empty(element3.PreviousElements("element3"));
@@ -900,6 +911,7 @@ namespace HtmlGenerator.Tests
             HtmlElement element3 = new HtmlElement("element3");
             HtmlElement element4 = new HtmlElement("element4");
             HtmlElement parent = new HtmlElement("parent", element1, element2, new HtmlComment("element2"), element3, new HtmlAttribute("element2"), element4);
+            Assert.True(parent.HasElements);
 
             Assert.Equal(new HtmlElement[] { element3, element2, element1 }, element4.PreviousElements());
             Assert.Equal(new HtmlElement[] { element2 }, element4.PreviousElements("element2"));
@@ -926,7 +938,7 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(TryGetAttribute_TestData))]
-        public void TryGetAttribute(HtmlAttribute[] attributes, string name, HtmlAttribute expected)
+        public void TryGetAttribute(HtmlObject[] attributes, string name, HtmlAttribute expected)
         {
             HtmlElement parent = new HtmlElement("element", attributes);
 
@@ -978,7 +990,7 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(TryGetElement_TestData))]
-        public void TryGetElement(HtmlElement[] elements, string tag, HtmlElement expected)
+        public void TryGetElement(HtmlObject[] elements, string tag, HtmlElement expected)
         {
             HtmlElement parent = new HtmlElement("element", elements);
 
