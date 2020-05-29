@@ -1029,7 +1029,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("element");
             HtmlAttribute attribute = null;
-            Assert.Throws<ArgumentNullException>("name", () => element.TryGetAttribute(null, out attribute));
+            Assert.Throws<ArgumentException>("name", () => element.TryGetAttribute(name, out attribute));
             Assert.Null(attribute);
         }
     }

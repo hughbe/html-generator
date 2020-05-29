@@ -476,7 +476,6 @@ namespace HtmlGenerator.Tests
             yield return new object[] { "<abc attribute='>" };
             yield return new object[] { "<abc attribute='/></abc>" };
             yield return new object[] { "<abc attribute=a" };
-            yield return new object[] { "<abc attribute=!" };
             yield return new object[] { "<abc attribute=abc\"" };
             yield return new object[] { "<abc attribute=\"abc'></abc>" };
             yield return new object[] { "<abc attribute='abc\"></abc>" };

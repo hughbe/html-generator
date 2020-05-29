@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Version>2.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Hugh Bellamy</Authors>
+    <Description>A library that simplifies generating complex HTML files from C# code.</Description>
+    <Copyright>Hugh Bellamy 2020</Copyright>
+    <PackageTags>html;generator;web</PackageTags>
+    <PackageProjectUrl>https://github.com/hughbe/html-generator</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/hughbe/html-generator/master/LICENSE.md</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/hughbe/html-generator</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>

@@ -64,7 +64,7 @@ namespace HtmlGenerator.Tests
         public void ReplaceAll_ContentNotNodeOrAttribute_ThrowsArgumentException()
         {
             HtmlElement parent = new HtmlElement("parent");
-            
+
             Assert.Throws<ArgumentException>("content", () => parent.ReplaceAll(new HtmlObject[] { new CustomHtmlObject() }));
             Assert.Throws<ArgumentException>("content", () => parent.ReplaceAll((IEnumerable<HtmlObject>)new HtmlObject[] { new CustomHtmlObject() }));
         }
@@ -107,7 +107,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement parent = new HtmlElement("parent", new HtmlElement("element"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
             parent.ReplaceAttributes(attributes);
-            Assert.Equal(1, parent.Elements().Count());
+            Assert.Single(parent.Elements());
             Assert.Equal(attributes, parent.Attributes().ToArray());
             Assert.Equal(1 + attributes.Length, parent.ElementsAndAttributes().Count());
         }
@@ -129,7 +129,7 @@ namespace HtmlGenerator.Tests
         {
             HtmlElement element = new HtmlElement("parent", new HtmlElement("h1"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
             element.ReplaceAttributes((IEnumerable<HtmlAttribute>)attributes);
-            Assert.Equal(1, element.Elements().Count());
+            Assert.Single(element.Elements());
             Assert.Equal(attributes, element.Attributes().ToArray());
             Assert.Equal(1 + attributes.Length, element.ElementsAndAttributes().Count());
         }

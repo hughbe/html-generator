@@ -12,13 +12,13 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("parent", new HtmlElement("element"), new HtmlComment("comment"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
 
             parent.RemoveAll();
-            Assert.Equal(0, parent.Nodes().Count());
-            Assert.Equal(0, parent.Attributes().Count());
+            Assert.Empty(parent.Nodes());
+            Assert.Empty(parent.Attributes());
 
             // Make sure we can remove from an empty element
             parent.RemoveAll();
-            Assert.Equal(0, parent.Nodes().Count());
-            Assert.Equal(0, parent.Attributes().Count());
+            Assert.Empty(parent.Nodes());
+            Assert.Empty(parent.Attributes());
         }
 
         [Fact]
@@ -27,8 +27,8 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("parent", new HtmlAttribute("attribute"));
 
             parent.RemoveAll();
-            Assert.Equal(0, parent.Nodes().Count());
-            Assert.Equal(0, parent.Attributes().Count());
+            Assert.Empty(parent.Nodes());
+            Assert.Empty(parent.Attributes());
         }
 
         [Fact]
@@ -38,12 +38,12 @@ namespace HtmlGenerator.Tests
 
             parent.RemoveAttributes();
             Assert.Equal(2, parent.Nodes().Count());
-            Assert.Equal(0, parent.Attributes().Count());
+            Assert.Empty(parent.Attributes());
 
             // Make sure we can remove from an empty element
             parent.RemoveAttributes();
             Assert.Equal(2, parent.Nodes().Count());
-            Assert.Equal(0, parent.Attributes().Count());
+            Assert.Empty(parent.Attributes());
         }
 
         [Fact]
@@ -59,12 +59,12 @@ namespace HtmlGenerator.Tests
             HtmlElement parent = new HtmlElement("parent", new HtmlElement("element"), new HtmlComment("comment"), new HtmlAttribute("attribute1"), new HtmlAttribute("attribute2"));
 
             parent.RemoveNodes();
-            Assert.Equal(0, parent.Nodes().Count());
+            Assert.Empty(parent.Nodes());
             Assert.Equal(2, parent.Attributes().Count());
 
             // Make sure we can remove from an empty element
             parent.RemoveNodes();
-            Assert.Equal(0, parent.Nodes().Count());
+            Assert.Empty(parent.Nodes());
             Assert.Equal(2, parent.Attributes().Count());
         }
 

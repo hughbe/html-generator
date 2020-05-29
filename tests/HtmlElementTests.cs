@@ -143,7 +143,7 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(Equals_TestData))]
-        public void Equals(HtmlElement element, object other, bool expected)
+        public void Equals_Invoke_ReturnsExpected(HtmlElement element, object other, bool expected)
         {
             Assert.Equal(element.GetHashCode(), element.GetHashCode());
             if (other is HtmlElement || other == null)

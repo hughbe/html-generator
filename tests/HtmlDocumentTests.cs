@@ -75,7 +75,7 @@ namespace HtmlGenerator.Tests
             Assert.True(document.IsEmpty);
             Assert.Null(document.Head);
         }
-        
+
         [Fact]
         public void AddHead_DocumentHasBody_ThrowsInvalidOperationException()
         {
@@ -131,7 +131,7 @@ namespace HtmlGenerator.Tests
 
         [Theory]
         [MemberData(nameof(Equals_TestData))]
-        public void Equals(HtmlDocument document, object other, bool expected)
+        public void Equals_Invoke_ReturnsExpected(HtmlDocument document, object other, bool expected)
         {
             if (other is HtmlDocument || other == null)
             {
